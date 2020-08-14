@@ -43,8 +43,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -81,16 +89,728 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Models\MobileBanking.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MobileBanking.Context.cs</LastGenOutput>
+      <DependentUpon>MobileBanking.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\MobileBanking.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MobileBanking.edmx</DependentUpon>
+      <LastGenOutput>MobileBanking.cs</LastGenOutput>
+    </Content>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\TransactionController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\A.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountCode.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Advance.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdvanceGuarantor.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdvanceStatement.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdvanceStmt.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Advert.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\agingsummary.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AP.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\APPRAISAL.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\asset.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\assetAllocation.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\assetcode.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\assetDescription.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AssetMovement.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\assetStatu.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\assetstran.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Asset_Depreciation.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\atmLog.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ATM_TR.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuditTable.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AUDITTRAN.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BANK.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BankRecon.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BFDEDUCT.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\branch.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Branch_Date.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BRIDGINGLOAN.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\budget.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CAPITALAR.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Capital_Adequacy_Return.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashFlowAccount.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cashflowActivity.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cashflowheader.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashFlowStatement.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CASHINCOME.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CASHPAYMENT.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CASHPROCEEDSMEMBER.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cashsplit.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CASHSUMMARY.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashTransaction.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CASHZONE.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cash_Shares_Fosa.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cheqcomm.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cheqdepositsetup.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CHEQUE.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChequeDeposit.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cincome.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Client.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Clients_Accounts.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\COLLOANGUAR.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\COMMISSIONSETUP.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\COMMUNICATION.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comprehensive_Income.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CONTRIB.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\contrib1.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cprofile.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CRB_Cleared_Loans.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CRB_Exemption.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CUB.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerBalance.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DAILYTRAN.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Declined_Subscription.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DEDUCTION.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DEDUCTION1.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DEDUCTIONLIST.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DEFAULTEDLOAN.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DefaultersMessage.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DEPARTMENT.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\depreciationMethod.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DIFFEREDLOANFORM.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DisbursementDeduction.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dtproperty.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EasyMobi_Mobile_Numbers_Update.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EditedLoanStandingOrder.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Edited_Loan.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeDetail.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employer.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ENDMAIN.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Exedutyfee.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ExemptedLoanInterest.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FDR.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FDRrate.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FILLEDLOANFORM.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Financialyear.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Financial_Position.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\finpos.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\fin_Postion_accounts.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FirstTime_Withdrawal.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FosaCharge.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FROZEN.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FROZENACC.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FROZENBALANCE.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GLSETUP.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GLTRANSACTION.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Group.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupLoanBalance.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Groupright.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupSharesBalance.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GuarantorAmt.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IMPORT.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\INCOME.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\INCOMESOURCE.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\incomeStatement_setup_accounts.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Int.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InterestTable.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Investment_Return.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IR.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\jointMember.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JV.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\KTDA_List.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LCharge.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LiquidityStatement.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LN.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LOAN.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\loanaging.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\loanagingdetailed.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LoanAnalysi.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LOANARREAR.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LOANBAL.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LOANGUAR.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LoanGuarantor.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LoanOpeningBalance.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LoanRange.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Loans_Classification.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LOANTYPE.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\loantypeaging.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LOANTYPE_INTEREST.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Loan_Sector.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Loan_Standingorder.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LOGIN.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LoginAttempt.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LSTMT.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Master.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MDEDUCT.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MDEDUCTNOTPOSTED.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MDEDUCTTEMP.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MEMBER.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MEMBERDEDUCTION.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MEMBERLOAN.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Membership_Detail.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MEMBERSTO.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MEMBERS_DETAILS.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Members_Extra_Obligations.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MEMBERTRAN.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MEMBERTRANSACTION.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\menu.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Message.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MicroArrear.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MicroDistributionSummary.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MiniStat.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MobileBanking.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MobileBanking.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MobileBanking.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MobileBanking.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MobileBanking.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MobileBankingAdmin.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Mobile_Number_Change_Requests.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MONTHLYADVDEDUCTION.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MONTHLYDEDUCTION.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Mpesa.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NARRATION.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NHIF.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OtherLoanCharge.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\param.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PayBill_Reconcilliation.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PaymentBooking.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PERTRAN.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PIN_Lock_Request.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PIN_Reset.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\port.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PRODUCTINC.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PRODUCTSETUP.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\REASON.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReceiptBooking.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Refund.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\REPAY.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\repay1.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\reportpath.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Risk_Classification.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sacco.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Salary.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SalaryTran.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SASRA_Daily_Summaries.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SavingsAccountsParameter.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SessionUSSD.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SessionUSSD_BKP.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SHARE.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sharesback.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SharesOpeningBalance.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sharetype.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ShareWithdrawal.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SHRVAR.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\smsLoanGuarantor.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMSSetting.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SMTDR.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\STATEMENT.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Stmt.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SubDepartment.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Subscriber.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\summarycollection.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Swift_Messages.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SwM.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysincome.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SYSPARAM.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbbalance.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbbalance1.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_ISOResults.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_menus.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_userGroupmenus.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_usermenus.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TELLERSUMMARY.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Teller_Transaction.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TempGuar.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TempStatement.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TEST.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TMPDEDUCTION.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TRANSACTION.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TransactionCode.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Transactionno.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TransCode.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_x.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UNIT.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserAccount.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserGroupRight.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserGroupRights_Logs.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VOUCHERNO.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WCHARGE.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ZONE.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\FingerPrintModel.cs" />
+    <Compile Include="ViewModel\ReturnData.cs" />
+    <Compile Include="ViewModel\Transaction.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="Models\MobileBanking.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MobileBanking.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\MobileBanking.edmx.diagram">
+      <DependentUpon>MobileBanking.edmx</DependentUpon>
+    </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -101,8 +821,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
