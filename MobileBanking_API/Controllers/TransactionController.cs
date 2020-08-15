@@ -27,19 +27,21 @@ namespace MobileBanking_API.Controllers
 						Success = false,
 						Message = "Sorry, member not found"
 					};
-				member.ActualBalance = + transaction.Amount;
+				member.AvailableBalance += transaction.Amount;
 				
 				db.CustomerBalances.Add(new CustomerBalance
 				{
-					IDNo = "",
-					PayrollNo = "",
-					AccName = "",
-					AvailableBalance = 0,
-					TransDescription = "",
-					TransDate = DateTime.UtcNow.Date, 
-					AccNO = "",
+					IDNo = member.IDNo,
+					PayrollNo = member.Payno,
+					CustomerNo = member.MemberNo,
+					AccName = member.AccountName,
+					AvailableBalance = member.AvailableBalance,
+					TransDescription = "Deposit",
+					TransDate = DateTime.UtcNow.Date,
+					ReconDate = DateTime.UtcNow.Date,
+					AccNO = member.AccNo,
 					valuedate = null,
-					transType = "",
+					transType = "CR",
 					Status = false
 				});
 
@@ -72,7 +74,23 @@ namespace MobileBanking_API.Controllers
 						Success = false,
 						Message = "Sorry, member not found"
 					};
-				member.ActualBalance = - transaction.Amount;
+				member.AvailableBalance -= transaction.Amount;
+
+				db.CustomerBalances.Add(new CustomerBalance
+				{
+					IDNo = member.IDNo,
+					PayrollNo = member.Payno,
+					CustomerNo = member.MemberNo,
+					AccName = member.AccountName,
+					AvailableBalance = member.AvailableBalance,
+					TransDescription = "Withdrawal",
+					TransDate = DateTime.UtcNow.Date,
+					ReconDate = DateTime.UtcNow.Date,
+					AccNO = member.AccNo,
+					valuedate = null,
+					transType = "DR",
+					Status = false
+				});
 
 				db.SaveChanges();
 				return new ReturnData

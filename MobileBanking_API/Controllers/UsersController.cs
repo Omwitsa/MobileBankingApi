@@ -20,7 +20,10 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var members = db.MobileBankingAdmins.Add(admin);
+				var isMembers = db.MobileBankingAdmins.Any(a => a.Username.ToUpper().Equals(admin.Username.ToUpper()));
+				if(!isMembers)
+					db.MobileBankingAdmins.Add(admin);
+
 				db.SaveChanges();
 				return new ReturnData
 				{
@@ -41,7 +44,6 @@ namespace MobileBanking_API.Controllers
 		[Route("login")]
 		public ReturnData Login([FromBody] MobileBankingAdmin admin)
 		{
-
 			try
 			{
 				var isValidUser = db.MobileBankingAdmins.Any(u => u.Username.ToUpper().Equals(admin.Username.ToUpper()) && u.Password.Equals(admin.Password));
@@ -79,28 +81,6 @@ namespace MobileBanking_API.Controllers
 				{
 					Success = true,
 					Message = "finger print saved successfully"
-				};
-			}
-			catch (Exception ex)
-			{
-				return new ReturnData
-				{
-					Success = false,
-					Message = "Sorry, An error occurred"
-				};
-			}
-		}
-
-		[Route("values")]
-		public ReturnData Values()
-		{
-			try
-			{
-				var member = db.CUBs.FirstOrDefault();
-				return new ReturnData
-				{
-					Success = true,
-					Data = member
 				};
 			}
 			catch (Exception ex)
