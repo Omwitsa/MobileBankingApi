@@ -799,6 +799,7 @@
       <DependentUpon>MobileBanking.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\SecurePasswordHasher.cs" />
     <Compile Include="ViewModel\FingerPrintModel.cs" />
     <Compile Include="ViewModel\ReturnData.cs" />
     <Compile Include="ViewModel\Transaction.cs" />
@@ -839,9 +840,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50141</DevelopmentServerPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50141/</IISUrl>
+          <IISUrl>http://localhost:50987/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

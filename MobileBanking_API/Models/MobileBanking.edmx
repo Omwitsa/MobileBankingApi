@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="kpillerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="kpillerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.A' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="A">
@@ -43,16 +43,6 @@ warning 6002: The table/view 'kpiller.dbo.AccountCodes' does not have a primary 
           <Property Name="overdraftlimit" Type="float" />
           <Property Name="withdrawable" Type="float" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.activatedATM' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="activatedATM">
-          <Property Name="CardNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="Accno" Type="varchar" MaxLength="50" />
-          <Property Name="ReceiverIDNo" Type="varchar" MaxLength="50" />
-          <Property Name="ReceiverName" Type="varchar" MaxLength="50" />
-          <Property Name="IssuedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateIssued" Type="datetime" />
-        </EntityType>-->
         <EntityType Name="Advance">
           <Key>
             <PropertyRef Name="accno" />
@@ -105,13 +95,6 @@ warning 6002: The table/view 'kpiller.dbo.AdvanceGuarantors' does not have a pri
           <Property Name="Cleared" Type="bit" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.AdvanceRate' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="AdvanceRate">
-          <Property Name="AdvanceRateid" Type="bigint" />
-          <Property Name="IfnotClearedCharge" Type="varchar" MaxLength="15" />
-          <Property Name="chargedefault" Type="varchar" MaxLength="15" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.AdvanceStatement' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AdvanceStatement">
@@ -174,17 +157,6 @@ warning 6002: The table/view 'kpiller.dbo.AdvanceStmt' does not have a primary k
           <Property Name="AuthorizedDate" Type="datetime" Nullable="false" />
           <Property Name="RequestDate" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.agents' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="agents">
-          <Property Name="idno" Type="varchar" MaxLength="50" />
-          <Property Name="names" Type="varchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.agingdescription' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="agingdescription">
-          <Property Name="description" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.agingsummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="agingsummary">
@@ -261,16 +233,6 @@ warning 6002: The table/view 'kpiller.dbo.AP' does not have a primary key define
           <Property Name="tinterest" Type="float" />
           <Property Name="transactionNo" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.ARCHIVED' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ARCHIVED">
-          <Property Name="MemberNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="DateArchived" Type="smalldatetime" />
-          <Property Name="TotalShares" Type="money" />
-          <Property Name="Reasons" Type="nvarchar" MaxLength="50" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="datetime" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.Asset Depreciation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Asset Depreciation">
@@ -418,20 +380,6 @@ warning 6002: The table/view 'kpiller.dbo.assetstrans' does not have a primary k
           <Property Name="auditdatetime" Type="datetime" />
           <Property Name="assetcode" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.atm_Collection' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="atm_Collection">
-          <Property Name="CardNo" Type="varchar" MaxLength="50" />
-          <Property Name="CardName" Type="varchar" MaxLength="50" />
-          <Property Name="Account" Type="nvarchar" MaxLength="50" />
-          <Property Name="id_number" Type="nvarchar" MaxLength="50" />
-          <Property Name="renew" Type="char" MaxLength="10" />
-          <Property Name="modbileNo" Type="varchar" MaxLength="50" />
-          <Property Name="Sacco_name" Type="varchar" MaxLength="50" />
-          <Property Name="Expiry1" Type="datetime" />
-          <Property Name="Renew_1" Type="char" MaxLength="10" />
-          <Property Name="Renew_Date" Type="datetime" />
-        </EntityType>-->
         <EntityType Name="ATM_TR">
           <Key>
             <PropertyRef Name="TrTrace" />
@@ -489,15 +437,6 @@ warning 6002: The table/view 'kpiller.dbo.AUDITTRANS' does not have a primary ke
           <Property Name="AuditID" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="AuditTime" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.B' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="B">
-          <Property Name="GrowerNo" Type="varchar" MaxLength="50" />
-          <Property Name="IDNo" Type="varchar" MaxLength="50" />
-          <Property Name="Name" Type="varchar" MaxLength="100" />
-          <Property Name="AccNo" Type="varchar" MaxLength="50" />
-          <Property Name="Amt" Type="money" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.BankRecon' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="BankRecon">
@@ -566,110 +505,6 @@ warning 6002: The table/view 'kpiller.dbo.BFDEDUCT' does not have a primary key 
           <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
           <Property Name="AuditTime" Type="smalldatetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.BFDETAIL' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="BFDETAIL">
-          <Property Name="FundID" Type="nvarchar" MaxLength="20" />
-          <Property Name="MemberNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="SpouseNames" Type="nvarchar" MaxLength="50" />
-          <Property Name="Child1Names" Type="nvarchar" MaxLength="50" />
-          <Property Name="Child2Names" Type="nvarchar" MaxLength="50" />
-          <Property Name="Child3Names" Type="nvarchar" MaxLength="50" />
-          <Property Name="Child4Names" Type="nvarchar" MaxLength="50" />
-          <Property Name="SelfAmount" Type="money" />
-          <Property Name="SpouseAmount" Type="money" />
-          <Property Name="Child1Amount" Type="money" />
-          <Property Name="Child2Amount" Type="money" />
-          <Property Name="Child3Amount" Type="money" />
-          <Property Name="Child4Amount" Type="money" />
-          <Property Name="AmountAlloc" Type="money" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="smalldatetime" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.BFLOANS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="BFLOANS">
-          <Property Name="FundID" Type="nvarchar" MaxLength="20" />
-          <Property Name="LoanNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="MemberNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="Amount" Type="money" />
-          <Property Name="Balance" Type="money" />
-          <Property Name="RepayPeriod" Type="int" />
-          <Property Name="ApplicDate" Type="smalldatetime" />
-          <Property Name="Interest" Type="money" />
-          <Property Name="RepayMethod" Type="nvarchar" MaxLength="20" />
-          <Property Name="Posted" Type="nvarchar" MaxLength="5" />
-          <Property Name="Cleared" Type="nvarchar" MaxLength="5" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="smalldatetime" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.BFMASTER' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="BFMASTER">
-          <Property Name="FundID" Type="nvarchar" MaxLength="20" />
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
-          <Property Name="InitialValue" Type="money" />
-          <Property Name="CurrValue" Type="money" />
-          <Property Name="InitialDate" Type="smalldatetime" />
-          <Property Name="Deductions" Type="money" />
-          <Property Name="LoanInterest" Type="money" />
-          <Property Name="IsActive" Type="nvarchar" MaxLength="5" />
-          <Property Name="Locked" Type="nvarchar" MaxLength="5" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="smalldatetime" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.BFREPAY' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="BFREPAY">
-          <Property Name="FundID" Type="nvarchar" MaxLength="20" />
-          <Property Name="LoanNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="RepayDate" Type="smalldatetime" />
-          <Property Name="RefNo" Type="int" />
-          <Property Name="Principal" Type="money" />
-          <Property Name="Interest" Type="money" />
-          <Property Name="Amount" Type="money" />
-          <Property Name="Balance" Type="money" />
-          <Property Name="PaymentMode" Type="nvarchar" MaxLength="20" />
-          <Property Name="Reference" Type="nvarchar" MaxLength="20" />
-          <Property Name="Posted" Type="nvarchar" MaxLength="5" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="nvarchar" MaxLength="20" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.BFTRANS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="BFTRANS">
-          <Property Name="FundID" Type="nvarchar" MaxLength="20" />
-          <Property Name="TransDate" Type="smalldatetime" />
-          <Property Name="ItemNo" Type="int" />
-          <Property Name="TransName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Credit" Type="money" />
-          <Property Name="Debit" Type="money" />
-          <Property Name="Balance" Type="money" />
-          <Property Name="Reference" Type="nvarchar" MaxLength="20" />
-          <Property Name="Cleared" Type="nvarchar" MaxLength="5" />
-          <Property Name="FundType" Type="nvarchar" MaxLength="5" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="smalldatetime" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.BNS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="BNS">
-          <Property Name="GrowerNo" Type="nvarchar" MaxLength="255" />
-          <Property Name="KTDAName" Type="nvarchar" MaxLength="255" />
-          <Property Name="AccNo" Type="nvarchar" MaxLength="255" />
-          <Property Name="SaccoName" Type="nvarchar" MaxLength="255" />
-          <Property Name="Kgs" Type="float" />
-          <Property Name="ExpectedBonus" Type="float" />
-          <Property Name="MFFlex" Type="float" />
-          <Property Name="MFBonus" Type="float" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.BORROWERS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="BORROWERS">
-          <Property Name="MemberNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="Names" Type="nvarchar" MaxLength="100" />
-          <Property Name="Amount" Type="money" />
-        </EntityType>-->
         <EntityType Name="Branch Dates">
           <Key>
             <PropertyRef Name="ID" />
@@ -781,28 +616,6 @@ warning 6002: The table/view 'kpiller.dbo.Cash Shares Fosa' does not have a prim
           <Property Name="GrowerNo" Type="nvarchar" MaxLength="30" />
           <Property Name="Amount" Type="money" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.Cash Shares Konoin' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Cash Shares Konoin">
-          <Property Name="Date" Type="datetime" />
-          <Property Name="VoucherNo" Type="nvarchar" MaxLength="30" />
-          <Property Name="GrowerNo" Type="nvarchar" MaxLength="30" />
-          <Property Name="Amount" Type="money" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.CashbookTrans' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="CashbookTrans">
-          <Property Name="Transdate" Type="datetime" />
-          <Property Name="TransDescription" Type="nvarchar(max)" />
-          <Property Name="Receipts" Type="money" />
-          <Property Name="Payments" Type="money" />
-          <Property Name="Balance" Type="money" />
-          <Property Name="DocumentNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="TransNo" Type="nvarchar(max)" />
-          <Property Name="OpeningBalDate" Type="datetime" />
-          <Property Name="EndBalDate" Type="datetime" />
-          <Property Name="Accno" Type="varchar" MaxLength="50" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.CashFlowAccounts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CashFlowAccounts">
@@ -956,25 +769,6 @@ warning 6002: The table/view 'kpiller.dbo.CashTransactions' does not have a prim
           <Property Name="userName" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.CashTransactions1' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="CashTransactions1">
-          <Property Name="Customerno" Type="varchar" MaxLength="15" />
-          <Property Name="AccNo" Type="varchar" MaxLength="15" />
-          <Property Name="AccName" Type="varchar" MaxLength="50" />
-          <Property Name="Amount" Type="money" />
-          <Property Name="Transdescription" Type="varchar" MaxLength="50" />
-          <Property Name="Transdate" Type="datetime" />
-          <Property Name="Commission" Type="money" />
-          <Property Name="Chequeno" Type="varchar" MaxLength="15" />
-          <Property Name="Transtype" Type="char" MaxLength="3" />
-          <Property Name="vno" Type="varchar" MaxLength="50" />
-          <Property Name="Posted" Type="bit" />
-          <Property Name="Locked" Type="bit" />
-          <Property Name="Auditid" Type="varchar" MaxLength="50" />
-          <Property Name="AuditTime" Type="datetime" />
-          <Property Name="userName" Type="varchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.CASHZONES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CASHZONES">
           <Key>
@@ -986,13 +780,6 @@ warning 6002: The table/view 'kpiller.dbo.CASHZONES' does not have a primary key
           <Property Name="BuyingCentre" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ZoneID" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.category' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="category">
-          <Property Name="Categoryid" Type="varchar" MaxLength="6" />
-          <Property Name="Description" Type="varchar" MaxLength="50" />
-          <Property Name="AccGroup" Type="varchar" MaxLength="50" />
-        </EntityType>-->
         <EntityType Name="cheqcomm">
           <Key>
             <PropertyRef Name="chqdepid" />
@@ -1085,23 +872,6 @@ warning 6002: The table/view 'kpiller.dbo.cheqdepositsetup' does not have a prim
           <Property Name="IntLoad" Type="float" />
           <Property Name="GroupID" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.CHEQUES2' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="CHEQUES2">
-          <Property Name="LoanNo" Type="varchar" MaxLength="50" />
-          <Property Name="ChequeNo" Type="nvarchar" MaxLength="30" />
-          <Property Name="Amount" Type="money" />
-          <Property Name="CollectorID" Type="nvarchar" MaxLength="10" />
-          <Property Name="CollectorName" Type="nvarchar" MaxLength="45" />
-          <Property Name="DateIssued" Type="datetime" />
-          <Property Name="ClerkStaffNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="ClerkName" Type="nvarchar" MaxLength="45" />
-          <Property Name="Status" Type="nvarchar" MaxLength="15" />
-          <Property Name="Reasons" Type="nvarchar" MaxLength="50" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="50" />
-          <Property Name="AuditTime" Type="datetime" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="20" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.cincome' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="cincome">
@@ -1200,18 +970,6 @@ warning 6002: The table/view 'kpiller.dbo.COMMUNICATION' does not have a primary
           <Property Name="AccNo" Type="nvarchar" MaxLength="50" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="150" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.COMPANY' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="COMPANY">
-          <Property Name="CompanyCode" Type="nvarchar" MaxLength="5" />
-          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Telephone" Type="nvarchar" MaxLength="15" />
-          <Property Name="Address" Type="nvarchar" MaxLength="50" />
-          <Property Name="AccountNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="smalldatetime" />
-          <Property Name="staff" Type="varchar" MaxLength="50" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.Comprehensive_Income' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Comprehensive_Income">
@@ -1472,14 +1230,6 @@ warning 6002: The table/view 'kpiller.dbo.CRB Exemptions' does not have a primar
           <Property Name="transcode" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.d_LoanLedger' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="d_LoanLedger">
-          <Property Name="EDate" Type="datetime" />
-          <Property Name="Price" Type="money" />
-          <Property Name="mini" Type="money" />
-          <Property Name="range" Type="money" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.DAILYTRANS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="DAILYTRANS">
           <Key>
@@ -1507,15 +1257,6 @@ warning 6002: The table/view 'kpiller.dbo.DAILYTRANS' does not have a primary ke
           <Property Name="Cash" Type="smallint" Nullable="false" />
           <Property Name="AuditID" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.DeactivatedATM' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="DeactivatedATM">
-          <Property Name="Accno" Type="varchar" MaxLength="50" />
-          <Property Name="CardNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="DateDeatctivated" Type="datetime" />
-          <Property Name="DoneBy" Type="varchar" MaxLength="50" />
-          <Property Name="Reasons" Type="varchar" MaxLength="50" />
-        </EntityType>-->
         <EntityType Name="Declined Subscriptions">
           <Key>
             <PropertyRef Name="ID" />
@@ -1532,12 +1273,6 @@ warning 6013: The table/view 'kpiller.dbo.DeactivatedATM' does not have a primar
           <Property Name="DeclineReason" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="DeclinedDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.dedAmount' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="dedAmount">
-          <Property Name="AccNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="dedAmount" Type="money" />
-        </EntityType>-->
         <EntityType Name="DEDUCTION">
           <Key>
             <PropertyRef Name="AccNo" />
@@ -1640,13 +1375,6 @@ warning 6002: The table/view 'kpiller.dbo.DEFAULTEDLOANS' does not have a primar
           <Property Name="LastTransDate" Type="datetime" Nullable="false" />
           <Property Name="AuditID" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.Defaulters' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Defaulters">
-          <Property Name="Memberno" Type="varchar" MaxLength="50" />
-          <Property Name="Loanno" Type="varchar" MaxLength="50" />
-          <Property Name="balance" Type="money" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.DefaultersMessages' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="DefaultersMessages">
@@ -1803,22 +1531,6 @@ warning 6002: The table/view 'kpiller.dbo.Employer' does not have a primary key 
           <Property Name="Email" Type="varchar" MaxLength="30" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.ENDLOCAL' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ENDLOCAL">
-          <Property Name="LoanNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="MinuteNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="MeetingDate" Type="smalldatetime" />
-          <Property Name="AmtRecommend" Type="money" />
-          <Property Name="Accepted" Type="nvarchar" MaxLength="3" />
-          <Property Name="Chairsigned" Type="nvarchar" MaxLength="3" />
-          <Property Name="SecSigned" Type="nvarchar" MaxLength="3" />
-          <Property Name="MembSigned" Type="nvarchar" MaxLength="3" />
-          <Property Name="Reasons" Type="nvarchar" MaxLength="200" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="smalldatetime" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.ENDMAIN' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ENDMAIN">
           <Key>
@@ -1861,16 +1573,6 @@ warning 6002: The table/view 'kpiller.dbo.ExemptedLoanInterest' does not have a 
           <Property Name="LoanNo" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ExemptDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.ExpectedReceived' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ExpectedReceived">
-          <Property Name="Memberno" Type="nvarchar" MaxLength="50" />
-          <Property Name="StaffNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="ExpecetdAmount" Type="money" />
-          <Property Name="Amt_received" Type="money" />
-          <Property Name="Mmonth" Type="varchar" MaxLength="50" />
-          <Property Name="yyear" Type="varchar" MaxLength="50" />
-        </EntityType>-->
         <EntityType Name="FDR">
           <Key>
             <PropertyRef Name="ID" />
@@ -2020,18 +1722,6 @@ warning 6002: The table/view 'kpiller.dbo.finpos' does not have a primary key de
           <Property Name="CheckedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Remarks" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.FixedCallParam' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="FixedCallParam">
-          <Property Name="MinFixedTermAmount" Type="varchar" MaxLength="20" />
-          <Property Name="MinCallDepositAmnt" Type="varchar" MaxLength="20" />
-          <Property Name="MinFixedTermDays" Type="varchar" MaxLength="20" />
-          <Property Name="MinPeriodCallDepDays" Type="varchar" MaxLength="20" />
-          <Property Name="NoticeBeforeMaturity" Type="varchar" MaxLength="20" />
-          <Property Name="NoticeAllDays" Type="varchar" MaxLength="20" />
-          <Property Name="AdvicePeriod" Type="varchar" MaxLength="20" />
-          <Property Name="IntCum" Type="float" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.FosaCharges' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="FosaCharges">
@@ -2277,13 +1967,6 @@ warning 6002: The table/view 'kpiller.dbo.GroupSharesBalances' does not have a p
           <Property Name="Balance" Type="money" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.GUARANTO' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="GUARANTO">
-          <Property Name="MemberNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="smalldatetime" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.GuarantorAmt' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="GuarantorAmt">
           <Key>
@@ -2299,46 +1982,6 @@ warning 6002: The table/view 'kpiller.dbo.GuarantorAmt' does not have a primary 
           <Property Name="GAmount" Type="money" Nullable="false" />
           <Property Name="Captured" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.GXs' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="GXs">
-          <Property Name="LoanNo" Type="varchar" MaxLength="50" />
-          <Property Name="Amount" Type="money" />
-          <Property Name="GuarantorAccNo" Type="varchar" MaxLength="50" />
-          <Property Name="LoaneeAccNo" Type="varchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.HousingsharesCONTRIB' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="HousingsharesCONTRIB">
-          <Property Name="MemberNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="ContrDate" Type="smalldatetime" />
-          <Property Name="RefNo" Type="int" />
-          <Property Name="Amount" Type="money" />
-          <Property Name="ShareBal" Type="money" />
-          <Property Name="TransBy" Type="nvarchar" MaxLength="100" />
-          <Property Name="ChequeNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="ReceiptNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="Locked" Type="nvarchar" MaxLength="3" />
-          <Property Name="Posted" Type="nvarchar" MaxLength="3" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="50" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="datetime" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.HShares' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="HShares">
-          <Property Name="Memberno" Type="varchar" MaxLength="50" />
-          <Property Name="TotalHShares" Type="money" />
-          <Property Name="AuditId" Type="varchar" MaxLength="50" />
-          <Property Name="AuditDatetime" Type="varchar" MaxLength="50" />
-          <Property Name="transdate" Type="datetime" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.iFmts' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="iFmts">
-          <Property Name="ParID" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="ParValue" Type="varchar" MaxLength="10" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.IMPORTS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="IMPORTS">
@@ -2456,25 +2099,6 @@ warning 6002: The table/view 'kpiller.dbo.IR' does not have a primary key define
           <Property Name="Yyear" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.IssuedATMCard' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="IssuedATMCard">
-          <Property Name="CardNo" Type="varchar" MaxLength="50" />
-          <Property Name="DateIssued" Type="datetime" />
-          <Property Name="issuedBy" Type="varchar" MaxLength="50" />
-          <Property Name="ReceivedIDNo" Type="varchar" MaxLength="50" />
-          <Property Name="ReceiverName" Type="varchar" MaxLength="50" />
-          <Property Name="AccNo" Type="varchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.ISSUEDLOANFORMS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ISSUEDLOANFORMS">
-          <Property Name="SerialNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="Date" Type="smalldatetime" />
-          <Property Name="MemberNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="AccNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="ReceiptNo" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.jointMembers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="jointMembers">
           <Key>
@@ -2515,25 +2139,6 @@ warning 6002: The table/view 'kpiller.dbo.JV' does not have a primary key define
           <Property Name="AUDITDATE" Type="datetime" />
           <Property Name="TRANSDATE" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.KIN' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="KIN">
-          <Property Name="MemberNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="KinNames" Type="nvarchar" MaxLength="50" />
-          <Property Name="KinNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="Address" Type="nvarchar" MaxLength="50" />
-          <Property Name="IDNo" Type="nvarchar" MaxLength="10" />
-          <Property Name="Relationship" Type="nvarchar" MaxLength="15" />
-          <Property Name="HomeTelNo" Type="nvarchar" MaxLength="15" />
-          <Property Name="Witness" Type="text" />
-          <Property Name="Percentage" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="OfficeTelNo" Type="nvarchar" MaxLength="15" />
-          <Property Name="SignDate" Type="smalldatetime" />
-          <Property Name="KinSigned" Type="nvarchar" MaxLength="3" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="smalldatetime" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="100" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.KTDA List' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="KTDA List">
@@ -2801,18 +2406,6 @@ warning 6002: The table/view 'kpiller.dbo.LoanGuarantors' does not have a primar
           <Property Name="posted" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.LoanListing' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="LoanListing">
-          <Property Name="loanno" Type="nvarchar" MaxLength="50" />
-          <Property Name="dateissued" Type="datetime" />
-          <Property Name="lastrepay" Type="datetime" />
-          <Property Name="daysinarrears" Type="bigint" />
-          <Property Name="class" Type="nvarchar" MaxLength="50" />
-          <Property Name="balance" Type="money" />
-          <Property Name="transdate" Type="datetime" />
-          <Property Name="mode" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.LoanOpeningBalances' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="LoanOpeningBalances">
           <Key>
@@ -2920,17 +2513,6 @@ warning 6002: The table/view 'kpiller.dbo.Loans Classification' does not have a 
           <Property Name="Processed" Type="bit" Nullable="false" />
           <Property Name="StoAmt" Type="money" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.LOANSCHD' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="LOANSCHD">
-          <Property Name="MemberNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="Period" Type="int" />
-          <Property Name="Principal" Type="money" />
-          <Property Name="Interest" Type="money" />
-          <Property Name="Balance" Type="money" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="20" />
-          <Property Name="FmtPer" Type="nvarchar" MaxLength="20" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.LOANTYPE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="LOANTYPE">
@@ -3560,12 +3142,6 @@ warning 6002: The table/view 'kpiller.dbo.MicroDistributionSummary' does not hav
           <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.mIncome' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="mIncome">
-          <Property Name="TransDate" Type="datetime" />
-          <Property Name="Amount" Type="money" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.MiniStat' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="MiniStat">
           <Key>
@@ -3575,12 +3151,6 @@ warning 6002: The table/view 'kpiller.dbo.MiniStat' does not have a primary key 
           <Property Name="Accno" Type="varchar" MaxLength="50" />
           <Property Name="MiniStat" Type="varchar(max)" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.mLN' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="mLN">
-          <Property Name="Telephone" Type="varchar" MaxLength="15" />
-          <Property Name="Expr1" Type="varchar" MaxLength="400" />
-        </EntityType>-->
         <EntityType Name="Mobile_Number_Change Requests">
           <Key>
             <PropertyRef Name="ID" />
@@ -3605,6 +3175,7 @@ warning 6013: The table/view 'kpiller.dbo.mLN' does not have a primary key defin
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="255" />
           <Property Name="Password" Type="varchar" MaxLength="255" />
+          <Property Name="MachineId" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="MONTHLYADVDEDUCTIONS">
           <Key>
@@ -4090,29 +3661,6 @@ warning 6002: The table/view 'kpiller.dbo.SASRA_Daily_Summaries' does not have a
           <Property Name="TransDate" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.Savers' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Savers">
-          <Property Name="MemberNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="Names" Type="nvarchar" MaxLength="100" />
-          <Property Name="Amount" Type="money" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.SAVINGS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SAVINGS">
-          <Property Name="MemberNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="TransDate" Type="datetime" />
-          <Property Name="TransNo" Type="int" />
-          <Property Name="TransName" Type="nvarchar" MaxLength="30" />
-          <Property Name="TransBy" Type="nvarchar" MaxLength="20" />
-          <Property Name="ChequeNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="Amount" Type="money" />
-          <Property Name="ReceiptNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="IncTrans" Type="nvarchar" MaxLength="3" />
-          <Property Name="Locked" Type="nvarchar" MaxLength="3" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="datetime" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.SavingsAccountsParameters' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SavingsAccountsParameters">
           <Key>
@@ -4372,23 +3920,6 @@ warning 6002: The table/view 'kpiller.dbo.STATEMENT' does not have a primary key
           <Property Name="CustBalID" Type="bigint" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.Station' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Station">
-          <Property Name="StationCode" Type="varchar" MaxLength="10" />
-          <Property Name="StationName" Type="varchar" MaxLength="30" />
-          <Property Name="StationAddress" Type="varchar" MaxLength="30" />
-          <Property Name="FaxNo" Type="varchar" MaxLength="30" />
-          <Property Name="Telephone" Type="varchar" MaxLength="30" />
-          <Property Name="Email" Type="varchar" MaxLength="30" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.Stdr' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Stdr">
-          <Property Name="Acccode" Type="nchar" MaxLength="10" />
-          <Property Name="Accno" Type="nvarchar" MaxLength="50" />
-          <Property Name="Balance" Type="money" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.Stmt' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Stmt">
           <Key>
@@ -4581,12 +4112,6 @@ warning 6002: The table/view 'kpiller.dbo.t_x' does not have a primary key defin
           <Property Name="PadChar" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.Table1' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Table1">
-          <Property Name="Memberno" Type="varchar" MaxLength="50" />
-          <Property Name="amount" Type="money" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.TB' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TB">
           <Key>
@@ -4708,18 +4233,6 @@ warning 6002: The table/view 'kpiller.dbo.tbl_usermenus' does not have a primary
           <Property Name="userloginid" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.teller' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="teller">
-          <Property Name="no" Type="bigint" />
-          <Property Name="Float" Type="money" />
-          <Property Name="DR" Type="money" />
-          <Property Name="CR" Type="money" />
-          <Property Name="Narr" Type="nvarchar" MaxLength="50" />
-          <Property Name="TransDate" Type="datetime" />
-          <Property Name="Transtype" Type="nchar" MaxLength="10" />
-          <Property Name="aacno" Type="varchar" MaxLength="30" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.Teller Transactions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Teller Transactions">
           <Key>
@@ -4752,23 +4265,6 @@ warning 6002: The table/view 'kpiller.dbo.Teller Transactions' does not have a p
           <Property Name="printed" Type="bit" />
           <Property Name="CASH" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.TellerParam' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TellerParam">
-          <Property Name="MaxCashHolding" Type="money" />
-          <Property Name="ReplenishingLevel" Type="money" />
-          <Property Name="TreasuryMax" Type="money" />
-          <Property Name="WeekFrom" Type="money" />
-          <Property Name="WeekTo" Type="money" />
-          <Property Name="SatoFrom" Type="money" />
-          <Property Name="SatoTo" Type="money" />
-          <Property Name="SuperAmntPayable" Type="money" />
-          <Property Name="ManagerAmntPayable" Type="money" />
-          <Property Name="TellerAmntPayable" Type="money" />
-          <Property Name="advanceamntpayable" Type="money" />
-          <Property Name="staffadvanceamntpayable" Type="money" />
-          <Property Name="glamount" Type="money" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.TELLERSUMMARY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TELLERSUMMARY">
@@ -4809,19 +4305,6 @@ warning 6002: The table/view 'kpiller.dbo.TempGuar' does not have a primary key 
           <Property Name="GName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="GTelNo" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.TempLoan' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TempLoan">
-          <Property Name="Memberno" Type="nvarchar" MaxLength="20" />
-          <Property Name="Fno" Type="nvarchar" MaxLength="50" />
-          <Property Name="Loanno" Type="nvarchar" MaxLength="50" />
-          <Property Name="Runningbal" Type="money" />
-          <Property Name="INF" Type="money" />
-          <Property Name="Accint" Type="money" />
-          <Property Name="Intdue" Type="money" />
-          <Property Name="LLF" Type="money" />
-          <Property Name="Total" Type="money" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.TempStatement' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TempStatement">
@@ -4870,41 +4353,6 @@ warning 6002: The table/view 'kpiller.dbo.TMPDEDUCTIONS' does not have a primary
           <Property Name="Interest" Type="money" Nullable="false" />
           <Property Name="TransDescription" Type="varchar" MaxLength="250" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.TMPSTATEMENT' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TMPSTATEMENT">
-          <Property Name="MemberNO" Type="nvarchar" MaxLength="50" />
-          <Property Name="Period" Type="nvarchar" MaxLength="50" />
-          <Property Name="OpeningBalance" Type="money" />
-          <Property Name="NewLoan" Type="money" />
-          <Property Name="LoanInterestPaid" Type="money" />
-          <Property Name="LoanInterestCharged" Type="money" />
-          <Property Name="LoanInterestOwing" Type="money" />
-          <Property Name="LoanRepayment" Type="money" />
-          <Property Name="OutstandingLoanBalance" Type="money" />
-          <Property Name="OpeningShares" Type="money" />
-          <Property Name="SharesContributed" Type="money" />
-          <Property Name="ClosingShares" Type="money" />
-          <Property Name="TotalMonthlyContribution" Type="money" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.TRANSACT' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TRANSACT">
-          <Property Name="MemberNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="TransDate" Type="smalldatetime" />
-          <Property Name="TransNo" Type="int" />
-          <Property Name="TransName" Type="nvarchar" MaxLength="30" />
-          <Property Name="TransBy" Type="nvarchar" MaxLength="20" />
-          <Property Name="ChequeNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="Amount" Type="money" />
-          <Property Name="Deposit" Type="money" />
-          <Property Name="Withdrawal" Type="money" />
-          <Property Name="Balance" Type="money" />
-          <Property Name="IncTrans" Type="nvarchar" MaxLength="3" />
-          <Property Name="Locked" Type="nvarchar" MaxLength="3" />
-          <Property Name="AuditID" Type="nvarchar" MaxLength="10" />
-          <Property Name="AuditTime" Type="smalldatetime" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.TransactionCode' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TransactionCode">
@@ -5046,34 +4494,6 @@ warning 6002: The table/view 'kpiller.dbo.UserGroupRights_Logs' does not have a 
           <Property Name="AuditDateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.USERGROUPS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="USERGROUPS">
-          <Property Name="GroupID" Type="nvarchar" MaxLength="30" />
-          <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
-          <Property Name="recordss" Type="bit" />
-          <Property Name="Transactions" Type="bit" />
-          <Property Name="Activity" Type="bit" />
-          <Property Name="Reports" Type="bit" />
-          <Property Name="Setup" Type="bit" />
-          <Property Name="files" Type="bit" />
-          <Property Name="welfare" Type="bit" />
-          <Property Name="members" Type="bit" />
-          <Property Name="supervisory" Type="bit" />
-          <Property Name="savings" Type="bit" />
-          <Property Name="glaccounts" Type="bit" />
-          <Property Name="GL" Type="bit" />
-          <Property Name="Loan" Type="bit" />
-          <Property Name="Fosa" Type="bit" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.USERS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="USERS">
-          <Property Name="UserID" Type="nvarchar" MaxLength="10" />
-          <Property Name="GroupID" Type="nvarchar" MaxLength="10" />
-          <Property Name="UserPassword" Type="nvarchar" MaxLength="10" />
-          <Property Name="IsSuperUser" Type="nvarchar" MaxLength="3" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.VOUCHERNO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VOUCHERNO">
           <Key>
@@ -5101,15 +4521,6 @@ warning 6002: The table/view 'kpiller.dbo.WCHARGES' does not have a primary key 
           <Property Name="RangeNo" Type="smallint" Nullable="false" />
           <Property Name="Percentage" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'kpiller.dbo.WithdrawalNotice' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="WithdrawalNotice">
-          <Property Name="Memberno" Type="varchar" MaxLength="10" />
-          <Property Name="BookingDate" Type="datetime" />
-          <Property Name="Reason" Type="varchar" MaxLength="50" />
-          <Property Name="WithdrawDate" Type="datetime" />
-          <Property Name="Transactionno" Type="nvarchar" MaxLength="30" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'kpiller.dbo.ZONES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ZONES">
@@ -7466,8 +6877,7 @@ warning 6002: The table/view 'kpiller.dbo.ZONES' does not have a primary key def
     FROM [dbo].[ZONES] AS [ZONES]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="kpillerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -8477,6 +7887,7 @@ warning 6002: The table/view 'kpiller.dbo.ZONES' does not have a primary key def
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="MachineId" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="MONTHLYADVDEDUCTION">
           <Key>
@@ -12935,6 +12346,7 @@ warning 6002: The table/view 'kpiller.dbo.ZONES' does not have a primary key def
           <EntitySetMapping Name="MobileBankingAdmins">
             <EntityTypeMapping TypeName="kpillerModel.MobileBankingAdmin">
               <MappingFragment StoreEntitySet="MobileBankingAdmin">
+                <ScalarProperty Name="MachineId" ColumnName="MachineId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

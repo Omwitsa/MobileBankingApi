@@ -1,4 +1,5 @@
 ﻿using MobileBanking_API.Models;
+using MobileBanking_API.Utilities;
 using MobileBanking_API.ViewModel;
 using System;
 using System.Linq;
@@ -21,8 +22,12 @@ namespace MobileBanking_API.Controllers
 			try
 			{
 				var isMembers = db.MobileBankingAdmins.Any(a => a.Username.ToUpper().Equals(admin.Username.ToUpper()));
-				if(!isMembers)
+				if (!isMembers)
+				{
+					admin.Password = SecurePasswordHasher.Hash(admin.Password);
 					db.MobileBankingAdmins.Add(admin);
+				}
+					
 
 				db.SaveChanges();
 				return new ReturnData
@@ -46,13 +51,28 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var isValidUser = db.MobileBankingAdmins.Any(u => u.Username.ToUpper().Equals(admin.Username.ToUpper()) && u.Password.Equals(admin.Password));
-				if (!isValidUser)
+				var adminUser = db.MobileBankingAdmins.FirstOrDefault(u => u.Username.ToUpper().Equals(admin.Username.ToUpper()));
+				if (adminUser == null)
 					return new ReturnData
 					{
 						Success = false,
 						Message = "Sorry, Invalid username or password"
 					};
+
+				if(!SecurePasswordHasher.Verify(admin.Password, adminUser.Password))
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, Invalid username or password"
+					};
+
+				if (!adminUser.MachineId.Equals(admin.MachineId))
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Kindly use the device you were assigned"
+					};
+
 				return new ReturnData
 				{
 					Success = true,
