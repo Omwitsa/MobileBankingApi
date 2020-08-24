@@ -9,7 +9,7 @@ namespace MobileBanking_API.Controllers
 {
 	[RoutePrefix("webservice/users")]
 	public class UsersController : ApiController
-    {
+	{
 		kpillerEntities db;
 		public UsersController()
 		{
@@ -17,17 +17,16 @@ namespace MobileBanking_API.Controllers
 		}
 
 		[Route("seedAdminUser")]
-		public ReturnData SeedAdminUser([FromBody] MobileBankingAdmin admin)
+		public ReturnData SeedAdminUser([FromBody] PosUser admin)
 		{
 			try
 			{
-				var isMembers = db.MobileBankingAdmins.Any(a => a.Username.ToUpper().Equals(admin.Username.ToUpper()));
+				var isMembers = db.PosUsers.Any(a => a.username.ToUpper().Equals(admin.username.ToUpper()));
 				if (!isMembers)
 				{
-					admin.Password = SecurePasswordHasher.Hash(admin.Password);
-					db.MobileBankingAdmins.Add(admin);
+					admin.password = SecurePasswordHasher.Hash(admin.password);
+					db.PosUsers.Add(admin);
 				}
-					
 
 				db.SaveChanges();
 				return new ReturnData
@@ -46,12 +45,57 @@ namespace MobileBanking_API.Controllers
 			}
 		}
 
-		[Route("login")]
-		public ReturnData Login([FromBody] MobileBankingAdmin admin)
+		[Route("registerAgentMember")]
+		public ReturnData RegisterAgentMember([FromBody] Agentmember agent)
 		{
 			try
 			{
-				var adminUser = db.MobileBankingAdmins.FirstOrDefault(u => u.Username.ToUpper().Equals(admin.Username.ToUpper()));
+				var agentMember = db.Agentmembers.FirstOrDefault(a => a.idno == agent.idno);
+				if (agentMember != null)
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, agent already exist"
+					};
+
+				if (string.IsNullOrEmpty(agent.Surname))
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Kindly provide surname"
+					};
+
+				if (string.IsNullOrEmpty(agent.idno))
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Kindly provide agent ID No."
+					};
+				
+				db.Agentmembers.Add(agent);
+				db.SaveChanges();
+				return new ReturnData
+				{
+					Success = true,
+					Message = "Agent created successfully"
+				};
+			}
+			catch (Exception ex)
+			{
+				return new ReturnData
+				{
+					Success = false,
+					Message = "Sorry, An error occurred"
+				};
+			}
+		}
+
+		[Route("login")]
+		public ReturnData Login([FromBody] PosUser admin)
+		{
+			try
+			{
+				var adminUser = db.PosUsers.FirstOrDefault(u => u.username.ToUpper().Equals(admin.username.ToUpper()));
 				if (adminUser == null)
 					return new ReturnData
 					{
@@ -59,7 +103,7 @@ namespace MobileBanking_API.Controllers
 						Message = "Sorry, Invalid username or password"
 					};
 
-				if(!SecurePasswordHasher.Verify(admin.Password, adminUser.Password))
+				if (!SecurePasswordHasher.Verify(admin.password, adminUser.password))
 					return new ReturnData
 					{
 						Success = false,

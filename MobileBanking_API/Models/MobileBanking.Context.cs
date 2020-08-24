@@ -68,7 +68,6 @@ namespace MobileBanking_API.Models
         public virtual DbSet<MEMBERTRANSACTION> MEMBERTRANSACTIONS { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Mobile_Number_Change_Requests> Mobile_Number_Change_Requests { get; set; }
-        public virtual DbSet<MobileBankingAdmin> MobileBankingAdmins { get; set; }
         public virtual DbSet<MONTHLYADVDEDUCTION> MONTHLYADVDEDUCTIONS { get; set; }
         public virtual DbSet<MONTHLYDEDUCTION> MONTHLYDEDUCTIONS { get; set; }
         public virtual DbSet<PIN_Lock_Request> PIN_Lock_Requests { get; set; }
@@ -250,5 +249,8 @@ namespace MobileBanking_API.Models
         public virtual DbSet<VOUCHERNO> VOUCHERNOes { get; set; }
         public virtual DbSet<WCHARGE> WCHARGES { get; set; }
         public virtual DbSet<ZONE> ZONES { get; set; }
+        public virtual DbSet<Agentmember> Agentmembers { get; set; }
+        public virtual DbSet<PosDevice> PosDevices { get; set; }
+        public virtual DbSet<PosUser> PosUsers { get; set; }
     }
 }

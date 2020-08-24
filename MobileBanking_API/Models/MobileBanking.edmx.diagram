@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e2bfe284adbe4a87b3a3c766412e2f32" Name="Diagram1" ZoomLevel="67">
+      <Diagram DiagramId="e2bfe284adbe4a87b3a3c766412e2f32" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="kpillerModel.Advance" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kpillerModel.Advert" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kpillerModel.APPRAISAL" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
@@ -48,7 +48,6 @@
         <EntityTypeShape EntityType="kpillerModel.MEMBERTRANSACTION" Width="1.5" PointX="20.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kpillerModel.Message" Width="1.5" PointX="12.75" PointY="21.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kpillerModel.Mobile_Number_Change_Requests" Width="1.5" PointX="20.75" PointY="21.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="kpillerModel.MobileBankingAdmin" Width="1.5" PointX="22.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kpillerModel.MONTHLYADVDEDUCTION" Width="1.5" PointX="22.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kpillerModel.MONTHLYDEDUCTION" Width="1.5" PointX="22.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kpillerModel.PIN_Lock_Request" Width="1.5" PointX="22.75" PointY="11.75" IsExpanded="true" />
@@ -230,6 +229,9 @@
         <EntityTypeShape EntityType="kpillerModel.VOUCHERNO" Width="1.5" PointX="46.75" PointY="32.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kpillerModel.WCHARGE" Width="1.5" PointX="46.75" PointY="34.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kpillerModel.ZONE" Width="1.5" PointX="36.75" PointY="46.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="kpillerModel.Agentmember" Width="1.5" PointX="43.375" PointY="46.75" />
+        <EntityTypeShape EntityType="kpillerModel.PosDevice" Width="1.5" PointX="45.375" PointY="46.75" />
+        <EntityTypeShape EntityType="kpillerModel.PosUser" Width="1.5" PointX="3.375" PointY="47.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -129,6 +129,9 @@
     <Compile Include="Models\Advert.cs">
       <DependentUpon>MobileBanking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Agentmember.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\agingsummary.cs">
       <DependentUpon>MobileBanking.tt</DependentUpon>
     </Compile>
@@ -576,9 +579,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MobileBanking.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\MobileBankingAdmin.cs">
-      <DependentUpon>MobileBanking.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Mobile_Number_Change_Requests.cs">
       <DependentUpon>MobileBanking.tt</DependentUpon>
     </Compile>
@@ -619,6 +619,12 @@
       <DependentUpon>MobileBanking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\port.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PosDevice.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PosUser.cs">
       <DependentUpon>MobileBanking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PRODUCTINC.cs">

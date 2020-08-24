@@ -12,11 +12,17 @@ namespace MobileBanking_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MobileBankingAdmin
+    public partial class Agentmember
     {
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string MachineId { get; set; }
+        public string Surname { get; set; }
+        public string Other_names { get; set; }
+        public string idno { get; set; }
+        public string mobile_number { get; set; }
+        public string Gender { get; set; }
+        public string DOB { get; set; }
+        public string fingerprint1 { get; set; }
+        public string fingerprint2 { get; set; }
+        public string Agentid { get; set; }
     }
 }
