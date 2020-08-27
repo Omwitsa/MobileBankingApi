@@ -103,6 +103,13 @@ namespace MobileBanking_API.Controllers
 						Message = "Sorry, account number not found"
 					};
 				member.AvailableBalance -= transaction.Amount;
+				if (member.AvailableBalance < 500)
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, your account must remain with a minimum of KES. 500"
+					};
+
 				var transactionDescription = "Cash Withdraw";
 				var vNo = GetVoucherNo(transaction.Amount);
 				
@@ -127,6 +134,10 @@ namespace MobileBanking_API.Controllers
 					Status = true
 				});
 
+				var Withdrawal_Charges = 50;
+				var saccoCommission = 0.7 * Withdrawal_Charges;
+				var agentCommision = 0.3 * Withdrawal_Charges;
+
 				db.GLTRANSACTIONS.Add(new GLTRANSACTION
 				{
 					TransDate = DateTime.UtcNow.Date,
@@ -138,10 +149,11 @@ namespace MobileBanking_API.Controllers
 					TransDescript = transactionDescription,
 					AuditTime = DateTime.UtcNow.AddHours(3),
 					AuditID = transaction.AuditId,
+					AgentCommision = (decimal)agentCommision,
+					SaccoCommision = (decimal)saccoCommission,
 					Source = member.MemberNo
 				});
-
-				var Withdrawal_Charges = 50;
+				
 				member.AvailableBalance -= Withdrawal_Charges;
 				transactionDescription = "Whithdrawal Charges";
 				db.CustomerBalances.Add(new CustomerBalance
@@ -233,5 +245,108 @@ namespace MobileBanking_API.Controllers
 				};
 			}
 		}
+
+		[Route("balance")]
+		public ReturnData Balance([FromBody] Transaction transaction)
+		{
+			try
+			{
+				var isMember = db.CustomerBalances.Any(b => b.AccNO.ToUpper().Equals(transaction.SNo.ToUpper()));
+				if (!isMember)
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, You details could not be found"
+					};
+
+				var debtQuery = $"SELECT ISNULL(Sum(Amount),0) FROM CUSTOMERBALANCE WHERE AccNO = '{transaction.SNo}' AND cash = 1 AND transtype='DR' AND TransDescription != 'Cheque Dep(uncleared)' AND TransDescription != 'Bounced Cheque'";
+				var debts = db.Database.SqlQuery<decimal>(debtQuery).FirstOrDefault();
+				var creditQuery = $"SELECT ISNULL(Sum(Amount),0) FROM CUSTOMERBALANCE WHERE AccNO = '{transaction.SNo}' AND cash = 1 AND transtype='CR' AND TransDescription != 'Cheque Dep(uncleared)'";
+				var credits = db.Database.SqlQuery<decimal>(creditQuery).FirstOrDefault();
+
+				var balance = credits - debts;
+				return new ReturnData
+				{
+					Success = true,
+					Message = $"{balance}",
+					Data = balance,
+				};
+			}
+			catch (Exception ex)
+			{
+				return new ReturnData
+				{
+					Success = false,
+					Message = "Sorry, An error occurred"
+				};
+			}
+		}
+
+		[Route("fetchAdvanceAmount")]
+		public ReturnData FetchAdvanceAmount([FromBody] Transaction transaction)
+		{
+			try
+			{
+				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE()))";
+				var threeMonthsIncome = db.Database.SqlQuery<decimal>(incomeQuery).Sum();
+				var averageIncome = 0m;
+				if (threeMonthsIncome > 0)
+					averageIncome = threeMonthsIncome / 3;
+
+				var advanceBalQuery = $"SELECT Amount FROM DEDUCTION WHERE Amount > 0 AND ProductID IN (SELECT ProductID FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())))";
+				var threeMonthsAdvanceBal = db.Database.SqlQuery<decimal>(advanceBalQuery).Sum();
+				var averageAdvanceBal = 0m;
+				if (threeMonthsAdvanceBal > 0)
+					averageAdvanceBal = threeMonthsAdvanceBal / 3;
+
+				var advanceArreaersQuery = $"SELECT Arrears FROM DEDUCTION WHERE Amount > 0 AND ProductID IN (SELECT ProductID FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())))";
+				var threeMonthsAdvanceArrears = db.Database.SqlQuery<decimal>(advanceArreaersQuery).Sum();
+				var averageAdvanceArrears = 0m;
+				if (threeMonthsAdvanceArrears > 0)
+					averageAdvanceArrears = threeMonthsAdvanceArrears / 3;
+
+				var repayRateQuery = $"SELECT RepayRate FROM LOANBAL WHERE ACCNO = '{transaction.SNo}'";
+				var repayRate = db.Database.SqlQuery<decimal>(repayRateQuery).Sum();
+
+				var loanArrearsQuery = $"SELECT arrears FROM LOANARREARS WHERE AccNo = '{transaction.SNo}'";
+				var loanArrears = db.Database.SqlQuery<decimal>(loanArrearsQuery).Sum();
+
+				var advance = averageIncome - averageAdvanceBal - averageAdvanceArrears - repayRate - loanArrears;
+				return new ReturnData
+				{
+					Success = true,
+					Message = $"{advance}"
+				};
+			}
+			catch (Exception ex)
+			{
+				return new ReturnData
+				{
+					Success = false,
+					Message = "Sorry, An error occurred"
+				};
+			}
+		}
+
+		[Route("applyAdvance")]
+		public ReturnData ApplyAdvance([FromBody] Transaction transaction)
+		{
+			try
+			{
+				return new ReturnData
+				{
+					Success = true,
+				};
+			}
+			catch (Exception ex)
+			{
+				return new ReturnData
+				{
+					Success = false,
+					Message = "Sorry, An error occurred"
+				};
+			}
+		}
+
 	}
 }
