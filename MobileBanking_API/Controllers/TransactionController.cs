@@ -49,7 +49,8 @@ namespace MobileBanking_API.Controllers
 					AccNO = member.AccNo,
 					valuedate = DateTime.UtcNow.Date,
 					transType = "CR",
-					Status = true
+					Status = true,
+					Cash = true,
 				});
 
 				db.GLTRANSACTIONS.Add(new GLTRANSACTION {
@@ -131,7 +132,8 @@ namespace MobileBanking_API.Controllers
 					AccNO = member.AccNo,
 					valuedate = DateTime.UtcNow.Date,
 					transType = "DR",
-					Status = true
+					Status = true,
+					Cash = true,
 				});
 
 				var Withdrawal_Charges = 50;
@@ -174,7 +176,8 @@ namespace MobileBanking_API.Controllers
 					AccNO = member.AccNo,
 					valuedate = DateTime.UtcNow.Date,
 					transType = "DR",
-					Status = true
+					Status = true,
+					Cash = true
 				});
 
 				db.GLTRANSACTIONS.Add(new GLTRANSACTION
@@ -212,7 +215,8 @@ namespace MobileBanking_API.Controllers
 					AccNO = member.AccNo,
 					valuedate = DateTime.UtcNow.Date,
 					transType = "DR",
-					Status = true
+					Status = true,
+					Cash = true
 				});
 
 				db.GLTRANSACTIONS.Add(new GLTRANSACTION
@@ -282,8 +286,8 @@ namespace MobileBanking_API.Controllers
 			}
 		}
 
-		[Route("fetchAdvanceAmount")]
-		public ReturnData FetchAdvanceAmount([FromBody] Transaction transaction)
+		[Route("applyAdvance")]
+		public ReturnData ApplyAdvance([FromBody] Transaction transaction)
 		{
 			try
 			{
@@ -312,10 +316,44 @@ namespace MobileBanking_API.Controllers
 				var loanArrears = db.Database.SqlQuery<decimal>(loanArrearsQuery).Sum();
 
 				var advance = averageIncome - averageAdvanceBal - averageAdvanceArrears - repayRate - loanArrears;
+				if (transaction.Amount < 200)
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, minimum advance amount is KES 200"
+					};
+
+				if (transaction.Amount > advance)
+					return new ReturnData
+					{
+						Success = false,
+						Message = $"Sorry, your maximum advance amount is KES {advance}"
+					};
+
+				var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.SNo.ToUpper()));
+				if (member == null)
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, account number not found"
+					};
+
+				db.Advances.Add(new Advance {
+					accno = transaction.SNo,
+					appamnt = transaction.Amount,
+					payrollno = member.Payno,
+					advdate = DateTime.UtcNow.Date,
+					auditid = transaction.AuditId,
+					serialno = transaction.MachineID,
+					audittime = DateTime.UtcNow.AddHours(3)
+				});
+
+				db.SaveChanges();
+
 				return new ReturnData
 				{
 					Success = true,
-					Message = $"{advance}"
+					Message = $"You have successfully applied for an advance of KES {transaction.Amount}"
 				};
 			}
 			catch (Exception ex)
@@ -327,26 +365,5 @@ namespace MobileBanking_API.Controllers
 				};
 			}
 		}
-
-		[Route("applyAdvance")]
-		public ReturnData ApplyAdvance([FromBody] Transaction transaction)
-		{
-			try
-			{
-				return new ReturnData
-				{
-					Success = true,
-				};
-			}
-			catch (Exception ex)
-			{
-				return new ReturnData
-				{
-					Success = false,
-					Message = "Sorry, An error occurred"
-				};
-			}
-		}
-
 	}
 }
