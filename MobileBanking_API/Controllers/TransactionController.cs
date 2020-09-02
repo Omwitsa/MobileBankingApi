@@ -311,19 +311,22 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE()))";
+				var productDescriptionQuery = $"Select Distinct  I.ProductID From INCOME I Inner Join DEDUCTIONLIST P On P.Recoverfrom=I.ProductID  INNER Join PRODUCTSETUP S on S.ProductID=I.ProductID Where AccNo='{transaction.SNo}' and p.DedCode <>'020' and  p.Recoverfrom not in (select RecoverFrom from DEDUCTION where AccNo='{transaction.SNo}' and Arrears+AmountCF+AmountIntCF>1) AND DATEDiff(dd,I.Transdate,GETDATE())<=S.intervals and P.Mobile=1 ";
+				var productId = db.Database.SqlQuery<string>(productDescriptionQuery).FirstOrDefault();
+
+				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())) AND ProductID = '{productId}'";
 				var threeMonthsIncome = db.Database.SqlQuery<decimal>(incomeQuery).Sum();
 				var averageIncome = 0m;
 				if (threeMonthsIncome > 0)
 					averageIncome = threeMonthsIncome / 3;
 
-				var advanceBalQuery = $"SELECT Amount FROM DEDUCTION WHERE Amount > 0 AND ProductID IN (SELECT ProductID FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())))";
+				var advanceBalQuery = $"SELECT Amount FROM DEDUCTION WHERE Amount > 0 AND ProductID = '{productId}'";
 				var threeMonthsAdvanceBal = db.Database.SqlQuery<decimal>(advanceBalQuery).Sum();
 				var averageAdvanceBal = 0m;
 				if (threeMonthsAdvanceBal > 0)
 					averageAdvanceBal = threeMonthsAdvanceBal / 3;
 
-				var advanceArreaersQuery = $"SELECT Arrears FROM DEDUCTION WHERE Amount > 0 AND ProductID IN (SELECT ProductID FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())))";
+				var advanceArreaersQuery = $"SELECT Arrears FROM DEDUCTION WHERE Amount > 0 AND ProductID = '{productId}'";
 				var threeMonthsAdvanceArrears = db.Database.SqlQuery<decimal>(advanceArreaersQuery).Sum();
 				var averageAdvanceArrears = 0m;
 				if (threeMonthsAdvanceArrears > 0)
