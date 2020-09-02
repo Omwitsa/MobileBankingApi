@@ -1,6 +1,7 @@
 ﻿using MobileBanking_API.Models;
 using MobileBanking_API.ViewModel;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
@@ -17,6 +18,12 @@ namespace MobileBanking_API.Controllers
 
 		[Route("deposit")]
 		public ReturnData Deposit([FromBody] Transaction transaction)
+		{
+			var response = DepositService(transaction);
+			return response;
+		}
+
+		private ReturnData DepositService(Transaction transaction)
 		{
 			try
 			{
@@ -53,7 +60,8 @@ namespace MobileBanking_API.Controllers
 					Cash = true,
 				});
 
-				db.GLTRANSACTIONS.Add(new GLTRANSACTION {
+				db.GLTRANSACTIONS.Add(new GLTRANSACTION
+				{
 					TransDate = DateTime.UtcNow.Date,
 					Amount = transaction.Amount,
 					DocumentNo = vNo,
@@ -94,6 +102,12 @@ namespace MobileBanking_API.Controllers
 		[Route("withdraw")]
 		public ReturnData Withdraw([FromBody] Transaction transaction)
 		{
+			var response = WithdrawalService(transaction);
+			return response;
+		}
+
+		private ReturnData WithdrawalService(Transaction transaction)
+		{
 			try
 			{
 				var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.SNo.ToUpper()));
@@ -113,7 +127,7 @@ namespace MobileBanking_API.Controllers
 
 				var transactionDescription = "Cash Withdraw";
 				var vNo = GetVoucherNo(transaction.Amount);
-				
+
 				db.CustomerBalances.Add(new CustomerBalance
 				{
 					IDNo = member.IDNo,
@@ -155,7 +169,7 @@ namespace MobileBanking_API.Controllers
 					SaccoCommision = (decimal)saccoCommission,
 					Source = member.MemberNo
 				});
-				
+
 				member.AvailableBalance -= Withdrawal_Charges;
 				transactionDescription = "Whithdrawal Charges";
 				db.CustomerBalances.Add(new CustomerBalance
@@ -289,6 +303,12 @@ namespace MobileBanking_API.Controllers
 		[Route("applyAdvance")]
 		public ReturnData ApplyAdvance([FromBody] Transaction transaction)
 		{
+			var response = AdvanceService(transaction);
+			return response;
+		}
+
+		private ReturnData AdvanceService(Transaction transaction)
+		{
 			try
 			{
 				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE()))";
@@ -338,7 +358,8 @@ namespace MobileBanking_API.Controllers
 						Message = "Sorry, account number not found"
 					};
 
-				db.Advances.Add(new Advance {
+				db.Advances.Add(new Advance
+				{
 					accno = transaction.SNo,
 					appamnt = transaction.Amount,
 					payrollno = member.Payno,
@@ -364,6 +385,28 @@ namespace MobileBanking_API.Controllers
 					Message = "Sorry, An error occurred"
 				};
 			}
+		}
+
+		[Route("sychTransactions")]
+		public ReturnData SychTransactions([FromBody] List<Transaction> transactions)
+		{
+			var response = new ReturnData();
+			foreach(var transaction in transactions)
+			{
+				if (transaction.Operation.ToLower().Equals("deposit"))
+					response = DepositService(transaction);
+
+				if (transaction.Operation.ToLower().Equals("withdraw"))
+					response = WithdrawalService(transaction);
+
+				if (transaction.Operation.ToLower().Equals("advance"))
+					response = AdvanceService(transaction);
+				
+				if (!response.Success)
+					return response;
+			}
+
+			return response;
 		}
 	}
 }

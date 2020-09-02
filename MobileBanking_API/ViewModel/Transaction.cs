@@ -8,5 +8,6 @@
 		public string Pin { get; set; }
 		public string SNo { get; set; }
 		public string AuditId { get; set; }
+		public string Operation { get; set; }
 	}
 }
