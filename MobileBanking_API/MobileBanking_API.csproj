@@ -806,6 +806,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\SecurePasswordHasher.cs" />
+    <Compile Include="ViewModel\AdvanceProduct.cs" />
     <Compile Include="ViewModel\FingerPrintModel.cs" />
     <Compile Include="ViewModel\ReturnData.cs" />
     <Compile Include="ViewModel\Transaction.cs" />
