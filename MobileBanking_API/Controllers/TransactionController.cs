@@ -307,13 +307,35 @@ namespace MobileBanking_API.Controllers
 			return response;
 		}
 
+		[Route("fetchAdvanceProducts")]
+		public ReturnData FetchAdvanceProducts([FromBody] Transaction transaction)
+		{
+			try
+			{
+				var productDescriptionQuery = $"Select Distinct  I.ProductID, P.Description From INCOME I Inner Join DEDUCTIONLIST P On P.Recoverfrom=I.ProductID  INNER Join PRODUCTSETUP S on S.ProductID=I.ProductID Where AccNo='{transaction.SNo}' and p.DedCode <>'020' and  p.Recoverfrom not in (select RecoverFrom from DEDUCTION where AccNo='{transaction.SNo}' and Arrears+AmountCF+AmountIntCF>1) AND DATEDiff(dd,I.Transdate,GETDATE())<=S.intervals and P.Mobile=1 ";
+				var advanceProducts = db.Database.SqlQuery<AdvanceProduct>(productDescriptionQuery).ToList();
+
+				return new ReturnData
+				{
+					Success = true,
+					Data = advanceProducts
+				};
+			}
+			catch (Exception ex) 
+			{
+				return new ReturnData
+				{
+					Success = false,
+					Message = "Sorry, An error occurred"
+				};
+			}
+		}
+
 		private ReturnData AdvanceService(Transaction transaction)
 		{
 			try
 			{
-				var productDescriptionQuery = $"Select Distinct  I.ProductID From INCOME I Inner Join DEDUCTIONLIST P On P.Recoverfrom=I.ProductID  INNER Join PRODUCTSETUP S on S.ProductID=I.ProductID Where AccNo='{transaction.SNo}' and p.DedCode <>'020' and  p.Recoverfrom not in (select RecoverFrom from DEDUCTION where AccNo='{transaction.SNo}' and Arrears+AmountCF+AmountIntCF>1) AND DATEDiff(dd,I.Transdate,GETDATE())<=S.intervals and P.Mobile=1 ";
-				var productId = db.Database.SqlQuery<string>(productDescriptionQuery).FirstOrDefault();
-
+				var productId = "";
 				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())) AND ProductID = '{productId}'";
 				var threeMonthsIncome = db.Database.SqlQuery<decimal>(incomeQuery).Sum();
 				var averageIncome = 0m;
@@ -373,7 +395,6 @@ namespace MobileBanking_API.Controllers
 				});
 
 				db.SaveChanges();
-
 				return new ReturnData
 				{
 					Success = true,
