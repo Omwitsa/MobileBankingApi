@@ -55,29 +55,15 @@ namespace MobileBanking_API.Controllers
 					return new ReturnData
 					{
 						Success = false,
-						Message = "Sorry, agent already exist"
+						Message = "Sorry, Member already exist"
 					};
 
-				if (string.IsNullOrEmpty(agent.Surname))
-					return new ReturnData
-					{
-						Success = false,
-						Message = "Kindly provide surname"
-					};
-
-				if (string.IsNullOrEmpty(agent.idno))
-					return new ReturnData
-					{
-						Success = false,
-						Message = "Kindly provide agent ID No."
-					};
-				
-				db.Agentmembers.Add(agent);
-				db.SaveChanges();
+                db.Agentmembers.Add(agent);
+                  db.SaveChanges();
 				return new ReturnData
 				{
 					Success = true,
-					Message = "Agent created successfully"
+					Message = "Member Registered successfully"
 				};
 			}
 			catch (Exception ex)

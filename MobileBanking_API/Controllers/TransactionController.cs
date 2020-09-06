@@ -74,7 +74,21 @@ namespace MobileBanking_API.Controllers
 					Source = member.MemberNo
 				});
 
-				db.SaveChanges();
+                var memberDetails = db.MEMBERS.FirstOrDefault(m => m.MemberNo.ToUpper().Equals(member.MemberNo.ToUpper()));
+                db.Messages.Add(new Message
+                {
+                    AccNo = member.AccNo,
+                    Source= transaction.AuditId,
+                    Telephone = memberDetails.MobileNo,
+                    Processed = false,
+                    AlertType = "AgencyDeposit",
+                    Charged = false,
+                    MsgType = "Outbox",
+                    Content = $"Your deposit of KES {transaction.Amount} to your account number {member.AccNo} was successful."
+                    
+                });
+
+                db.SaveChanges();
 				return new ReturnData
 				{
 					Success = true,
@@ -313,8 +327,8 @@ namespace MobileBanking_API.Controllers
 			{
 				var productDescriptionQuery = $"Select Distinct  I.ProductID From INCOME I Inner Join DEDUCTIONLIST P On P.Recoverfrom=I.ProductID  INNER Join PRODUCTSETUP S on S.ProductID=I.ProductID Where AccNo='{transaction.SNo}' and p.DedCode <>'020' and  p.Recoverfrom not in (select RecoverFrom from DEDUCTION where AccNo='{transaction.SNo}' and Arrears+AmountCF+AmountIntCF>1) AND DATEDiff(dd,I.Transdate,GETDATE())<=S.intervals and P.Mobile=1 ";
 				var productId = db.Database.SqlQuery<string>(productDescriptionQuery).FirstOrDefault();
-
-				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())) AND ProductID = '{productId}'";
+                
+                var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())) AND ProductID = '{productId}'";
 				var threeMonthsIncome = db.Database.SqlQuery<decimal>(incomeQuery).Sum();
 				var averageIncome = 0m;
 				if (threeMonthsIncome > 0)
