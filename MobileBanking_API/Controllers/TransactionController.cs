@@ -322,26 +322,18 @@ namespace MobileBanking_API.Controllers
 		}
 
 		[Route("fetchAdvanceProducts")]
-		public ReturnData FetchAdvanceProducts([FromBody] Transaction transaction)
+		public List<AdvanceProduct> FetchAdvanceProducts([FromBody] Transaction transaction)
 		{
 			try
 			{
 				var productDescriptionQuery = $"Select Distinct  I.ProductID, P.Description From INCOME I Inner Join DEDUCTIONLIST P On P.Recoverfrom=I.ProductID  INNER Join PRODUCTSETUP S on S.ProductID=I.ProductID Where AccNo='{transaction.SNo}' and p.DedCode <>'020' and  p.Recoverfrom not in (select RecoverFrom from DEDUCTION where AccNo='{transaction.SNo}' and Arrears+AmountCF+AmountIntCF>1) AND DATEDiff(dd,I.Transdate,GETDATE())<=S.intervals and P.Mobile=1 ";
 				var advanceProducts = db.Database.SqlQuery<AdvanceProduct>(productDescriptionQuery).ToList();
 
-				return new ReturnData
-				{
-					Success = true,
-					Data = advanceProducts
-				};
+				return advanceProducts;
 			}
 			catch (Exception ex) 
 			{
-				return new ReturnData
-				{
-					Success = false,
-					Message = "Sorry, An error occurred"
-				};
+				return new List<AdvanceProduct>();
 			}
 		}
 
