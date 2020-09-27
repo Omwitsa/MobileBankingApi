@@ -131,9 +131,14 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var members = db.MEMBERS.Where(m => m.IDNo.ToUpper().Equals(printModel.IdNo.ToUpper())).ToList();
-				members.ForEach(m => m.FingerPrint = printModel.FingerPrint);
-				db.SaveChanges();
+				if (!string.IsNullOrEmpty(printModel.FingerPrint))
+				{
+					var figuerPrintInfo = printModel.FingerPrint.Split('@');
+					printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
+					var members = db.MEMBERS.Where(m => m.IDNo.ToUpper().Equals(printModel.IdNo.ToUpper())).ToList();
+					members.ForEach(m => m.FingerPrint = printModel.FingerPrint);
+					db.SaveChanges();
+				}
 			
 				return new ReturnData
 				{
