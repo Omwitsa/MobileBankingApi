@@ -50,6 +50,13 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
+				if (string.IsNullOrEmpty(agent.idno) || string.IsNullOrEmpty(agent.Surname))
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, kindly provide member data"
+					};
+
 				var agentMember = db.Agentmembers.FirstOrDefault(a => a.idno == agent.idno);
 				if (agentMember != null)
 					return new ReturnData
@@ -59,7 +66,7 @@ namespace MobileBanking_API.Controllers
 					};
 
                 db.Agentmembers.Add(agent);
-                  db.SaveChanges();
+                db.SaveChanges();
 				return new ReturnData
 				{
 					Success = true,
@@ -124,9 +131,10 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var member = db.CUBs.FirstOrDefault(m => m.MemberNo.ToUpper().Equals(printModel.MemberNo.ToUpper()));
-				member.FingerPrint = printModel.FingerPrint;
+				var members = db.MEMBERS.Where(m => m.IDNo.ToUpper().Equals(printModel.IdNo.ToUpper())).ToList();
+				members.ForEach(m => m.FingerPrint = printModel.FingerPrint);
 				db.SaveChanges();
+			
 				return new ReturnData
 				{
 					Success = true,
