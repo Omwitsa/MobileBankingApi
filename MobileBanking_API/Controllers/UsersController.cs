@@ -150,5 +150,27 @@ namespace MobileBanking_API.Controllers
 				};
 			}
 		}
+
+		[Route("getUserAccounts")]
+		public ReturnData GetUserAccounts([FromBody] FingerPrintModel printModel)
+		{
+			try
+			{
+				var accounts = db.MEMBERS.Where(m => m.FingerPrint == printModel.FingerPrint).Select(m => m.AccNo).ToList();
+				return new ReturnData
+				{
+					Success = true,
+					Data = accounts
+				};
+			}
+			catch (Exception)
+			{
+				return new ReturnData
+				{
+					Success = false,
+					Message = "Sorry, An error occurred"
+				};
+			}
+		}
 	}
 }
