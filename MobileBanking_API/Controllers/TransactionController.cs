@@ -74,19 +74,19 @@ namespace MobileBanking_API.Controllers
 					Source = member.MemberNo
 				});
 
-                var memberDetails = db.MEMBERS.FirstOrDefault(m => m.MemberNo.ToUpper().Equals(member.MemberNo.ToUpper()));
-                db.Messages.Add(new Message
-                {
-                    AccNo = member.AccNo,
-                    Source= transaction.AuditId,
-                    Telephone = memberDetails.MobileNo,
-                    Processed = false,
-                    AlertType = "AgencyDeposit",
-                    Charged = false,
-                    MsgType = "Outbox",
-                    Content = $"Your deposit of KES {transaction.Amount} to your account number {member.AccNo} was successful."
+                //var memberDetails = db.MEMBERS.FirstOrDefault(m => m.MemberNo.ToUpper().Equals(member.MemberNo.ToUpper()));
+                //db.Messages.Add(new Message
+                //{
+                //    AccNo = member.AccNo,
+                //    Source= transaction.AuditId,
+                //    Telephone = memberDetails.MobileNo,
+                //    Processed = false,
+                //    AlertType = "AgencyDeposit",
+                //    Charged = false,
+                //    MsgType = "Outbox",
+                //    Content = $"Your deposit of KES {transaction.Amount} to your account number {member.AccNo} was successful."
                     
-                });
+                //});
 
                 db.SaveChanges();
 				return new ReturnData
