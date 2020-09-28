@@ -74,5 +74,6 @@ namespace MobileBanking_API.Models
         public string Address { get; set; }
         public string category { get; set; }
         public string Photo { get; set; }
+        public string FingerPrint { get; set; }
     }
 }
