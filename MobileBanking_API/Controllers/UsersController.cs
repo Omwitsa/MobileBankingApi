@@ -156,8 +156,8 @@ namespace MobileBanking_API.Controllers
 			}
 		}
 
-		[Route("getUserAccounts")]
-		public ReturnData GetUserAccounts([FromBody] FingerPrintModel printModel)
+		[Route("fetchUserAccounts")]
+		public ReturnData FetchUserAccounts([FromBody] FingerPrintModel printModel)
 		{
 			try
 			{
