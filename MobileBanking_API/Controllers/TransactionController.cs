@@ -326,8 +326,28 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var productDescriptionQuery = $"Select Distinct  I.ProductID, P.Description From INCOME I Inner Join DEDUCTIONLIST P On P.Recoverfrom=I.ProductID  INNER Join PRODUCTSETUP S on S.ProductID=I.ProductID Where AccNo='{transaction.SNo}' and p.DedCode <>'020' and  p.Recoverfrom not in (select RecoverFrom from DEDUCTION where AccNo='{transaction.SNo}' and Arrears+AmountCF+AmountIntCF>1) AND DATEDiff(dd,I.Transdate,GETDATE())<=S.intervals and P.Mobile=1 ";
-				var advanceProducts = db.Database.SqlQuery<AdvanceProduct>(productDescriptionQuery).ToList();
+				var advanceProducts = new List<AdvanceProduct>();
+				var memberAccounts = db.MEMBERS.Where(m => m.FingerPrint == transaction.FingerePrint).Select(m => m.AccNo).ToList();
+				if(memberAccounts.Count > 0)
+				{
+					var accounts = "";
+					var count = 1;
+					memberAccounts.ForEach(a => {
+						if (count != memberAccounts.Count)
+							accounts = $"{accounts}'{a}',";
+						else
+							accounts = $"{accounts}'{a}'";
+						count++;
+					});
+
+					string account = memberAccounts.FirstOrDefault() ?? "";
+					var productDescriptionQuery = $"Select Distinct  I.ProductID, P.Description From INCOME I Inner Join DEDUCTIONLIST P On P.Recoverfrom=I.ProductID  " +
+						$"INNER Join PRODUCTSETUP S on S.ProductID=I.ProductID Where AccNo IN ({accounts}) and p.DedCode <>'020' and  p.Recoverfrom " +
+						$"not in (select RecoverFrom from DEDUCTION where AccNo='{account}' and Arrears+AmountCF+AmountIntCF>1) AND DATEDiff(dd,I.Transdate,GETDATE())<=S.intervals " +
+						$"AND P.Mobile=1 ";
+					
+					advanceProducts = db.Database.SqlQuery<AdvanceProduct>(productDescriptionQuery).ToList();
+				}
 
 				return advanceProducts;
 			}
