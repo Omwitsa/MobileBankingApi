@@ -345,7 +345,6 @@ namespace MobileBanking_API.Controllers
 						$"INNER Join PRODUCTSETUP S on S.ProductID=I.ProductID Where AccNo IN ({accounts}) and p.DedCode <>'020' and  p.Recoverfrom " +
 						$"not in (select RecoverFrom from DEDUCTION where AccNo='{account}' and Arrears+AmountCF+AmountIntCF>1) AND DATEDiff(dd,I.Transdate,GETDATE())<=S.intervals " +
 						$"AND P.Mobile=1 ";
-					
 					advanceProducts = db.Database.SqlQuery<AdvanceProduct>(productDescriptionQuery).ToList();
 				}
 
@@ -354,6 +353,21 @@ namespace MobileBanking_API.Controllers
 			catch (Exception ex) 
 			{
 				return new List<AdvanceProduct>();
+			}
+		}
+
+		[Route("fetchMemberAccounts")]
+		public List<string> FetchMemberAccounts([FromBody] Transaction transaction)
+		{
+			var accounts = new List<string>();
+			try
+			{
+				accounts = db.MEMBERS.Where(m => m.FingerPrint == transaction.FingerePrint).Select(m => m.AccNo).ToList();
+				return accounts;
+			}
+			catch (Exception ex)
+			{
+				return accounts;
 			}
 		}
 
