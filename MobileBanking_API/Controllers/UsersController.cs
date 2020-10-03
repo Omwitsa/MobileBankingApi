@@ -135,10 +135,9 @@ namespace MobileBanking_API.Controllers
 				{
 					var figuerPrintInfo = printModel.FingerPrint.Split('@');
 					printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
-					var members = db.MEMBERS.Where(m => m.IDNo.ToUpper().Equals(printModel.IdNo.ToUpper())).ToList();
 					int decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
-					members.ForEach(m => m.FingerPrint = $"{decimalFingerprint}");
-					db.SaveChanges();
+					var fingerUpdateQuery = $"UPDATE MEMBERS SET FingerPrint = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+					db.Database.ExecuteSqlCommand(fingerUpdateQuery);
 				}
 			
 				return new ReturnData
@@ -162,7 +161,7 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var accounts = db.MEMBERS.Where(m => m.FingerPrint == printModel.FingerPrint).Select(m => m.AccNo).ToList();
+				var accounts = db.MEMBERS.Where(m => m.IDNo == printModel.IdNo).Select(m => m.AccNo).ToList();
 				return new ReturnData
 				{
 					Success = true,

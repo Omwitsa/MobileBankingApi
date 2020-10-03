@@ -327,7 +327,7 @@ namespace MobileBanking_API.Controllers
 			try
 			{
 				var advanceProducts = new List<AdvanceProduct>();
-				var memberAccounts = db.MEMBERS.Where(m => m.FingerPrint == transaction.FingerePrint).Select(m => m.AccNo).ToList();
+				var memberAccounts = db.MEMBERS.Where(m => m.IDNo == transaction.SNo).Select(m => m.AccNo).ToList();
 				if(memberAccounts.Count > 0)
 				{
 					var accounts = "";
@@ -362,7 +362,7 @@ namespace MobileBanking_API.Controllers
 			var accounts = new List<string>();
 			try
 			{
-				accounts = db.MEMBERS.Where(m => m.FingerPrint == transaction.FingerePrint).Select(m => m.AccNo).ToList();
+				accounts = db.MEMBERS.Where(m => m.IDNo == transaction.SNo).Select(m => m.AccNo).ToList();
 				return accounts;
 			}
 			catch (Exception ex)
