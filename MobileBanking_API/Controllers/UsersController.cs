@@ -136,7 +136,8 @@ namespace MobileBanking_API.Controllers
 					var figuerPrintInfo = printModel.FingerPrint.Split('@');
 					printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
 					var members = db.MEMBERS.Where(m => m.IDNo.ToUpper().Equals(printModel.IdNo.ToUpper())).ToList();
-					members.ForEach(m => m.FingerPrint = printModel.FingerPrint);
+					int decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
+					members.ForEach(m => m.FingerPrint = $"{decimalFingerprint}");
 					db.SaveChanges();
 				}
 			
