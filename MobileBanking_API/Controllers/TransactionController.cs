@@ -375,7 +375,7 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var productDetailsQuery = $"SELECT * FROM DEDUCTIONLIST d INNER JOIN INCOME i ON i.ProductID = d.Recoverfrom WHERE d.Description = '' AND i.AccNo = ''";
+				var productDetailsQuery = $"SELECT * FROM DEDUCTIONLIST d INNER JOIN INCOME i ON i.ProductID = d.Recoverfrom WHERE d.Description = '{transaction.ProductDescription}' AND i.AccNo = '{transaction.AccountNo}'";
 				var productDetails = db.Database.SqlQuery<AdvanceProduct>(productDetailsQuery).FirstOrDefault();
 				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())) AND ProductID = '{productDetails.ProductID}'";
 				var threeMonthsIncome = db.Database.SqlQuery<decimal>(incomeQuery).Sum();
