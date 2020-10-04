@@ -328,7 +328,7 @@ namespace MobileBanking_API.Controllers
 			{
 				transaction.AccountNo = transaction.AccountNo ?? "";
 				var productDescriptionQuery = $"Select Distinct  I.ProductID, P.Description From INCOME I Inner Join DEDUCTIONLIST P On P.Recoverfrom=I.ProductID  " +
-					$"INNER Join PRODUCTSETUP S on S.ProductID=I.ProductID Where AccNo IN ({transaction.AccountNo}) and p.DedCode <>'020' and  p.Recoverfrom " +
+					$"INNER Join PRODUCTSETUP S on S.ProductID=I.ProductID Where AccNo IN ('{transaction.AccountNo}') and p.DedCode <>'020' and  p.Recoverfrom " +
 					$"not in (select RecoverFrom from DEDUCTION where AccNo='{transaction.AccountNo}' and Arrears+AmountCF+AmountIntCF>1) AND DATEDiff(dd,I.Transdate,GETDATE())<=S.intervals " +
 					$"AND P.Mobile=1 ";
 
