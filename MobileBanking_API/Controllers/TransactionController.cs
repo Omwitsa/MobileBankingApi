@@ -375,20 +375,21 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var productId = "";
-				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())) AND ProductID = '{productId}'";
+				var productDetailsQuery = $"SELECT * FROM DEDUCTIONLIST d INNER JOIN INCOME i ON i.ProductID = d.Recoverfrom WHERE d.Description = '' AND i.AccNo = ''";
+				var productDetails = db.Database.SqlQuery<AdvanceProduct>(productDetailsQuery).FirstOrDefault();
+				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())) AND ProductID = '{productDetails.ProductID}'";
 				var threeMonthsIncome = db.Database.SqlQuery<decimal>(incomeQuery).Sum();
 				var averageIncome = 0m;
 				if (threeMonthsIncome > 0)
 					averageIncome = threeMonthsIncome / 3;
 
-				var advanceBalQuery = $"SELECT Amount FROM DEDUCTION WHERE Amount > 0 AND ProductID = '{productId}'";
+				var advanceBalQuery = $"SELECT Amount FROM DEDUCTION WHERE Amount > 0 AND ProductID = '{productDetails.ProductID}'";
 				var threeMonthsAdvanceBal = db.Database.SqlQuery<decimal>(advanceBalQuery).Sum();
 				var averageAdvanceBal = 0m;
 				if (threeMonthsAdvanceBal > 0)
 					averageAdvanceBal = threeMonthsAdvanceBal / 3;
 
-				var advanceArreaersQuery = $"SELECT Arrears FROM DEDUCTION WHERE Amount > 0 AND ProductID = '{productId}'";
+				var advanceArreaersQuery = $"SELECT Arrears FROM DEDUCTION WHERE Amount > 0 AND ProductID = '{productDetails.ProductID}'";
 				var threeMonthsAdvanceArrears = db.Database.SqlQuery<decimal>(advanceArreaersQuery).Sum();
 				var averageAdvanceArrears = 0m;
 				if (threeMonthsAdvanceArrears > 0)
@@ -431,6 +432,7 @@ namespace MobileBanking_API.Controllers
 					advdate = DateTime.UtcNow.Date,
 					auditid = transaction.AuditId,
 					serialno = transaction.MachineID,
+					description = productDetails.Description,
 					audittime = DateTime.UtcNow.AddHours(3)
 				});
 

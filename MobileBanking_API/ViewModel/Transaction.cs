@@ -9,5 +9,7 @@
 		public string SNo { get; set; }
 		public string AuditId { get; set; }
 		public string Operation { get; set; }
+		public string ProductDescription { get; set; }
+		public string Account { get; set; }
 	}
 }
