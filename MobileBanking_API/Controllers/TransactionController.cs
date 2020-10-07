@@ -328,7 +328,7 @@ namespace MobileBanking_API.Controllers
 			{
 				transaction.AccountNo = transaction.AccountNo ?? "";
 				var productDescriptionQuery = $"Select Distinct  I.ProductID, P.Description From INCOME I Inner Join DEDUCTIONLIST P On P.Recoverfrom=I.ProductID  " +
-					$"INNER Join PRODUCTSETUP S on S.ProductID=I.ProductID Where AccNo IN ('{transaction.AccountNo}') and p.DedCode <>'020' and  p.Recoverfrom " +
+					$"INNER Join PRODUCTSETUP S on S.ProductID=I.ProductID Where AccNo = '{transaction.AccountNo}' and p.DedCode <>'020' and  p.Recoverfrom " +
 					$"not in (select RecoverFrom from DEDUCTION where AccNo='{transaction.AccountNo}' and Arrears+AmountCF+AmountIntCF>1) AND DATEDiff(dd,I.Transdate,GETDATE())<=S.intervals " +
 					$"AND P.Mobile=1 ";
 
@@ -363,7 +363,7 @@ namespace MobileBanking_API.Controllers
 			{
 				var productDetailsQuery = $"SELECT * FROM DEDUCTIONLIST d INNER JOIN INCOME i ON i.ProductID = d.Recoverfrom WHERE d.Description = '{transaction.ProductDescription}' AND i.AccNo = '{transaction.AccountNo}'";
 				var productDetails = db.Database.SqlQuery<AdvanceProduct>(productDetailsQuery).FirstOrDefault();
-				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.SNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())) AND ProductID = '{productDetails.ProductID}'";
+				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.AccountNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())) AND ProductID = '{productDetails.ProductID}'";
 				var threeMonthsIncome = db.Database.SqlQuery<decimal>(incomeQuery).Sum();
 				var averageIncome = 0m;
 				if (threeMonthsIncome > 0)
@@ -381,10 +381,10 @@ namespace MobileBanking_API.Controllers
 				if (threeMonthsAdvanceArrears > 0)
 					averageAdvanceArrears = threeMonthsAdvanceArrears / 3;
 
-				var repayRateQuery = $"SELECT RepayRate FROM LOANBAL WHERE ACCNO = '{transaction.SNo}'";
+				var repayRateQuery = $"SELECT RepayRate FROM LOANBAL WHERE ACCNO = '{transaction.AccountNo}'";
 				var repayRate = db.Database.SqlQuery<decimal>(repayRateQuery).Sum();
 
-				var loanArrearsQuery = $"SELECT arrears FROM LOANARREARS WHERE AccNo = '{transaction.SNo}'";
+				var loanArrearsQuery = $"SELECT arrears FROM LOANARREARS WHERE AccNo = '{transaction.AccountNo}'";
 				var loanArrears = db.Database.SqlQuery<decimal>(loanArrearsQuery).Sum();
 
 				var advance = averageIncome - averageAdvanceBal - averageAdvanceArrears - repayRate - loanArrears;
@@ -402,7 +402,7 @@ namespace MobileBanking_API.Controllers
 						Message = $"Sorry, your maximum advance amount is KES {advance}"
 					};
 
-				var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.SNo.ToUpper()));
+				var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
 				if (member == null)
 					return new ReturnData
 					{
@@ -412,7 +412,7 @@ namespace MobileBanking_API.Controllers
 
 				db.Advances.Add(new Advance
 				{
-					accno = transaction.SNo,
+					accno = transaction.AccountNo,
 					appamnt = transaction.Amount,
 					payrollno = member.Payno,
 					advdate = DateTime.UtcNow.Date,
