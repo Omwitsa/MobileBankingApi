@@ -361,34 +361,69 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var productDetailsQuery = $"SELECT * FROM DEDUCTIONLIST d INNER JOIN INCOME i ON i.ProductID = d.Recoverfrom WHERE d.Description = '{transaction.ProductDescription}' AND i.AccNo = '{transaction.AccountNo}'";
+                var Accmeber = $"Select MemberNo from MEMBERS  where AccNo='{transaction.AccountNo}'";
+                var Membeno = db.Database.SqlQuery<string>(Accmeber).FirstOrDefault();
+               
+
+           
+                var productDetailsQuery = $"SELECT * FROM DEDUCTIONLIST d INNER JOIN INCOME i ON i.ProductID = d.Recoverfrom WHERE d.Description = '{transaction.ProductDescription}' AND i.AccNo = '{transaction.AccountNo}'";
 				var productDetails = db.Database.SqlQuery<AdvanceProduct>(productDetailsQuery).FirstOrDefault();
+
 				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.AccountNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())) AND ProductID = '{productDetails.ProductID}'";
 				var threeMonthsIncome = db.Database.SqlQuery<decimal>(incomeQuery).Sum();
 				var averageIncome = 0m;
-				if (threeMonthsIncome > 0)
-					averageIncome = threeMonthsIncome / 3;
+                if (threeMonthsIncome > 0)
+                    averageIncome = threeMonthsIncome / 3;
+                else
+                    averageIncome = 0;
 
-				var advanceBalQuery = $"SELECT Amount FROM DEDUCTION WHERE Amount > 0 AND ProductID = '{productDetails.ProductID}'";
-				var threeMonthsAdvanceBal = db.Database.SqlQuery<decimal>(advanceBalQuery).Sum();
+                //var advanceBalQuery = $"SELECT Amount FROM DEDUCTION WHERE Amount > 0 AND ProductID = '{productDetails.ProductID}'";
+                var advanceBalQuery = $"Select (AmountCF)+(AmountIntCF)+(Arrears) From DEDUCTION Where AccNo='{transaction.AccountNo}' AND RecoverFrom='{productDetails.ProductID}'";
+                var threeMonthsAdvanceBal = db.Database.SqlQuery<decimal>(advanceBalQuery).Sum();
 				var averageAdvanceBal = 0m;
-				if (threeMonthsAdvanceBal > 0)
-					averageAdvanceBal = threeMonthsAdvanceBal / 3;
+                if (threeMonthsAdvanceBal > 0)
+                    averageAdvanceBal = threeMonthsAdvanceBal / 3;
+                else
+                    averageAdvanceBal = 0;
 
-				var advanceArreaersQuery = $"SELECT Arrears FROM DEDUCTION WHERE Amount > 0 AND ProductID = '{productDetails.ProductID}'";
-				var threeMonthsAdvanceArrears = db.Database.SqlQuery<decimal>(advanceArreaersQuery).Sum();
+                //var advanceArreaersQuery = $"SELECT Arrears FROM DEDUCTION WHERE Amount > 0 AND ProductID = '{productDetails.ProductID}'";
+                var advanceArreaersQuery = $"Select Arrears From DEDUCTION Where AccNo='{transaction.AccountNo}' AND RecoverFrom<>'{productDetails.ProductID}' AND Arrears > 0";
+                var threeMonthsAdvanceArrears = db.Database.SqlQuery<decimal>(advanceArreaersQuery).Sum();
 				var averageAdvanceArrears = 0m;
-				if (threeMonthsAdvanceArrears > 0)
-					averageAdvanceArrears = threeMonthsAdvanceArrears / 3;
+                if (threeMonthsAdvanceArrears > 0)
+                    averageAdvanceArrears = threeMonthsAdvanceArrears / 3;
+                else
+                    averageAdvanceArrears = 0;
 
-				var repayRateQuery = $"SELECT RepayRate FROM LOANBAL WHERE ACCNO = '{transaction.AccountNo}'";
-				var repayRate = db.Database.SqlQuery<decimal>(repayRateQuery).Sum();
+                //var repayRateQuery = $"SELECT RepayRate FROM LOANBAL WHERE ACCNO = '{transaction.AccountNo}'";
+                var repayRateQuery = $"Select RepayRate From LOANBAL L Inner Join MEMBERDEDUCTIONS D On D.STONo=L.LoanNo Where L.MemberNo='{Membeno}' AND D.ProductID='{productDetails.ProductID}' AND L.Balance+L.IntBalance>10";
+                var repayRate = db.Database.SqlQuery<decimal>(repayRateQuery).Sum();
+                var totalrepayrate = 0m;
+                if (repayRate > 0)
+                    totalrepayrate = repayRate;
+                else
+                    totalrepayrate = 0;
 
-				var loanArrearsQuery = $"SELECT arrears FROM LOANARREARS WHERE AccNo = '{transaction.AccountNo}'";
-				var loanArrears = db.Database.SqlQuery<decimal>(loanArrearsQuery).Sum();
+                //var loanArrearsQuery = $"SELECT arrears FROM LOANARREARS WHERE AccNo = '{transaction.AccountNo}'";
+                var loanArrearsQuery = $"SELECT Arrears From LOANARREARS Where AccNo='{transaction.AccountNo}' and Arrears >0";
+                var loanArrears = db.Database.SqlQuery<decimal>(loanArrearsQuery).Sum();
+                var totalloanarrears = 0m;
+                if (loanArrears > 0)
+                    totalloanarrears = loanArrears;
+                else
+                    totalloanarrears = 0;
 
-				var advance = averageIncome - averageAdvanceBal - averageAdvanceArrears - repayRate - loanArrears;
-				if (transaction.Amount < 200)
+
+                var advance = averageIncome - averageAdvanceBal - averageAdvanceArrears - totalrepayrate - totalloanarrears;
+                //var Recadvance = 0m;
+                if (advance > 0)
+                    advance = advance - 100;
+
+                else
+                    advance = 0;
+
+
+                    if (transaction.Amount < 200)
 					return new ReturnData
 					{
 						Success = false,
