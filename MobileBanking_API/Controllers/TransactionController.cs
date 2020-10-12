@@ -74,19 +74,20 @@ namespace MobileBanking_API.Controllers
 					Source = member.MemberNo
 				});
 
-                //var memberDetails = db.MEMBERS.FirstOrDefault(m => m.MemberNo.ToUpper().Equals(member.MemberNo.ToUpper()));
-                //db.Messages.Add(new Message
-                //{
-                //    AccNo = member.AccNo,
-                //    Source= transaction.AuditId,
-                //    Telephone = memberDetails.MobileNo,
-                //    Processed = false,
-                //    AlertType = "AgencyDeposit",
-                //    Charged = false,
-                //    MsgType = "Outbox",
-                //    Content = $"Your deposit of KES {transaction.Amount} to your account number {member.AccNo} was successful."
-                    
-                //});
+                //var memberDetails = db.MEMBERS.FirstOrDefault(m => m.MemberNo.ToUpper().Equals(transaction.SNo.ToUpper()));
+                db.Messages.Add(new Message
+                {
+                    AccNo = member.AccNo,
+                    Source = transaction.AuditId,
+                    Telephone = member.Phone,
+                    Processed = false,
+                    AlertType = "AgencyDeposit",
+                    Charged = false,
+                    MsgType = "Outbox",
+                    DateReceived = DateTime.UtcNow.Date,
+                    Content = $"Dear Member,your deposit of KES {transaction.Amount} to your account number {transaction.SNo} was successful."
+
+                });
 
                 db.SaveChanges();
 				return new ReturnData
@@ -262,7 +263,22 @@ namespace MobileBanking_API.Controllers
 				});
 
 				db.SaveChanges();
-				return new ReturnData
+                db.Messages.Add(new Message
+                {
+                    AccNo = member.AccNo,
+                    Source = transaction.AuditId,
+                    Telephone = member.Phone,
+                    Processed = false,
+                    AlertType = "AgencyWithdraw",
+                    Charged = false,
+                    MsgType = "Outbox",
+                    DateReceived = DateTime.UtcNow.Date,
+                    Content = $"Dear Member,your withdrawal of KES {transaction.Amount} to your account number {transaction.SNo} was successful."
+
+                });
+
+                db.SaveChanges();
+                return new ReturnData
 				{
 					Success = true,
 					Message = "Withdrawn successfully"
@@ -283,21 +299,43 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var isMember = db.CustomerBalances.Any(b => b.AccNO.ToUpper().Equals(transaction.SNo.ToUpper()));
-				if (!isMember)
-					return new ReturnData
-					{
-						Success = false,
-						Message = "Sorry, You details could not be found"
-					};
+                //var isMember = db.CustomerBalances.Any(b => b.AccNO.ToUpper().Equals(transaction.SNo.ToUpper()));
+                //if (!isMember)
+                //	return new ReturnData
+                //	{
+                //		Success = false,
+                //		Message = "Sorry, You details could not be found"
+                //	};
+                var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.SNo.ToUpper()));
+                if (member == null)
+                    return new ReturnData
+                    {
+                        Success = false,
+                        Message = "Sorry, account number not found"
+                    };
 
-				var debtQuery = $"SELECT ISNULL(Sum(Amount),0) FROM CUSTOMERBALANCE WHERE AccNO = '{transaction.SNo}' AND cash = 1 AND transtype='DR' AND TransDescription != 'Cheque Dep(uncleared)' AND TransDescription != 'Bounced Cheque'";
+                var debtQuery = $"SELECT ISNULL(Sum(Amount),0) FROM CUSTOMERBALANCE WHERE AccNO = '{transaction.SNo}' AND cash = 1 AND transtype='DR' AND TransDescription != 'Cheque Dep(uncleared)' AND TransDescription != 'Bounced Cheque'";
 				var debts = db.Database.SqlQuery<decimal>(debtQuery).FirstOrDefault();
 				var creditQuery = $"SELECT ISNULL(Sum(Amount),0) FROM CUSTOMERBALANCE WHERE AccNO = '{transaction.SNo}' AND cash = 1 AND transtype='CR' AND TransDescription != 'Cheque Dep(uncleared)'";
 				var credits = db.Database.SqlQuery<decimal>(creditQuery).FirstOrDefault();
 
 				var balance = credits - debts;
-				return new ReturnData
+                db.Messages.Add(new Message
+                {
+                    AccNo = member.AccNo,
+                    Source = transaction.AuditId,
+                    Telephone = member.Phone,
+                    Processed = false,
+                    AlertType = "AgencyWithdraw",
+                    Charged = false,
+                    MsgType = "balance",
+                    DateReceived = DateTime.UtcNow.Date,
+                    Content = $"Dear Member,your balance of  your account number {transaction.SNo} is {balance} ."
+
+                });
+
+                db.SaveChanges();
+                return new ReturnData
 				{
 					Success = true,
 					Message = $"{balance}",
@@ -361,11 +399,20 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-                var Accmeber = $"Select MemberNo from MEMBERS  where AccNo='{transaction.AccountNo}'";
+                var Accmeber = $"Select MemberNo from CUB  where AccNo='{transaction.AccountNo}'";
                 var Membeno = db.Database.SqlQuery<string>(Accmeber).FirstOrDefault();
-               
 
-           
+
+                var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
+                if (member == null)
+                    return new ReturnData
+                    {
+                        Success = false,
+                        Message = "Sorry, Member number not found"
+                    };
+
+
+
                 var productDetailsQuery = $"SELECT * FROM DEDUCTIONLIST d INNER JOIN INCOME i ON i.ProductID = d.Recoverfrom WHERE d.Description = '{transaction.ProductDescription}' AND i.AccNo = '{transaction.AccountNo}'";
 				var productDetails = db.Database.SqlQuery<AdvanceProduct>(productDetailsQuery).FirstOrDefault();
 
@@ -416,13 +463,11 @@ namespace MobileBanking_API.Controllers
 
                 var advance = averageIncome - averageAdvanceBal - averageAdvanceArrears - totalrepayrate - totalloanarrears;
                 //var Recadvance = 0m;
-                if (advance > 0)
-                    advance = advance - 100;
-
-                else
+                if (productDetails.ProductID =="001" || productDetails.ProductID == "077" && advance > 0)
+                      advance = 3*(advance - 100);
+                 else
                     advance = 0;
-
-
+                
                     if (transaction.Amount < 200)
 					return new ReturnData
 					{
@@ -437,23 +482,40 @@ namespace MobileBanking_API.Controllers
 						Message = $"Sorry, your maximum advance amount is KES {advance}"
 					};
 
-				var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
-				if (member == null)
-					return new ReturnData
-					{
-						Success = false,
-						Message = "Sorry, account number not found"
-					};
+                //var member = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
+                //if (member == null)
+                //	return new ReturnData
+                //	{
+                //		Success = false,
+                //		Message = "Sorry, account number not found"
+                //	};
 
+                //var interest = $"select TOP 1 serialno from advance where accno = '{transaction.AccountNo}' order by advdate desc";
+                //var realint = db.Database.SqlQuery<int>(interest).FirstOrDefault();
+
+
+                var query = $"select interestRate from DEDUCTIONLIST where Description='{transaction.ProductDescription}'";
+                var realint = db.Database.SqlQuery<int>(query).FirstOrDefault();
+                var pe = Convert.ToInt32(realint);
+
+
+                var pd = 3;
+              
 				db.Advances.Add(new Advance
 				{
 					accno = transaction.AccountNo,
 					appamnt = transaction.Amount,
-					payrollno = member.Payno,
 					advdate = DateTime.UtcNow.Date,
 					auditid = transaction.AuditId,
 					serialno = transaction.MachineID,
 					description = productDetails.Description,
+                    payrollno=member.Payno,
+                    name=member.Name,
+                    ProductID=productDetails.ProductID,
+                    custno=member.Payno,
+                    amntapp=transaction.Amount,
+                    IntRate= pe,
+                    period=pd,
 					audittime = DateTime.UtcNow.AddHours(3)
 				});
 
@@ -469,7 +531,7 @@ namespace MobileBanking_API.Controllers
 				return new ReturnData
 				{
 					Success = false,
-					Message = "Sorry, An error occurred"
+					Message = "Sorry,Your request was declined beacuse you have a running loan facility"
 				};
 			}
 		}
