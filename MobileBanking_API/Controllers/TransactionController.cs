@@ -101,7 +101,7 @@ namespace MobileBanking_API.Controllers
 				return new ReturnData
 				{
 					Success = false,
-					Message = "Sorry, An error occurred"
+					Message = "Sorry, network error occurred,check your internet and try again"
 				};
 			}
 		}
@@ -326,7 +326,7 @@ namespace MobileBanking_API.Controllers
                     Source = transaction.AuditId,
                     Telephone = member.Phone,
                     Processed = false,
-                    AlertType = "AgencyWithdraw",
+                    AlertType = "AgencyBalance",
                     Charged = false,
                     MsgType = "balance",
                     DateReceived = DateTime.UtcNow.Date,
@@ -481,33 +481,22 @@ namespace MobileBanking_API.Controllers
 						Success = false,
 						Message = $"Sorry, your maximum advance amount is KES {advance}"
 					};
-
-                //var member = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
-                //if (member == null)
-                //	return new ReturnData
-                //	{
-                //		Success = false,
-                //		Message = "Sorry, account number not found"
-                //	};
-
-                //var interest = $"select TOP 1 serialno from advance where accno = '{transaction.AccountNo}' order by advdate desc";
-                //var realint = db.Database.SqlQuery<int>(interest).FirstOrDefault();
+                //var query = $"select TOP 1 serialno from advance order by serialno desc";
+                //var bal = db.Database.SqlQuery<Int64>(query).FirstOrDefault();
 
 
-                var query = $"select interestRate from DEDUCTIONLIST where Description='{transaction.ProductDescription}'";
-                var realint = db.Database.SqlQuery<int>(query).FirstOrDefault();
-                var pe = Convert.ToInt32(realint);
+                var seri =transaction.MachineID+1;
 
 
+                var pe = 7;
                 var pd = 3;
-              
-				db.Advances.Add(new Advance
+              	db.Advances.Add(new Advance
 				{
 					accno = transaction.AccountNo,
 					appamnt = transaction.Amount,
 					advdate = DateTime.UtcNow.Date,
 					auditid = transaction.AuditId,
-					serialno = transaction.MachineID,
+					serialno = seri,
 					description = productDetails.Description,
                     payrollno=member.Payno,
                     name=member.Name,
@@ -520,7 +509,22 @@ namespace MobileBanking_API.Controllers
 				});
 
 				db.SaveChanges();
-				return new ReturnData
+                db.Messages.Add(new Message
+                {
+                    AccNo = transaction.AccountNo,
+                    Source = transaction.AuditId,
+                    Telephone = member.Phone,
+                    Processed = false,
+                    AlertType = "AgencyAdvance",
+                    Charged = false,
+                    MsgType = "Outbox",
+                    DateReceived = DateTime.UtcNow.Date,
+                    Content = $"Dear Member,your request for advance of KES {transaction.Amount} to your account number {transaction.AccountNo} was successful."
+
+                });
+
+                db.SaveChanges();
+                return new ReturnData
 				{
 					Success = true,
 					Message = $"You have successfully applied for an advance of KES {transaction.Amount}"
@@ -528,6 +532,7 @@ namespace MobileBanking_API.Controllers
 			}
 			catch (Exception ex)
 			{
+         
 				return new ReturnData
 				{
 					Success = false,
