@@ -131,14 +131,25 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				if (!string.IsNullOrEmpty(printModel.FingerPrint))
-				{
-					var figuerPrintInfo = printModel.FingerPrint.Split('@');
-					printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
-					int decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
-					var fingerUpdateQuery = $"UPDATE MEMBERS SET FingerPrint = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
-					db.Database.ExecuteSqlCommand(fingerUpdateQuery);
-				}
+                
+                
+                //if (!string.IsNullOrEmpty(printModel.FingerPrint))
+                var accmeber = $"Select FingerPrint1 from MEMBERS  where IDNo='{printModel.IdNo}'";
+                var membeno = db.Database.SqlQuery<string>(accmeber).FirstOrDefault();
+                var figuerPrintInfo = printModel.FingerPrint.Split('@');
+                printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
+                int decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
+                if (membeno != null)
+                {
+                    var fingerUpdateQuery = $"UPDATE MEMBERS SET FingerPrint = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+                    db.Database.ExecuteSqlCommand(fingerUpdateQuery);
+                }
+                else
+                {
+                 
+                    var fingerUpdateQuery1 = $"UPDATE MEMBERS SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+                    db.Database.ExecuteSqlCommand(fingerUpdateQuery1);
+                }
 			
 				return new ReturnData
 				{
