@@ -12,6 +12,8 @@ namespace MobileBanking_API.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class kpillerEntities : DbContext
     {
@@ -252,5 +254,9381 @@ namespace MobileBanking_API.Models
         public virtual DbSet<Agentmember> Agentmembers { get; set; }
         public virtual DbSet<PosDevice> PosDevices { get; set; }
         public virtual DbSet<PosUser> PosUsers { get; set; }
+        public virtual DbSet<t_BinTable> t_BinTable { get; set; }
+        public virtual DbSet<t_CommunicationPorts> t_CommunicationPorts { get; set; }
+        public virtual DbSet<t_ISOFieldNames> t_ISOFieldNames { get; set; }
+        public virtual DbSet<t_MessageLog> t_MessageLog { get; set; }
+        public virtual DbSet<t_MessageTypes> t_MessageTypes { get; set; }
+        public virtual DbSet<t_ProcessingCode> t_ProcessingCode { get; set; }
+        public virtual DbSet<t_ReasonCodes> t_ReasonCodes { get; set; }
+        public virtual DbSet<t_Devices> t_Devices { get; set; }
+        public virtual DbSet<t_ISOMessageFormats> t_ISOMessageFormats { get; set; }
+        public virtual DbSet<t_UserMessageFormats> t_UserMessageFormats { get; set; }
+        public virtual DbSet<Expected_Return> Expected_Returns { get; set; }
+        public virtual DbSet<HENRYSHARELOANBAL> HENRYSHARELOANBALs { get; set; }
+        public virtual DbSet<vbMicrofinanceCollection> vbMicrofinanceCollections { get; set; }
+        public virtual DbSet<vbMicrofinanceCollections1> vbMicrofinanceCollections1 { get; set; }
+        public virtual DbSet<vWBankTransaction> vWBankTransactions { get; set; }
+        public virtual DbSet<vwBOSALoanee> vwBOSALoanees { get; set; }
+        public virtual DbSet<VwContribListing> VwContribListings { get; set; }
+        public virtual DbSet<vwDefauter> vwDefauters { get; set; }
+        public virtual DbSet<VwExpect> VwExpects { get; set; }
+        public virtual DbSet<vWexpectedReturn> vWexpectedReturns { get; set; }
+        public virtual DbSet<VwFrontofficepayment> VwFrontofficepayments { get; set; }
+        public virtual DbSet<vwHousing> vwHousings { get; set; }
+        public virtual DbSet<VwImportData> VwImportDatas { get; set; }
+        public virtual DbSet<VwInterest> VwInterests { get; set; }
+        public virtual DbSet<vwInterestAccrued> vwInterestAccrueds { get; set; }
+        public virtual DbSet<VwInterestAccrued1> VwInterestAccrued1 { get; set; }
+        public virtual DbSet<vWinterestCharged> vWinterestChargeds { get; set; }
+        public virtual DbSet<VwInterestReloaded333> VwInterestReloaded333 { get; set; }
+        public virtual DbSet<VwLoanBalance> VwLoanBalances { get; set; }
+        public virtual DbSet<VwLoanBalance1> VwLoanBalances1 { get; set; }
+        public virtual DbSet<VwLoanDeafulted> VwLoanDeafulteds { get; set; }
+        public virtual DbSet<vwLoanDetail> vwLoanDetails { get; set; }
+        public virtual DbSet<VwLoanEffectedMonthly> VwLoanEffectedMonthlies { get; set; }
+        public virtual DbSet<vwLoanGuarantorInformation> vwLoanGuarantorInformations { get; set; }
+        public virtual DbSet<vwLoanGuarantor> vwLoanGuarantors { get; set; }
+        public virtual DbSet<VwloanRepayment> VwloanRepayments { get; set; }
+        public virtual DbSet<VwLoan> VwLoans { get; set; }
+        public virtual DbSet<vwMemberShare> vwMemberShares { get; set; }
+        public virtual DbSet<VwMonthlyRepayment> VwMonthlyRepayments { get; set; }
+        public virtual DbSet<VwPettycash> VwPettycashes { get; set; }
+        public virtual DbSet<vwShareBalance> vwShareBalances { get; set; }
+        public virtual DbSet<VwShareBalance1> VwShareBalance1 { get; set; }
+        public virtual DbSet<vWSharesContrib> vWSharesContribs { get; set; }
+        public virtual DbSet<VwSharesHolder> VwSharesHolders { get; set; }
+        public virtual DbSet<zonesReport> zonesReports { get; set; }
+    
+        public virtual int ACC_EDIT(string aCCNO)
+        {
+            var aCCNOParameter = aCCNO != null ?
+                new ObjectParameter("ACCNO", aCCNO) :
+                new ObjectParameter("ACCNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ACC_EDIT", aCCNOParameter);
+        }
+    
+        public virtual ObjectResult<Acc_Updated_Result> Acc_Updated(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Acc_Updated_Result>("Acc_Updated", accNoParameter);
+        }
+    
+        public virtual int active_proc_rebuild(string ip_accountno)
+        {
+            var ip_accountnoParameter = ip_accountno != null ?
+                new ObjectParameter("ip_accountno", ip_accountno) :
+                new ObjectParameter("ip_accountno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("active_proc_rebuild", ip_accountnoParameter);
+        }
+    
+        [DbFunction("kpillerEntities", "Advance_Appraisal")]
+        public virtual IQueryable<Advance_Appraisal_Result> Advance_Appraisal(string accNo, string productID)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Advance_Appraisal_Result>("[kpillerEntities].[Advance_Appraisal](@AccNo, @ProductID)", accNoParameter, productIDParameter);
+        }
+    
+        public virtual int Asset_Depreciation()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Asset_Depreciation");
+        }
+    
+        public virtual ObjectResult<string> branch_codes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("branch_codes");
+        }
+    
+        public virtual int Charge_For_SentSMS()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Charge_For_SentSMS");
+        }
+    
+        public virtual ObjectResult<Check_Advert_Result> Check_Advert()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Check_Advert_Result>("Check_Advert");
+        }
+    
+        public virtual ObjectResult<Check_Authority_Status_Result> Check_Authority_Status(string accNo, Nullable<decimal> amount)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Check_Authority_Status_Result>("Check_Authority_Status", accNoParameter, amountParameter);
+        }
+    
+        public virtual int Create_Shares_Standing_Orders()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Create_Shares_Standing_Orders");
+        }
+    
+        public virtual int Create_Welfare_Standing_Order()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Create_Welfare_Standing_Order");
+        }
+    
+        public virtual ObjectResult<Customer_balance_Result> Customer_balance(string accno)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Customer_balance_Result>("Customer_balance", accnoParameter);
+        }
+    
+        public virtual int d_insert_tbl_menu(string menuName_1, string alias_2, Nullable<bool> enable_3)
+        {
+            var menuName_1Parameter = menuName_1 != null ?
+                new ObjectParameter("MenuName_1", menuName_1) :
+                new ObjectParameter("MenuName_1", typeof(string));
+    
+            var alias_2Parameter = alias_2 != null ?
+                new ObjectParameter("alias_2", alias_2) :
+                new ObjectParameter("alias_2", typeof(string));
+    
+            var enable_3Parameter = enable_3.HasValue ?
+                new ObjectParameter("enable_3", enable_3) :
+                new ObjectParameter("enable_3", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("d_insert_tbl_menu", menuName_1Parameter, alias_2Parameter, enable_3Parameter);
+        }
+    
+        public virtual ObjectResult<d_sel_member_Result> d_sel_member()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<d_sel_member_Result>("d_sel_member");
+        }
+    
+        public virtual int deallocateAssets(string assetNo)
+        {
+            var assetNoParameter = assetNo != null ?
+                new ObjectParameter("assetNo", assetNo) :
+                new ObjectParameter("assetNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("deallocateAssets", assetNoParameter);
+        }
+    
+        public virtual int Deduct_Share_Capital(string auditID)
+        {
+            var auditIDParameter = auditID != null ?
+                new ObjectParameter("AuditID", auditID) :
+                new ObjectParameter("AuditID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Deduct_Share_Capital", auditIDParameter);
+        }
+    
+        public virtual int Delete_tmpDividendPaylist()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Delete_tmpDividendPaylist");
+        }
+    
+        public virtual int dt_addtosourcecontrol(string vchSourceSafeINI, string vchProjectName, string vchComment, string vchLoginName, string vchPassword)
+        {
+            var vchSourceSafeINIParameter = vchSourceSafeINI != null ?
+                new ObjectParameter("vchSourceSafeINI", vchSourceSafeINI) :
+                new ObjectParameter("vchSourceSafeINI", typeof(string));
+    
+            var vchProjectNameParameter = vchProjectName != null ?
+                new ObjectParameter("vchProjectName", vchProjectName) :
+                new ObjectParameter("vchProjectName", typeof(string));
+    
+            var vchCommentParameter = vchComment != null ?
+                new ObjectParameter("vchComment", vchComment) :
+                new ObjectParameter("vchComment", typeof(string));
+    
+            var vchLoginNameParameter = vchLoginName != null ?
+                new ObjectParameter("vchLoginName", vchLoginName) :
+                new ObjectParameter("vchLoginName", typeof(string));
+    
+            var vchPasswordParameter = vchPassword != null ?
+                new ObjectParameter("vchPassword", vchPassword) :
+                new ObjectParameter("vchPassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_addtosourcecontrol", vchSourceSafeINIParameter, vchProjectNameParameter, vchCommentParameter, vchLoginNameParameter, vchPasswordParameter);
+        }
+    
+        public virtual int dt_addtosourcecontrol_u(string vchSourceSafeINI, string vchProjectName, string vchComment, string vchLoginName, string vchPassword)
+        {
+            var vchSourceSafeINIParameter = vchSourceSafeINI != null ?
+                new ObjectParameter("vchSourceSafeINI", vchSourceSafeINI) :
+                new ObjectParameter("vchSourceSafeINI", typeof(string));
+    
+            var vchProjectNameParameter = vchProjectName != null ?
+                new ObjectParameter("vchProjectName", vchProjectName) :
+                new ObjectParameter("vchProjectName", typeof(string));
+    
+            var vchCommentParameter = vchComment != null ?
+                new ObjectParameter("vchComment", vchComment) :
+                new ObjectParameter("vchComment", typeof(string));
+    
+            var vchLoginNameParameter = vchLoginName != null ?
+                new ObjectParameter("vchLoginName", vchLoginName) :
+                new ObjectParameter("vchLoginName", typeof(string));
+    
+            var vchPasswordParameter = vchPassword != null ?
+                new ObjectParameter("vchPassword", vchPassword) :
+                new ObjectParameter("vchPassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_addtosourcecontrol_u", vchSourceSafeINIParameter, vchProjectNameParameter, vchCommentParameter, vchLoginNameParameter, vchPasswordParameter);
+        }
+    
+        public virtual int dt_adduserobject()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_adduserobject");
+        }
+    
+        public virtual int dt_adduserobject_vcs(string vchProperty)
+        {
+            var vchPropertyParameter = vchProperty != null ?
+                new ObjectParameter("vchProperty", vchProperty) :
+                new ObjectParameter("vchProperty", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_adduserobject_vcs", vchPropertyParameter);
+        }
+    
+        public virtual int dt_checkinobject(string chObjectType, string vchObjectName, string vchComment, string vchLoginName, string vchPassword, Nullable<int> iVCSFlags, Nullable<int> iActionFlag, string txStream1, string txStream2, string txStream3)
+        {
+            var chObjectTypeParameter = chObjectType != null ?
+                new ObjectParameter("chObjectType", chObjectType) :
+                new ObjectParameter("chObjectType", typeof(string));
+    
+            var vchObjectNameParameter = vchObjectName != null ?
+                new ObjectParameter("vchObjectName", vchObjectName) :
+                new ObjectParameter("vchObjectName", typeof(string));
+    
+            var vchCommentParameter = vchComment != null ?
+                new ObjectParameter("vchComment", vchComment) :
+                new ObjectParameter("vchComment", typeof(string));
+    
+            var vchLoginNameParameter = vchLoginName != null ?
+                new ObjectParameter("vchLoginName", vchLoginName) :
+                new ObjectParameter("vchLoginName", typeof(string));
+    
+            var vchPasswordParameter = vchPassword != null ?
+                new ObjectParameter("vchPassword", vchPassword) :
+                new ObjectParameter("vchPassword", typeof(string));
+    
+            var iVCSFlagsParameter = iVCSFlags.HasValue ?
+                new ObjectParameter("iVCSFlags", iVCSFlags) :
+                new ObjectParameter("iVCSFlags", typeof(int));
+    
+            var iActionFlagParameter = iActionFlag.HasValue ?
+                new ObjectParameter("iActionFlag", iActionFlag) :
+                new ObjectParameter("iActionFlag", typeof(int));
+    
+            var txStream1Parameter = txStream1 != null ?
+                new ObjectParameter("txStream1", txStream1) :
+                new ObjectParameter("txStream1", typeof(string));
+    
+            var txStream2Parameter = txStream2 != null ?
+                new ObjectParameter("txStream2", txStream2) :
+                new ObjectParameter("txStream2", typeof(string));
+    
+            var txStream3Parameter = txStream3 != null ?
+                new ObjectParameter("txStream3", txStream3) :
+                new ObjectParameter("txStream3", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_checkinobject", chObjectTypeParameter, vchObjectNameParameter, vchCommentParameter, vchLoginNameParameter, vchPasswordParameter, iVCSFlagsParameter, iActionFlagParameter, txStream1Parameter, txStream2Parameter, txStream3Parameter);
+        }
+    
+        public virtual int dt_checkinobject_u(string chObjectType, string vchObjectName, string vchComment, string vchLoginName, string vchPassword, Nullable<int> iVCSFlags, Nullable<int> iActionFlag, string txStream1, string txStream2, string txStream3)
+        {
+            var chObjectTypeParameter = chObjectType != null ?
+                new ObjectParameter("chObjectType", chObjectType) :
+                new ObjectParameter("chObjectType", typeof(string));
+    
+            var vchObjectNameParameter = vchObjectName != null ?
+                new ObjectParameter("vchObjectName", vchObjectName) :
+                new ObjectParameter("vchObjectName", typeof(string));
+    
+            var vchCommentParameter = vchComment != null ?
+                new ObjectParameter("vchComment", vchComment) :
+                new ObjectParameter("vchComment", typeof(string));
+    
+            var vchLoginNameParameter = vchLoginName != null ?
+                new ObjectParameter("vchLoginName", vchLoginName) :
+                new ObjectParameter("vchLoginName", typeof(string));
+    
+            var vchPasswordParameter = vchPassword != null ?
+                new ObjectParameter("vchPassword", vchPassword) :
+                new ObjectParameter("vchPassword", typeof(string));
+    
+            var iVCSFlagsParameter = iVCSFlags.HasValue ?
+                new ObjectParameter("iVCSFlags", iVCSFlags) :
+                new ObjectParameter("iVCSFlags", typeof(int));
+    
+            var iActionFlagParameter = iActionFlag.HasValue ?
+                new ObjectParameter("iActionFlag", iActionFlag) :
+                new ObjectParameter("iActionFlag", typeof(int));
+    
+            var txStream1Parameter = txStream1 != null ?
+                new ObjectParameter("txStream1", txStream1) :
+                new ObjectParameter("txStream1", typeof(string));
+    
+            var txStream2Parameter = txStream2 != null ?
+                new ObjectParameter("txStream2", txStream2) :
+                new ObjectParameter("txStream2", typeof(string));
+    
+            var txStream3Parameter = txStream3 != null ?
+                new ObjectParameter("txStream3", txStream3) :
+                new ObjectParameter("txStream3", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_checkinobject_u", chObjectTypeParameter, vchObjectNameParameter, vchCommentParameter, vchLoginNameParameter, vchPasswordParameter, iVCSFlagsParameter, iActionFlagParameter, txStream1Parameter, txStream2Parameter, txStream3Parameter);
+        }
+    
+        public virtual int dt_checkoutobject(string chObjectType, string vchObjectName, string vchComment, string vchLoginName, string vchPassword, Nullable<int> iVCSFlags, Nullable<int> iActionFlag)
+        {
+            var chObjectTypeParameter = chObjectType != null ?
+                new ObjectParameter("chObjectType", chObjectType) :
+                new ObjectParameter("chObjectType", typeof(string));
+    
+            var vchObjectNameParameter = vchObjectName != null ?
+                new ObjectParameter("vchObjectName", vchObjectName) :
+                new ObjectParameter("vchObjectName", typeof(string));
+    
+            var vchCommentParameter = vchComment != null ?
+                new ObjectParameter("vchComment", vchComment) :
+                new ObjectParameter("vchComment", typeof(string));
+    
+            var vchLoginNameParameter = vchLoginName != null ?
+                new ObjectParameter("vchLoginName", vchLoginName) :
+                new ObjectParameter("vchLoginName", typeof(string));
+    
+            var vchPasswordParameter = vchPassword != null ?
+                new ObjectParameter("vchPassword", vchPassword) :
+                new ObjectParameter("vchPassword", typeof(string));
+    
+            var iVCSFlagsParameter = iVCSFlags.HasValue ?
+                new ObjectParameter("iVCSFlags", iVCSFlags) :
+                new ObjectParameter("iVCSFlags", typeof(int));
+    
+            var iActionFlagParameter = iActionFlag.HasValue ?
+                new ObjectParameter("iActionFlag", iActionFlag) :
+                new ObjectParameter("iActionFlag", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_checkoutobject", chObjectTypeParameter, vchObjectNameParameter, vchCommentParameter, vchLoginNameParameter, vchPasswordParameter, iVCSFlagsParameter, iActionFlagParameter);
+        }
+    
+        public virtual int dt_checkoutobject_u(string chObjectType, string vchObjectName, string vchComment, string vchLoginName, string vchPassword, Nullable<int> iVCSFlags, Nullable<int> iActionFlag)
+        {
+            var chObjectTypeParameter = chObjectType != null ?
+                new ObjectParameter("chObjectType", chObjectType) :
+                new ObjectParameter("chObjectType", typeof(string));
+    
+            var vchObjectNameParameter = vchObjectName != null ?
+                new ObjectParameter("vchObjectName", vchObjectName) :
+                new ObjectParameter("vchObjectName", typeof(string));
+    
+            var vchCommentParameter = vchComment != null ?
+                new ObjectParameter("vchComment", vchComment) :
+                new ObjectParameter("vchComment", typeof(string));
+    
+            var vchLoginNameParameter = vchLoginName != null ?
+                new ObjectParameter("vchLoginName", vchLoginName) :
+                new ObjectParameter("vchLoginName", typeof(string));
+    
+            var vchPasswordParameter = vchPassword != null ?
+                new ObjectParameter("vchPassword", vchPassword) :
+                new ObjectParameter("vchPassword", typeof(string));
+    
+            var iVCSFlagsParameter = iVCSFlags.HasValue ?
+                new ObjectParameter("iVCSFlags", iVCSFlags) :
+                new ObjectParameter("iVCSFlags", typeof(int));
+    
+            var iActionFlagParameter = iActionFlag.HasValue ?
+                new ObjectParameter("iActionFlag", iActionFlag) :
+                new ObjectParameter("iActionFlag", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_checkoutobject_u", chObjectTypeParameter, vchObjectNameParameter, vchCommentParameter, vchLoginNameParameter, vchPasswordParameter, iVCSFlagsParameter, iActionFlagParameter);
+        }
+    
+        public virtual int dt_displayoaerror(Nullable<int> iObject, Nullable<int> iresult)
+        {
+            var iObjectParameter = iObject.HasValue ?
+                new ObjectParameter("iObject", iObject) :
+                new ObjectParameter("iObject", typeof(int));
+    
+            var iresultParameter = iresult.HasValue ?
+                new ObjectParameter("iresult", iresult) :
+                new ObjectParameter("iresult", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_displayoaerror", iObjectParameter, iresultParameter);
+        }
+    
+        public virtual int dt_displayoaerror_u(Nullable<int> iObject, Nullable<int> iresult)
+        {
+            var iObjectParameter = iObject.HasValue ?
+                new ObjectParameter("iObject", iObject) :
+                new ObjectParameter("iObject", typeof(int));
+    
+            var iresultParameter = iresult.HasValue ?
+                new ObjectParameter("iresult", iresult) :
+                new ObjectParameter("iresult", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_displayoaerror_u", iObjectParameter, iresultParameter);
+        }
+    
+        public virtual int dt_droppropertiesbyid(Nullable<int> id, string property)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_droppropertiesbyid", idParameter, propertyParameter);
+        }
+    
+        public virtual int dt_dropuserobjectbyid(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_dropuserobjectbyid", idParameter);
+        }
+    
+        public virtual int dt_generateansiname(ObjectParameter name)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_generateansiname", name);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> dt_getobjwithprop(string property, string value)
+        {
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            var valueParameter = value != null ?
+                new ObjectParameter("value", value) :
+                new ObjectParameter("value", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("dt_getobjwithprop", propertyParameter, valueParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> dt_getobjwithprop_u(string property, string uvalue)
+        {
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            var uvalueParameter = uvalue != null ?
+                new ObjectParameter("uvalue", uvalue) :
+                new ObjectParameter("uvalue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("dt_getobjwithprop_u", propertyParameter, uvalueParameter);
+        }
+    
+        public virtual ObjectResult<dt_getpropertiesbyid_Result> dt_getpropertiesbyid(Nullable<int> id, string property)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dt_getpropertiesbyid_Result>("dt_getpropertiesbyid", idParameter, propertyParameter);
+        }
+    
+        public virtual ObjectResult<dt_getpropertiesbyid_u_Result> dt_getpropertiesbyid_u(Nullable<int> id, string property)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dt_getpropertiesbyid_u_Result>("dt_getpropertiesbyid_u", idParameter, propertyParameter);
+        }
+    
+        public virtual int dt_getpropertiesbyid_vcs(Nullable<int> id, string property, ObjectParameter value)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_getpropertiesbyid_vcs", idParameter, propertyParameter, value);
+        }
+    
+        public virtual int dt_getpropertiesbyid_vcs_u(Nullable<int> id, string property, ObjectParameter value)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_getpropertiesbyid_vcs_u", idParameter, propertyParameter, value);
+        }
+    
+        public virtual int dt_isundersourcecontrol(string vchLoginName, string vchPassword, Nullable<int> iWhoToo)
+        {
+            var vchLoginNameParameter = vchLoginName != null ?
+                new ObjectParameter("vchLoginName", vchLoginName) :
+                new ObjectParameter("vchLoginName", typeof(string));
+    
+            var vchPasswordParameter = vchPassword != null ?
+                new ObjectParameter("vchPassword", vchPassword) :
+                new ObjectParameter("vchPassword", typeof(string));
+    
+            var iWhoTooParameter = iWhoToo.HasValue ?
+                new ObjectParameter("iWhoToo", iWhoToo) :
+                new ObjectParameter("iWhoToo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_isundersourcecontrol", vchLoginNameParameter, vchPasswordParameter, iWhoTooParameter);
+        }
+    
+        public virtual int dt_isundersourcecontrol_u(string vchLoginName, string vchPassword, Nullable<int> iWhoToo)
+        {
+            var vchLoginNameParameter = vchLoginName != null ?
+                new ObjectParameter("vchLoginName", vchLoginName) :
+                new ObjectParameter("vchLoginName", typeof(string));
+    
+            var vchPasswordParameter = vchPassword != null ?
+                new ObjectParameter("vchPassword", vchPassword) :
+                new ObjectParameter("vchPassword", typeof(string));
+    
+            var iWhoTooParameter = iWhoToo.HasValue ?
+                new ObjectParameter("iWhoToo", iWhoToo) :
+                new ObjectParameter("iWhoToo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_isundersourcecontrol_u", vchLoginNameParameter, vchPasswordParameter, iWhoTooParameter);
+        }
+    
+        public virtual int dt_removefromsourcecontrol()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_removefromsourcecontrol");
+        }
+    
+        public virtual int dt_setpropertybyid(Nullable<int> id, string property, string value, byte[] lvalue)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            var valueParameter = value != null ?
+                new ObjectParameter("value", value) :
+                new ObjectParameter("value", typeof(string));
+    
+            var lvalueParameter = lvalue != null ?
+                new ObjectParameter("lvalue", lvalue) :
+                new ObjectParameter("lvalue", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_setpropertybyid", idParameter, propertyParameter, valueParameter, lvalueParameter);
+        }
+    
+        public virtual int dt_setpropertybyid_u(Nullable<int> id, string property, string uvalue, byte[] lvalue)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            var uvalueParameter = uvalue != null ?
+                new ObjectParameter("uvalue", uvalue) :
+                new ObjectParameter("uvalue", typeof(string));
+    
+            var lvalueParameter = lvalue != null ?
+                new ObjectParameter("lvalue", lvalue) :
+                new ObjectParameter("lvalue", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_setpropertybyid_u", idParameter, propertyParameter, uvalueParameter, lvalueParameter);
+        }
+    
+        public virtual int dt_validateloginparams(string vchLoginName, string vchPassword)
+        {
+            var vchLoginNameParameter = vchLoginName != null ?
+                new ObjectParameter("vchLoginName", vchLoginName) :
+                new ObjectParameter("vchLoginName", typeof(string));
+    
+            var vchPasswordParameter = vchPassword != null ?
+                new ObjectParameter("vchPassword", vchPassword) :
+                new ObjectParameter("vchPassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_validateloginparams", vchLoginNameParameter, vchPasswordParameter);
+        }
+    
+        public virtual int dt_validateloginparams_u(string vchLoginName, string vchPassword)
+        {
+            var vchLoginNameParameter = vchLoginName != null ?
+                new ObjectParameter("vchLoginName", vchLoginName) :
+                new ObjectParameter("vchLoginName", typeof(string));
+    
+            var vchPasswordParameter = vchPassword != null ?
+                new ObjectParameter("vchPassword", vchPassword) :
+                new ObjectParameter("vchPassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_validateloginparams_u", vchLoginNameParameter, vchPasswordParameter);
+        }
+    
+        public virtual int dt_vcsenabled()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_vcsenabled");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> dt_verstamp006()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("dt_verstamp006");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> dt_verstamp007()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("dt_verstamp007");
+        }
+    
+        public virtual int dt_whocheckedout(string chObjectType, string vchObjectName, string vchLoginName, string vchPassword)
+        {
+            var chObjectTypeParameter = chObjectType != null ?
+                new ObjectParameter("chObjectType", chObjectType) :
+                new ObjectParameter("chObjectType", typeof(string));
+    
+            var vchObjectNameParameter = vchObjectName != null ?
+                new ObjectParameter("vchObjectName", vchObjectName) :
+                new ObjectParameter("vchObjectName", typeof(string));
+    
+            var vchLoginNameParameter = vchLoginName != null ?
+                new ObjectParameter("vchLoginName", vchLoginName) :
+                new ObjectParameter("vchLoginName", typeof(string));
+    
+            var vchPasswordParameter = vchPassword != null ?
+                new ObjectParameter("vchPassword", vchPassword) :
+                new ObjectParameter("vchPassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_whocheckedout", chObjectTypeParameter, vchObjectNameParameter, vchLoginNameParameter, vchPasswordParameter);
+        }
+    
+        public virtual int dt_whocheckedout_u(string chObjectType, string vchObjectName, string vchLoginName, string vchPassword)
+        {
+            var chObjectTypeParameter = chObjectType != null ?
+                new ObjectParameter("chObjectType", chObjectType) :
+                new ObjectParameter("chObjectType", typeof(string));
+    
+            var vchObjectNameParameter = vchObjectName != null ?
+                new ObjectParameter("vchObjectName", vchObjectName) :
+                new ObjectParameter("vchObjectName", typeof(string));
+    
+            var vchLoginNameParameter = vchLoginName != null ?
+                new ObjectParameter("vchLoginName", vchLoginName) :
+                new ObjectParameter("vchLoginName", typeof(string));
+    
+            var vchPasswordParameter = vchPassword != null ?
+                new ObjectParameter("vchPassword", vchPassword) :
+                new ObjectParameter("vchPassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_whocheckedout_u", chObjectTypeParameter, vchObjectNameParameter, vchLoginNameParameter, vchPasswordParameter);
+        }
+    
+        public virtual int EasyMobi_Advance_Product_Recovery(string accNo, string productID, string refNo, string phoneNo, Nullable<decimal> amount)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            var refNoParameter = refNo != null ?
+                new ObjectParameter("RefNo", refNo) :
+                new ObjectParameter("RefNo", typeof(string));
+    
+            var phoneNoParameter = phoneNo != null ?
+                new ObjectParameter("PhoneNo", phoneNo) :
+                new ObjectParameter("PhoneNo", typeof(string));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EasyMobi_Advance_Product_Recovery", accNoParameter, productIDParameter, refNoParameter, phoneNoParameter, amountParameter);
+        }
+    
+        public virtual int EasyMobi_BOSA_Deposit_Deduction(string accNo, string productID, string refNo, string phoneNo, Nullable<decimal> amount)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            var refNoParameter = refNo != null ?
+                new ObjectParameter("RefNo", refNo) :
+                new ObjectParameter("RefNo", typeof(string));
+    
+            var phoneNoParameter = phoneNo != null ?
+                new ObjectParameter("PhoneNo", phoneNo) :
+                new ObjectParameter("PhoneNo", typeof(string));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EasyMobi_BOSA_Deposit_Deduction", accNoParameter, productIDParameter, refNoParameter, phoneNoParameter, amountParameter);
+        }
+    
+        public virtual int EasyMobi_Loan_Product_Recovery(string accNo, string productID2, string refNo, string phoneNo, Nullable<decimal> amount)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var productID2Parameter = productID2 != null ?
+                new ObjectParameter("ProductID2", productID2) :
+                new ObjectParameter("ProductID2", typeof(string));
+    
+            var refNoParameter = refNo != null ?
+                new ObjectParameter("RefNo", refNo) :
+                new ObjectParameter("RefNo", typeof(string));
+    
+            var phoneNoParameter = phoneNo != null ?
+                new ObjectParameter("PhoneNo", phoneNo) :
+                new ObjectParameter("PhoneNo", typeof(string));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EasyMobi_Loan_Product_Recovery", accNoParameter, productID2Parameter, refNoParameter, phoneNoParameter, amountParameter);
+        }
+    
+        public virtual int EasyMobi_MICRO_Savings_Deduction(string accNo, string productID, string refNo, string phoneNo, Nullable<decimal> amount)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            var refNoParameter = refNo != null ?
+                new ObjectParameter("RefNo", refNo) :
+                new ObjectParameter("RefNo", typeof(string));
+    
+            var phoneNoParameter = phoneNo != null ?
+                new ObjectParameter("PhoneNo", phoneNo) :
+                new ObjectParameter("PhoneNo", typeof(string));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EasyMobi_MICRO_Savings_Deduction", accNoParameter, productIDParameter, refNoParameter, phoneNoParameter, amountParameter);
+        }
+    
+        public virtual int GENERATE_CASH_FLOW(string transdate)
+        {
+            var transdateParameter = transdate != null ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GENERATE_CASH_FLOW", transdateParameter);
+        }
+    
+        public virtual int Generate_Statement(string accNo, Nullable<System.DateTime> startDate, Nullable<System.DateTime> finishDate)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var finishDateParameter = finishDate.HasValue ?
+                new ObjectParameter("FinishDate", finishDate) :
+                new ObjectParameter("FinishDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Generate_Statement", accNoParameter, startDateParameter, finishDateParameter);
+        }
+    
+        public virtual ObjectResult<Get_Acc_Transactions_Result> Get_Acc_Transactions(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Acc_Transactions_Result>("Get_Acc_Transactions", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Acc_Uncleared_Cheques_Result> Get_Acc_Uncleared_Cheques(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Acc_Uncleared_Cheques_Result>("Get_Acc_Uncleared_Cheques", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Account_Details_AccName_Result> Get_Account_Details_AccName(string accName)
+        {
+            var accNameParameter = accName != null ?
+                new ObjectParameter("AccName", accName) :
+                new ObjectParameter("AccName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Account_Details_AccName_Result>("Get_Account_Details_AccName", accNameParameter);
+        }
+    
+        public virtual ObjectResult<Get_Account_Details_AccNo_Result> Get_Account_Details_AccNo(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Account_Details_AccNo_Result>("Get_Account_Details_AccNo", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Account_Details_IDNo_Result> Get_Account_Details_IDNo(string idno)
+        {
+            var idnoParameter = idno != null ?
+                new ObjectParameter("idno", idno) :
+                new ObjectParameter("idno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Account_Details_IDNo_Result>("Get_Account_Details_IDNo", idnoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Account_Details_MemberNo_Result> Get_Account_Details_MemberNo(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Account_Details_MemberNo_Result>("Get_Account_Details_MemberNo", memberNoParameter);
+        }
+    
+        public virtual int Get_AccountHolders_Balances(Nullable<System.DateTime> transdate)
+        {
+            var transdateParameter = transdate.HasValue ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Get_AccountHolders_Balances", transdateParameter);
+        }
+    
+        public virtual ObjectResult<string> Get_Accounts(string startAccNo, string finishAccNo)
+        {
+            var startAccNoParameter = startAccNo != null ?
+                new ObjectParameter("StartAccNo", startAccNo) :
+                new ObjectParameter("StartAccNo", typeof(string));
+    
+            var finishAccNoParameter = finishAccNo != null ?
+                new ObjectParameter("FinishAccNo", finishAccNo) :
+                new ObjectParameter("FinishAccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Get_Accounts", startAccNoParameter, finishAccNoParameter);
+        }
+    
+        public virtual ObjectResult<string> get_active_accounts()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("get_active_accounts");
+        }
+    
+        public virtual ObjectResult<Get_Advance_Members_Result> Get_Advance_Members(Nullable<System.DateTime> cDate)
+        {
+            var cDateParameter = cDate.HasValue ?
+                new ObjectParameter("cDate", cDate) :
+                new ObjectParameter("cDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Advance_Members_Result>("Get_Advance_Members", cDateParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> Get_Advance_Sto(string accNo, string recFrom, string source)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var recFromParameter = recFrom != null ?
+                new ObjectParameter("RecFrom", recFrom) :
+                new ObjectParameter("RecFrom", typeof(string));
+    
+            var sourceParameter = source != null ?
+                new ObjectParameter("Source", source) :
+                new ObjectParameter("Source", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("Get_Advance_Sto", accNoParameter, recFromParameter, sourceParameter);
+        }
+    
+        public virtual int Get_Advances_listing()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Get_Advances_listing");
+        }
+    
+        public virtual ObjectResult<Get_All_Members_Like_Result> Get_All_Members_Like(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_All_Members_Like_Result>("Get_All_Members_Like", memberNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Authorisation_Result> Get_Authorisation(string accNo, Nullable<decimal> amount)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Authorisation_Result>("Get_Authorisation", accNoParameter, amountParameter);
+        }
+    
+        [DbFunction("kpillerEntities", "Get_B2C_Charges")]
+        public virtual IQueryable<Get_B2C_Charges_Result> Get_B2C_Charges(Nullable<decimal> amount)
+        {
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Get_B2C_Charges_Result>("[kpillerEntities].[Get_B2C_Charges](@Amount)", amountParameter);
+        }
+    
+        public virtual ObjectResult<Get_balances_Result> Get_balances(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_balances_Result>("Get_balances", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_BOSA_Balances_Result> Get_BOSA_Balances(Nullable<System.DateTime> asAt)
+        {
+            var asAtParameter = asAt.HasValue ?
+                new ObjectParameter("AsAt", asAt) :
+                new ObjectParameter("AsAt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_BOSA_Balances_Result>("Get_BOSA_Balances", asAtParameter);
+        }
+    
+        public virtual ObjectResult<Get_BOSA_Deposits_Result> Get_BOSA_Deposits(Nullable<System.DateTime> asAt)
+        {
+            var asAtParameter = asAt.HasValue ?
+                new ObjectParameter("AsAt", asAt) :
+                new ObjectParameter("AsAt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_BOSA_Deposits_Result>("Get_BOSA_Deposits", asAtParameter);
+        }
+    
+        public virtual ObjectResult<Get_Cheques_Result> Get_Cheques(string product, Nullable<System.DateTime> period, string source)
+        {
+            var productParameter = product != null ?
+                new ObjectParameter("Product", product) :
+                new ObjectParameter("Product", typeof(string));
+    
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(System.DateTime));
+    
+            var sourceParameter = source != null ?
+                new ObjectParameter("Source", source) :
+                new ObjectParameter("Source", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Cheques_Result>("Get_Cheques", productParameter, periodParameter, sourceParameter);
+        }
+    
+        public virtual ObjectResult<Get_Customer_Details_AccNo_Result> Get_Customer_Details_AccNo(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Customer_Details_AccNo_Result>("Get_Customer_Details_AccNo", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Customer_Details_GrowerNo_Result> Get_Customer_Details_GrowerNo(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Customer_Details_GrowerNo_Result>("Get_Customer_Details_GrowerNo", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Customer_Details_IDNo_Result> Get_Customer_Details_IDNo(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Customer_Details_IDNo_Result>("Get_Customer_Details_IDNo", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Customer_Details_MemberNo_Result> Get_Customer_Details_MemberNo(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Customer_Details_MemberNo_Result>("Get_Customer_Details_MemberNo", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Customer_Details_Name_Result> Get_Customer_Details_Name(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Customer_Details_Name_Result>("Get_Customer_Details_Name", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_CustomerNo_Transactions_Result> Get_CustomerNo_Transactions(string mNo, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var mNoParameter = mNo != null ?
+                new ObjectParameter("MNo", mNo) :
+                new ObjectParameter("MNo", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_CustomerNo_Transactions_Result>("Get_CustomerNo_Transactions", mNoParameter, fromDateParameter, toDateParameter);
+        }
+    
+        public virtual ObjectResult<Get_Database_tables_Result> Get_Database_tables()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Database_tables_Result>("Get_Database_tables");
+        }
+    
+        public virtual ObjectResult<Get_Deductions_Result> Get_Deductions()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Deductions_Result>("Get_Deductions");
+        }
+    
+        public virtual ObjectResult<Get_Frozen_Trans_Result> Get_Frozen_Trans(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Frozen_Trans_Result>("Get_Frozen_Trans", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_GLAccount_Details_Result> Get_GLAccount_Details(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_GLAccount_Details_Result>("Get_GLAccount_Details", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Imported_CashIncome_Result> Get_Imported_CashIncome(Nullable<System.DateTime> period, string memberno, Nullable<decimal> amount)
+        {
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(System.DateTime));
+    
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Imported_CashIncome_Result>("Get_Imported_CashIncome", periodParameter, membernoParameter, amountParameter);
+        }
+    
+        public virtual ObjectResult<Get_Income_Products_Result> Get_Income_Products(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Income_Products_Result>("Get_Income_Products", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Income_Sources_Result> Get_Income_Sources()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Income_Sources_Result>("Get_Income_Sources");
+        }
+    
+        public virtual ObjectResult<Get_Loabalance_Result> Get_Loabalance(string memberno)
+        {
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Loabalance_Result>("Get_Loabalance", membernoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Loan_Details_Result> Get_Loan_Details(string loanNo)
+        {
+            var loanNoParameter = loanNo != null ?
+                new ObjectParameter("LoanNo", loanNo) :
+                new ObjectParameter("LoanNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Loan_Details_Result>("Get_Loan_Details", loanNoParameter);
+        }
+    
+        public virtual ObjectResult<string> Get_Loan_Guarantors(string loanNo, string accNo)
+        {
+            var loanNoParameter = loanNo != null ?
+                new ObjectParameter("LoanNo", loanNo) :
+                new ObjectParameter("LoanNo", typeof(string));
+    
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Get_Loan_Guarantors", loanNoParameter, accNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Loan_Repayment_Result> Get_Loan_Repayment(string memberno, string loanno)
+        {
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            var loannoParameter = loanno != null ?
+                new ObjectParameter("loanno", loanno) :
+                new ObjectParameter("loanno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Loan_Repayment_Result>("Get_Loan_Repayment", membernoParameter, loannoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> Get_Loan_Sto(string accNo, string productID, string source)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            var sourceParameter = source != null ?
+                new ObjectParameter("Source", source) :
+                new ObjectParameter("Source", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("Get_Loan_Sto", accNoParameter, productIDParameter, sourceParameter);
+        }
+    
+        public virtual ObjectResult<Get_LoanBalance_Result> Get_LoanBalance(Nullable<System.DateTime> transDate)
+        {
+            var transDateParameter = transDate.HasValue ?
+                new ObjectParameter("TransDate", transDate) :
+                new ObjectParameter("TransDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_LoanBalance_Result>("Get_LoanBalance", transDateParameter);
+        }
+    
+        public virtual ObjectResult<Get_Member_Details_Result> Get_Member_Details(string searchID, string searchValue)
+        {
+            var searchIDParameter = searchID != null ?
+                new ObjectParameter("SearchID", searchID) :
+                new ObjectParameter("SearchID", typeof(string));
+    
+            var searchValueParameter = searchValue != null ?
+                new ObjectParameter("SearchValue", searchValue) :
+                new ObjectParameter("SearchValue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Member_Details_Result>("Get_Member_Details", searchIDParameter, searchValueParameter);
+        }
+    
+        public virtual ObjectResult<Get_Member_Details_AccNo_Result> Get_Member_Details_AccNo(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Member_Details_AccNo_Result>("Get_Member_Details_AccNo", memberNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Member_Details_IDNo_Result> Get_Member_Details_IDNo(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Member_Details_IDNo_Result>("Get_Member_Details_IDNo", memberNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Member_Details_MemberNo_Result> Get_Member_Details_MemberNo(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Member_Details_MemberNo_Result>("Get_Member_Details_MemberNo", memberNoParameter);
+        }
+    
+        public virtual int Get_Member_Loan_Arrears(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Get_Member_Loan_Arrears", memberNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Member_Loans_Result> Get_Member_Loans(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Member_Loans_Result>("Get_Member_Loans", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> Get_Member_Monthly_Shares(string memberNo, Nullable<int> mMonth, Nullable<int> mYear, string sharescode)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            var mMonthParameter = mMonth.HasValue ?
+                new ObjectParameter("mMonth", mMonth) :
+                new ObjectParameter("mMonth", typeof(int));
+    
+            var mYearParameter = mYear.HasValue ?
+                new ObjectParameter("mYear", mYear) :
+                new ObjectParameter("mYear", typeof(int));
+    
+            var sharescodeParameter = sharescode != null ?
+                new ObjectParameter("sharescode", sharescode) :
+                new ObjectParameter("sharescode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("Get_Member_Monthly_Shares", memberNoParameter, mMonthParameter, mYearParameter, sharescodeParameter);
+        }
+    
+        public virtual ObjectResult<Get_Member_Standing_Orders_Result> Get_Member_Standing_Orders(string searchID, string searchValue)
+        {
+            var searchIDParameter = searchID != null ?
+                new ObjectParameter("SearchID", searchID) :
+                new ObjectParameter("SearchID", typeof(string));
+    
+            var searchValueParameter = searchValue != null ?
+                new ObjectParameter("SearchValue", searchValue) :
+                new ObjectParameter("SearchValue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Member_Standing_Orders_Result>("Get_Member_Standing_Orders", searchIDParameter, searchValueParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> Get_Member_Total_Shares(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("Get_Member_Total_Shares", memberNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Members_AccountNo_Result> Get_Members_AccountNo(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Members_AccountNo_Result>("Get_Members_AccountNo", memberNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Members_GrowerNo_Result> Get_Members_GrowerNo(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Members_GrowerNo_Result>("Get_Members_GrowerNo", memberNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Members_IDNo_Result> Get_Members_IDNo(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Members_IDNo_Result>("Get_Members_IDNo", memberNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Members_OtherNames_Result> Get_Members_OtherNames(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Members_OtherNames_Result>("Get_Members_OtherNames", memberNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Members_SurName_Result> Get_Members_SurName(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Members_SurName_Result>("Get_Members_SurName", memberNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_MyLoan_Details_Result> Get_MyLoan_Details(string loanNo)
+        {
+            var loanNoParameter = loanNo != null ?
+                new ObjectParameter("LoanNo", loanNo) :
+                new ObjectParameter("LoanNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_MyLoan_Details_Result>("Get_MyLoan_Details", loanNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_NHIF_Month_Contributions_Result> Get_NHIF_Month_Contributions(Nullable<System.DateTime> period, string accNo)
+        {
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(System.DateTime));
+    
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_NHIF_Month_Contributions_Result>("Get_NHIF_Month_Contributions", periodParameter, accNoParameter);
+        }
+    
+        public virtual ObjectResult<string> Get_NHIF_Month_Members(Nullable<System.DateTime> period)
+        {
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Get_NHIF_Month_Members", periodParameter);
+        }
+    
+        public virtual ObjectResult<Get_Other_Deduction_Result> Get_Other_Deduction(string memberno)
+        {
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Other_Deduction_Result>("Get_Other_Deduction", membernoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> Get_Posted_Amount(Nullable<System.DateTime> period, string source, string productID, string chequeNo)
+        {
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(System.DateTime));
+    
+            var sourceParameter = source != null ?
+                new ObjectParameter("Source", source) :
+                new ObjectParameter("Source", typeof(string));
+    
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            var chequeNoParameter = chequeNo != null ?
+                new ObjectParameter("ChequeNo", chequeNo) :
+                new ObjectParameter("ChequeNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("Get_Posted_Amount", periodParameter, sourceParameter, productIDParameter, chequeNoParameter);
+        }
+    
+        public virtual int get_rate()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("get_rate");
+        }
+    
+        public virtual int Get_Receipt_Details(Nullable<System.DateTime> dt, string receiptNo)
+        {
+            var dtParameter = dt.HasValue ?
+                new ObjectParameter("Dt", dt) :
+                new ObjectParameter("Dt", typeof(System.DateTime));
+    
+            var receiptNoParameter = receiptNo != null ?
+                new ObjectParameter("ReceiptNo", receiptNo) :
+                new ObjectParameter("ReceiptNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Get_Receipt_Details", dtParameter, receiptNoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<double>> Get_Received_Amount(string productID, string source, Nullable<System.DateTime> period, string chequeNo)
+        {
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            var sourceParameter = source != null ?
+                new ObjectParameter("Source", source) :
+                new ObjectParameter("Source", typeof(string));
+    
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(System.DateTime));
+    
+            var chequeNoParameter = chequeNo != null ?
+                new ObjectParameter("ChequeNo", chequeNo) :
+                new ObjectParameter("ChequeNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("Get_Received_Amount", productIDParameter, sourceParameter, periodParameter, chequeNoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Share_contrib_Result> Get_Share_contrib(string memberno)
+        {
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Share_contrib_Result>("Get_Share_contrib", membernoParameter);
+        }
+    
+        public virtual ObjectResult<Get_Staff_Loan_Arrears_Result> Get_Staff_Loan_Arrears(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Staff_Loan_Arrears_Result>("Get_Staff_Loan_Arrears", accNoParameter);
+        }
+    
+        public virtual int Get_Staff_Loans(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Get_Staff_Loans", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> get_sum_advances()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("get_sum_advances");
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> get_sum_saving_avail(string accno)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("get_sum_saving_avail", accnoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> get_sum_savings(string accno)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("get_sum_savings", accnoParameter);
+        }
+    
+        public virtual ObjectResult<Get_summaryCollectionDistribution_Result> Get_summaryCollectionDistribution(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("startDate", startDate) :
+                new ObjectParameter("startDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_summaryCollectionDistribution_Result>("Get_summaryCollectionDistribution", startDateParameter, endDateParameter);
+        }
+    
+        public virtual ObjectResult<Get_Teller_Transactions_Result> Get_Teller_Transactions(string userID, string accno, Nullable<System.DateTime> transDate)
+        {
+            var userIDParameter = userID != null ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(string));
+    
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            var transDateParameter = transDate.HasValue ?
+                new ObjectParameter("TransDate", transDate) :
+                new ObjectParameter("TransDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Teller_Transactions_Result>("Get_Teller_Transactions", userIDParameter, accnoParameter, transDateParameter);
+        }
+    
+        public virtual ObjectResult<Get_Unposted_Income_Result> Get_Unposted_Income(string productID, string productName, string userName, string chequeNo)
+        {
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            var productNameParameter = productName != null ?
+                new ObjectParameter("ProductName", productName) :
+                new ObjectParameter("ProductName", typeof(string));
+    
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var chequeNoParameter = chequeNo != null ?
+                new ObjectParameter("ChequeNo", chequeNo) :
+                new ObjectParameter("ChequeNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Unposted_Income_Result>("Get_Unposted_Income", productIDParameter, productNameParameter, userNameParameter, chequeNoParameter);
+        }
+    
+        public virtual ObjectResult<getGlTransactions_Result> getGlTransactions(string accNo, Nullable<System.DateTime> startdate, Nullable<System.DateTime> endDate, string source)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var startdateParameter = startdate.HasValue ?
+                new ObjectParameter("startdate", startdate) :
+                new ObjectParameter("startdate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("endDate", endDate) :
+                new ObjectParameter("endDate", typeof(System.DateTime));
+    
+            var sourceParameter = source != null ?
+                new ObjectParameter("source", source) :
+                new ObjectParameter("source", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getGlTransactions_Result>("getGlTransactions", accNoParameter, startdateParameter, endDateParameter, sourceParameter);
+        }
+    
+        public virtual ObjectResult<GetLoabal_Result> GetLoabal(string memberno)
+        {
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetLoabal_Result>("GetLoabal", membernoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> getPeriodicGlBalance(string accno, Nullable<System.DateTime> startdate, Nullable<System.DateTime> enddate)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            var startdateParameter = startdate.HasValue ?
+                new ObjectParameter("startdate", startdate) :
+                new ObjectParameter("startdate", typeof(System.DateTime));
+    
+            var enddateParameter = enddate.HasValue ?
+                new ObjectParameter("enddate", enddate) :
+                new ObjectParameter("enddate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("getPeriodicGlBalance", accnoParameter, startdateParameter, enddateParameter);
+        }
+    
+        public virtual int Income_Statement(string processDate, Nullable<int> financialYear, string startyear, string endyear, string startperiod, Nullable<int> reporttype)
+        {
+            var processDateParameter = processDate != null ?
+                new ObjectParameter("ProcessDate", processDate) :
+                new ObjectParameter("ProcessDate", typeof(string));
+    
+            var financialYearParameter = financialYear.HasValue ?
+                new ObjectParameter("FinancialYear", financialYear) :
+                new ObjectParameter("FinancialYear", typeof(int));
+    
+            var startyearParameter = startyear != null ?
+                new ObjectParameter("Startyear", startyear) :
+                new ObjectParameter("Startyear", typeof(string));
+    
+            var endyearParameter = endyear != null ?
+                new ObjectParameter("endyear", endyear) :
+                new ObjectParameter("endyear", typeof(string));
+    
+            var startperiodParameter = startperiod != null ?
+                new ObjectParameter("Startperiod", startperiod) :
+                new ObjectParameter("Startperiod", typeof(string));
+    
+            var reporttypeParameter = reporttype.HasValue ?
+                new ObjectParameter("Reporttype", reporttype) :
+                new ObjectParameter("Reporttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Income_Statement", processDateParameter, financialYearParameter, startyearParameter, endyearParameter, startperiodParameter, reporttypeParameter);
+        }
+    
+        public virtual int Insert_Missing_Advances()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Insert_Missing_Advances");
+        }
+    
+        public virtual int Insert_Missing_Loan_Records()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Insert_Missing_Loan_Records");
+        }
+    
+        public virtual int INSERT_MONTHLYADVDEDUCTIONS(string accNo_1, string advNo_2, Nullable<System.DateTime> period_3, Nullable<double> amount_4, Nullable<double> interest, string auditID_5)
+        {
+            var accNo_1Parameter = accNo_1 != null ?
+                new ObjectParameter("AccNo_1", accNo_1) :
+                new ObjectParameter("AccNo_1", typeof(string));
+    
+            var advNo_2Parameter = advNo_2 != null ?
+                new ObjectParameter("AdvNo_2", advNo_2) :
+                new ObjectParameter("AdvNo_2", typeof(string));
+    
+            var period_3Parameter = period_3.HasValue ?
+                new ObjectParameter("Period_3", period_3) :
+                new ObjectParameter("Period_3", typeof(System.DateTime));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(double));
+    
+            var interestParameter = interest.HasValue ?
+                new ObjectParameter("Interest", interest) :
+                new ObjectParameter("Interest", typeof(double));
+    
+            var auditID_5Parameter = auditID_5 != null ?
+                new ObjectParameter("AuditID_5", auditID_5) :
+                new ObjectParameter("AuditID_5", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INSERT_MONTHLYADVDEDUCTIONS", accNo_1Parameter, advNo_2Parameter, period_3Parameter, amount_4Parameter, interestParameter, auditID_5Parameter);
+        }
+    
+        public virtual int Insert_PayBill_deposits()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Insert_PayBill_deposits");
+        }
+    
+        public virtual int insert_tbl_usermenus(string groupname_1, string menu_2, Nullable<bool> enable_3)
+        {
+            var groupname_1Parameter = groupname_1 != null ?
+                new ObjectParameter("groupname_1", groupname_1) :
+                new ObjectParameter("groupname_1", typeof(string));
+    
+            var menu_2Parameter = menu_2 != null ?
+                new ObjectParameter("menu_2", menu_2) :
+                new ObjectParameter("menu_2", typeof(string));
+    
+            var enable_3Parameter = enable_3.HasValue ?
+                new ObjectParameter("enable_3", enable_3) :
+                new ObjectParameter("enable_3", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insert_tbl_usermenus", groupname_1Parameter, menu_2Parameter, enable_3Parameter);
+        }
+    
+        public virtual ObjectResult<InsiderLoans_Result> InsiderLoans(Nullable<System.DateTime> transdate)
+        {
+            var transdateParameter = transdate.HasValue ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsiderLoans_Result>("InsiderLoans", transdateParameter);
+        }
+    
+        public virtual int lIQUIDITY_STATEMENT(string processdate, Nullable<int> financialyear, string startyear, string endyear)
+        {
+            var processdateParameter = processdate != null ?
+                new ObjectParameter("processdate", processdate) :
+                new ObjectParameter("processdate", typeof(string));
+    
+            var financialyearParameter = financialyear.HasValue ?
+                new ObjectParameter("financialyear", financialyear) :
+                new ObjectParameter("financialyear", typeof(int));
+    
+            var startyearParameter = startyear != null ?
+                new ObjectParameter("startyear", startyear) :
+                new ObjectParameter("startyear", typeof(string));
+    
+            var endyearParameter = endyear != null ?
+                new ObjectParameter("endyear", endyear) :
+                new ObjectParameter("endyear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("lIQUIDITY_STATEMENT", processdateParameter, financialyearParameter, startyearParameter, endyearParameter);
+        }
+    
+        public virtual ObjectResult<Loan_defaultors_Result> Loan_defaultors()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Loan_defaultors_Result>("Loan_defaultors");
+        }
+    
+        [DbFunction("kpillerEntities", "LoanInstalmentDetails")]
+        public virtual IQueryable<LoanInstalmentDetails_Result> LoanInstalmentDetails(string lNo)
+        {
+            var lNoParameter = lNo != null ?
+                new ObjectParameter("LNo", lNo) :
+                new ObjectParameter("LNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<LoanInstalmentDetails_Result>("[kpillerEntities].[LoanInstalmentDetails](@LNo)", lNoParameter);
+        }
+    
+        public virtual ObjectResult<LoanSharesRecovery_Result> LoanSharesRecovery(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("endDate", endDate) :
+                new ObjectParameter("endDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoanSharesRecovery_Result>("LoanSharesRecovery", startDateParameter, endDateParameter);
+        }
+    
+        public virtual ObjectResult<loantypes1_Result> loantypes1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<loantypes1_Result>("loantypes1");
+        }
+    
+        public virtual int moveAssets(string assetNo, string departFrm, string departTo, string tranDate, string auditId)
+        {
+            var assetNoParameter = assetNo != null ?
+                new ObjectParameter("assetNo", assetNo) :
+                new ObjectParameter("assetNo", typeof(string));
+    
+            var departFrmParameter = departFrm != null ?
+                new ObjectParameter("departFrm", departFrm) :
+                new ObjectParameter("departFrm", typeof(string));
+    
+            var departToParameter = departTo != null ?
+                new ObjectParameter("departTo", departTo) :
+                new ObjectParameter("departTo", typeof(string));
+    
+            var tranDateParameter = tranDate != null ?
+                new ObjectParameter("tranDate", tranDate) :
+                new ObjectParameter("tranDate", typeof(string));
+    
+            var auditIdParameter = auditId != null ?
+                new ObjectParameter("auditId", auditId) :
+                new ObjectParameter("auditId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("moveAssets", assetNoParameter, departFrmParameter, departToParameter, tranDateParameter, auditIdParameter);
+        }
+    
+        public virtual int MsgToProc(string bitMap, string data)
+        {
+            var bitMapParameter = bitMap != null ?
+                new ObjectParameter("BitMap", bitMap) :
+                new ObjectParameter("BitMap", typeof(string));
+    
+            var dataParameter = data != null ?
+                new ObjectParameter("Data", data) :
+                new ObjectParameter("Data", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MsgToProc", bitMapParameter, dataParameter);
+        }
+    
+        public virtual int NEWUPDATE_CONTRIB(Nullable<long> contribID_1, string memberNo_2, Nullable<System.DateTime> contrDate_3, Nullable<int> refNo_4, Nullable<decimal> amount_5, Nullable<decimal> shareBal_6, string transBy_7, string chequeNo_8, string receiptNo_9, string locked_10, string posted_11, string remarks_12, string auditID_13)
+        {
+            var contribID_1Parameter = contribID_1.HasValue ?
+                new ObjectParameter("ContribID_1", contribID_1) :
+                new ObjectParameter("ContribID_1", typeof(long));
+    
+            var memberNo_2Parameter = memberNo_2 != null ?
+                new ObjectParameter("MemberNo_2", memberNo_2) :
+                new ObjectParameter("MemberNo_2", typeof(string));
+    
+            var contrDate_3Parameter = contrDate_3.HasValue ?
+                new ObjectParameter("ContrDate_3", contrDate_3) :
+                new ObjectParameter("ContrDate_3", typeof(System.DateTime));
+    
+            var refNo_4Parameter = refNo_4.HasValue ?
+                new ObjectParameter("RefNo_4", refNo_4) :
+                new ObjectParameter("RefNo_4", typeof(int));
+    
+            var amount_5Parameter = amount_5.HasValue ?
+                new ObjectParameter("Amount_5", amount_5) :
+                new ObjectParameter("Amount_5", typeof(decimal));
+    
+            var shareBal_6Parameter = shareBal_6.HasValue ?
+                new ObjectParameter("ShareBal_6", shareBal_6) :
+                new ObjectParameter("ShareBal_6", typeof(decimal));
+    
+            var transBy_7Parameter = transBy_7 != null ?
+                new ObjectParameter("TransBy_7", transBy_7) :
+                new ObjectParameter("TransBy_7", typeof(string));
+    
+            var chequeNo_8Parameter = chequeNo_8 != null ?
+                new ObjectParameter("ChequeNo_8", chequeNo_8) :
+                new ObjectParameter("ChequeNo_8", typeof(string));
+    
+            var receiptNo_9Parameter = receiptNo_9 != null ?
+                new ObjectParameter("ReceiptNo_9", receiptNo_9) :
+                new ObjectParameter("ReceiptNo_9", typeof(string));
+    
+            var locked_10Parameter = locked_10 != null ?
+                new ObjectParameter("Locked_10", locked_10) :
+                new ObjectParameter("Locked_10", typeof(string));
+    
+            var posted_11Parameter = posted_11 != null ?
+                new ObjectParameter("Posted_11", posted_11) :
+                new ObjectParameter("Posted_11", typeof(string));
+    
+            var remarks_12Parameter = remarks_12 != null ?
+                new ObjectParameter("Remarks_12", remarks_12) :
+                new ObjectParameter("Remarks_12", typeof(string));
+    
+            var auditID_13Parameter = auditID_13 != null ?
+                new ObjectParameter("AuditID_13", auditID_13) :
+                new ObjectParameter("AuditID_13", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("NEWUPDATE_CONTRIB", contribID_1Parameter, memberNo_2Parameter, contrDate_3Parameter, refNo_4Parameter, amount_5Parameter, shareBal_6Parameter, transBy_7Parameter, chequeNo_8Parameter, receiptNo_9Parameter, locked_10Parameter, posted_11Parameter, remarks_12Parameter, auditID_13Parameter);
+        }
+    
+        public virtual ObjectResult<Post_B2C_Transaction_Result> Post_B2C_Transaction()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Post_B2C_Transaction_Result>("Post_B2C_Transaction");
+        }
+    
+        public virtual int Rebuild_Account_Available_Balance(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Rebuild_Account_Available_Balance", accNoParameter);
+        }
+    
+        public virtual int Recover_Advance_From_Account()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Recover_Advance_From_Account");
+        }
+    
+        public virtual int Recover_Day_Loan_Arrears_From_Account(string loanNo)
+        {
+            var loanNoParameter = loanNo != null ?
+                new ObjectParameter("LoanNo", loanNo) :
+                new ObjectParameter("LoanNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Recover_Day_Loan_Arrears_From_Account", loanNoParameter);
+        }
+    
+        public virtual ObjectResult<Recover_Loan_As_Edited_Result> Recover_Loan_As_Edited(string accNo, Nullable<System.DateTime> period)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Recover_Loan_As_Edited_Result>("Recover_Loan_As_Edited", accNoParameter, periodParameter);
+        }
+    
+        public virtual int Recover_Loan_From_Account()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Recover_Loan_From_Account");
+        }
+    
+        public virtual int Remove_Day_Advance_Credited_Severally()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Remove_Day_Advance_Credited_Severally");
+        }
+    
+        public virtual int Remove_Loan_Interest_Reloaded_Severally()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Remove_Loan_Interest_Reloaded_Severally");
+        }
+    
+        public virtual int Reset_MICRO_Receipt(string voucherNo, Nullable<System.DateTime> tDate)
+        {
+            var voucherNoParameter = voucherNo != null ?
+                new ObjectParameter("VoucherNo", voucherNo) :
+                new ObjectParameter("VoucherNo", typeof(string));
+    
+            var tDateParameter = tDate.HasValue ?
+                new ObjectParameter("tDate", tDate) :
+                new ObjectParameter("tDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Reset_MICRO_Receipt", voucherNoParameter, tDateParameter);
+        }
+    
+        public virtual int Run_Fixed_deposit_interest()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Run_Fixed_deposit_interest");
+        }
+    
+        public virtual int save_Advance(string payrollno_1, string accno_2, string name_3, Nullable<System.DateTime> advdate_4, Nullable<int> period_5, Nullable<decimal> amntapp_6, Nullable<decimal> amntg_7, Nullable<System.DateTime> expirydate_8, Nullable<bool> locked_9, Nullable<bool> glpost_10, string auditid_11, Nullable<System.DateTime> audittime_12, string serialno_13, string custno_14, string idno_15, Nullable<double> kilo_16, Nullable<double> factor_17, Nullable<decimal> examnt_18, Nullable<decimal> appamnt_19, Nullable<bool> posted_20, string remarks_21, string description_22)
+        {
+            var payrollno_1Parameter = payrollno_1 != null ?
+                new ObjectParameter("payrollno_1", payrollno_1) :
+                new ObjectParameter("payrollno_1", typeof(string));
+    
+            var accno_2Parameter = accno_2 != null ?
+                new ObjectParameter("accno_2", accno_2) :
+                new ObjectParameter("accno_2", typeof(string));
+    
+            var name_3Parameter = name_3 != null ?
+                new ObjectParameter("name_3", name_3) :
+                new ObjectParameter("name_3", typeof(string));
+    
+            var advdate_4Parameter = advdate_4.HasValue ?
+                new ObjectParameter("advdate_4", advdate_4) :
+                new ObjectParameter("advdate_4", typeof(System.DateTime));
+    
+            var period_5Parameter = period_5.HasValue ?
+                new ObjectParameter("period_5", period_5) :
+                new ObjectParameter("period_5", typeof(int));
+    
+            var amntapp_6Parameter = amntapp_6.HasValue ?
+                new ObjectParameter("amntapp_6", amntapp_6) :
+                new ObjectParameter("amntapp_6", typeof(decimal));
+    
+            var amntg_7Parameter = amntg_7.HasValue ?
+                new ObjectParameter("amntg_7", amntg_7) :
+                new ObjectParameter("amntg_7", typeof(decimal));
+    
+            var expirydate_8Parameter = expirydate_8.HasValue ?
+                new ObjectParameter("expirydate_8", expirydate_8) :
+                new ObjectParameter("expirydate_8", typeof(System.DateTime));
+    
+            var locked_9Parameter = locked_9.HasValue ?
+                new ObjectParameter("locked_9", locked_9) :
+                new ObjectParameter("locked_9", typeof(bool));
+    
+            var glpost_10Parameter = glpost_10.HasValue ?
+                new ObjectParameter("glpost_10", glpost_10) :
+                new ObjectParameter("glpost_10", typeof(bool));
+    
+            var auditid_11Parameter = auditid_11 != null ?
+                new ObjectParameter("auditid_11", auditid_11) :
+                new ObjectParameter("auditid_11", typeof(string));
+    
+            var audittime_12Parameter = audittime_12.HasValue ?
+                new ObjectParameter("audittime_12", audittime_12) :
+                new ObjectParameter("audittime_12", typeof(System.DateTime));
+    
+            var serialno_13Parameter = serialno_13 != null ?
+                new ObjectParameter("serialno_13", serialno_13) :
+                new ObjectParameter("serialno_13", typeof(string));
+    
+            var custno_14Parameter = custno_14 != null ?
+                new ObjectParameter("custno_14", custno_14) :
+                new ObjectParameter("custno_14", typeof(string));
+    
+            var idno_15Parameter = idno_15 != null ?
+                new ObjectParameter("idno_15", idno_15) :
+                new ObjectParameter("idno_15", typeof(string));
+    
+            var kilo_16Parameter = kilo_16.HasValue ?
+                new ObjectParameter("kilo_16", kilo_16) :
+                new ObjectParameter("kilo_16", typeof(double));
+    
+            var factor_17Parameter = factor_17.HasValue ?
+                new ObjectParameter("factor_17", factor_17) :
+                new ObjectParameter("factor_17", typeof(double));
+    
+            var examnt_18Parameter = examnt_18.HasValue ?
+                new ObjectParameter("examnt_18", examnt_18) :
+                new ObjectParameter("examnt_18", typeof(decimal));
+    
+            var appamnt_19Parameter = appamnt_19.HasValue ?
+                new ObjectParameter("appamnt_19", appamnt_19) :
+                new ObjectParameter("appamnt_19", typeof(decimal));
+    
+            var posted_20Parameter = posted_20.HasValue ?
+                new ObjectParameter("posted_20", posted_20) :
+                new ObjectParameter("posted_20", typeof(bool));
+    
+            var remarks_21Parameter = remarks_21 != null ?
+                new ObjectParameter("remarks_21", remarks_21) :
+                new ObjectParameter("remarks_21", typeof(string));
+    
+            var description_22Parameter = description_22 != null ?
+                new ObjectParameter("description_22", description_22) :
+                new ObjectParameter("description_22", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("save_Advance", payrollno_1Parameter, accno_2Parameter, name_3Parameter, advdate_4Parameter, period_5Parameter, amntapp_6Parameter, amntg_7Parameter, expirydate_8Parameter, locked_9Parameter, glpost_10Parameter, auditid_11Parameter, audittime_12Parameter, serialno_13Parameter, custno_14Parameter, idno_15Parameter, kilo_16Parameter, factor_17Parameter, examnt_18Parameter, appamnt_19Parameter, posted_20Parameter, remarks_21Parameter, description_22Parameter);
+        }
+    
+        public virtual int Save_Advert(string advertisement_1, Nullable<bool> status_2, string accno_3, Nullable<decimal> amount_4, string username_5, string vno_6, string transType, Nullable<System.DateTime> requestDate)
+        {
+            var advertisement_1Parameter = advertisement_1 != null ?
+                new ObjectParameter("Advertisement_1", advertisement_1) :
+                new ObjectParameter("Advertisement_1", typeof(string));
+    
+            var status_2Parameter = status_2.HasValue ?
+                new ObjectParameter("status_2", status_2) :
+                new ObjectParameter("status_2", typeof(bool));
+    
+            var accno_3Parameter = accno_3 != null ?
+                new ObjectParameter("accno_3", accno_3) :
+                new ObjectParameter("accno_3", typeof(string));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("amount_4", amount_4) :
+                new ObjectParameter("amount_4", typeof(decimal));
+    
+            var username_5Parameter = username_5 != null ?
+                new ObjectParameter("username_5", username_5) :
+                new ObjectParameter("username_5", typeof(string));
+    
+            var vno_6Parameter = vno_6 != null ?
+                new ObjectParameter("vno_6", vno_6) :
+                new ObjectParameter("vno_6", typeof(string));
+    
+            var transTypeParameter = transType != null ?
+                new ObjectParameter("TransType", transType) :
+                new ObjectParameter("TransType", typeof(string));
+    
+            var requestDateParameter = requestDate.HasValue ?
+                new ObjectParameter("RequestDate", requestDate) :
+                new ObjectParameter("RequestDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_Advert", advertisement_1Parameter, status_2Parameter, accno_3Parameter, amount_4Parameter, username_5Parameter, vno_6Parameter, transTypeParameter, requestDateParameter);
+        }
+    
+        public virtual int SAVE_APPRAISAL(string loanNo_1, Nullable<System.DateTime> appraisDate_2, Nullable<decimal> salary_3, Nullable<decimal> allowances_4, string repayMethod_5, Nullable<decimal> co_opShares_6, Nullable<decimal> co_opLoans_7, Nullable<decimal> shares_8, Nullable<decimal> loans_9, Nullable<decimal> deductions_10, Nullable<decimal> amtRecommended_11, string reason_12, string auditID_13, string memberNo_15)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var appraisDate_2Parameter = appraisDate_2.HasValue ?
+                new ObjectParameter("AppraisDate_2", appraisDate_2) :
+                new ObjectParameter("AppraisDate_2", typeof(System.DateTime));
+    
+            var salary_3Parameter = salary_3.HasValue ?
+                new ObjectParameter("Salary_3", salary_3) :
+                new ObjectParameter("Salary_3", typeof(decimal));
+    
+            var allowances_4Parameter = allowances_4.HasValue ?
+                new ObjectParameter("Allowances_4", allowances_4) :
+                new ObjectParameter("Allowances_4", typeof(decimal));
+    
+            var repayMethod_5Parameter = repayMethod_5 != null ?
+                new ObjectParameter("RepayMethod_5", repayMethod_5) :
+                new ObjectParameter("RepayMethod_5", typeof(string));
+    
+            var co_opShares_6Parameter = co_opShares_6.HasValue ?
+                new ObjectParameter("Co_opShares_6", co_opShares_6) :
+                new ObjectParameter("Co_opShares_6", typeof(decimal));
+    
+            var co_opLoans_7Parameter = co_opLoans_7.HasValue ?
+                new ObjectParameter("Co_opLoans_7", co_opLoans_7) :
+                new ObjectParameter("Co_opLoans_7", typeof(decimal));
+    
+            var shares_8Parameter = shares_8.HasValue ?
+                new ObjectParameter("Shares_8", shares_8) :
+                new ObjectParameter("Shares_8", typeof(decimal));
+    
+            var loans_9Parameter = loans_9.HasValue ?
+                new ObjectParameter("Loans_9", loans_9) :
+                new ObjectParameter("Loans_9", typeof(decimal));
+    
+            var deductions_10Parameter = deductions_10.HasValue ?
+                new ObjectParameter("Deductions_10", deductions_10) :
+                new ObjectParameter("Deductions_10", typeof(decimal));
+    
+            var amtRecommended_11Parameter = amtRecommended_11.HasValue ?
+                new ObjectParameter("AmtRecommended_11", amtRecommended_11) :
+                new ObjectParameter("AmtRecommended_11", typeof(decimal));
+    
+            var reason_12Parameter = reason_12 != null ?
+                new ObjectParameter("Reason_12", reason_12) :
+                new ObjectParameter("Reason_12", typeof(string));
+    
+            var auditID_13Parameter = auditID_13 != null ?
+                new ObjectParameter("AuditID_13", auditID_13) :
+                new ObjectParameter("AuditID_13", typeof(string));
+    
+            var memberNo_15Parameter = memberNo_15 != null ?
+                new ObjectParameter("MemberNo_15", memberNo_15) :
+                new ObjectParameter("MemberNo_15", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_APPRAISAL", loanNo_1Parameter, appraisDate_2Parameter, salary_3Parameter, allowances_4Parameter, repayMethod_5Parameter, co_opShares_6Parameter, co_opLoans_7Parameter, shares_8Parameter, loans_9Parameter, deductions_10Parameter, amtRecommended_11Parameter, reason_12Parameter, auditID_13Parameter, memberNo_15Parameter);
+        }
+    
+        public virtual int SAVE_AUDITTRANS(string transTable_1, string transDescription_2, Nullable<System.DateTime> transDate_3, Nullable<decimal> amount_4, string auditID_5)
+        {
+            var transTable_1Parameter = transTable_1 != null ?
+                new ObjectParameter("TransTable_1", transTable_1) :
+                new ObjectParameter("TransTable_1", typeof(string));
+    
+            var transDescription_2Parameter = transDescription_2 != null ?
+                new ObjectParameter("TransDescription_2", transDescription_2) :
+                new ObjectParameter("TransDescription_2", typeof(string));
+    
+            var transDate_3Parameter = transDate_3.HasValue ?
+                new ObjectParameter("TransDate_3", transDate_3) :
+                new ObjectParameter("TransDate_3", typeof(System.DateTime));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(decimal));
+    
+            var auditID_5Parameter = auditID_5 != null ?
+                new ObjectParameter("AuditID_5", auditID_5) :
+                new ObjectParameter("AuditID_5", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_AUDITTRANS", transTable_1Parameter, transDescription_2Parameter, transDate_3Parameter, amount_4Parameter, auditID_5Parameter);
+        }
+    
+        public virtual int SAVE_BUDGET(string accno_1, Nullable<long> mmonth_2, Nullable<long> yyear_3, Nullable<decimal> budgetted_5)
+        {
+            var accno_1Parameter = accno_1 != null ?
+                new ObjectParameter("Accno_1", accno_1) :
+                new ObjectParameter("Accno_1", typeof(string));
+    
+            var mmonth_2Parameter = mmonth_2.HasValue ?
+                new ObjectParameter("mmonth_2", mmonth_2) :
+                new ObjectParameter("mmonth_2", typeof(long));
+    
+            var yyear_3Parameter = yyear_3.HasValue ?
+                new ObjectParameter("yyear_3", yyear_3) :
+                new ObjectParameter("yyear_3", typeof(long));
+    
+            var budgetted_5Parameter = budgetted_5.HasValue ?
+                new ObjectParameter("Budgetted_5", budgetted_5) :
+                new ObjectParameter("Budgetted_5", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_BUDGET", accno_1Parameter, mmonth_2Parameter, yyear_3Parameter, budgetted_5Parameter);
+        }
+    
+        public virtual int Save_CashBook_Trans(string transID_1, string memberNo_2, Nullable<decimal> amount_3, string transDescript_4, string receiptNo_5, string chequeNo_6, Nullable<System.DateTime> transDate_7, Nullable<int> posted_8, string auditID_9, Nullable<int> isMember, string accNo)
+        {
+            var transID_1Parameter = transID_1 != null ?
+                new ObjectParameter("TransID_1", transID_1) :
+                new ObjectParameter("TransID_1", typeof(string));
+    
+            var memberNo_2Parameter = memberNo_2 != null ?
+                new ObjectParameter("MemberNo_2", memberNo_2) :
+                new ObjectParameter("MemberNo_2", typeof(string));
+    
+            var amount_3Parameter = amount_3.HasValue ?
+                new ObjectParameter("Amount_3", amount_3) :
+                new ObjectParameter("Amount_3", typeof(decimal));
+    
+            var transDescript_4Parameter = transDescript_4 != null ?
+                new ObjectParameter("TransDescript_4", transDescript_4) :
+                new ObjectParameter("TransDescript_4", typeof(string));
+    
+            var receiptNo_5Parameter = receiptNo_5 != null ?
+                new ObjectParameter("ReceiptNo_5", receiptNo_5) :
+                new ObjectParameter("ReceiptNo_5", typeof(string));
+    
+            var chequeNo_6Parameter = chequeNo_6 != null ?
+                new ObjectParameter("ChequeNo_6", chequeNo_6) :
+                new ObjectParameter("ChequeNo_6", typeof(string));
+    
+            var transDate_7Parameter = transDate_7.HasValue ?
+                new ObjectParameter("TransDate_7", transDate_7) :
+                new ObjectParameter("TransDate_7", typeof(System.DateTime));
+    
+            var posted_8Parameter = posted_8.HasValue ?
+                new ObjectParameter("Posted_8", posted_8) :
+                new ObjectParameter("Posted_8", typeof(int));
+    
+            var auditID_9Parameter = auditID_9 != null ?
+                new ObjectParameter("AuditID_9", auditID_9) :
+                new ObjectParameter("AuditID_9", typeof(string));
+    
+            var isMemberParameter = isMember.HasValue ?
+                new ObjectParameter("IsMember", isMember) :
+                new ObjectParameter("IsMember", typeof(int));
+    
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_CashBook_Trans", transID_1Parameter, memberNo_2Parameter, amount_3Parameter, transDescript_4Parameter, receiptNo_5Parameter, chequeNo_6Parameter, transDate_7Parameter, posted_8Parameter, auditID_9Parameter, isMemberParameter, accNoParameter);
+        }
+    
+        public virtual int save_CASHINCOME(string memberNo_2, Nullable<System.DateTime> transDate_3, Nullable<System.DateTime> period_4, Nullable<decimal> amount_5, string auditID_6, string source_9, string center_10, string chequeno_11, string productid_12)
+        {
+            var memberNo_2Parameter = memberNo_2 != null ?
+                new ObjectParameter("MemberNo_2", memberNo_2) :
+                new ObjectParameter("MemberNo_2", typeof(string));
+    
+            var transDate_3Parameter = transDate_3.HasValue ?
+                new ObjectParameter("TransDate_3", transDate_3) :
+                new ObjectParameter("TransDate_3", typeof(System.DateTime));
+    
+            var period_4Parameter = period_4.HasValue ?
+                new ObjectParameter("period_4", period_4) :
+                new ObjectParameter("period_4", typeof(System.DateTime));
+    
+            var amount_5Parameter = amount_5.HasValue ?
+                new ObjectParameter("Amount_5", amount_5) :
+                new ObjectParameter("Amount_5", typeof(decimal));
+    
+            var auditID_6Parameter = auditID_6 != null ?
+                new ObjectParameter("AuditID_6", auditID_6) :
+                new ObjectParameter("AuditID_6", typeof(string));
+    
+            var source_9Parameter = source_9 != null ?
+                new ObjectParameter("Source_9", source_9) :
+                new ObjectParameter("Source_9", typeof(string));
+    
+            var center_10Parameter = center_10 != null ?
+                new ObjectParameter("Center_10", center_10) :
+                new ObjectParameter("Center_10", typeof(string));
+    
+            var chequeno_11Parameter = chequeno_11 != null ?
+                new ObjectParameter("Chequeno_11", chequeno_11) :
+                new ObjectParameter("Chequeno_11", typeof(string));
+    
+            var productid_12Parameter = productid_12 != null ?
+                new ObjectParameter("Productid_12", productid_12) :
+                new ObjectParameter("Productid_12", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("save_CASHINCOME", memberNo_2Parameter, transDate_3Parameter, period_4Parameter, amount_5Parameter, auditID_6Parameter, source_9Parameter, center_10Parameter, chequeno_11Parameter, productid_12Parameter);
+        }
+    
+        public virtual int SAVE_CASHMEMBERS(string memberNo_1, string iDNo_2, string memberName_3, string auditID_4)
+        {
+            var memberNo_1Parameter = memberNo_1 != null ?
+                new ObjectParameter("MemberNo_1", memberNo_1) :
+                new ObjectParameter("MemberNo_1", typeof(string));
+    
+            var iDNo_2Parameter = iDNo_2 != null ?
+                new ObjectParameter("IDNo_2", iDNo_2) :
+                new ObjectParameter("IDNo_2", typeof(string));
+    
+            var memberName_3Parameter = memberName_3 != null ?
+                new ObjectParameter("MemberName_3", memberName_3) :
+                new ObjectParameter("MemberName_3", typeof(string));
+    
+            var auditID_4Parameter = auditID_4 != null ?
+                new ObjectParameter("AuditID_4", auditID_4) :
+                new ObjectParameter("AuditID_4", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_CASHMEMBERS", memberNo_1Parameter, iDNo_2Parameter, memberName_3Parameter, auditID_4Parameter);
+        }
+    
+        public virtual int SAVE_CASHPAYMENTS(string iDNo_1, string names_2, Nullable<System.DateTime> transDate_3, Nullable<decimal> amount_4, Nullable<decimal> commision, string chequeNo_5, Nullable<System.DateTime> chequeDate_6, string chkDescript, string auditID_7)
+        {
+            var iDNo_1Parameter = iDNo_1 != null ?
+                new ObjectParameter("IDNo_1", iDNo_1) :
+                new ObjectParameter("IDNo_1", typeof(string));
+    
+            var names_2Parameter = names_2 != null ?
+                new ObjectParameter("Names_2", names_2) :
+                new ObjectParameter("Names_2", typeof(string));
+    
+            var transDate_3Parameter = transDate_3.HasValue ?
+                new ObjectParameter("TransDate_3", transDate_3) :
+                new ObjectParameter("TransDate_3", typeof(System.DateTime));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(decimal));
+    
+            var commisionParameter = commision.HasValue ?
+                new ObjectParameter("Commision", commision) :
+                new ObjectParameter("Commision", typeof(decimal));
+    
+            var chequeNo_5Parameter = chequeNo_5 != null ?
+                new ObjectParameter("ChequeNo_5", chequeNo_5) :
+                new ObjectParameter("ChequeNo_5", typeof(string));
+    
+            var chequeDate_6Parameter = chequeDate_6.HasValue ?
+                new ObjectParameter("ChequeDate_6", chequeDate_6) :
+                new ObjectParameter("ChequeDate_6", typeof(System.DateTime));
+    
+            var chkDescriptParameter = chkDescript != null ?
+                new ObjectParameter("ChkDescript", chkDescript) :
+                new ObjectParameter("ChkDescript", typeof(string));
+    
+            var auditID_7Parameter = auditID_7 != null ?
+                new ObjectParameter("AuditID_7", auditID_7) :
+                new ObjectParameter("AuditID_7", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_CASHPAYMENTS", iDNo_1Parameter, names_2Parameter, transDate_3Parameter, amount_4Parameter, commisionParameter, chequeNo_5Parameter, chequeDate_6Parameter, chkDescriptParameter, auditID_7Parameter);
+        }
+    
+        public virtual int SAVE_CASHPROCEEDSMEMBERS(string memberNo_1, string iDNo_2, string memberName_3, string auditID)
+        {
+            var memberNo_1Parameter = memberNo_1 != null ?
+                new ObjectParameter("MemberNo_1", memberNo_1) :
+                new ObjectParameter("MemberNo_1", typeof(string));
+    
+            var iDNo_2Parameter = iDNo_2 != null ?
+                new ObjectParameter("IDNo_2", iDNo_2) :
+                new ObjectParameter("IDNo_2", typeof(string));
+    
+            var memberName_3Parameter = memberName_3 != null ?
+                new ObjectParameter("MemberName_3", memberName_3) :
+                new ObjectParameter("MemberName_3", typeof(string));
+    
+            var auditIDParameter = auditID != null ?
+                new ObjectParameter("AuditID", auditID) :
+                new ObjectParameter("AuditID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_CASHPROCEEDSMEMBERS", memberNo_1Parameter, iDNo_2Parameter, memberName_3Parameter, auditIDParameter);
+        }
+    
+        public virtual int SAVE_CHEQUE(string loanNo_1, string chequeNo_2, Nullable<decimal> amount_3, string collectorID_4, string collectorName_5, Nullable<System.DateTime> dateIssued_6, string clerkStaffNo_7, string clerkName_8, string status_9, string reasons_10, string auditID_11, string remarks_12, Nullable<decimal> intAmount_14)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var chequeNo_2Parameter = chequeNo_2 != null ?
+                new ObjectParameter("ChequeNo_2", chequeNo_2) :
+                new ObjectParameter("ChequeNo_2", typeof(string));
+    
+            var amount_3Parameter = amount_3.HasValue ?
+                new ObjectParameter("Amount_3", amount_3) :
+                new ObjectParameter("Amount_3", typeof(decimal));
+    
+            var collectorID_4Parameter = collectorID_4 != null ?
+                new ObjectParameter("CollectorID_4", collectorID_4) :
+                new ObjectParameter("CollectorID_4", typeof(string));
+    
+            var collectorName_5Parameter = collectorName_5 != null ?
+                new ObjectParameter("CollectorName_5", collectorName_5) :
+                new ObjectParameter("CollectorName_5", typeof(string));
+    
+            var dateIssued_6Parameter = dateIssued_6.HasValue ?
+                new ObjectParameter("DateIssued_6", dateIssued_6) :
+                new ObjectParameter("DateIssued_6", typeof(System.DateTime));
+    
+            var clerkStaffNo_7Parameter = clerkStaffNo_7 != null ?
+                new ObjectParameter("ClerkStaffNo_7", clerkStaffNo_7) :
+                new ObjectParameter("ClerkStaffNo_7", typeof(string));
+    
+            var clerkName_8Parameter = clerkName_8 != null ?
+                new ObjectParameter("ClerkName_8", clerkName_8) :
+                new ObjectParameter("ClerkName_8", typeof(string));
+    
+            var status_9Parameter = status_9 != null ?
+                new ObjectParameter("Status_9", status_9) :
+                new ObjectParameter("Status_9", typeof(string));
+    
+            var reasons_10Parameter = reasons_10 != null ?
+                new ObjectParameter("Reasons_10", reasons_10) :
+                new ObjectParameter("Reasons_10", typeof(string));
+    
+            var auditID_11Parameter = auditID_11 != null ?
+                new ObjectParameter("AuditID_11", auditID_11) :
+                new ObjectParameter("AuditID_11", typeof(string));
+    
+            var remarks_12Parameter = remarks_12 != null ?
+                new ObjectParameter("Remarks_12", remarks_12) :
+                new ObjectParameter("Remarks_12", typeof(string));
+    
+            var intAmount_14Parameter = intAmount_14.HasValue ?
+                new ObjectParameter("IntAmount_14", intAmount_14) :
+                new ObjectParameter("IntAmount_14", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_CHEQUE", loanNo_1Parameter, chequeNo_2Parameter, amount_3Parameter, collectorID_4Parameter, collectorName_5Parameter, dateIssued_6Parameter, clerkStaffNo_7Parameter, clerkName_8Parameter, status_9Parameter, reasons_10Parameter, auditID_11Parameter, remarks_12Parameter, intAmount_14Parameter);
+        }
+    
+        public virtual int SAVE_ChequeDeposit(string accountNumber_1, Nullable<System.DateTime> depositDate_2, string amount_3, Nullable<int> isLocal_4, string clearanceDuration_5, string chequeNo_6, string vNo_7, Nullable<bool> bounce_8, Nullable<bool> cleared_9, Nullable<bool> posted_10, Nullable<bool> locked_11, string auditID_12, Nullable<System.DateTime> valueDate_14, string bCode_15, string laccno_16, string gltrans_17, string bank_18, string branch_19, Nullable<int> special)
+        {
+            var accountNumber_1Parameter = accountNumber_1 != null ?
+                new ObjectParameter("AccountNumber_1", accountNumber_1) :
+                new ObjectParameter("AccountNumber_1", typeof(string));
+    
+            var depositDate_2Parameter = depositDate_2.HasValue ?
+                new ObjectParameter("DepositDate_2", depositDate_2) :
+                new ObjectParameter("DepositDate_2", typeof(System.DateTime));
+    
+            var amount_3Parameter = amount_3 != null ?
+                new ObjectParameter("Amount_3", amount_3) :
+                new ObjectParameter("Amount_3", typeof(string));
+    
+            var isLocal_4Parameter = isLocal_4.HasValue ?
+                new ObjectParameter("IsLocal_4", isLocal_4) :
+                new ObjectParameter("IsLocal_4", typeof(int));
+    
+            var clearanceDuration_5Parameter = clearanceDuration_5 != null ?
+                new ObjectParameter("ClearanceDuration_5", clearanceDuration_5) :
+                new ObjectParameter("ClearanceDuration_5", typeof(string));
+    
+            var chequeNo_6Parameter = chequeNo_6 != null ?
+                new ObjectParameter("ChequeNo_6", chequeNo_6) :
+                new ObjectParameter("ChequeNo_6", typeof(string));
+    
+            var vNo_7Parameter = vNo_7 != null ?
+                new ObjectParameter("VNo_7", vNo_7) :
+                new ObjectParameter("VNo_7", typeof(string));
+    
+            var bounce_8Parameter = bounce_8.HasValue ?
+                new ObjectParameter("Bounce_8", bounce_8) :
+                new ObjectParameter("Bounce_8", typeof(bool));
+    
+            var cleared_9Parameter = cleared_9.HasValue ?
+                new ObjectParameter("Cleared_9", cleared_9) :
+                new ObjectParameter("Cleared_9", typeof(bool));
+    
+            var posted_10Parameter = posted_10.HasValue ?
+                new ObjectParameter("Posted_10", posted_10) :
+                new ObjectParameter("Posted_10", typeof(bool));
+    
+            var locked_11Parameter = locked_11.HasValue ?
+                new ObjectParameter("Locked_11", locked_11) :
+                new ObjectParameter("Locked_11", typeof(bool));
+    
+            var auditID_12Parameter = auditID_12 != null ?
+                new ObjectParameter("AuditID_12", auditID_12) :
+                new ObjectParameter("AuditID_12", typeof(string));
+    
+            var valueDate_14Parameter = valueDate_14.HasValue ?
+                new ObjectParameter("ValueDate_14", valueDate_14) :
+                new ObjectParameter("ValueDate_14", typeof(System.DateTime));
+    
+            var bCode_15Parameter = bCode_15 != null ?
+                new ObjectParameter("BCode_15", bCode_15) :
+                new ObjectParameter("BCode_15", typeof(string));
+    
+            var laccno_16Parameter = laccno_16 != null ?
+                new ObjectParameter("Laccno_16", laccno_16) :
+                new ObjectParameter("Laccno_16", typeof(string));
+    
+            var gltrans_17Parameter = gltrans_17 != null ?
+                new ObjectParameter("gltrans_17", gltrans_17) :
+                new ObjectParameter("gltrans_17", typeof(string));
+    
+            var bank_18Parameter = bank_18 != null ?
+                new ObjectParameter("Bank_18", bank_18) :
+                new ObjectParameter("Bank_18", typeof(string));
+    
+            var branch_19Parameter = branch_19 != null ?
+                new ObjectParameter("Branch_19", branch_19) :
+                new ObjectParameter("Branch_19", typeof(string));
+    
+            var specialParameter = special.HasValue ?
+                new ObjectParameter("Special", special) :
+                new ObjectParameter("Special", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_ChequeDeposit", accountNumber_1Parameter, depositDate_2Parameter, amount_3Parameter, isLocal_4Parameter, clearanceDuration_5Parameter, chequeNo_6Parameter, vNo_7Parameter, bounce_8Parameter, cleared_9Parameter, posted_10Parameter, locked_11Parameter, auditID_12Parameter, valueDate_14Parameter, bCode_15Parameter, laccno_16Parameter, gltrans_17Parameter, bank_18Parameter, branch_19Parameter, specialParameter);
+        }
+    
+        public virtual int SAVE_CHEQUES(string loanNo_1, string chequeNo_2, Nullable<decimal> amount_3, string collectorID_4, string collectorName_5, Nullable<System.DateTime> dateIssued_6, string clerkStaffNo_7, string clerkName_8, string status_9, string reasons_10, string auditID_11, string remarks_13, Nullable<decimal> intAmount_15)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var chequeNo_2Parameter = chequeNo_2 != null ?
+                new ObjectParameter("ChequeNo_2", chequeNo_2) :
+                new ObjectParameter("ChequeNo_2", typeof(string));
+    
+            var amount_3Parameter = amount_3.HasValue ?
+                new ObjectParameter("Amount_3", amount_3) :
+                new ObjectParameter("Amount_3", typeof(decimal));
+    
+            var collectorID_4Parameter = collectorID_4 != null ?
+                new ObjectParameter("CollectorID_4", collectorID_4) :
+                new ObjectParameter("CollectorID_4", typeof(string));
+    
+            var collectorName_5Parameter = collectorName_5 != null ?
+                new ObjectParameter("CollectorName_5", collectorName_5) :
+                new ObjectParameter("CollectorName_5", typeof(string));
+    
+            var dateIssued_6Parameter = dateIssued_6.HasValue ?
+                new ObjectParameter("DateIssued_6", dateIssued_6) :
+                new ObjectParameter("DateIssued_6", typeof(System.DateTime));
+    
+            var clerkStaffNo_7Parameter = clerkStaffNo_7 != null ?
+                new ObjectParameter("ClerkStaffNo_7", clerkStaffNo_7) :
+                new ObjectParameter("ClerkStaffNo_7", typeof(string));
+    
+            var clerkName_8Parameter = clerkName_8 != null ?
+                new ObjectParameter("ClerkName_8", clerkName_8) :
+                new ObjectParameter("ClerkName_8", typeof(string));
+    
+            var status_9Parameter = status_9 != null ?
+                new ObjectParameter("Status_9", status_9) :
+                new ObjectParameter("Status_9", typeof(string));
+    
+            var reasons_10Parameter = reasons_10 != null ?
+                new ObjectParameter("Reasons_10", reasons_10) :
+                new ObjectParameter("Reasons_10", typeof(string));
+    
+            var auditID_11Parameter = auditID_11 != null ?
+                new ObjectParameter("AuditID_11", auditID_11) :
+                new ObjectParameter("AuditID_11", typeof(string));
+    
+            var remarks_13Parameter = remarks_13 != null ?
+                new ObjectParameter("Remarks_13", remarks_13) :
+                new ObjectParameter("Remarks_13", typeof(string));
+    
+            var intAmount_15Parameter = intAmount_15.HasValue ?
+                new ObjectParameter("IntAmount_15", intAmount_15) :
+                new ObjectParameter("IntAmount_15", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_CHEQUES", loanNo_1Parameter, chequeNo_2Parameter, amount_3Parameter, collectorID_4Parameter, collectorName_5Parameter, dateIssued_6Parameter, clerkStaffNo_7Parameter, clerkName_8Parameter, status_9Parameter, reasons_10Parameter, auditID_11Parameter, remarks_13Parameter, intAmount_15Parameter);
+        }
+    
+        public virtual int SAVE_CONTRIB(string memberNo, Nullable<System.DateTime> contrDate, Nullable<long> refNo, Nullable<decimal> amoun, Nullable<decimal> shareBal, string transBy, string chequeNo, string receiptNo, string locked, string posted, string remarks, string auditID, string sharesCode)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            var contrDateParameter = contrDate.HasValue ?
+                new ObjectParameter("ContrDate", contrDate) :
+                new ObjectParameter("ContrDate", typeof(System.DateTime));
+    
+            var refNoParameter = refNo.HasValue ?
+                new ObjectParameter("RefNo", refNo) :
+                new ObjectParameter("RefNo", typeof(long));
+    
+            var amounParameter = amoun.HasValue ?
+                new ObjectParameter("Amoun", amoun) :
+                new ObjectParameter("Amoun", typeof(decimal));
+    
+            var shareBalParameter = shareBal.HasValue ?
+                new ObjectParameter("ShareBal", shareBal) :
+                new ObjectParameter("ShareBal", typeof(decimal));
+    
+            var transByParameter = transBy != null ?
+                new ObjectParameter("TransBy", transBy) :
+                new ObjectParameter("TransBy", typeof(string));
+    
+            var chequeNoParameter = chequeNo != null ?
+                new ObjectParameter("ChequeNo", chequeNo) :
+                new ObjectParameter("ChequeNo", typeof(string));
+    
+            var receiptNoParameter = receiptNo != null ?
+                new ObjectParameter("ReceiptNo", receiptNo) :
+                new ObjectParameter("ReceiptNo", typeof(string));
+    
+            var lockedParameter = locked != null ?
+                new ObjectParameter("Locked", locked) :
+                new ObjectParameter("Locked", typeof(string));
+    
+            var postedParameter = posted != null ?
+                new ObjectParameter("Posted", posted) :
+                new ObjectParameter("Posted", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var auditIDParameter = auditID != null ?
+                new ObjectParameter("AuditID", auditID) :
+                new ObjectParameter("AuditID", typeof(string));
+    
+            var sharesCodeParameter = sharesCode != null ?
+                new ObjectParameter("SharesCode", sharesCode) :
+                new ObjectParameter("SharesCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_CONTRIB", memberNoParameter, contrDateParameter, refNoParameter, amounParameter, shareBalParameter, transByParameter, chequeNoParameter, receiptNoParameter, lockedParameter, postedParameter, remarksParameter, auditIDParameter, sharesCodeParameter);
+        }
+    
+        public virtual int SAVE_CONTRIBUTION(string memberNo_1, Nullable<System.DateTime> contrDate_2, Nullable<int> refNo_3, Nullable<decimal> amount_4, Nullable<decimal> shareBal_5, string transBy_6, string chequeNo_7, string receiptNo_8, string locked_9, string posted_10, string remarks_11, string sharescode, string auditID_12)
+        {
+            var memberNo_1Parameter = memberNo_1 != null ?
+                new ObjectParameter("MemberNo_1", memberNo_1) :
+                new ObjectParameter("MemberNo_1", typeof(string));
+    
+            var contrDate_2Parameter = contrDate_2.HasValue ?
+                new ObjectParameter("ContrDate_2", contrDate_2) :
+                new ObjectParameter("ContrDate_2", typeof(System.DateTime));
+    
+            var refNo_3Parameter = refNo_3.HasValue ?
+                new ObjectParameter("RefNo_3", refNo_3) :
+                new ObjectParameter("RefNo_3", typeof(int));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(decimal));
+    
+            var shareBal_5Parameter = shareBal_5.HasValue ?
+                new ObjectParameter("ShareBal_5", shareBal_5) :
+                new ObjectParameter("ShareBal_5", typeof(decimal));
+    
+            var transBy_6Parameter = transBy_6 != null ?
+                new ObjectParameter("TransBy_6", transBy_6) :
+                new ObjectParameter("TransBy_6", typeof(string));
+    
+            var chequeNo_7Parameter = chequeNo_7 != null ?
+                new ObjectParameter("ChequeNo_7", chequeNo_7) :
+                new ObjectParameter("ChequeNo_7", typeof(string));
+    
+            var receiptNo_8Parameter = receiptNo_8 != null ?
+                new ObjectParameter("ReceiptNo_8", receiptNo_8) :
+                new ObjectParameter("ReceiptNo_8", typeof(string));
+    
+            var locked_9Parameter = locked_9 != null ?
+                new ObjectParameter("Locked_9", locked_9) :
+                new ObjectParameter("Locked_9", typeof(string));
+    
+            var posted_10Parameter = posted_10 != null ?
+                new ObjectParameter("Posted_10", posted_10) :
+                new ObjectParameter("Posted_10", typeof(string));
+    
+            var remarks_11Parameter = remarks_11 != null ?
+                new ObjectParameter("Remarks_11", remarks_11) :
+                new ObjectParameter("Remarks_11", typeof(string));
+    
+            var sharescodeParameter = sharescode != null ?
+                new ObjectParameter("sharescode", sharescode) :
+                new ObjectParameter("sharescode", typeof(string));
+    
+            var auditID_12Parameter = auditID_12 != null ?
+                new ObjectParameter("AuditID_12", auditID_12) :
+                new ObjectParameter("AuditID_12", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_CONTRIBUTION", memberNo_1Parameter, contrDate_2Parameter, refNo_3Parameter, amount_4Parameter, shareBal_5Parameter, transBy_6Parameter, chequeNo_7Parameter, receiptNo_8Parameter, locked_9Parameter, posted_10Parameter, remarks_11Parameter, sharescodeParameter, auditID_12Parameter);
+        }
+    
+        public virtual int Save_CustomerBalance(string customerNo_1, string iDNo_2, string payrollNo_3, string accName_4, Nullable<decimal> amount_5, Nullable<decimal> availableBalance_6, string accNO_7, string transDescription_8, Nullable<System.DateTime> transDate_9, Nullable<decimal> commission_10, string chequeNo_11, string period_12, Nullable<bool> posted_13, Nullable<bool> locked_14, string transType_15, Nullable<bool> status_16, string vno_17, string auditid_18, string moduleid_20, string accd_21, Nullable<System.DateTime> valuedate_22, Nullable<decimal> actualbalance_23, Nullable<bool> cash_24, string bcode_25, Nullable<bool> bosa_26, Nullable<bool> rebuild_27, string machineID)
+        {
+            var customerNo_1Parameter = customerNo_1 != null ?
+                new ObjectParameter("CustomerNo_1", customerNo_1) :
+                new ObjectParameter("CustomerNo_1", typeof(string));
+    
+            var iDNo_2Parameter = iDNo_2 != null ?
+                new ObjectParameter("IDNo_2", iDNo_2) :
+                new ObjectParameter("IDNo_2", typeof(string));
+    
+            var payrollNo_3Parameter = payrollNo_3 != null ?
+                new ObjectParameter("PayrollNo_3", payrollNo_3) :
+                new ObjectParameter("PayrollNo_3", typeof(string));
+    
+            var accName_4Parameter = accName_4 != null ?
+                new ObjectParameter("AccName_4", accName_4) :
+                new ObjectParameter("AccName_4", typeof(string));
+    
+            var amount_5Parameter = amount_5.HasValue ?
+                new ObjectParameter("Amount_5", amount_5) :
+                new ObjectParameter("Amount_5", typeof(decimal));
+    
+            var availableBalance_6Parameter = availableBalance_6.HasValue ?
+                new ObjectParameter("AvailableBalance_6", availableBalance_6) :
+                new ObjectParameter("AvailableBalance_6", typeof(decimal));
+    
+            var accNO_7Parameter = accNO_7 != null ?
+                new ObjectParameter("AccNO_7", accNO_7) :
+                new ObjectParameter("AccNO_7", typeof(string));
+    
+            var transDescription_8Parameter = transDescription_8 != null ?
+                new ObjectParameter("TransDescription_8", transDescription_8) :
+                new ObjectParameter("TransDescription_8", typeof(string));
+    
+            var transDate_9Parameter = transDate_9.HasValue ?
+                new ObjectParameter("TransDate_9", transDate_9) :
+                new ObjectParameter("TransDate_9", typeof(System.DateTime));
+    
+            var commission_10Parameter = commission_10.HasValue ?
+                new ObjectParameter("Commission_10", commission_10) :
+                new ObjectParameter("Commission_10", typeof(decimal));
+    
+            var chequeNo_11Parameter = chequeNo_11 != null ?
+                new ObjectParameter("ChequeNo_11", chequeNo_11) :
+                new ObjectParameter("ChequeNo_11", typeof(string));
+    
+            var period_12Parameter = period_12 != null ?
+                new ObjectParameter("Period_12", period_12) :
+                new ObjectParameter("Period_12", typeof(string));
+    
+            var posted_13Parameter = posted_13.HasValue ?
+                new ObjectParameter("Posted_13", posted_13) :
+                new ObjectParameter("Posted_13", typeof(bool));
+    
+            var locked_14Parameter = locked_14.HasValue ?
+                new ObjectParameter("Locked_14", locked_14) :
+                new ObjectParameter("Locked_14", typeof(bool));
+    
+            var transType_15Parameter = transType_15 != null ?
+                new ObjectParameter("transType_15", transType_15) :
+                new ObjectParameter("transType_15", typeof(string));
+    
+            var status_16Parameter = status_16.HasValue ?
+                new ObjectParameter("Status_16", status_16) :
+                new ObjectParameter("Status_16", typeof(bool));
+    
+            var vno_17Parameter = vno_17 != null ?
+                new ObjectParameter("vno_17", vno_17) :
+                new ObjectParameter("vno_17", typeof(string));
+    
+            var auditid_18Parameter = auditid_18 != null ?
+                new ObjectParameter("Auditid_18", auditid_18) :
+                new ObjectParameter("Auditid_18", typeof(string));
+    
+            var moduleid_20Parameter = moduleid_20 != null ?
+                new ObjectParameter("moduleid_20", moduleid_20) :
+                new ObjectParameter("moduleid_20", typeof(string));
+    
+            var accd_21Parameter = accd_21 != null ?
+                new ObjectParameter("accd_21", accd_21) :
+                new ObjectParameter("accd_21", typeof(string));
+    
+            var valuedate_22Parameter = valuedate_22.HasValue ?
+                new ObjectParameter("valuedate_22", valuedate_22) :
+                new ObjectParameter("valuedate_22", typeof(System.DateTime));
+    
+            var actualbalance_23Parameter = actualbalance_23.HasValue ?
+                new ObjectParameter("actualbalance_23", actualbalance_23) :
+                new ObjectParameter("actualbalance_23", typeof(decimal));
+    
+            var cash_24Parameter = cash_24.HasValue ?
+                new ObjectParameter("Cash_24", cash_24) :
+                new ObjectParameter("Cash_24", typeof(bool));
+    
+            var bcode_25Parameter = bcode_25 != null ?
+                new ObjectParameter("bcode_25", bcode_25) :
+                new ObjectParameter("bcode_25", typeof(string));
+    
+            var bosa_26Parameter = bosa_26.HasValue ?
+                new ObjectParameter("bosa_26", bosa_26) :
+                new ObjectParameter("bosa_26", typeof(bool));
+    
+            var rebuild_27Parameter = rebuild_27.HasValue ?
+                new ObjectParameter("rebuild_27", rebuild_27) :
+                new ObjectParameter("rebuild_27", typeof(bool));
+    
+            var machineIDParameter = machineID != null ?
+                new ObjectParameter("MachineID", machineID) :
+                new ObjectParameter("MachineID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_CustomerBalance", customerNo_1Parameter, iDNo_2Parameter, payrollNo_3Parameter, accName_4Parameter, amount_5Parameter, availableBalance_6Parameter, accNO_7Parameter, transDescription_8Parameter, transDate_9Parameter, commission_10Parameter, chequeNo_11Parameter, period_12Parameter, posted_13Parameter, locked_14Parameter, transType_15Parameter, status_16Parameter, vno_17Parameter, auditid_18Parameter, moduleid_20Parameter, accd_21Parameter, valuedate_22Parameter, actualbalance_23Parameter, cash_24Parameter, bcode_25Parameter, bosa_26Parameter, rebuild_27Parameter, machineIDParameter);
+        }
+    
+        public virtual int Save_CustomerBalance_1(string customerNo_1, string iDNo_2, string payrollNo_3, string accName_4, Nullable<decimal> amount_5, Nullable<decimal> availableBalance_6, string accNO_7, string transDescription_8, Nullable<System.DateTime> transDate_9, Nullable<decimal> commission_10, string chequeNo_11, string period_12, Nullable<bool> posted_13, Nullable<bool> locked_14, string transType_15, Nullable<bool> status_16, string vno_17, string auditid_18, string moduleid_19, string accd_20, Nullable<System.DateTime> valuedate_21, Nullable<decimal> actualbalance_22, Nullable<bool> cash_23, string bcode_24, Nullable<bool> bosa_25, Nullable<bool> rebuild_26, Nullable<int> reconciled_27, string authority, string transactionNo)
+        {
+            var customerNo_1Parameter = customerNo_1 != null ?
+                new ObjectParameter("CustomerNo_1", customerNo_1) :
+                new ObjectParameter("CustomerNo_1", typeof(string));
+    
+            var iDNo_2Parameter = iDNo_2 != null ?
+                new ObjectParameter("IDNo_2", iDNo_2) :
+                new ObjectParameter("IDNo_2", typeof(string));
+    
+            var payrollNo_3Parameter = payrollNo_3 != null ?
+                new ObjectParameter("PayrollNo_3", payrollNo_3) :
+                new ObjectParameter("PayrollNo_3", typeof(string));
+    
+            var accName_4Parameter = accName_4 != null ?
+                new ObjectParameter("AccName_4", accName_4) :
+                new ObjectParameter("AccName_4", typeof(string));
+    
+            var amount_5Parameter = amount_5.HasValue ?
+                new ObjectParameter("Amount_5", amount_5) :
+                new ObjectParameter("Amount_5", typeof(decimal));
+    
+            var availableBalance_6Parameter = availableBalance_6.HasValue ?
+                new ObjectParameter("AvailableBalance_6", availableBalance_6) :
+                new ObjectParameter("AvailableBalance_6", typeof(decimal));
+    
+            var accNO_7Parameter = accNO_7 != null ?
+                new ObjectParameter("AccNO_7", accNO_7) :
+                new ObjectParameter("AccNO_7", typeof(string));
+    
+            var transDescription_8Parameter = transDescription_8 != null ?
+                new ObjectParameter("TransDescription_8", transDescription_8) :
+                new ObjectParameter("TransDescription_8", typeof(string));
+    
+            var transDate_9Parameter = transDate_9.HasValue ?
+                new ObjectParameter("TransDate_9", transDate_9) :
+                new ObjectParameter("TransDate_9", typeof(System.DateTime));
+    
+            var commission_10Parameter = commission_10.HasValue ?
+                new ObjectParameter("Commission_10", commission_10) :
+                new ObjectParameter("Commission_10", typeof(decimal));
+    
+            var chequeNo_11Parameter = chequeNo_11 != null ?
+                new ObjectParameter("ChequeNo_11", chequeNo_11) :
+                new ObjectParameter("ChequeNo_11", typeof(string));
+    
+            var period_12Parameter = period_12 != null ?
+                new ObjectParameter("Period_12", period_12) :
+                new ObjectParameter("Period_12", typeof(string));
+    
+            var posted_13Parameter = posted_13.HasValue ?
+                new ObjectParameter("Posted_13", posted_13) :
+                new ObjectParameter("Posted_13", typeof(bool));
+    
+            var locked_14Parameter = locked_14.HasValue ?
+                new ObjectParameter("Locked_14", locked_14) :
+                new ObjectParameter("Locked_14", typeof(bool));
+    
+            var transType_15Parameter = transType_15 != null ?
+                new ObjectParameter("transType_15", transType_15) :
+                new ObjectParameter("transType_15", typeof(string));
+    
+            var status_16Parameter = status_16.HasValue ?
+                new ObjectParameter("Status_16", status_16) :
+                new ObjectParameter("Status_16", typeof(bool));
+    
+            var vno_17Parameter = vno_17 != null ?
+                new ObjectParameter("vno_17", vno_17) :
+                new ObjectParameter("vno_17", typeof(string));
+    
+            var auditid_18Parameter = auditid_18 != null ?
+                new ObjectParameter("Auditid_18", auditid_18) :
+                new ObjectParameter("Auditid_18", typeof(string));
+    
+            var moduleid_19Parameter = moduleid_19 != null ?
+                new ObjectParameter("moduleid_19", moduleid_19) :
+                new ObjectParameter("moduleid_19", typeof(string));
+    
+            var accd_20Parameter = accd_20 != null ?
+                new ObjectParameter("accd_20", accd_20) :
+                new ObjectParameter("accd_20", typeof(string));
+    
+            var valuedate_21Parameter = valuedate_21.HasValue ?
+                new ObjectParameter("valuedate_21", valuedate_21) :
+                new ObjectParameter("valuedate_21", typeof(System.DateTime));
+    
+            var actualbalance_22Parameter = actualbalance_22.HasValue ?
+                new ObjectParameter("actualbalance_22", actualbalance_22) :
+                new ObjectParameter("actualbalance_22", typeof(decimal));
+    
+            var cash_23Parameter = cash_23.HasValue ?
+                new ObjectParameter("Cash_23", cash_23) :
+                new ObjectParameter("Cash_23", typeof(bool));
+    
+            var bcode_24Parameter = bcode_24 != null ?
+                new ObjectParameter("bcode_24", bcode_24) :
+                new ObjectParameter("bcode_24", typeof(string));
+    
+            var bosa_25Parameter = bosa_25.HasValue ?
+                new ObjectParameter("bosa_25", bosa_25) :
+                new ObjectParameter("bosa_25", typeof(bool));
+    
+            var rebuild_26Parameter = rebuild_26.HasValue ?
+                new ObjectParameter("rebuild_26", rebuild_26) :
+                new ObjectParameter("rebuild_26", typeof(bool));
+    
+            var reconciled_27Parameter = reconciled_27.HasValue ?
+                new ObjectParameter("Reconciled_27", reconciled_27) :
+                new ObjectParameter("Reconciled_27", typeof(int));
+    
+            var authorityParameter = authority != null ?
+                new ObjectParameter("Authority", authority) :
+                new ObjectParameter("Authority", typeof(string));
+    
+            var transactionNoParameter = transactionNo != null ?
+                new ObjectParameter("TransactionNo", transactionNo) :
+                new ObjectParameter("TransactionNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_CustomerBalance_1", customerNo_1Parameter, iDNo_2Parameter, payrollNo_3Parameter, accName_4Parameter, amount_5Parameter, availableBalance_6Parameter, accNO_7Parameter, transDescription_8Parameter, transDate_9Parameter, commission_10Parameter, chequeNo_11Parameter, period_12Parameter, posted_13Parameter, locked_14Parameter, transType_15Parameter, status_16Parameter, vno_17Parameter, auditid_18Parameter, moduleid_19Parameter, accd_20Parameter, valuedate_21Parameter, actualbalance_22Parameter, cash_23Parameter, bcode_24Parameter, bosa_25Parameter, rebuild_26Parameter, reconciled_27Parameter, authorityParameter, transactionNoParameter);
+        }
+    
+        public virtual int SAVE_DEDUCTION(string custNo_1, string accNo_2, string memberNo_3, string dedCode_4, Nullable<long> yYear_5, Nullable<decimal> amount_6, Nullable<decimal> amountInterest_7, Nullable<int> partialPosted_8, Nullable<int> posted_9, Nullable<decimal> amountCF_10, Nullable<decimal> amountIntCF_11, string auditID_12, string voucherNo_13, Nullable<int> mMonth_14, Nullable<bool> uPD_15, Nullable<System.DateTime> transDate_16, Nullable<int> stopped_17, string wMNO_18, string productID, string recoverFrom, string source, Nullable<decimal> period, Nullable<System.DateTime> intDate)
+        {
+            var custNo_1Parameter = custNo_1 != null ?
+                new ObjectParameter("CustNo_1", custNo_1) :
+                new ObjectParameter("CustNo_1", typeof(string));
+    
+            var accNo_2Parameter = accNo_2 != null ?
+                new ObjectParameter("AccNo_2", accNo_2) :
+                new ObjectParameter("AccNo_2", typeof(string));
+    
+            var memberNo_3Parameter = memberNo_3 != null ?
+                new ObjectParameter("MemberNo_3", memberNo_3) :
+                new ObjectParameter("MemberNo_3", typeof(string));
+    
+            var dedCode_4Parameter = dedCode_4 != null ?
+                new ObjectParameter("DedCode_4", dedCode_4) :
+                new ObjectParameter("DedCode_4", typeof(string));
+    
+            var yYear_5Parameter = yYear_5.HasValue ?
+                new ObjectParameter("yYear_5", yYear_5) :
+                new ObjectParameter("yYear_5", typeof(long));
+    
+            var amount_6Parameter = amount_6.HasValue ?
+                new ObjectParameter("Amount_6", amount_6) :
+                new ObjectParameter("Amount_6", typeof(decimal));
+    
+            var amountInterest_7Parameter = amountInterest_7.HasValue ?
+                new ObjectParameter("AmountInterest_7", amountInterest_7) :
+                new ObjectParameter("AmountInterest_7", typeof(decimal));
+    
+            var partialPosted_8Parameter = partialPosted_8.HasValue ?
+                new ObjectParameter("PartialPosted_8", partialPosted_8) :
+                new ObjectParameter("PartialPosted_8", typeof(int));
+    
+            var posted_9Parameter = posted_9.HasValue ?
+                new ObjectParameter("Posted_9", posted_9) :
+                new ObjectParameter("Posted_9", typeof(int));
+    
+            var amountCF_10Parameter = amountCF_10.HasValue ?
+                new ObjectParameter("AmountCF_10", amountCF_10) :
+                new ObjectParameter("AmountCF_10", typeof(decimal));
+    
+            var amountIntCF_11Parameter = amountIntCF_11.HasValue ?
+                new ObjectParameter("AmountIntCF_11", amountIntCF_11) :
+                new ObjectParameter("AmountIntCF_11", typeof(decimal));
+    
+            var auditID_12Parameter = auditID_12 != null ?
+                new ObjectParameter("AuditID_12", auditID_12) :
+                new ObjectParameter("AuditID_12", typeof(string));
+    
+            var voucherNo_13Parameter = voucherNo_13 != null ?
+                new ObjectParameter("VoucherNo_13", voucherNo_13) :
+                new ObjectParameter("VoucherNo_13", typeof(string));
+    
+            var mMonth_14Parameter = mMonth_14.HasValue ?
+                new ObjectParameter("mMonth_14", mMonth_14) :
+                new ObjectParameter("mMonth_14", typeof(int));
+    
+            var uPD_15Parameter = uPD_15.HasValue ?
+                new ObjectParameter("UPD_15", uPD_15) :
+                new ObjectParameter("UPD_15", typeof(bool));
+    
+            var transDate_16Parameter = transDate_16.HasValue ?
+                new ObjectParameter("TransDate_16", transDate_16) :
+                new ObjectParameter("TransDate_16", typeof(System.DateTime));
+    
+            var stopped_17Parameter = stopped_17.HasValue ?
+                new ObjectParameter("Stopped_17", stopped_17) :
+                new ObjectParameter("Stopped_17", typeof(int));
+    
+            var wMNO_18Parameter = wMNO_18 != null ?
+                new ObjectParameter("WMNO_18", wMNO_18) :
+                new ObjectParameter("WMNO_18", typeof(string));
+    
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            var recoverFromParameter = recoverFrom != null ?
+                new ObjectParameter("RecoverFrom", recoverFrom) :
+                new ObjectParameter("RecoverFrom", typeof(string));
+    
+            var sourceParameter = source != null ?
+                new ObjectParameter("Source", source) :
+                new ObjectParameter("Source", typeof(string));
+    
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(decimal));
+    
+            var intDateParameter = intDate.HasValue ?
+                new ObjectParameter("IntDate", intDate) :
+                new ObjectParameter("IntDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_DEDUCTION", custNo_1Parameter, accNo_2Parameter, memberNo_3Parameter, dedCode_4Parameter, yYear_5Parameter, amount_6Parameter, amountInterest_7Parameter, partialPosted_8Parameter, posted_9Parameter, amountCF_10Parameter, amountIntCF_11Parameter, auditID_12Parameter, voucherNo_13Parameter, mMonth_14Parameter, uPD_15Parameter, transDate_16Parameter, stopped_17Parameter, wMNO_18Parameter, productIDParameter, recoverFromParameter, sourceParameter, periodParameter, intDateParameter);
+        }
+    
+        public virtual int save_DEDUCTIONLIST(string dedCode_2, string type_3, string description_4, Nullable<int> chargeintupfront_5, Nullable<double> interestRate_6, Nullable<decimal> amount_7, string glAccount_8, Nullable<int> orderNo_9, Nullable<int> useRange_10, string gLControl_11, string glaccrued_12, Nullable<decimal> period_13, string recoverfrom_14, string source_15)
+        {
+            var dedCode_2Parameter = dedCode_2 != null ?
+                new ObjectParameter("DedCode_2", dedCode_2) :
+                new ObjectParameter("DedCode_2", typeof(string));
+    
+            var type_3Parameter = type_3 != null ?
+                new ObjectParameter("Type_3", type_3) :
+                new ObjectParameter("Type_3", typeof(string));
+    
+            var description_4Parameter = description_4 != null ?
+                new ObjectParameter("Description_4", description_4) :
+                new ObjectParameter("Description_4", typeof(string));
+    
+            var chargeintupfront_5Parameter = chargeintupfront_5.HasValue ?
+                new ObjectParameter("Chargeintupfront_5", chargeintupfront_5) :
+                new ObjectParameter("Chargeintupfront_5", typeof(int));
+    
+            var interestRate_6Parameter = interestRate_6.HasValue ?
+                new ObjectParameter("InterestRate_6", interestRate_6) :
+                new ObjectParameter("InterestRate_6", typeof(double));
+    
+            var amount_7Parameter = amount_7.HasValue ?
+                new ObjectParameter("Amount_7", amount_7) :
+                new ObjectParameter("Amount_7", typeof(decimal));
+    
+            var glAccount_8Parameter = glAccount_8 != null ?
+                new ObjectParameter("GlAccount_8", glAccount_8) :
+                new ObjectParameter("GlAccount_8", typeof(string));
+    
+            var orderNo_9Parameter = orderNo_9.HasValue ?
+                new ObjectParameter("OrderNo_9", orderNo_9) :
+                new ObjectParameter("OrderNo_9", typeof(int));
+    
+            var useRange_10Parameter = useRange_10.HasValue ?
+                new ObjectParameter("UseRange_10", useRange_10) :
+                new ObjectParameter("UseRange_10", typeof(int));
+    
+            var gLControl_11Parameter = gLControl_11 != null ?
+                new ObjectParameter("GLControl_11", gLControl_11) :
+                new ObjectParameter("GLControl_11", typeof(string));
+    
+            var glaccrued_12Parameter = glaccrued_12 != null ?
+                new ObjectParameter("glaccrued_12", glaccrued_12) :
+                new ObjectParameter("glaccrued_12", typeof(string));
+    
+            var period_13Parameter = period_13.HasValue ?
+                new ObjectParameter("Period_13", period_13) :
+                new ObjectParameter("Period_13", typeof(decimal));
+    
+            var recoverfrom_14Parameter = recoverfrom_14 != null ?
+                new ObjectParameter("Recoverfrom_14", recoverfrom_14) :
+                new ObjectParameter("Recoverfrom_14", typeof(string));
+    
+            var source_15Parameter = source_15 != null ?
+                new ObjectParameter("source_15", source_15) :
+                new ObjectParameter("source_15", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("save_DEDUCTIONLIST", dedCode_2Parameter, type_3Parameter, description_4Parameter, chargeintupfront_5Parameter, interestRate_6Parameter, amount_7Parameter, glAccount_8Parameter, orderNo_9Parameter, useRange_10Parameter, gLControl_11Parameter, glaccrued_12Parameter, period_13Parameter, recoverfrom_14Parameter, source_15Parameter);
+        }
+    
+        public virtual int SAVE_DEFAULTEDLOAN(string loanNo_1, Nullable<System.DateTime> lastTransDate_2, string auditID_3)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var lastTransDate_2Parameter = lastTransDate_2.HasValue ?
+                new ObjectParameter("LastTransDate_2", lastTransDate_2) :
+                new ObjectParameter("LastTransDate_2", typeof(System.DateTime));
+    
+            var auditID_3Parameter = auditID_3 != null ?
+                new ObjectParameter("AuditID_3", auditID_3) :
+                new ObjectParameter("AuditID_3", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_DEFAULTEDLOAN", loanNo_1Parameter, lastTransDate_2Parameter, auditID_3Parameter);
+        }
+    
+        public virtual int SAVE_DIVIDEND(string memberNo_1, Nullable<decimal> current_Tot_Shares_2, Nullable<decimal> shares_as_at_3, Nullable<decimal> gross_Dividend_4, Nullable<decimal> withTax_5, Nullable<decimal> net_Dividend_6, string bankName_7, string acctNo_8, string companyName_9, Nullable<decimal> shareInterest_10, Nullable<decimal> withHoldingTax_11, Nullable<decimal> divInterest_12, Nullable<decimal> divTax_13, Nullable<decimal> depTax_14, Nullable<decimal> shareCap_15, Nullable<int> netDiv_16, Nullable<decimal> divTaxAmt, Nullable<System.DateTime> sharesAsAt)
+        {
+            var memberNo_1Parameter = memberNo_1 != null ?
+                new ObjectParameter("MemberNo_1", memberNo_1) :
+                new ObjectParameter("MemberNo_1", typeof(string));
+    
+            var current_Tot_Shares_2Parameter = current_Tot_Shares_2.HasValue ?
+                new ObjectParameter("Current_Tot_Shares_2", current_Tot_Shares_2) :
+                new ObjectParameter("Current_Tot_Shares_2", typeof(decimal));
+    
+            var shares_as_at_3Parameter = shares_as_at_3.HasValue ?
+                new ObjectParameter("Shares_as_at_3", shares_as_at_3) :
+                new ObjectParameter("Shares_as_at_3", typeof(decimal));
+    
+            var gross_Dividend_4Parameter = gross_Dividend_4.HasValue ?
+                new ObjectParameter("Gross_Dividend_4", gross_Dividend_4) :
+                new ObjectParameter("Gross_Dividend_4", typeof(decimal));
+    
+            var withTax_5Parameter = withTax_5.HasValue ?
+                new ObjectParameter("WithTax_5", withTax_5) :
+                new ObjectParameter("WithTax_5", typeof(decimal));
+    
+            var net_Dividend_6Parameter = net_Dividend_6.HasValue ?
+                new ObjectParameter("Net_Dividend_6", net_Dividend_6) :
+                new ObjectParameter("Net_Dividend_6", typeof(decimal));
+    
+            var bankName_7Parameter = bankName_7 != null ?
+                new ObjectParameter("BankName_7", bankName_7) :
+                new ObjectParameter("BankName_7", typeof(string));
+    
+            var acctNo_8Parameter = acctNo_8 != null ?
+                new ObjectParameter("AcctNo_8", acctNo_8) :
+                new ObjectParameter("AcctNo_8", typeof(string));
+    
+            var companyName_9Parameter = companyName_9 != null ?
+                new ObjectParameter("CompanyName_9", companyName_9) :
+                new ObjectParameter("CompanyName_9", typeof(string));
+    
+            var shareInterest_10Parameter = shareInterest_10.HasValue ?
+                new ObjectParameter("ShareInterest_10", shareInterest_10) :
+                new ObjectParameter("ShareInterest_10", typeof(decimal));
+    
+            var withHoldingTax_11Parameter = withHoldingTax_11.HasValue ?
+                new ObjectParameter("WithHoldingTax_11", withHoldingTax_11) :
+                new ObjectParameter("WithHoldingTax_11", typeof(decimal));
+    
+            var divInterest_12Parameter = divInterest_12.HasValue ?
+                new ObjectParameter("DivInterest_12", divInterest_12) :
+                new ObjectParameter("DivInterest_12", typeof(decimal));
+    
+            var divTax_13Parameter = divTax_13.HasValue ?
+                new ObjectParameter("DivTax_13", divTax_13) :
+                new ObjectParameter("DivTax_13", typeof(decimal));
+    
+            var depTax_14Parameter = depTax_14.HasValue ?
+                new ObjectParameter("DepTax_14", depTax_14) :
+                new ObjectParameter("DepTax_14", typeof(decimal));
+    
+            var shareCap_15Parameter = shareCap_15.HasValue ?
+                new ObjectParameter("ShareCap_15", shareCap_15) :
+                new ObjectParameter("ShareCap_15", typeof(decimal));
+    
+            var netDiv_16Parameter = netDiv_16.HasValue ?
+                new ObjectParameter("NetDiv_16", netDiv_16) :
+                new ObjectParameter("NetDiv_16", typeof(int));
+    
+            var divTaxAmtParameter = divTaxAmt.HasValue ?
+                new ObjectParameter("DivTaxAmt", divTaxAmt) :
+                new ObjectParameter("DivTaxAmt", typeof(decimal));
+    
+            var sharesAsAtParameter = sharesAsAt.HasValue ?
+                new ObjectParameter("SharesAsAt", sharesAsAt) :
+                new ObjectParameter("SharesAsAt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_DIVIDEND", memberNo_1Parameter, current_Tot_Shares_2Parameter, shares_as_at_3Parameter, gross_Dividend_4Parameter, withTax_5Parameter, net_Dividend_6Parameter, bankName_7Parameter, acctNo_8Parameter, companyName_9Parameter, shareInterest_10Parameter, withHoldingTax_11Parameter, divInterest_12Parameter, divTax_13Parameter, depTax_14Parameter, shareCap_15Parameter, netDiv_16Parameter, divTaxAmtParameter, sharesAsAtParameter);
+        }
+    
+        public virtual int Save_EndMain(string loanNo_1, string minuteNo_2, Nullable<System.DateTime> meetingDate_3, Nullable<decimal> amtApproved_4, string accepted_5, string chairSigned_6, string secSigned_7, string membSigned_8, string reasons_9, string remarks_10, string auditID_11)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var minuteNo_2Parameter = minuteNo_2 != null ?
+                new ObjectParameter("MinuteNo_2", minuteNo_2) :
+                new ObjectParameter("MinuteNo_2", typeof(string));
+    
+            var meetingDate_3Parameter = meetingDate_3.HasValue ?
+                new ObjectParameter("MeetingDate_3", meetingDate_3) :
+                new ObjectParameter("MeetingDate_3", typeof(System.DateTime));
+    
+            var amtApproved_4Parameter = amtApproved_4.HasValue ?
+                new ObjectParameter("AmtApproved_4", amtApproved_4) :
+                new ObjectParameter("AmtApproved_4", typeof(decimal));
+    
+            var accepted_5Parameter = accepted_5 != null ?
+                new ObjectParameter("Accepted_5", accepted_5) :
+                new ObjectParameter("Accepted_5", typeof(string));
+    
+            var chairSigned_6Parameter = chairSigned_6 != null ?
+                new ObjectParameter("ChairSigned_6", chairSigned_6) :
+                new ObjectParameter("ChairSigned_6", typeof(string));
+    
+            var secSigned_7Parameter = secSigned_7 != null ?
+                new ObjectParameter("SecSigned_7", secSigned_7) :
+                new ObjectParameter("SecSigned_7", typeof(string));
+    
+            var membSigned_8Parameter = membSigned_8 != null ?
+                new ObjectParameter("MembSigned_8", membSigned_8) :
+                new ObjectParameter("MembSigned_8", typeof(string));
+    
+            var reasons_9Parameter = reasons_9 != null ?
+                new ObjectParameter("Reasons_9", reasons_9) :
+                new ObjectParameter("Reasons_9", typeof(string));
+    
+            var remarks_10Parameter = remarks_10 != null ?
+                new ObjectParameter("Remarks_10", remarks_10) :
+                new ObjectParameter("Remarks_10", typeof(string));
+    
+            var auditID_11Parameter = auditID_11 != null ?
+                new ObjectParameter("AuditID_11", auditID_11) :
+                new ObjectParameter("AuditID_11", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_EndMain", loanNo_1Parameter, minuteNo_2Parameter, meetingDate_3Parameter, amtApproved_4Parameter, accepted_5Parameter, chairSigned_6Parameter, secSigned_7Parameter, membSigned_8Parameter, reasons_9Parameter, remarks_10Parameter, auditID_11Parameter);
+        }
+    
+        public virtual int SAVE_ENDORSEMENT(string loanNo_1, string minuteNo_2, Nullable<System.DateTime> meetingDate_3, Nullable<decimal> amtApproved_4, string accepted_5, string chairSigned_6, string secSigned_7, string membSigned_8, string reasons_9, string remarks_10, string auditID_11)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var minuteNo_2Parameter = minuteNo_2 != null ?
+                new ObjectParameter("MinuteNo_2", minuteNo_2) :
+                new ObjectParameter("MinuteNo_2", typeof(string));
+    
+            var meetingDate_3Parameter = meetingDate_3.HasValue ?
+                new ObjectParameter("MeetingDate_3", meetingDate_3) :
+                new ObjectParameter("MeetingDate_3", typeof(System.DateTime));
+    
+            var amtApproved_4Parameter = amtApproved_4.HasValue ?
+                new ObjectParameter("AmtApproved_4", amtApproved_4) :
+                new ObjectParameter("AmtApproved_4", typeof(decimal));
+    
+            var accepted_5Parameter = accepted_5 != null ?
+                new ObjectParameter("Accepted_5", accepted_5) :
+                new ObjectParameter("Accepted_5", typeof(string));
+    
+            var chairSigned_6Parameter = chairSigned_6 != null ?
+                new ObjectParameter("ChairSigned_6", chairSigned_6) :
+                new ObjectParameter("ChairSigned_6", typeof(string));
+    
+            var secSigned_7Parameter = secSigned_7 != null ?
+                new ObjectParameter("SecSigned_7", secSigned_7) :
+                new ObjectParameter("SecSigned_7", typeof(string));
+    
+            var membSigned_8Parameter = membSigned_8 != null ?
+                new ObjectParameter("MembSigned_8", membSigned_8) :
+                new ObjectParameter("MembSigned_8", typeof(string));
+    
+            var reasons_9Parameter = reasons_9 != null ?
+                new ObjectParameter("Reasons_9", reasons_9) :
+                new ObjectParameter("Reasons_9", typeof(string));
+    
+            var remarks_10Parameter = remarks_10 != null ?
+                new ObjectParameter("Remarks_10", remarks_10) :
+                new ObjectParameter("Remarks_10", typeof(string));
+    
+            var auditID_11Parameter = auditID_11 != null ?
+                new ObjectParameter("AuditID_11", auditID_11) :
+                new ObjectParameter("AuditID_11", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_ENDORSEMENT", loanNo_1Parameter, minuteNo_2Parameter, meetingDate_3Parameter, amtApproved_4Parameter, accepted_5Parameter, chairSigned_6Parameter, secSigned_7Parameter, membSigned_8Parameter, reasons_9Parameter, remarks_10Parameter, auditID_11Parameter);
+        }
+    
+        public virtual int SAVE_FDR(string accNo_1, Nullable<System.DateTime> transDate_2, Nullable<decimal> amount_3, Nullable<decimal> period_4, Nullable<decimal> interest_5, Nullable<System.DateTime> maturityDate_6, string auditID_7, string docNo, Nullable<System.DateTime> interestDate)
+        {
+            var accNo_1Parameter = accNo_1 != null ?
+                new ObjectParameter("AccNo_1", accNo_1) :
+                new ObjectParameter("AccNo_1", typeof(string));
+    
+            var transDate_2Parameter = transDate_2.HasValue ?
+                new ObjectParameter("TransDate_2", transDate_2) :
+                new ObjectParameter("TransDate_2", typeof(System.DateTime));
+    
+            var amount_3Parameter = amount_3.HasValue ?
+                new ObjectParameter("Amount_3", amount_3) :
+                new ObjectParameter("Amount_3", typeof(decimal));
+    
+            var period_4Parameter = period_4.HasValue ?
+                new ObjectParameter("Period_4", period_4) :
+                new ObjectParameter("Period_4", typeof(decimal));
+    
+            var interest_5Parameter = interest_5.HasValue ?
+                new ObjectParameter("Interest_5", interest_5) :
+                new ObjectParameter("Interest_5", typeof(decimal));
+    
+            var maturityDate_6Parameter = maturityDate_6.HasValue ?
+                new ObjectParameter("MaturityDate_6", maturityDate_6) :
+                new ObjectParameter("MaturityDate_6", typeof(System.DateTime));
+    
+            var auditID_7Parameter = auditID_7 != null ?
+                new ObjectParameter("AuditID_7", auditID_7) :
+                new ObjectParameter("AuditID_7", typeof(string));
+    
+            var docNoParameter = docNo != null ?
+                new ObjectParameter("DocNo", docNo) :
+                new ObjectParameter("DocNo", typeof(string));
+    
+            var interestDateParameter = interestDate.HasValue ?
+                new ObjectParameter("InterestDate", interestDate) :
+                new ObjectParameter("InterestDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_FDR", accNo_1Parameter, transDate_2Parameter, amount_3Parameter, period_4Parameter, interest_5Parameter, maturityDate_6Parameter, auditID_7Parameter, docNoParameter, interestDateParameter);
+        }
+    
+        public virtual int SAVE_FROZENACC(string accNo_1, string reason_2, Nullable<System.DateTime> transDate_3, Nullable<int> status_4, string auditID_5)
+        {
+            var accNo_1Parameter = accNo_1 != null ?
+                new ObjectParameter("AccNo_1", accNo_1) :
+                new ObjectParameter("AccNo_1", typeof(string));
+    
+            var reason_2Parameter = reason_2 != null ?
+                new ObjectParameter("Reason_2", reason_2) :
+                new ObjectParameter("Reason_2", typeof(string));
+    
+            var transDate_3Parameter = transDate_3.HasValue ?
+                new ObjectParameter("TransDate_3", transDate_3) :
+                new ObjectParameter("TransDate_3", typeof(System.DateTime));
+    
+            var status_4Parameter = status_4.HasValue ?
+                new ObjectParameter("Status_4", status_4) :
+                new ObjectParameter("Status_4", typeof(int));
+    
+            var auditID_5Parameter = auditID_5 != null ?
+                new ObjectParameter("AuditID_5", auditID_5) :
+                new ObjectParameter("AuditID_5", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_FROZENACC", accNo_1Parameter, reason_2Parameter, transDate_3Parameter, status_4Parameter, auditID_5Parameter);
+        }
+    
+        public virtual int Save_GLTRANSACTION(Nullable<System.DateTime> transDate_1, Nullable<decimal> amount_2, string drAccNo_3, string crAccNo_4, string documentNo_5, string source_6, string auditID_7, string transDesc, string chequeno, string transactionNo, string module, string pmode, string refId)
+        {
+            var transDate_1Parameter = transDate_1.HasValue ?
+                new ObjectParameter("TransDate_1", transDate_1) :
+                new ObjectParameter("TransDate_1", typeof(System.DateTime));
+    
+            var amount_2Parameter = amount_2.HasValue ?
+                new ObjectParameter("Amount_2", amount_2) :
+                new ObjectParameter("Amount_2", typeof(decimal));
+    
+            var drAccNo_3Parameter = drAccNo_3 != null ?
+                new ObjectParameter("DrAccNo_3", drAccNo_3) :
+                new ObjectParameter("DrAccNo_3", typeof(string));
+    
+            var crAccNo_4Parameter = crAccNo_4 != null ?
+                new ObjectParameter("CrAccNo_4", crAccNo_4) :
+                new ObjectParameter("CrAccNo_4", typeof(string));
+    
+            var documentNo_5Parameter = documentNo_5 != null ?
+                new ObjectParameter("DocumentNo_5", documentNo_5) :
+                new ObjectParameter("DocumentNo_5", typeof(string));
+    
+            var source_6Parameter = source_6 != null ?
+                new ObjectParameter("Source_6", source_6) :
+                new ObjectParameter("Source_6", typeof(string));
+    
+            var auditID_7Parameter = auditID_7 != null ?
+                new ObjectParameter("AuditID_7", auditID_7) :
+                new ObjectParameter("AuditID_7", typeof(string));
+    
+            var transDescParameter = transDesc != null ?
+                new ObjectParameter("TransDesc", transDesc) :
+                new ObjectParameter("TransDesc", typeof(string));
+    
+            var chequenoParameter = chequeno != null ?
+                new ObjectParameter("Chequeno", chequeno) :
+                new ObjectParameter("Chequeno", typeof(string));
+    
+            var transactionNoParameter = transactionNo != null ?
+                new ObjectParameter("TransactionNo", transactionNo) :
+                new ObjectParameter("TransactionNo", typeof(string));
+    
+            var moduleParameter = module != null ?
+                new ObjectParameter("module", module) :
+                new ObjectParameter("module", typeof(string));
+    
+            var pmodeParameter = pmode != null ?
+                new ObjectParameter("pmode", pmode) :
+                new ObjectParameter("pmode", typeof(string));
+    
+            var refIdParameter = refId != null ?
+                new ObjectParameter("refId", refId) :
+                new ObjectParameter("refId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_GLTRANSACTION", transDate_1Parameter, amount_2Parameter, drAccNo_3Parameter, crAccNo_4Parameter, documentNo_5Parameter, source_6Parameter, auditID_7Parameter, transDescParameter, chequenoParameter, transactionNoParameter, moduleParameter, pmodeParameter, refIdParameter);
+        }
+    
+        public virtual int SAVE_INCOME(string memberNo_1, string accNo_2, string iDNo_3, Nullable<decimal> amount_4, Nullable<System.DateTime> transDate_5, Nullable<System.DateTime> period_6, string source, Nullable<int> posted_7, string productID_8, string auditID_9, string chequeNo)
+        {
+            var memberNo_1Parameter = memberNo_1 != null ?
+                new ObjectParameter("MemberNo_1", memberNo_1) :
+                new ObjectParameter("MemberNo_1", typeof(string));
+    
+            var accNo_2Parameter = accNo_2 != null ?
+                new ObjectParameter("AccNo_2", accNo_2) :
+                new ObjectParameter("AccNo_2", typeof(string));
+    
+            var iDNo_3Parameter = iDNo_3 != null ?
+                new ObjectParameter("IDNo_3", iDNo_3) :
+                new ObjectParameter("IDNo_3", typeof(string));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(decimal));
+    
+            var transDate_5Parameter = transDate_5.HasValue ?
+                new ObjectParameter("TransDate_5", transDate_5) :
+                new ObjectParameter("TransDate_5", typeof(System.DateTime));
+    
+            var period_6Parameter = period_6.HasValue ?
+                new ObjectParameter("Period_6", period_6) :
+                new ObjectParameter("Period_6", typeof(System.DateTime));
+    
+            var sourceParameter = source != null ?
+                new ObjectParameter("Source", source) :
+                new ObjectParameter("Source", typeof(string));
+    
+            var posted_7Parameter = posted_7.HasValue ?
+                new ObjectParameter("Posted_7", posted_7) :
+                new ObjectParameter("Posted_7", typeof(int));
+    
+            var productID_8Parameter = productID_8 != null ?
+                new ObjectParameter("ProductID_8", productID_8) :
+                new ObjectParameter("ProductID_8", typeof(string));
+    
+            var auditID_9Parameter = auditID_9 != null ?
+                new ObjectParameter("AuditID_9", auditID_9) :
+                new ObjectParameter("AuditID_9", typeof(string));
+    
+            var chequeNoParameter = chequeNo != null ?
+                new ObjectParameter("ChequeNo", chequeNo) :
+                new ObjectParameter("ChequeNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_INCOME", memberNo_1Parameter, accNo_2Parameter, iDNo_3Parameter, amount_4Parameter, transDate_5Parameter, period_6Parameter, sourceParameter, posted_7Parameter, productID_8Parameter, auditID_9Parameter, chequeNoParameter);
+        }
+    
+        public virtual int SAVE_INCOMESOURCE(string source_1, string auditID_2)
+        {
+            var source_1Parameter = source_1 != null ?
+                new ObjectParameter("Source_1", source_1) :
+                new ObjectParameter("Source_1", typeof(string));
+    
+            var auditID_2Parameter = auditID_2 != null ?
+                new ObjectParameter("AuditID_2", auditID_2) :
+                new ObjectParameter("AuditID_2", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_INCOMESOURCE", source_1Parameter, auditID_2Parameter);
+        }
+    
+        public virtual int SAVE_LOAN_APPLICATION(string loanNo_1, string memberNo_2, string loanCode_3, Nullable<System.DateTime> applicDate_4, Nullable<decimal> loanAmt_5, Nullable<int> repayPeriod_6, string jobGrp_7, Nullable<decimal> basicSalary_8, string witMemberNo_9, string witSigned_10, string supMemberNo_11, string supSigned_12, string preparedBy_13, string purpose_14, string addSecurity_15, Nullable<decimal> insurance_16, Nullable<decimal> insPercent_17, Nullable<int> insCalcType_18, string posted_19, string auditID_20)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var memberNo_2Parameter = memberNo_2 != null ?
+                new ObjectParameter("MemberNo_2", memberNo_2) :
+                new ObjectParameter("MemberNo_2", typeof(string));
+    
+            var loanCode_3Parameter = loanCode_3 != null ?
+                new ObjectParameter("LoanCode_3", loanCode_3) :
+                new ObjectParameter("LoanCode_3", typeof(string));
+    
+            var applicDate_4Parameter = applicDate_4.HasValue ?
+                new ObjectParameter("ApplicDate_4", applicDate_4) :
+                new ObjectParameter("ApplicDate_4", typeof(System.DateTime));
+    
+            var loanAmt_5Parameter = loanAmt_5.HasValue ?
+                new ObjectParameter("LoanAmt_5", loanAmt_5) :
+                new ObjectParameter("LoanAmt_5", typeof(decimal));
+    
+            var repayPeriod_6Parameter = repayPeriod_6.HasValue ?
+                new ObjectParameter("RepayPeriod_6", repayPeriod_6) :
+                new ObjectParameter("RepayPeriod_6", typeof(int));
+    
+            var jobGrp_7Parameter = jobGrp_7 != null ?
+                new ObjectParameter("JobGrp_7", jobGrp_7) :
+                new ObjectParameter("JobGrp_7", typeof(string));
+    
+            var basicSalary_8Parameter = basicSalary_8.HasValue ?
+                new ObjectParameter("BasicSalary_8", basicSalary_8) :
+                new ObjectParameter("BasicSalary_8", typeof(decimal));
+    
+            var witMemberNo_9Parameter = witMemberNo_9 != null ?
+                new ObjectParameter("WitMemberNo_9", witMemberNo_9) :
+                new ObjectParameter("WitMemberNo_9", typeof(string));
+    
+            var witSigned_10Parameter = witSigned_10 != null ?
+                new ObjectParameter("WitSigned_10", witSigned_10) :
+                new ObjectParameter("WitSigned_10", typeof(string));
+    
+            var supMemberNo_11Parameter = supMemberNo_11 != null ?
+                new ObjectParameter("SupMemberNo_11", supMemberNo_11) :
+                new ObjectParameter("SupMemberNo_11", typeof(string));
+    
+            var supSigned_12Parameter = supSigned_12 != null ?
+                new ObjectParameter("SupSigned_12", supSigned_12) :
+                new ObjectParameter("SupSigned_12", typeof(string));
+    
+            var preparedBy_13Parameter = preparedBy_13 != null ?
+                new ObjectParameter("PreparedBy_13", preparedBy_13) :
+                new ObjectParameter("PreparedBy_13", typeof(string));
+    
+            var purpose_14Parameter = purpose_14 != null ?
+                new ObjectParameter("Purpose_14", purpose_14) :
+                new ObjectParameter("Purpose_14", typeof(string));
+    
+            var addSecurity_15Parameter = addSecurity_15 != null ?
+                new ObjectParameter("AddSecurity_15", addSecurity_15) :
+                new ObjectParameter("AddSecurity_15", typeof(string));
+    
+            var insurance_16Parameter = insurance_16.HasValue ?
+                new ObjectParameter("Insurance_16", insurance_16) :
+                new ObjectParameter("Insurance_16", typeof(decimal));
+    
+            var insPercent_17Parameter = insPercent_17.HasValue ?
+                new ObjectParameter("InsPercent_17", insPercent_17) :
+                new ObjectParameter("InsPercent_17", typeof(decimal));
+    
+            var insCalcType_18Parameter = insCalcType_18.HasValue ?
+                new ObjectParameter("InsCalcType_18", insCalcType_18) :
+                new ObjectParameter("InsCalcType_18", typeof(int));
+    
+            var posted_19Parameter = posted_19 != null ?
+                new ObjectParameter("Posted_19", posted_19) :
+                new ObjectParameter("Posted_19", typeof(string));
+    
+            var auditID_20Parameter = auditID_20 != null ?
+                new ObjectParameter("AuditID_20", auditID_20) :
+                new ObjectParameter("AuditID_20", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_LOAN_APPLICATION", loanNo_1Parameter, memberNo_2Parameter, loanCode_3Parameter, applicDate_4Parameter, loanAmt_5Parameter, repayPeriod_6Parameter, jobGrp_7Parameter, basicSalary_8Parameter, witMemberNo_9Parameter, witSigned_10Parameter, supMemberNo_11Parameter, supSigned_12Parameter, preparedBy_13Parameter, purpose_14Parameter, addSecurity_15Parameter, insurance_16Parameter, insPercent_17Parameter, insCalcType_18Parameter, posted_19Parameter, auditID_20Parameter);
+        }
+    
+        public virtual int save_loanaging(string description_2, Nullable<int> from_3, Nullable<int> upto_4, Nullable<int> percentage_5)
+        {
+            var description_2Parameter = description_2 != null ?
+                new ObjectParameter("description_2", description_2) :
+                new ObjectParameter("description_2", typeof(string));
+    
+            var from_3Parameter = from_3.HasValue ?
+                new ObjectParameter("from_3", from_3) :
+                new ObjectParameter("from_3", typeof(int));
+    
+            var upto_4Parameter = upto_4.HasValue ?
+                new ObjectParameter("upto_4", upto_4) :
+                new ObjectParameter("upto_4", typeof(int));
+    
+            var percentage_5Parameter = percentage_5.HasValue ?
+                new ObjectParameter("percentage_5", percentage_5) :
+                new ObjectParameter("percentage_5", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("save_loanaging", description_2Parameter, from_3Parameter, upto_4Parameter, percentage_5Parameter);
+        }
+    
+        public virtual int SAVE_LOANBAL(string loanNo_1, string loanCode_2, string memberNo_3, Nullable<decimal> balance_4, Nullable<System.DateTime> firstDate_5, Nullable<decimal> repayRate_6, Nullable<System.DateTime> lastDate_7, Nullable<decimal> interest_8, string repayMethod_9, string cleared_10, string autoCalc_11, Nullable<decimal> intrAmount_12, Nullable<int> repayPeriod_13, string remarks_14, string auditID_15, Nullable<decimal> loanbal_17, string accno_18, Nullable<decimal> intBalance_19, Nullable<decimal> tamount_20, Nullable<System.DateTime> nextduedate_21, Nullable<decimal> mintbal_22, Nullable<System.DateTime> duedate_23)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var loanCode_2Parameter = loanCode_2 != null ?
+                new ObjectParameter("LoanCode_2", loanCode_2) :
+                new ObjectParameter("LoanCode_2", typeof(string));
+    
+            var memberNo_3Parameter = memberNo_3 != null ?
+                new ObjectParameter("MemberNo_3", memberNo_3) :
+                new ObjectParameter("MemberNo_3", typeof(string));
+    
+            var balance_4Parameter = balance_4.HasValue ?
+                new ObjectParameter("Balance_4", balance_4) :
+                new ObjectParameter("Balance_4", typeof(decimal));
+    
+            var firstDate_5Parameter = firstDate_5.HasValue ?
+                new ObjectParameter("FirstDate_5", firstDate_5) :
+                new ObjectParameter("FirstDate_5", typeof(System.DateTime));
+    
+            var repayRate_6Parameter = repayRate_6.HasValue ?
+                new ObjectParameter("RepayRate_6", repayRate_6) :
+                new ObjectParameter("RepayRate_6", typeof(decimal));
+    
+            var lastDate_7Parameter = lastDate_7.HasValue ?
+                new ObjectParameter("LastDate_7", lastDate_7) :
+                new ObjectParameter("LastDate_7", typeof(System.DateTime));
+    
+            var interest_8Parameter = interest_8.HasValue ?
+                new ObjectParameter("Interest_8", interest_8) :
+                new ObjectParameter("Interest_8", typeof(decimal));
+    
+            var repayMethod_9Parameter = repayMethod_9 != null ?
+                new ObjectParameter("RepayMethod_9", repayMethod_9) :
+                new ObjectParameter("RepayMethod_9", typeof(string));
+    
+            var cleared_10Parameter = cleared_10 != null ?
+                new ObjectParameter("Cleared_10", cleared_10) :
+                new ObjectParameter("Cleared_10", typeof(string));
+    
+            var autoCalc_11Parameter = autoCalc_11 != null ?
+                new ObjectParameter("AutoCalc_11", autoCalc_11) :
+                new ObjectParameter("AutoCalc_11", typeof(string));
+    
+            var intrAmount_12Parameter = intrAmount_12.HasValue ?
+                new ObjectParameter("IntrAmount_12", intrAmount_12) :
+                new ObjectParameter("IntrAmount_12", typeof(decimal));
+    
+            var repayPeriod_13Parameter = repayPeriod_13.HasValue ?
+                new ObjectParameter("RepayPeriod_13", repayPeriod_13) :
+                new ObjectParameter("RepayPeriod_13", typeof(int));
+    
+            var remarks_14Parameter = remarks_14 != null ?
+                new ObjectParameter("Remarks_14", remarks_14) :
+                new ObjectParameter("Remarks_14", typeof(string));
+    
+            var auditID_15Parameter = auditID_15 != null ?
+                new ObjectParameter("AuditID_15", auditID_15) :
+                new ObjectParameter("AuditID_15", typeof(string));
+    
+            var loanbal_17Parameter = loanbal_17.HasValue ?
+                new ObjectParameter("Loanbal_17", loanbal_17) :
+                new ObjectParameter("Loanbal_17", typeof(decimal));
+    
+            var accno_18Parameter = accno_18 != null ?
+                new ObjectParameter("Accno_18", accno_18) :
+                new ObjectParameter("Accno_18", typeof(string));
+    
+            var intBalance_19Parameter = intBalance_19.HasValue ?
+                new ObjectParameter("IntBalance_19", intBalance_19) :
+                new ObjectParameter("IntBalance_19", typeof(decimal));
+    
+            var tamount_20Parameter = tamount_20.HasValue ?
+                new ObjectParameter("Tamount_20", tamount_20) :
+                new ObjectParameter("Tamount_20", typeof(decimal));
+    
+            var nextduedate_21Parameter = nextduedate_21.HasValue ?
+                new ObjectParameter("nextduedate_21", nextduedate_21) :
+                new ObjectParameter("nextduedate_21", typeof(System.DateTime));
+    
+            var mintbal_22Parameter = mintbal_22.HasValue ?
+                new ObjectParameter("Mintbal_22", mintbal_22) :
+                new ObjectParameter("Mintbal_22", typeof(decimal));
+    
+            var duedate_23Parameter = duedate_23.HasValue ?
+                new ObjectParameter("duedate_23", duedate_23) :
+                new ObjectParameter("duedate_23", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_LOANBAL", loanNo_1Parameter, loanCode_2Parameter, memberNo_3Parameter, balance_4Parameter, firstDate_5Parameter, repayRate_6Parameter, lastDate_7Parameter, interest_8Parameter, repayMethod_9Parameter, cleared_10Parameter, autoCalc_11Parameter, intrAmount_12Parameter, repayPeriod_13Parameter, remarks_14Parameter, auditID_15Parameter, loanbal_17Parameter, accno_18Parameter, intBalance_19Parameter, tamount_20Parameter, nextduedate_21Parameter, mintbal_22Parameter, duedate_23Parameter);
+        }
+    
+        public virtual int Save_LoanBalance(string loanNo, string loanCode, string memberNo, Nullable<decimal> balance, Nullable<System.DateTime> firstDate, Nullable<decimal> repayRate, Nullable<System.DateTime> lastDate, Nullable<decimal> interest, string repayMethod, string cleared, string autoCalc, Nullable<decimal> intrAmount, Nullable<int> repayPeriod, string remarks, string auditID, Nullable<decimal> loanbal, string accno, Nullable<decimal> intBalance, Nullable<decimal> tamount, Nullable<System.DateTime> nextduedate, Nullable<decimal> mintbal, Nullable<System.DateTime> duedate)
+        {
+            var loanNoParameter = loanNo != null ?
+                new ObjectParameter("LoanNo", loanNo) :
+                new ObjectParameter("LoanNo", typeof(string));
+    
+            var loanCodeParameter = loanCode != null ?
+                new ObjectParameter("LoanCode", loanCode) :
+                new ObjectParameter("LoanCode", typeof(string));
+    
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            var balanceParameter = balance.HasValue ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(decimal));
+    
+            var firstDateParameter = firstDate.HasValue ?
+                new ObjectParameter("FirstDate", firstDate) :
+                new ObjectParameter("FirstDate", typeof(System.DateTime));
+    
+            var repayRateParameter = repayRate.HasValue ?
+                new ObjectParameter("RepayRate", repayRate) :
+                new ObjectParameter("RepayRate", typeof(decimal));
+    
+            var lastDateParameter = lastDate.HasValue ?
+                new ObjectParameter("LastDate", lastDate) :
+                new ObjectParameter("LastDate", typeof(System.DateTime));
+    
+            var interestParameter = interest.HasValue ?
+                new ObjectParameter("Interest", interest) :
+                new ObjectParameter("Interest", typeof(decimal));
+    
+            var repayMethodParameter = repayMethod != null ?
+                new ObjectParameter("RepayMethod", repayMethod) :
+                new ObjectParameter("RepayMethod", typeof(string));
+    
+            var clearedParameter = cleared != null ?
+                new ObjectParameter("Cleared", cleared) :
+                new ObjectParameter("Cleared", typeof(string));
+    
+            var autoCalcParameter = autoCalc != null ?
+                new ObjectParameter("AutoCalc", autoCalc) :
+                new ObjectParameter("AutoCalc", typeof(string));
+    
+            var intrAmountParameter = intrAmount.HasValue ?
+                new ObjectParameter("IntrAmount", intrAmount) :
+                new ObjectParameter("IntrAmount", typeof(decimal));
+    
+            var repayPeriodParameter = repayPeriod.HasValue ?
+                new ObjectParameter("RepayPeriod", repayPeriod) :
+                new ObjectParameter("RepayPeriod", typeof(int));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var auditIDParameter = auditID != null ?
+                new ObjectParameter("AuditID", auditID) :
+                new ObjectParameter("AuditID", typeof(string));
+    
+            var loanbalParameter = loanbal.HasValue ?
+                new ObjectParameter("Loanbal", loanbal) :
+                new ObjectParameter("Loanbal", typeof(decimal));
+    
+            var accnoParameter = accno != null ?
+                new ObjectParameter("Accno", accno) :
+                new ObjectParameter("Accno", typeof(string));
+    
+            var intBalanceParameter = intBalance.HasValue ?
+                new ObjectParameter("IntBalance", intBalance) :
+                new ObjectParameter("IntBalance", typeof(decimal));
+    
+            var tamountParameter = tamount.HasValue ?
+                new ObjectParameter("Tamount", tamount) :
+                new ObjectParameter("Tamount", typeof(decimal));
+    
+            var nextduedateParameter = nextduedate.HasValue ?
+                new ObjectParameter("nextduedate", nextduedate) :
+                new ObjectParameter("nextduedate", typeof(System.DateTime));
+    
+            var mintbalParameter = mintbal.HasValue ?
+                new ObjectParameter("Mintbal", mintbal) :
+                new ObjectParameter("Mintbal", typeof(decimal));
+    
+            var duedateParameter = duedate.HasValue ?
+                new ObjectParameter("duedate", duedate) :
+                new ObjectParameter("duedate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_LoanBalance", loanNoParameter, loanCodeParameter, memberNoParameter, balanceParameter, firstDateParameter, repayRateParameter, lastDateParameter, interestParameter, repayMethodParameter, clearedParameter, autoCalcParameter, intrAmountParameter, repayPeriodParameter, remarksParameter, auditIDParameter, loanbalParameter, accnoParameter, intBalanceParameter, tamountParameter, nextduedateParameter, mintbalParameter, duedateParameter);
+        }
+    
+        public virtual int SAVE_LOANBALANCE1(string loanNo_1, string loanCode_2, string memberNo_3, Nullable<decimal> balance_4, Nullable<System.DateTime> firstDate_5, Nullable<decimal> repayRate_6, Nullable<System.DateTime> lastDate_7, Nullable<decimal> interest_8, string repayMethod_9, string cleared_10, string autoCalc_11, Nullable<decimal> intrAmount_12, Nullable<int> repayPeriod_13, string remarks_14, string auditID_15, Nullable<decimal> loanbal_16, string accno_17, Nullable<long> lid_18, Nullable<decimal> intBalance_19, Nullable<decimal> tamount_20, Nullable<System.DateTime> nextduedate_21, Nullable<decimal> mintbal_22, Nullable<System.DateTime> duedate_23)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var loanCode_2Parameter = loanCode_2 != null ?
+                new ObjectParameter("LoanCode_2", loanCode_2) :
+                new ObjectParameter("LoanCode_2", typeof(string));
+    
+            var memberNo_3Parameter = memberNo_3 != null ?
+                new ObjectParameter("MemberNo_3", memberNo_3) :
+                new ObjectParameter("MemberNo_3", typeof(string));
+    
+            var balance_4Parameter = balance_4.HasValue ?
+                new ObjectParameter("Balance_4", balance_4) :
+                new ObjectParameter("Balance_4", typeof(decimal));
+    
+            var firstDate_5Parameter = firstDate_5.HasValue ?
+                new ObjectParameter("FirstDate_5", firstDate_5) :
+                new ObjectParameter("FirstDate_5", typeof(System.DateTime));
+    
+            var repayRate_6Parameter = repayRate_6.HasValue ?
+                new ObjectParameter("RepayRate_6", repayRate_6) :
+                new ObjectParameter("RepayRate_6", typeof(decimal));
+    
+            var lastDate_7Parameter = lastDate_7.HasValue ?
+                new ObjectParameter("LastDate_7", lastDate_7) :
+                new ObjectParameter("LastDate_7", typeof(System.DateTime));
+    
+            var interest_8Parameter = interest_8.HasValue ?
+                new ObjectParameter("Interest_8", interest_8) :
+                new ObjectParameter("Interest_8", typeof(decimal));
+    
+            var repayMethod_9Parameter = repayMethod_9 != null ?
+                new ObjectParameter("RepayMethod_9", repayMethod_9) :
+                new ObjectParameter("RepayMethod_9", typeof(string));
+    
+            var cleared_10Parameter = cleared_10 != null ?
+                new ObjectParameter("Cleared_10", cleared_10) :
+                new ObjectParameter("Cleared_10", typeof(string));
+    
+            var autoCalc_11Parameter = autoCalc_11 != null ?
+                new ObjectParameter("AutoCalc_11", autoCalc_11) :
+                new ObjectParameter("AutoCalc_11", typeof(string));
+    
+            var intrAmount_12Parameter = intrAmount_12.HasValue ?
+                new ObjectParameter("IntrAmount_12", intrAmount_12) :
+                new ObjectParameter("IntrAmount_12", typeof(decimal));
+    
+            var repayPeriod_13Parameter = repayPeriod_13.HasValue ?
+                new ObjectParameter("RepayPeriod_13", repayPeriod_13) :
+                new ObjectParameter("RepayPeriod_13", typeof(int));
+    
+            var remarks_14Parameter = remarks_14 != null ?
+                new ObjectParameter("Remarks_14", remarks_14) :
+                new ObjectParameter("Remarks_14", typeof(string));
+    
+            var auditID_15Parameter = auditID_15 != null ?
+                new ObjectParameter("AuditID_15", auditID_15) :
+                new ObjectParameter("AuditID_15", typeof(string));
+    
+            var loanbal_16Parameter = loanbal_16.HasValue ?
+                new ObjectParameter("Loanbal_16", loanbal_16) :
+                new ObjectParameter("Loanbal_16", typeof(decimal));
+    
+            var accno_17Parameter = accno_17 != null ?
+                new ObjectParameter("Accno_17", accno_17) :
+                new ObjectParameter("Accno_17", typeof(string));
+    
+            var lid_18Parameter = lid_18.HasValue ?
+                new ObjectParameter("lid_18", lid_18) :
+                new ObjectParameter("lid_18", typeof(long));
+    
+            var intBalance_19Parameter = intBalance_19.HasValue ?
+                new ObjectParameter("IntBalance_19", intBalance_19) :
+                new ObjectParameter("IntBalance_19", typeof(decimal));
+    
+            var tamount_20Parameter = tamount_20.HasValue ?
+                new ObjectParameter("Tamount_20", tamount_20) :
+                new ObjectParameter("Tamount_20", typeof(decimal));
+    
+            var nextduedate_21Parameter = nextduedate_21.HasValue ?
+                new ObjectParameter("nextduedate_21", nextduedate_21) :
+                new ObjectParameter("nextduedate_21", typeof(System.DateTime));
+    
+            var mintbal_22Parameter = mintbal_22.HasValue ?
+                new ObjectParameter("Mintbal_22", mintbal_22) :
+                new ObjectParameter("Mintbal_22", typeof(decimal));
+    
+            var duedate_23Parameter = duedate_23.HasValue ?
+                new ObjectParameter("duedate_23", duedate_23) :
+                new ObjectParameter("duedate_23", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_LOANBALANCE1", loanNo_1Parameter, loanCode_2Parameter, memberNo_3Parameter, balance_4Parameter, firstDate_5Parameter, repayRate_6Parameter, lastDate_7Parameter, interest_8Parameter, repayMethod_9Parameter, cleared_10Parameter, autoCalc_11Parameter, intrAmount_12Parameter, repayPeriod_13Parameter, remarks_14Parameter, auditID_15Parameter, loanbal_16Parameter, accno_17Parameter, lid_18Parameter, intBalance_19Parameter, tamount_20Parameter, nextduedate_21Parameter, mintbal_22Parameter, duedate_23Parameter);
+        }
+    
+        public virtual int SAVE_LOANGUAR(string memberNo_1, string loanNo_2, Nullable<decimal> amount_3, Nullable<decimal> balance_4, string auditID_5, Nullable<decimal> totalShares_6, Nullable<decimal> oLoans, string loanee)
+        {
+            var memberNo_1Parameter = memberNo_1 != null ?
+                new ObjectParameter("MemberNo_1", memberNo_1) :
+                new ObjectParameter("MemberNo_1", typeof(string));
+    
+            var loanNo_2Parameter = loanNo_2 != null ?
+                new ObjectParameter("LoanNo_2", loanNo_2) :
+                new ObjectParameter("LoanNo_2", typeof(string));
+    
+            var amount_3Parameter = amount_3.HasValue ?
+                new ObjectParameter("Amount_3", amount_3) :
+                new ObjectParameter("Amount_3", typeof(decimal));
+    
+            var balance_4Parameter = balance_4.HasValue ?
+                new ObjectParameter("Balance_4", balance_4) :
+                new ObjectParameter("Balance_4", typeof(decimal));
+    
+            var auditID_5Parameter = auditID_5 != null ?
+                new ObjectParameter("AuditID_5", auditID_5) :
+                new ObjectParameter("AuditID_5", typeof(string));
+    
+            var totalShares_6Parameter = totalShares_6.HasValue ?
+                new ObjectParameter("TotalShares_6", totalShares_6) :
+                new ObjectParameter("TotalShares_6", typeof(decimal));
+    
+            var oLoansParameter = oLoans.HasValue ?
+                new ObjectParameter("OLoans", oLoans) :
+                new ObjectParameter("OLoans", typeof(decimal));
+    
+            var loaneeParameter = loanee != null ?
+                new ObjectParameter("Loanee", loanee) :
+                new ObjectParameter("Loanee", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_LOANGUAR", memberNo_1Parameter, loanNo_2Parameter, amount_3Parameter, balance_4Parameter, auditID_5Parameter, totalShares_6Parameter, oLoansParameter, loaneeParameter);
+        }
+    
+        public virtual int SAVE_LOGIN(string userLoginID_1, string ttime_2, string wkStation_3)
+        {
+            var userLoginID_1Parameter = userLoginID_1 != null ?
+                new ObjectParameter("UserLoginID_1", userLoginID_1) :
+                new ObjectParameter("UserLoginID_1", typeof(string));
+    
+            var ttime_2Parameter = ttime_2 != null ?
+                new ObjectParameter("ttime_2", ttime_2) :
+                new ObjectParameter("ttime_2", typeof(string));
+    
+            var wkStation_3Parameter = wkStation_3 != null ?
+                new ObjectParameter("WkStation_3", wkStation_3) :
+                new ObjectParameter("WkStation_3", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_LOGIN", userLoginID_1Parameter, ttime_2Parameter, wkStation_3Parameter);
+        }
+    
+        public virtual int SAVE_MEMBER(string groupID_1, string memberNo_2, string surName_3, string otherNames_4, string iDNo_5, string gender_6, Nullable<System.DateTime> dOB_7, Nullable<System.DateTime> regDate_8, string address_9, string telNo_10, string maritalStatus_11, string pinNo_12, string accNo_13, string province_14, string district_15, string location_16, string division_17, string auditID_18)
+        {
+            var groupID_1Parameter = groupID_1 != null ?
+                new ObjectParameter("GroupID_1", groupID_1) :
+                new ObjectParameter("GroupID_1", typeof(string));
+    
+            var memberNo_2Parameter = memberNo_2 != null ?
+                new ObjectParameter("MemberNo_2", memberNo_2) :
+                new ObjectParameter("MemberNo_2", typeof(string));
+    
+            var surName_3Parameter = surName_3 != null ?
+                new ObjectParameter("SurName_3", surName_3) :
+                new ObjectParameter("SurName_3", typeof(string));
+    
+            var otherNames_4Parameter = otherNames_4 != null ?
+                new ObjectParameter("OtherNames_4", otherNames_4) :
+                new ObjectParameter("OtherNames_4", typeof(string));
+    
+            var iDNo_5Parameter = iDNo_5 != null ?
+                new ObjectParameter("IDNo_5", iDNo_5) :
+                new ObjectParameter("IDNo_5", typeof(string));
+    
+            var gender_6Parameter = gender_6 != null ?
+                new ObjectParameter("Gender_6", gender_6) :
+                new ObjectParameter("Gender_6", typeof(string));
+    
+            var dOB_7Parameter = dOB_7.HasValue ?
+                new ObjectParameter("DOB_7", dOB_7) :
+                new ObjectParameter("DOB_7", typeof(System.DateTime));
+    
+            var regDate_8Parameter = regDate_8.HasValue ?
+                new ObjectParameter("RegDate_8", regDate_8) :
+                new ObjectParameter("RegDate_8", typeof(System.DateTime));
+    
+            var address_9Parameter = address_9 != null ?
+                new ObjectParameter("Address_9", address_9) :
+                new ObjectParameter("Address_9", typeof(string));
+    
+            var telNo_10Parameter = telNo_10 != null ?
+                new ObjectParameter("TelNo_10", telNo_10) :
+                new ObjectParameter("TelNo_10", typeof(string));
+    
+            var maritalStatus_11Parameter = maritalStatus_11 != null ?
+                new ObjectParameter("MaritalStatus_11", maritalStatus_11) :
+                new ObjectParameter("MaritalStatus_11", typeof(string));
+    
+            var pinNo_12Parameter = pinNo_12 != null ?
+                new ObjectParameter("PinNo_12", pinNo_12) :
+                new ObjectParameter("PinNo_12", typeof(string));
+    
+            var accNo_13Parameter = accNo_13 != null ?
+                new ObjectParameter("AccNo_13", accNo_13) :
+                new ObjectParameter("AccNo_13", typeof(string));
+    
+            var province_14Parameter = province_14 != null ?
+                new ObjectParameter("Province_14", province_14) :
+                new ObjectParameter("Province_14", typeof(string));
+    
+            var district_15Parameter = district_15 != null ?
+                new ObjectParameter("District_15", district_15) :
+                new ObjectParameter("District_15", typeof(string));
+    
+            var location_16Parameter = location_16 != null ?
+                new ObjectParameter("Location_16", location_16) :
+                new ObjectParameter("Location_16", typeof(string));
+    
+            var division_17Parameter = division_17 != null ?
+                new ObjectParameter("Division_17", division_17) :
+                new ObjectParameter("Division_17", typeof(string));
+    
+            var auditID_18Parameter = auditID_18 != null ?
+                new ObjectParameter("AuditID_18", auditID_18) :
+                new ObjectParameter("AuditID_18", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_MEMBER", groupID_1Parameter, memberNo_2Parameter, surName_3Parameter, otherNames_4Parameter, iDNo_5Parameter, gender_6Parameter, dOB_7Parameter, regDate_8Parameter, address_9Parameter, telNo_10Parameter, maritalStatus_11Parameter, pinNo_12Parameter, accNo_13Parameter, province_14Parameter, district_15Parameter, location_16Parameter, division_17Parameter, auditID_18Parameter);
+        }
+    
+        public virtual int SAVE_MEMBERDEDUCTIONS(string memberNo_1, string accNo_2, string deductionID_3, string sTONo_4, Nullable<decimal> dedAmount_5, Nullable<decimal> percentage_6, Nullable<decimal> defAmount, string prooductID_7, string source, Nullable<System.DateTime> startDate_8, Nullable<System.DateTime> lastTransDate_9, string auditID_10, Nullable<decimal> interest, Nullable<decimal> principal)
+        {
+            var memberNo_1Parameter = memberNo_1 != null ?
+                new ObjectParameter("MemberNo_1", memberNo_1) :
+                new ObjectParameter("MemberNo_1", typeof(string));
+    
+            var accNo_2Parameter = accNo_2 != null ?
+                new ObjectParameter("AccNo_2", accNo_2) :
+                new ObjectParameter("AccNo_2", typeof(string));
+    
+            var deductionID_3Parameter = deductionID_3 != null ?
+                new ObjectParameter("DeductionID_3", deductionID_3) :
+                new ObjectParameter("DeductionID_3", typeof(string));
+    
+            var sTONo_4Parameter = sTONo_4 != null ?
+                new ObjectParameter("STONo_4", sTONo_4) :
+                new ObjectParameter("STONo_4", typeof(string));
+    
+            var dedAmount_5Parameter = dedAmount_5.HasValue ?
+                new ObjectParameter("DedAmount_5", dedAmount_5) :
+                new ObjectParameter("DedAmount_5", typeof(decimal));
+    
+            var percentage_6Parameter = percentage_6.HasValue ?
+                new ObjectParameter("Percentage_6", percentage_6) :
+                new ObjectParameter("Percentage_6", typeof(decimal));
+    
+            var defAmountParameter = defAmount.HasValue ?
+                new ObjectParameter("DefAmount", defAmount) :
+                new ObjectParameter("DefAmount", typeof(decimal));
+    
+            var prooductID_7Parameter = prooductID_7 != null ?
+                new ObjectParameter("ProoductID_7", prooductID_7) :
+                new ObjectParameter("ProoductID_7", typeof(string));
+    
+            var sourceParameter = source != null ?
+                new ObjectParameter("Source", source) :
+                new ObjectParameter("Source", typeof(string));
+    
+            var startDate_8Parameter = startDate_8.HasValue ?
+                new ObjectParameter("StartDate_8", startDate_8) :
+                new ObjectParameter("StartDate_8", typeof(System.DateTime));
+    
+            var lastTransDate_9Parameter = lastTransDate_9.HasValue ?
+                new ObjectParameter("LastTransDate_9", lastTransDate_9) :
+                new ObjectParameter("LastTransDate_9", typeof(System.DateTime));
+    
+            var auditID_10Parameter = auditID_10 != null ?
+                new ObjectParameter("AuditID_10", auditID_10) :
+                new ObjectParameter("AuditID_10", typeof(string));
+    
+            var interestParameter = interest.HasValue ?
+                new ObjectParameter("Interest", interest) :
+                new ObjectParameter("Interest", typeof(decimal));
+    
+            var principalParameter = principal.HasValue ?
+                new ObjectParameter("Principal", principal) :
+                new ObjectParameter("Principal", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_MEMBERDEDUCTIONS", memberNo_1Parameter, accNo_2Parameter, deductionID_3Parameter, sTONo_4Parameter, dedAmount_5Parameter, percentage_6Parameter, defAmountParameter, prooductID_7Parameter, sourceParameter, startDate_8Parameter, lastTransDate_9Parameter, auditID_10Parameter, interestParameter, principalParameter);
+        }
+    
+        public virtual int SAVE_MEMBERSTO(string sTONo_1, string memberNo_2, string accNo_3, Nullable<decimal> amount_4, Nullable<decimal> balance_5, Nullable<decimal> totAmount_6, Nullable<System.DateTime> startDate_7, Nullable<System.DateTime> lastTransDate_8, Nullable<int> stopped_9, string auditID_10, Nullable<System.DateTime> audittime, Nullable<decimal> stoamount, string productID, string loanCode, string intCode, string transno)
+        {
+            var sTONo_1Parameter = sTONo_1 != null ?
+                new ObjectParameter("STONo_1", sTONo_1) :
+                new ObjectParameter("STONo_1", typeof(string));
+    
+            var memberNo_2Parameter = memberNo_2 != null ?
+                new ObjectParameter("MemberNo_2", memberNo_2) :
+                new ObjectParameter("MemberNo_2", typeof(string));
+    
+            var accNo_3Parameter = accNo_3 != null ?
+                new ObjectParameter("AccNo_3", accNo_3) :
+                new ObjectParameter("AccNo_3", typeof(string));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(decimal));
+    
+            var balance_5Parameter = balance_5.HasValue ?
+                new ObjectParameter("Balance_5", balance_5) :
+                new ObjectParameter("Balance_5", typeof(decimal));
+    
+            var totAmount_6Parameter = totAmount_6.HasValue ?
+                new ObjectParameter("TotAmount_6", totAmount_6) :
+                new ObjectParameter("TotAmount_6", typeof(decimal));
+    
+            var startDate_7Parameter = startDate_7.HasValue ?
+                new ObjectParameter("StartDate_7", startDate_7) :
+                new ObjectParameter("StartDate_7", typeof(System.DateTime));
+    
+            var lastTransDate_8Parameter = lastTransDate_8.HasValue ?
+                new ObjectParameter("LastTransDate_8", lastTransDate_8) :
+                new ObjectParameter("LastTransDate_8", typeof(System.DateTime));
+    
+            var stopped_9Parameter = stopped_9.HasValue ?
+                new ObjectParameter("Stopped_9", stopped_9) :
+                new ObjectParameter("Stopped_9", typeof(int));
+    
+            var auditID_10Parameter = auditID_10 != null ?
+                new ObjectParameter("AuditID_10", auditID_10) :
+                new ObjectParameter("AuditID_10", typeof(string));
+    
+            var audittimeParameter = audittime.HasValue ?
+                new ObjectParameter("audittime", audittime) :
+                new ObjectParameter("audittime", typeof(System.DateTime));
+    
+            var stoamountParameter = stoamount.HasValue ?
+                new ObjectParameter("stoamount", stoamount) :
+                new ObjectParameter("stoamount", typeof(decimal));
+    
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            var loanCodeParameter = loanCode != null ?
+                new ObjectParameter("LoanCode", loanCode) :
+                new ObjectParameter("LoanCode", typeof(string));
+    
+            var intCodeParameter = intCode != null ?
+                new ObjectParameter("IntCode", intCode) :
+                new ObjectParameter("IntCode", typeof(string));
+    
+            var transnoParameter = transno != null ?
+                new ObjectParameter("transno", transno) :
+                new ObjectParameter("transno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_MEMBERSTO", sTONo_1Parameter, memberNo_2Parameter, accNo_3Parameter, amount_4Parameter, balance_5Parameter, totAmount_6Parameter, startDate_7Parameter, lastTransDate_8Parameter, stopped_9Parameter, auditID_10Parameter, audittimeParameter, stoamountParameter, productIDParameter, loanCodeParameter, intCodeParameter, transnoParameter);
+        }
+    
+        public virtual int SAVE_MEMBERTRANS(string memberNo, string groupID, Nullable<System.DateTime> transDate, Nullable<decimal> deposits, Nullable<decimal> loanRepayment, Nullable<decimal> loanInterest, string voucherNo, string transtype, string auditID)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            var groupIDParameter = groupID != null ?
+                new ObjectParameter("GroupID", groupID) :
+                new ObjectParameter("GroupID", typeof(string));
+    
+            var transDateParameter = transDate.HasValue ?
+                new ObjectParameter("TransDate", transDate) :
+                new ObjectParameter("TransDate", typeof(System.DateTime));
+    
+            var depositsParameter = deposits.HasValue ?
+                new ObjectParameter("Deposits", deposits) :
+                new ObjectParameter("Deposits", typeof(decimal));
+    
+            var loanRepaymentParameter = loanRepayment.HasValue ?
+                new ObjectParameter("LoanRepayment", loanRepayment) :
+                new ObjectParameter("LoanRepayment", typeof(decimal));
+    
+            var loanInterestParameter = loanInterest.HasValue ?
+                new ObjectParameter("LoanInterest", loanInterest) :
+                new ObjectParameter("LoanInterest", typeof(decimal));
+    
+            var voucherNoParameter = voucherNo != null ?
+                new ObjectParameter("VoucherNo", voucherNo) :
+                new ObjectParameter("VoucherNo", typeof(string));
+    
+            var transtypeParameter = transtype != null ?
+                new ObjectParameter("Transtype", transtype) :
+                new ObjectParameter("Transtype", typeof(string));
+    
+            var auditIDParameter = auditID != null ?
+                new ObjectParameter("AuditID", auditID) :
+                new ObjectParameter("AuditID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_MEMBERTRANS", memberNoParameter, groupIDParameter, transDateParameter, depositsParameter, loanRepaymentParameter, loanInterestParameter, voucherNoParameter, transtypeParameter, auditIDParameter);
+        }
+    
+        public virtual int SAVE_MEMBERTRANSACTION(string accNo_1, string memberNo_2, string groupNo_3, Nullable<System.DateTime> transDate_4, string voucherNo_5, Nullable<decimal> regFees_6, Nullable<decimal> deposits_7, Nullable<decimal> loanForm_8, string loanFormNo, Nullable<decimal> loanRep_9, Nullable<decimal> otherIncome, Nullable<decimal> bikeCash, string auditID_10, string serialNo, string loanType, Nullable<decimal> loanInterest)
+        {
+            var accNo_1Parameter = accNo_1 != null ?
+                new ObjectParameter("AccNo_1", accNo_1) :
+                new ObjectParameter("AccNo_1", typeof(string));
+    
+            var memberNo_2Parameter = memberNo_2 != null ?
+                new ObjectParameter("MemberNo_2", memberNo_2) :
+                new ObjectParameter("MemberNo_2", typeof(string));
+    
+            var groupNo_3Parameter = groupNo_3 != null ?
+                new ObjectParameter("GroupNo_3", groupNo_3) :
+                new ObjectParameter("GroupNo_3", typeof(string));
+    
+            var transDate_4Parameter = transDate_4.HasValue ?
+                new ObjectParameter("TransDate_4", transDate_4) :
+                new ObjectParameter("TransDate_4", typeof(System.DateTime));
+    
+            var voucherNo_5Parameter = voucherNo_5 != null ?
+                new ObjectParameter("VoucherNo_5", voucherNo_5) :
+                new ObjectParameter("VoucherNo_5", typeof(string));
+    
+            var regFees_6Parameter = regFees_6.HasValue ?
+                new ObjectParameter("RegFees_6", regFees_6) :
+                new ObjectParameter("RegFees_6", typeof(decimal));
+    
+            var deposits_7Parameter = deposits_7.HasValue ?
+                new ObjectParameter("Deposits_7", deposits_7) :
+                new ObjectParameter("Deposits_7", typeof(decimal));
+    
+            var loanForm_8Parameter = loanForm_8.HasValue ?
+                new ObjectParameter("LoanForm_8", loanForm_8) :
+                new ObjectParameter("LoanForm_8", typeof(decimal));
+    
+            var loanFormNoParameter = loanFormNo != null ?
+                new ObjectParameter("LoanFormNo", loanFormNo) :
+                new ObjectParameter("LoanFormNo", typeof(string));
+    
+            var loanRep_9Parameter = loanRep_9.HasValue ?
+                new ObjectParameter("LoanRep_9", loanRep_9) :
+                new ObjectParameter("LoanRep_9", typeof(decimal));
+    
+            var otherIncomeParameter = otherIncome.HasValue ?
+                new ObjectParameter("OtherIncome", otherIncome) :
+                new ObjectParameter("OtherIncome", typeof(decimal));
+    
+            var bikeCashParameter = bikeCash.HasValue ?
+                new ObjectParameter("BikeCash", bikeCash) :
+                new ObjectParameter("BikeCash", typeof(decimal));
+    
+            var auditID_10Parameter = auditID_10 != null ?
+                new ObjectParameter("AuditID_10", auditID_10) :
+                new ObjectParameter("AuditID_10", typeof(string));
+    
+            var serialNoParameter = serialNo != null ?
+                new ObjectParameter("SerialNo", serialNo) :
+                new ObjectParameter("SerialNo", typeof(string));
+    
+            var loanTypeParameter = loanType != null ?
+                new ObjectParameter("LoanType", loanType) :
+                new ObjectParameter("LoanType", typeof(string));
+    
+            var loanInterestParameter = loanInterest.HasValue ?
+                new ObjectParameter("LoanInterest", loanInterest) :
+                new ObjectParameter("LoanInterest", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_MEMBERTRANSACTION", accNo_1Parameter, memberNo_2Parameter, groupNo_3Parameter, transDate_4Parameter, voucherNo_5Parameter, regFees_6Parameter, deposits_7Parameter, loanForm_8Parameter, loanFormNoParameter, loanRep_9Parameter, otherIncomeParameter, bikeCashParameter, auditID_10Parameter, serialNoParameter, loanTypeParameter, loanInterestParameter);
+        }
+    
+        public virtual int SAVE_MONTHLYDEDUCTION(string accNo_1, string stoNo_2, Nullable<System.DateTime> period_3, Nullable<decimal> principal_4, Nullable<decimal> interest_5, string auditID_6, string source, string productID)
+        {
+            var accNo_1Parameter = accNo_1 != null ?
+                new ObjectParameter("AccNo_1", accNo_1) :
+                new ObjectParameter("AccNo_1", typeof(string));
+    
+            var stoNo_2Parameter = stoNo_2 != null ?
+                new ObjectParameter("StoNo_2", stoNo_2) :
+                new ObjectParameter("StoNo_2", typeof(string));
+    
+            var period_3Parameter = period_3.HasValue ?
+                new ObjectParameter("Period_3", period_3) :
+                new ObjectParameter("Period_3", typeof(System.DateTime));
+    
+            var principal_4Parameter = principal_4.HasValue ?
+                new ObjectParameter("Principal_4", principal_4) :
+                new ObjectParameter("Principal_4", typeof(decimal));
+    
+            var interest_5Parameter = interest_5.HasValue ?
+                new ObjectParameter("Interest_5", interest_5) :
+                new ObjectParameter("Interest_5", typeof(decimal));
+    
+            var auditID_6Parameter = auditID_6 != null ?
+                new ObjectParameter("AuditID_6", auditID_6) :
+                new ObjectParameter("AuditID_6", typeof(string));
+    
+            var sourceParameter = source != null ?
+                new ObjectParameter("Source", source) :
+                new ObjectParameter("Source", typeof(string));
+    
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_MONTHLYDEDUCTION", accNo_1Parameter, stoNo_2Parameter, period_3Parameter, principal_4Parameter, interest_5Parameter, auditID_6Parameter, sourceParameter, productIDParameter);
+        }
+    
+        public virtual int Save_New_Member(string memberNo_1, string staffNo_2, string iDNo_3, string accNo_4, string surname_5, string otherNames_6, string sex_7, Nullable<System.DateTime> dOB_8, string employer_9, string dept_10, string rank_11, string terms_12, string presentAddr_13, string officeTelNo_14, string homeAddr_15, string homeTelNo_16, Nullable<decimal> regFee_17, Nullable<decimal> initShares_18, Nullable<System.DateTime> asAtDate_19, Nullable<decimal> monthlyContr_20, Nullable<System.DateTime> applicDate_21, Nullable<System.DateTime> effectDate_22, string signed_23, string accepted_24, string archived_25, string withdrawn_26, string isGuarantor_27, string province_28, string district_29, string station_30, string companyCode_31, string pIN_32, byte[] photo_33, Nullable<decimal> shareCap_34, string bankCode_35, string auditID_36, Nullable<System.DateTime> auditTime_37, Nullable<System.DateTime> e_DATE_38, Nullable<decimal> hshares_39, Nullable<decimal> fshares_40)
+        {
+            var memberNo_1Parameter = memberNo_1 != null ?
+                new ObjectParameter("MemberNo_1", memberNo_1) :
+                new ObjectParameter("MemberNo_1", typeof(string));
+    
+            var staffNo_2Parameter = staffNo_2 != null ?
+                new ObjectParameter("StaffNo_2", staffNo_2) :
+                new ObjectParameter("StaffNo_2", typeof(string));
+    
+            var iDNo_3Parameter = iDNo_3 != null ?
+                new ObjectParameter("IDNo_3", iDNo_3) :
+                new ObjectParameter("IDNo_3", typeof(string));
+    
+            var accNo_4Parameter = accNo_4 != null ?
+                new ObjectParameter("AccNo_4", accNo_4) :
+                new ObjectParameter("AccNo_4", typeof(string));
+    
+            var surname_5Parameter = surname_5 != null ?
+                new ObjectParameter("Surname_5", surname_5) :
+                new ObjectParameter("Surname_5", typeof(string));
+    
+            var otherNames_6Parameter = otherNames_6 != null ?
+                new ObjectParameter("OtherNames_6", otherNames_6) :
+                new ObjectParameter("OtherNames_6", typeof(string));
+    
+            var sex_7Parameter = sex_7 != null ?
+                new ObjectParameter("Sex_7", sex_7) :
+                new ObjectParameter("Sex_7", typeof(string));
+    
+            var dOB_8Parameter = dOB_8.HasValue ?
+                new ObjectParameter("DOB_8", dOB_8) :
+                new ObjectParameter("DOB_8", typeof(System.DateTime));
+    
+            var employer_9Parameter = employer_9 != null ?
+                new ObjectParameter("Employer_9", employer_9) :
+                new ObjectParameter("Employer_9", typeof(string));
+    
+            var dept_10Parameter = dept_10 != null ?
+                new ObjectParameter("Dept_10", dept_10) :
+                new ObjectParameter("Dept_10", typeof(string));
+    
+            var rank_11Parameter = rank_11 != null ?
+                new ObjectParameter("Rank_11", rank_11) :
+                new ObjectParameter("Rank_11", typeof(string));
+    
+            var terms_12Parameter = terms_12 != null ?
+                new ObjectParameter("Terms_12", terms_12) :
+                new ObjectParameter("Terms_12", typeof(string));
+    
+            var presentAddr_13Parameter = presentAddr_13 != null ?
+                new ObjectParameter("PresentAddr_13", presentAddr_13) :
+                new ObjectParameter("PresentAddr_13", typeof(string));
+    
+            var officeTelNo_14Parameter = officeTelNo_14 != null ?
+                new ObjectParameter("OfficeTelNo_14", officeTelNo_14) :
+                new ObjectParameter("OfficeTelNo_14", typeof(string));
+    
+            var homeAddr_15Parameter = homeAddr_15 != null ?
+                new ObjectParameter("HomeAddr_15", homeAddr_15) :
+                new ObjectParameter("HomeAddr_15", typeof(string));
+    
+            var homeTelNo_16Parameter = homeTelNo_16 != null ?
+                new ObjectParameter("HomeTelNo_16", homeTelNo_16) :
+                new ObjectParameter("HomeTelNo_16", typeof(string));
+    
+            var regFee_17Parameter = regFee_17.HasValue ?
+                new ObjectParameter("RegFee_17", regFee_17) :
+                new ObjectParameter("RegFee_17", typeof(decimal));
+    
+            var initShares_18Parameter = initShares_18.HasValue ?
+                new ObjectParameter("InitShares_18", initShares_18) :
+                new ObjectParameter("InitShares_18", typeof(decimal));
+    
+            var asAtDate_19Parameter = asAtDate_19.HasValue ?
+                new ObjectParameter("AsAtDate_19", asAtDate_19) :
+                new ObjectParameter("AsAtDate_19", typeof(System.DateTime));
+    
+            var monthlyContr_20Parameter = monthlyContr_20.HasValue ?
+                new ObjectParameter("MonthlyContr_20", monthlyContr_20) :
+                new ObjectParameter("MonthlyContr_20", typeof(decimal));
+    
+            var applicDate_21Parameter = applicDate_21.HasValue ?
+                new ObjectParameter("ApplicDate_21", applicDate_21) :
+                new ObjectParameter("ApplicDate_21", typeof(System.DateTime));
+    
+            var effectDate_22Parameter = effectDate_22.HasValue ?
+                new ObjectParameter("EffectDate_22", effectDate_22) :
+                new ObjectParameter("EffectDate_22", typeof(System.DateTime));
+    
+            var signed_23Parameter = signed_23 != null ?
+                new ObjectParameter("Signed_23", signed_23) :
+                new ObjectParameter("Signed_23", typeof(string));
+    
+            var accepted_24Parameter = accepted_24 != null ?
+                new ObjectParameter("Accepted_24", accepted_24) :
+                new ObjectParameter("Accepted_24", typeof(string));
+    
+            var archived_25Parameter = archived_25 != null ?
+                new ObjectParameter("Archived_25", archived_25) :
+                new ObjectParameter("Archived_25", typeof(string));
+    
+            var withdrawn_26Parameter = withdrawn_26 != null ?
+                new ObjectParameter("Withdrawn_26", withdrawn_26) :
+                new ObjectParameter("Withdrawn_26", typeof(string));
+    
+            var isGuarantor_27Parameter = isGuarantor_27 != null ?
+                new ObjectParameter("IsGuarantor_27", isGuarantor_27) :
+                new ObjectParameter("IsGuarantor_27", typeof(string));
+    
+            var province_28Parameter = province_28 != null ?
+                new ObjectParameter("Province_28", province_28) :
+                new ObjectParameter("Province_28", typeof(string));
+    
+            var district_29Parameter = district_29 != null ?
+                new ObjectParameter("District_29", district_29) :
+                new ObjectParameter("District_29", typeof(string));
+    
+            var station_30Parameter = station_30 != null ?
+                new ObjectParameter("Station_30", station_30) :
+                new ObjectParameter("Station_30", typeof(string));
+    
+            var companyCode_31Parameter = companyCode_31 != null ?
+                new ObjectParameter("CompanyCode_31", companyCode_31) :
+                new ObjectParameter("CompanyCode_31", typeof(string));
+    
+            var pIN_32Parameter = pIN_32 != null ?
+                new ObjectParameter("PIN_32", pIN_32) :
+                new ObjectParameter("PIN_32", typeof(string));
+    
+            var photo_33Parameter = photo_33 != null ?
+                new ObjectParameter("Photo_33", photo_33) :
+                new ObjectParameter("Photo_33", typeof(byte[]));
+    
+            var shareCap_34Parameter = shareCap_34.HasValue ?
+                new ObjectParameter("ShareCap_34", shareCap_34) :
+                new ObjectParameter("ShareCap_34", typeof(decimal));
+    
+            var bankCode_35Parameter = bankCode_35 != null ?
+                new ObjectParameter("BankCode_35", bankCode_35) :
+                new ObjectParameter("BankCode_35", typeof(string));
+    
+            var auditID_36Parameter = auditID_36 != null ?
+                new ObjectParameter("AuditID_36", auditID_36) :
+                new ObjectParameter("AuditID_36", typeof(string));
+    
+            var auditTime_37Parameter = auditTime_37.HasValue ?
+                new ObjectParameter("AuditTime_37", auditTime_37) :
+                new ObjectParameter("AuditTime_37", typeof(System.DateTime));
+    
+            var e_DATE_38Parameter = e_DATE_38.HasValue ?
+                new ObjectParameter("E_DATE_38", e_DATE_38) :
+                new ObjectParameter("E_DATE_38", typeof(System.DateTime));
+    
+            var hshares_39Parameter = hshares_39.HasValue ?
+                new ObjectParameter("hshares_39", hshares_39) :
+                new ObjectParameter("hshares_39", typeof(decimal));
+    
+            var fshares_40Parameter = fshares_40.HasValue ?
+                new ObjectParameter("fshares_40", fshares_40) :
+                new ObjectParameter("fshares_40", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_New_Member", memberNo_1Parameter, staffNo_2Parameter, iDNo_3Parameter, accNo_4Parameter, surname_5Parameter, otherNames_6Parameter, sex_7Parameter, dOB_8Parameter, employer_9Parameter, dept_10Parameter, rank_11Parameter, terms_12Parameter, presentAddr_13Parameter, officeTelNo_14Parameter, homeAddr_15Parameter, homeTelNo_16Parameter, regFee_17Parameter, initShares_18Parameter, asAtDate_19Parameter, monthlyContr_20Parameter, applicDate_21Parameter, effectDate_22Parameter, signed_23Parameter, accepted_24Parameter, archived_25Parameter, withdrawn_26Parameter, isGuarantor_27Parameter, province_28Parameter, district_29Parameter, station_30Parameter, companyCode_31Parameter, pIN_32Parameter, photo_33Parameter, shareCap_34Parameter, bankCode_35Parameter, auditID_36Parameter, auditTime_37Parameter, e_DATE_38Parameter, hshares_39Parameter, fshares_40Parameter);
+        }
+    
+        public virtual int SAVE_NEWAPPRAISAL(string loanNo_1, Nullable<System.DateTime> appraisDate_2, Nullable<decimal> salary_3, Nullable<decimal> allowances_4, string repayMethod_5, Nullable<decimal> co_opShares_6, Nullable<decimal> co_opLoans_7, Nullable<decimal> shares_8, Nullable<decimal> loans_9, Nullable<decimal> deductions_10, Nullable<decimal> amtRecommended_11, string reason_12, string auditID_13, string memberNo_14, Nullable<decimal> kilos_15, Nullable<System.DateTime> payDate)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var appraisDate_2Parameter = appraisDate_2.HasValue ?
+                new ObjectParameter("AppraisDate_2", appraisDate_2) :
+                new ObjectParameter("AppraisDate_2", typeof(System.DateTime));
+    
+            var salary_3Parameter = salary_3.HasValue ?
+                new ObjectParameter("Salary_3", salary_3) :
+                new ObjectParameter("Salary_3", typeof(decimal));
+    
+            var allowances_4Parameter = allowances_4.HasValue ?
+                new ObjectParameter("Allowances_4", allowances_4) :
+                new ObjectParameter("Allowances_4", typeof(decimal));
+    
+            var repayMethod_5Parameter = repayMethod_5 != null ?
+                new ObjectParameter("RepayMethod_5", repayMethod_5) :
+                new ObjectParameter("RepayMethod_5", typeof(string));
+    
+            var co_opShares_6Parameter = co_opShares_6.HasValue ?
+                new ObjectParameter("Co_opShares_6", co_opShares_6) :
+                new ObjectParameter("Co_opShares_6", typeof(decimal));
+    
+            var co_opLoans_7Parameter = co_opLoans_7.HasValue ?
+                new ObjectParameter("Co_opLoans_7", co_opLoans_7) :
+                new ObjectParameter("Co_opLoans_7", typeof(decimal));
+    
+            var shares_8Parameter = shares_8.HasValue ?
+                new ObjectParameter("Shares_8", shares_8) :
+                new ObjectParameter("Shares_8", typeof(decimal));
+    
+            var loans_9Parameter = loans_9.HasValue ?
+                new ObjectParameter("Loans_9", loans_9) :
+                new ObjectParameter("Loans_9", typeof(decimal));
+    
+            var deductions_10Parameter = deductions_10.HasValue ?
+                new ObjectParameter("Deductions_10", deductions_10) :
+                new ObjectParameter("Deductions_10", typeof(decimal));
+    
+            var amtRecommended_11Parameter = amtRecommended_11.HasValue ?
+                new ObjectParameter("AmtRecommended_11", amtRecommended_11) :
+                new ObjectParameter("AmtRecommended_11", typeof(decimal));
+    
+            var reason_12Parameter = reason_12 != null ?
+                new ObjectParameter("Reason_12", reason_12) :
+                new ObjectParameter("Reason_12", typeof(string));
+    
+            var auditID_13Parameter = auditID_13 != null ?
+                new ObjectParameter("AuditID_13", auditID_13) :
+                new ObjectParameter("AuditID_13", typeof(string));
+    
+            var memberNo_14Parameter = memberNo_14 != null ?
+                new ObjectParameter("MemberNo_14", memberNo_14) :
+                new ObjectParameter("MemberNo_14", typeof(string));
+    
+            var kilos_15Parameter = kilos_15.HasValue ?
+                new ObjectParameter("Kilos_15", kilos_15) :
+                new ObjectParameter("Kilos_15", typeof(decimal));
+    
+            var payDateParameter = payDate.HasValue ?
+                new ObjectParameter("PayDate", payDate) :
+                new ObjectParameter("PayDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_NEWAPPRAISAL", loanNo_1Parameter, appraisDate_2Parameter, salary_3Parameter, allowances_4Parameter, repayMethod_5Parameter, co_opShares_6Parameter, co_opLoans_7Parameter, shares_8Parameter, loans_9Parameter, deductions_10Parameter, amtRecommended_11Parameter, reason_12Parameter, auditID_13Parameter, memberNo_14Parameter, kilos_15Parameter, payDateParameter);
+        }
+    
+        public virtual int SAVE_NEWCONTRIB(string memberNo_1, Nullable<System.DateTime> contrDate_2, Nullable<int> refNo_3, Nullable<decimal> amount_4, Nullable<decimal> shareBal_5, string transBy_6, string chequeNo_7, string receiptNo_8, string locked_9, string posted_10, string remarks_11, string shareCode, string auditID_12)
+        {
+            var memberNo_1Parameter = memberNo_1 != null ?
+                new ObjectParameter("MemberNo_1", memberNo_1) :
+                new ObjectParameter("MemberNo_1", typeof(string));
+    
+            var contrDate_2Parameter = contrDate_2.HasValue ?
+                new ObjectParameter("ContrDate_2", contrDate_2) :
+                new ObjectParameter("ContrDate_2", typeof(System.DateTime));
+    
+            var refNo_3Parameter = refNo_3.HasValue ?
+                new ObjectParameter("RefNo_3", refNo_3) :
+                new ObjectParameter("RefNo_3", typeof(int));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(decimal));
+    
+            var shareBal_5Parameter = shareBal_5.HasValue ?
+                new ObjectParameter("ShareBal_5", shareBal_5) :
+                new ObjectParameter("ShareBal_5", typeof(decimal));
+    
+            var transBy_6Parameter = transBy_6 != null ?
+                new ObjectParameter("TransBy_6", transBy_6) :
+                new ObjectParameter("TransBy_6", typeof(string));
+    
+            var chequeNo_7Parameter = chequeNo_7 != null ?
+                new ObjectParameter("ChequeNo_7", chequeNo_7) :
+                new ObjectParameter("ChequeNo_7", typeof(string));
+    
+            var receiptNo_8Parameter = receiptNo_8 != null ?
+                new ObjectParameter("ReceiptNo_8", receiptNo_8) :
+                new ObjectParameter("ReceiptNo_8", typeof(string));
+    
+            var locked_9Parameter = locked_9 != null ?
+                new ObjectParameter("Locked_9", locked_9) :
+                new ObjectParameter("Locked_9", typeof(string));
+    
+            var posted_10Parameter = posted_10 != null ?
+                new ObjectParameter("Posted_10", posted_10) :
+                new ObjectParameter("Posted_10", typeof(string));
+    
+            var remarks_11Parameter = remarks_11 != null ?
+                new ObjectParameter("Remarks_11", remarks_11) :
+                new ObjectParameter("Remarks_11", typeof(string));
+    
+            var shareCodeParameter = shareCode != null ?
+                new ObjectParameter("ShareCode", shareCode) :
+                new ObjectParameter("ShareCode", typeof(string));
+    
+            var auditID_12Parameter = auditID_12 != null ?
+                new ObjectParameter("AuditID_12", auditID_12) :
+                new ObjectParameter("AuditID_12", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_NEWCONTRIB", memberNo_1Parameter, contrDate_2Parameter, refNo_3Parameter, amount_4Parameter, shareBal_5Parameter, transBy_6Parameter, chequeNo_7Parameter, receiptNo_8Parameter, locked_9Parameter, posted_10Parameter, remarks_11Parameter, shareCodeParameter, auditID_12Parameter);
+        }
+    
+        public virtual int SAVE_PRODUCT(string productID_1, string productName_2, string gLAccNo_3, string gLAccNo_4, string processingFee_4, Nullable<decimal> amount_5, Nullable<decimal> percentage_6, Nullable<int> intervals, Nullable<int> backOffice_7, string auditID_8)
+        {
+            var productID_1Parameter = productID_1 != null ?
+                new ObjectParameter("ProductID_1", productID_1) :
+                new ObjectParameter("ProductID_1", typeof(string));
+    
+            var productName_2Parameter = productName_2 != null ?
+                new ObjectParameter("ProductName_2", productName_2) :
+                new ObjectParameter("ProductName_2", typeof(string));
+    
+            var gLAccNo_3Parameter = gLAccNo_3 != null ?
+                new ObjectParameter("GLAccNo_3", gLAccNo_3) :
+                new ObjectParameter("GLAccNo_3", typeof(string));
+    
+            var gLAccNo_4Parameter = gLAccNo_4 != null ?
+                new ObjectParameter("GLAccNo_4", gLAccNo_4) :
+                new ObjectParameter("GLAccNo_4", typeof(string));
+    
+            var processingFee_4Parameter = processingFee_4 != null ?
+                new ObjectParameter("ProcessingFee_4", processingFee_4) :
+                new ObjectParameter("ProcessingFee_4", typeof(string));
+    
+            var amount_5Parameter = amount_5.HasValue ?
+                new ObjectParameter("Amount_5", amount_5) :
+                new ObjectParameter("Amount_5", typeof(decimal));
+    
+            var percentage_6Parameter = percentage_6.HasValue ?
+                new ObjectParameter("Percentage_6", percentage_6) :
+                new ObjectParameter("Percentage_6", typeof(decimal));
+    
+            var intervalsParameter = intervals.HasValue ?
+                new ObjectParameter("intervals", intervals) :
+                new ObjectParameter("intervals", typeof(int));
+    
+            var backOffice_7Parameter = backOffice_7.HasValue ?
+                new ObjectParameter("BackOffice_7", backOffice_7) :
+                new ObjectParameter("BackOffice_7", typeof(int));
+    
+            var auditID_8Parameter = auditID_8 != null ?
+                new ObjectParameter("AuditID_8", auditID_8) :
+                new ObjectParameter("AuditID_8", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_PRODUCT", productID_1Parameter, productName_2Parameter, gLAccNo_3Parameter, gLAccNo_4Parameter, processingFee_4Parameter, amount_5Parameter, percentage_6Parameter, intervalsParameter, backOffice_7Parameter, auditID_8Parameter);
+        }
+    
+        public virtual int save_PRODUCTINC(string productID_2, string source_3, string ssource_4, Nullable<System.DateTime> period_5, Nullable<System.DateTime> transDate_6, Nullable<double> amount_7, string chequeNo_8, string auditID_9)
+        {
+            var productID_2Parameter = productID_2 != null ?
+                new ObjectParameter("ProductID_2", productID_2) :
+                new ObjectParameter("ProductID_2", typeof(string));
+    
+            var source_3Parameter = source_3 != null ?
+                new ObjectParameter("Source_3", source_3) :
+                new ObjectParameter("Source_3", typeof(string));
+    
+            var ssource_4Parameter = ssource_4 != null ?
+                new ObjectParameter("Ssource_4", ssource_4) :
+                new ObjectParameter("Ssource_4", typeof(string));
+    
+            var period_5Parameter = period_5.HasValue ?
+                new ObjectParameter("Period_5", period_5) :
+                new ObjectParameter("Period_5", typeof(System.DateTime));
+    
+            var transDate_6Parameter = transDate_6.HasValue ?
+                new ObjectParameter("TransDate_6", transDate_6) :
+                new ObjectParameter("TransDate_6", typeof(System.DateTime));
+    
+            var amount_7Parameter = amount_7.HasValue ?
+                new ObjectParameter("Amount_7", amount_7) :
+                new ObjectParameter("Amount_7", typeof(double));
+    
+            var chequeNo_8Parameter = chequeNo_8 != null ?
+                new ObjectParameter("ChequeNo_8", chequeNo_8) :
+                new ObjectParameter("ChequeNo_8", typeof(string));
+    
+            var auditID_9Parameter = auditID_9 != null ?
+                new ObjectParameter("AuditID_9", auditID_9) :
+                new ObjectParameter("AuditID_9", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("save_PRODUCTINC", productID_2Parameter, source_3Parameter, ssource_4Parameter, period_5Parameter, transDate_6Parameter, amount_7Parameter, chequeNo_8Parameter, auditID_9Parameter);
+        }
+    
+        public virtual int Save_PSL(string memberNo_2, string loanno_3, Nullable<System.DateTime> transdate_4, Nullable<decimal> refNo_5, string description_6, Nullable<decimal> amount_7, Nullable<decimal> principal_8, Nullable<decimal> interest_9, Nullable<decimal> shares_10, string compName_11)
+        {
+            var memberNo_2Parameter = memberNo_2 != null ?
+                new ObjectParameter("MemberNo_2", memberNo_2) :
+                new ObjectParameter("MemberNo_2", typeof(string));
+    
+            var loanno_3Parameter = loanno_3 != null ?
+                new ObjectParameter("loanno_3", loanno_3) :
+                new ObjectParameter("loanno_3", typeof(string));
+    
+            var transdate_4Parameter = transdate_4.HasValue ?
+                new ObjectParameter("transdate_4", transdate_4) :
+                new ObjectParameter("transdate_4", typeof(System.DateTime));
+    
+            var refNo_5Parameter = refNo_5.HasValue ?
+                new ObjectParameter("RefNo_5", refNo_5) :
+                new ObjectParameter("RefNo_5", typeof(decimal));
+    
+            var description_6Parameter = description_6 != null ?
+                new ObjectParameter("Description_6", description_6) :
+                new ObjectParameter("Description_6", typeof(string));
+    
+            var amount_7Parameter = amount_7.HasValue ?
+                new ObjectParameter("Amount_7", amount_7) :
+                new ObjectParameter("Amount_7", typeof(decimal));
+    
+            var principal_8Parameter = principal_8.HasValue ?
+                new ObjectParameter("Principal_8", principal_8) :
+                new ObjectParameter("Principal_8", typeof(decimal));
+    
+            var interest_9Parameter = interest_9.HasValue ?
+                new ObjectParameter("Interest_9", interest_9) :
+                new ObjectParameter("Interest_9", typeof(decimal));
+    
+            var shares_10Parameter = shares_10.HasValue ?
+                new ObjectParameter("shares_10", shares_10) :
+                new ObjectParameter("shares_10", typeof(decimal));
+    
+            var compName_11Parameter = compName_11 != null ?
+                new ObjectParameter("CompName_11", compName_11) :
+                new ObjectParameter("CompName_11", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_PSL", memberNo_2Parameter, loanno_3Parameter, transdate_4Parameter, refNo_5Parameter, description_6Parameter, amount_7Parameter, principal_8Parameter, interest_9Parameter, shares_10Parameter, compName_11Parameter);
+        }
+    
+        public virtual int SAVE_REPAY(string loanNo_1, string memberNo_2, Nullable<System.DateTime> dateReceived_3, Nullable<int> paymentNo_4, Nullable<decimal> amount_5, Nullable<decimal> principal_6, Nullable<decimal> interest_7, Nullable<decimal> intrCharged_8, Nullable<decimal> intrOwed_9, Nullable<decimal> loanBalance_10, string receiptNo_11, string locked_12, string posted_13, string accrued_14, string remarks_15, string auditID_16, string transby_17)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var memberNo_2Parameter = memberNo_2 != null ?
+                new ObjectParameter("MemberNo_2", memberNo_2) :
+                new ObjectParameter("MemberNo_2", typeof(string));
+    
+            var dateReceived_3Parameter = dateReceived_3.HasValue ?
+                new ObjectParameter("DateReceived_3", dateReceived_3) :
+                new ObjectParameter("DateReceived_3", typeof(System.DateTime));
+    
+            var paymentNo_4Parameter = paymentNo_4.HasValue ?
+                new ObjectParameter("PaymentNo_4", paymentNo_4) :
+                new ObjectParameter("PaymentNo_4", typeof(int));
+    
+            var amount_5Parameter = amount_5.HasValue ?
+                new ObjectParameter("Amount_5", amount_5) :
+                new ObjectParameter("Amount_5", typeof(decimal));
+    
+            var principal_6Parameter = principal_6.HasValue ?
+                new ObjectParameter("Principal_6", principal_6) :
+                new ObjectParameter("Principal_6", typeof(decimal));
+    
+            var interest_7Parameter = interest_7.HasValue ?
+                new ObjectParameter("Interest_7", interest_7) :
+                new ObjectParameter("Interest_7", typeof(decimal));
+    
+            var intrCharged_8Parameter = intrCharged_8.HasValue ?
+                new ObjectParameter("IntrCharged_8", intrCharged_8) :
+                new ObjectParameter("IntrCharged_8", typeof(decimal));
+    
+            var intrOwed_9Parameter = intrOwed_9.HasValue ?
+                new ObjectParameter("IntrOwed_9", intrOwed_9) :
+                new ObjectParameter("IntrOwed_9", typeof(decimal));
+    
+            var loanBalance_10Parameter = loanBalance_10.HasValue ?
+                new ObjectParameter("LoanBalance_10", loanBalance_10) :
+                new ObjectParameter("LoanBalance_10", typeof(decimal));
+    
+            var receiptNo_11Parameter = receiptNo_11 != null ?
+                new ObjectParameter("ReceiptNo_11", receiptNo_11) :
+                new ObjectParameter("ReceiptNo_11", typeof(string));
+    
+            var locked_12Parameter = locked_12 != null ?
+                new ObjectParameter("Locked_12", locked_12) :
+                new ObjectParameter("Locked_12", typeof(string));
+    
+            var posted_13Parameter = posted_13 != null ?
+                new ObjectParameter("Posted_13", posted_13) :
+                new ObjectParameter("Posted_13", typeof(string));
+    
+            var accrued_14Parameter = accrued_14 != null ?
+                new ObjectParameter("Accrued_14", accrued_14) :
+                new ObjectParameter("Accrued_14", typeof(string));
+    
+            var remarks_15Parameter = remarks_15 != null ?
+                new ObjectParameter("Remarks_15", remarks_15) :
+                new ObjectParameter("Remarks_15", typeof(string));
+    
+            var auditID_16Parameter = auditID_16 != null ?
+                new ObjectParameter("AuditID_16", auditID_16) :
+                new ObjectParameter("AuditID_16", typeof(string));
+    
+            var transby_17Parameter = transby_17 != null ?
+                new ObjectParameter("Transby_17", transby_17) :
+                new ObjectParameter("Transby_17", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_REPAY", loanNo_1Parameter, memberNo_2Parameter, dateReceived_3Parameter, paymentNo_4Parameter, amount_5Parameter, principal_6Parameter, interest_7Parameter, intrCharged_8Parameter, intrOwed_9Parameter, loanBalance_10Parameter, receiptNo_11Parameter, locked_12Parameter, posted_13Parameter, accrued_14Parameter, remarks_15Parameter, auditID_16Parameter, transby_17Parameter);
+        }
+    
+        public virtual int SAVE_REPAYMENT(string loanNo_1, Nullable<System.DateTime> dateReceived_2, Nullable<int> paymentNo_3, Nullable<decimal> amount_4, Nullable<decimal> principal_5, Nullable<decimal> interest_6, Nullable<decimal> intrCharged_7, Nullable<decimal> intrOwed_8, Nullable<decimal> loanBalance_9, string receiptNo_10, string locked_11, string posted_12, string accrued_13, string remarks_14, string auditID_15, string transby_16)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var dateReceived_2Parameter = dateReceived_2.HasValue ?
+                new ObjectParameter("DateReceived_2", dateReceived_2) :
+                new ObjectParameter("DateReceived_2", typeof(System.DateTime));
+    
+            var paymentNo_3Parameter = paymentNo_3.HasValue ?
+                new ObjectParameter("PaymentNo_3", paymentNo_3) :
+                new ObjectParameter("PaymentNo_3", typeof(int));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(decimal));
+    
+            var principal_5Parameter = principal_5.HasValue ?
+                new ObjectParameter("Principal_5", principal_5) :
+                new ObjectParameter("Principal_5", typeof(decimal));
+    
+            var interest_6Parameter = interest_6.HasValue ?
+                new ObjectParameter("Interest_6", interest_6) :
+                new ObjectParameter("Interest_6", typeof(decimal));
+    
+            var intrCharged_7Parameter = intrCharged_7.HasValue ?
+                new ObjectParameter("IntrCharged_7", intrCharged_7) :
+                new ObjectParameter("IntrCharged_7", typeof(decimal));
+    
+            var intrOwed_8Parameter = intrOwed_8.HasValue ?
+                new ObjectParameter("IntrOwed_8", intrOwed_8) :
+                new ObjectParameter("IntrOwed_8", typeof(decimal));
+    
+            var loanBalance_9Parameter = loanBalance_9.HasValue ?
+                new ObjectParameter("LoanBalance_9", loanBalance_9) :
+                new ObjectParameter("LoanBalance_9", typeof(decimal));
+    
+            var receiptNo_10Parameter = receiptNo_10 != null ?
+                new ObjectParameter("ReceiptNo_10", receiptNo_10) :
+                new ObjectParameter("ReceiptNo_10", typeof(string));
+    
+            var locked_11Parameter = locked_11 != null ?
+                new ObjectParameter("Locked_11", locked_11) :
+                new ObjectParameter("Locked_11", typeof(string));
+    
+            var posted_12Parameter = posted_12 != null ?
+                new ObjectParameter("Posted_12", posted_12) :
+                new ObjectParameter("Posted_12", typeof(string));
+    
+            var accrued_13Parameter = accrued_13 != null ?
+                new ObjectParameter("Accrued_13", accrued_13) :
+                new ObjectParameter("Accrued_13", typeof(string));
+    
+            var remarks_14Parameter = remarks_14 != null ?
+                new ObjectParameter("Remarks_14", remarks_14) :
+                new ObjectParameter("Remarks_14", typeof(string));
+    
+            var auditID_15Parameter = auditID_15 != null ?
+                new ObjectParameter("AuditID_15", auditID_15) :
+                new ObjectParameter("AuditID_15", typeof(string));
+    
+            var transby_16Parameter = transby_16 != null ?
+                new ObjectParameter("Transby_16", transby_16) :
+                new ObjectParameter("Transby_16", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_REPAYMENT", loanNo_1Parameter, dateReceived_2Parameter, paymentNo_3Parameter, amount_4Parameter, principal_5Parameter, interest_6Parameter, intrCharged_7Parameter, intrOwed_8Parameter, loanBalance_9Parameter, receiptNo_10Parameter, locked_11Parameter, posted_12Parameter, accrued_13Parameter, remarks_14Parameter, auditID_15Parameter, transby_16Parameter);
+        }
+    
+        public virtual int Save_Repayment1(string loanNo_1, string memberNo_2, Nullable<System.DateTime> dateReceived_3, Nullable<int> paymentNo_4, Nullable<decimal> amount_5, Nullable<decimal> principal_6, Nullable<decimal> interest_7, Nullable<decimal> intrCharged_8, Nullable<decimal> intrOwed_9, Nullable<decimal> loanBalance_10, string receiptNo_11, string locked_12, string posted_13, string accrued_14, string remarks_15, string auditID_16, string transby_17)
+        {
+            var loanNo_1Parameter = loanNo_1 != null ?
+                new ObjectParameter("LoanNo_1", loanNo_1) :
+                new ObjectParameter("LoanNo_1", typeof(string));
+    
+            var memberNo_2Parameter = memberNo_2 != null ?
+                new ObjectParameter("MemberNo_2", memberNo_2) :
+                new ObjectParameter("MemberNo_2", typeof(string));
+    
+            var dateReceived_3Parameter = dateReceived_3.HasValue ?
+                new ObjectParameter("DateReceived_3", dateReceived_3) :
+                new ObjectParameter("DateReceived_3", typeof(System.DateTime));
+    
+            var paymentNo_4Parameter = paymentNo_4.HasValue ?
+                new ObjectParameter("PaymentNo_4", paymentNo_4) :
+                new ObjectParameter("PaymentNo_4", typeof(int));
+    
+            var amount_5Parameter = amount_5.HasValue ?
+                new ObjectParameter("Amount_5", amount_5) :
+                new ObjectParameter("Amount_5", typeof(decimal));
+    
+            var principal_6Parameter = principal_6.HasValue ?
+                new ObjectParameter("Principal_6", principal_6) :
+                new ObjectParameter("Principal_6", typeof(decimal));
+    
+            var interest_7Parameter = interest_7.HasValue ?
+                new ObjectParameter("Interest_7", interest_7) :
+                new ObjectParameter("Interest_7", typeof(decimal));
+    
+            var intrCharged_8Parameter = intrCharged_8.HasValue ?
+                new ObjectParameter("IntrCharged_8", intrCharged_8) :
+                new ObjectParameter("IntrCharged_8", typeof(decimal));
+    
+            var intrOwed_9Parameter = intrOwed_9.HasValue ?
+                new ObjectParameter("IntrOwed_9", intrOwed_9) :
+                new ObjectParameter("IntrOwed_9", typeof(decimal));
+    
+            var loanBalance_10Parameter = loanBalance_10.HasValue ?
+                new ObjectParameter("LoanBalance_10", loanBalance_10) :
+                new ObjectParameter("LoanBalance_10", typeof(decimal));
+    
+            var receiptNo_11Parameter = receiptNo_11 != null ?
+                new ObjectParameter("ReceiptNo_11", receiptNo_11) :
+                new ObjectParameter("ReceiptNo_11", typeof(string));
+    
+            var locked_12Parameter = locked_12 != null ?
+                new ObjectParameter("Locked_12", locked_12) :
+                new ObjectParameter("Locked_12", typeof(string));
+    
+            var posted_13Parameter = posted_13 != null ?
+                new ObjectParameter("Posted_13", posted_13) :
+                new ObjectParameter("Posted_13", typeof(string));
+    
+            var accrued_14Parameter = accrued_14 != null ?
+                new ObjectParameter("Accrued_14", accrued_14) :
+                new ObjectParameter("Accrued_14", typeof(string));
+    
+            var remarks_15Parameter = remarks_15 != null ?
+                new ObjectParameter("Remarks_15", remarks_15) :
+                new ObjectParameter("Remarks_15", typeof(string));
+    
+            var auditID_16Parameter = auditID_16 != null ?
+                new ObjectParameter("AuditID_16", auditID_16) :
+                new ObjectParameter("AuditID_16", typeof(string));
+    
+            var transby_17Parameter = transby_17 != null ?
+                new ObjectParameter("Transby_17", transby_17) :
+                new ObjectParameter("Transby_17", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_Repayment1", loanNo_1Parameter, memberNo_2Parameter, dateReceived_3Parameter, paymentNo_4Parameter, amount_5Parameter, principal_6Parameter, interest_7Parameter, intrCharged_8Parameter, intrOwed_9Parameter, loanBalance_10Parameter, receiptNo_11Parameter, locked_12Parameter, posted_13Parameter, accrued_14Parameter, remarks_15Parameter, auditID_16Parameter, transby_17Parameter);
+        }
+    
+        public virtual int SAVE_SalaryTrans(Nullable<System.DateTime> datePosted_1, string accountNo_2, string customerNo_3, string payrollNo_4, Nullable<decimal> amountPosted_5, string productCode_6, string productName_7, string preparedBy_8, Nullable<bool> posted_9, Nullable<bool> locked_10, Nullable<long> pERIOD_11)
+        {
+            var datePosted_1Parameter = datePosted_1.HasValue ?
+                new ObjectParameter("DatePosted_1", datePosted_1) :
+                new ObjectParameter("DatePosted_1", typeof(System.DateTime));
+    
+            var accountNo_2Parameter = accountNo_2 != null ?
+                new ObjectParameter("AccountNo_2", accountNo_2) :
+                new ObjectParameter("AccountNo_2", typeof(string));
+    
+            var customerNo_3Parameter = customerNo_3 != null ?
+                new ObjectParameter("CustomerNo_3", customerNo_3) :
+                new ObjectParameter("CustomerNo_3", typeof(string));
+    
+            var payrollNo_4Parameter = payrollNo_4 != null ?
+                new ObjectParameter("PayrollNo_4", payrollNo_4) :
+                new ObjectParameter("PayrollNo_4", typeof(string));
+    
+            var amountPosted_5Parameter = amountPosted_5.HasValue ?
+                new ObjectParameter("AmountPosted_5", amountPosted_5) :
+                new ObjectParameter("AmountPosted_5", typeof(decimal));
+    
+            var productCode_6Parameter = productCode_6 != null ?
+                new ObjectParameter("ProductCode_6", productCode_6) :
+                new ObjectParameter("ProductCode_6", typeof(string));
+    
+            var productName_7Parameter = productName_7 != null ?
+                new ObjectParameter("ProductName_7", productName_7) :
+                new ObjectParameter("ProductName_7", typeof(string));
+    
+            var preparedBy_8Parameter = preparedBy_8 != null ?
+                new ObjectParameter("PreparedBy_8", preparedBy_8) :
+                new ObjectParameter("PreparedBy_8", typeof(string));
+    
+            var posted_9Parameter = posted_9.HasValue ?
+                new ObjectParameter("Posted_9", posted_9) :
+                new ObjectParameter("Posted_9", typeof(bool));
+    
+            var locked_10Parameter = locked_10.HasValue ?
+                new ObjectParameter("Locked_10", locked_10) :
+                new ObjectParameter("Locked_10", typeof(bool));
+    
+            var pERIOD_11Parameter = pERIOD_11.HasValue ?
+                new ObjectParameter("PERIOD_11", pERIOD_11) :
+                new ObjectParameter("PERIOD_11", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_SalaryTrans", datePosted_1Parameter, accountNo_2Parameter, customerNo_3Parameter, payrollNo_4Parameter, amountPosted_5Parameter, productCode_6Parameter, productName_7Parameter, preparedBy_8Parameter, posted_9Parameter, locked_10Parameter, pERIOD_11Parameter);
+        }
+    
+        public virtual int SAVE_SMSCHARGES(string phoneNumber, string transDescription, string accno, string dESC, string loanno, Nullable<System.DateTime> transdate, Nullable<bool> charged)
+        {
+            var phoneNumberParameter = phoneNumber != null ?
+                new ObjectParameter("PhoneNumber", phoneNumber) :
+                new ObjectParameter("PhoneNumber", typeof(string));
+    
+            var transDescriptionParameter = transDescription != null ?
+                new ObjectParameter("TransDescription", transDescription) :
+                new ObjectParameter("TransDescription", typeof(string));
+    
+            var accnoParameter = accno != null ?
+                new ObjectParameter("Accno", accno) :
+                new ObjectParameter("Accno", typeof(string));
+    
+            var dESCParameter = dESC != null ?
+                new ObjectParameter("DESC", dESC) :
+                new ObjectParameter("DESC", typeof(string));
+    
+            var loannoParameter = loanno != null ?
+                new ObjectParameter("Loanno", loanno) :
+                new ObjectParameter("Loanno", typeof(string));
+    
+            var transdateParameter = transdate.HasValue ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(System.DateTime));
+    
+            var chargedParameter = charged.HasValue ?
+                new ObjectParameter("Charged", charged) :
+                new ObjectParameter("Charged", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_SMSCHARGES", phoneNumberParameter, transDescriptionParameter, accnoParameter, dESCParameter, loannoParameter, transdateParameter, chargedParameter);
+        }
+    
+        public virtual int SAVE_TMPDEDUCTION(Nullable<System.DateTime> transDate_1, string memberNo_2, string voucherNo_3, Nullable<decimal> principal_4, Nullable<decimal> interest_5, string transDescription)
+        {
+            var transDate_1Parameter = transDate_1.HasValue ?
+                new ObjectParameter("TransDate_1", transDate_1) :
+                new ObjectParameter("TransDate_1", typeof(System.DateTime));
+    
+            var memberNo_2Parameter = memberNo_2 != null ?
+                new ObjectParameter("MemberNo_2", memberNo_2) :
+                new ObjectParameter("MemberNo_2", typeof(string));
+    
+            var voucherNo_3Parameter = voucherNo_3 != null ?
+                new ObjectParameter("VoucherNo_3", voucherNo_3) :
+                new ObjectParameter("VoucherNo_3", typeof(string));
+    
+            var principal_4Parameter = principal_4.HasValue ?
+                new ObjectParameter("Principal_4", principal_4) :
+                new ObjectParameter("Principal_4", typeof(decimal));
+    
+            var interest_5Parameter = interest_5.HasValue ?
+                new ObjectParameter("Interest_5", interest_5) :
+                new ObjectParameter("Interest_5", typeof(decimal));
+    
+            var transDescriptionParameter = transDescription != null ?
+                new ObjectParameter("TransDescription", transDescription) :
+                new ObjectParameter("TransDescription", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_TMPDEDUCTION", transDate_1Parameter, memberNo_2Parameter, voucherNo_3Parameter, principal_4Parameter, interest_5Parameter, transDescriptionParameter);
+        }
+    
+        public virtual int SAVE_TRANSACTION(string accNo_1, Nullable<decimal> amount_2, string transDescription_3, Nullable<System.DateTime> transDate_4, string voucherNo_5, string transType_6, string contraAcc_7, Nullable<int> posted, string auditID_8, string groupID)
+        {
+            var accNo_1Parameter = accNo_1 != null ?
+                new ObjectParameter("AccNo_1", accNo_1) :
+                new ObjectParameter("AccNo_1", typeof(string));
+    
+            var amount_2Parameter = amount_2.HasValue ?
+                new ObjectParameter("Amount_2", amount_2) :
+                new ObjectParameter("Amount_2", typeof(decimal));
+    
+            var transDescription_3Parameter = transDescription_3 != null ?
+                new ObjectParameter("TransDescription_3", transDescription_3) :
+                new ObjectParameter("TransDescription_3", typeof(string));
+    
+            var transDate_4Parameter = transDate_4.HasValue ?
+                new ObjectParameter("TransDate_4", transDate_4) :
+                new ObjectParameter("TransDate_4", typeof(System.DateTime));
+    
+            var voucherNo_5Parameter = voucherNo_5 != null ?
+                new ObjectParameter("VoucherNo_5", voucherNo_5) :
+                new ObjectParameter("VoucherNo_5", typeof(string));
+    
+            var transType_6Parameter = transType_6 != null ?
+                new ObjectParameter("TransType_6", transType_6) :
+                new ObjectParameter("TransType_6", typeof(string));
+    
+            var contraAcc_7Parameter = contraAcc_7 != null ?
+                new ObjectParameter("ContraAcc_7", contraAcc_7) :
+                new ObjectParameter("ContraAcc_7", typeof(string));
+    
+            var postedParameter = posted.HasValue ?
+                new ObjectParameter("Posted", posted) :
+                new ObjectParameter("Posted", typeof(int));
+    
+            var auditID_8Parameter = auditID_8 != null ?
+                new ObjectParameter("AuditID_8", auditID_8) :
+                new ObjectParameter("AuditID_8", typeof(string));
+    
+            var groupIDParameter = groupID != null ?
+                new ObjectParameter("GroupID", groupID) :
+                new ObjectParameter("GroupID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_TRANSACTION", accNo_1Parameter, amount_2Parameter, transDescription_3Parameter, transDate_4Parameter, voucherNo_5Parameter, transType_6Parameter, contraAcc_7Parameter, postedParameter, auditID_8Parameter, groupIDParameter);
+        }
+    
+        public virtual int Save_Weigted_Shares(string memberNo_1, Nullable<System.DateTime> transDate_2, Nullable<decimal> openshares_3, Nullable<decimal> closeshares_4, Nullable<decimal> openLoanBal_5, Nullable<decimal> closeLoanBal_6, Nullable<decimal> intrPaid_7, Nullable<decimal> intrCharged_8, Nullable<decimal> newLoans_9, Nullable<decimal> intrOwed_10, Nullable<decimal> shareCap_11)
+        {
+            var memberNo_1Parameter = memberNo_1 != null ?
+                new ObjectParameter("MemberNo_1", memberNo_1) :
+                new ObjectParameter("MemberNo_1", typeof(string));
+    
+            var transDate_2Parameter = transDate_2.HasValue ?
+                new ObjectParameter("TransDate_2", transDate_2) :
+                new ObjectParameter("TransDate_2", typeof(System.DateTime));
+    
+            var openshares_3Parameter = openshares_3.HasValue ?
+                new ObjectParameter("Openshares_3", openshares_3) :
+                new ObjectParameter("Openshares_3", typeof(decimal));
+    
+            var closeshares_4Parameter = closeshares_4.HasValue ?
+                new ObjectParameter("Closeshares_4", closeshares_4) :
+                new ObjectParameter("Closeshares_4", typeof(decimal));
+    
+            var openLoanBal_5Parameter = openLoanBal_5.HasValue ?
+                new ObjectParameter("OpenLoanBal_5", openLoanBal_5) :
+                new ObjectParameter("OpenLoanBal_5", typeof(decimal));
+    
+            var closeLoanBal_6Parameter = closeLoanBal_6.HasValue ?
+                new ObjectParameter("CloseLoanBal_6", closeLoanBal_6) :
+                new ObjectParameter("CloseLoanBal_6", typeof(decimal));
+    
+            var intrPaid_7Parameter = intrPaid_7.HasValue ?
+                new ObjectParameter("IntrPaid_7", intrPaid_7) :
+                new ObjectParameter("IntrPaid_7", typeof(decimal));
+    
+            var intrCharged_8Parameter = intrCharged_8.HasValue ?
+                new ObjectParameter("IntrCharged_8", intrCharged_8) :
+                new ObjectParameter("IntrCharged_8", typeof(decimal));
+    
+            var newLoans_9Parameter = newLoans_9.HasValue ?
+                new ObjectParameter("NewLoans_9", newLoans_9) :
+                new ObjectParameter("NewLoans_9", typeof(decimal));
+    
+            var intrOwed_10Parameter = intrOwed_10.HasValue ?
+                new ObjectParameter("IntrOwed_10", intrOwed_10) :
+                new ObjectParameter("IntrOwed_10", typeof(decimal));
+    
+            var shareCap_11Parameter = shareCap_11.HasValue ?
+                new ObjectParameter("ShareCap_11", shareCap_11) :
+                new ObjectParameter("ShareCap_11", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_Weigted_Shares", memberNo_1Parameter, transDate_2Parameter, openshares_3Parameter, closeshares_4Parameter, openLoanBal_5Parameter, closeLoanBal_6Parameter, intrPaid_7Parameter, intrCharged_8Parameter, newLoans_9Parameter, intrOwed_10Parameter, shareCap_11Parameter);
+        }
+    
+        public virtual ObjectResult<Search_CUB_AccName_Result> Search_CUB_AccName(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Search_CUB_AccName_Result>("Search_CUB_AccName", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Search_CUB_AccNo_Result> Search_CUB_AccNo(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Search_CUB_AccNo_Result>("Search_CUB_AccNo", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Search_CUB_GrowerNo_Result> Search_CUB_GrowerNo(string growerNo)
+        {
+            var growerNoParameter = growerNo != null ?
+                new ObjectParameter("GrowerNo", growerNo) :
+                new ObjectParameter("GrowerNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Search_CUB_GrowerNo_Result>("Search_CUB_GrowerNo", growerNoParameter);
+        }
+    
+        public virtual ObjectResult<Search_CUB_IDNo_Result> Search_CUB_IDNo(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Search_CUB_IDNo_Result>("Search_CUB_IDNo", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Search_CUB_MemNo_Result> Search_CUB_MemNo(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Search_CUB_MemNo_Result>("Search_CUB_MemNo", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Search_CUB_Nominee_IDNo_Result> Search_CUB_Nominee_IDNo(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Search_CUB_Nominee_IDNo_Result>("Search_CUB_Nominee_IDNo", accNoParameter);
+        }
+    
+        public virtual ObjectResult<Search_PhoneNo_Result> Search_PhoneNo(string phoneNo)
+        {
+            var phoneNoParameter = phoneNo != null ?
+                new ObjectParameter("PhoneNo", phoneNo) :
+                new ObjectParameter("PhoneNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Search_PhoneNo_Result>("Search_PhoneNo", phoneNoParameter);
+        }
+    
+        public virtual ObjectResult<Search_Product_ID_Result> Search_Product_ID(string source)
+        {
+            var sourceParameter = source != null ?
+                new ObjectParameter("Source", source) :
+                new ObjectParameter("Source", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Search_Product_ID_Result>("Search_Product_ID", sourceParameter);
+        }
+    
+        public virtual int Send_ATM_Messages()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Send_ATM_Messages");
+        }
+    
+        public virtual ObjectResult<share_list_Result> share_list(string memno)
+        {
+            var memnoParameter = memno != null ?
+                new ObjectParameter("memno", memno) :
+                new ObjectParameter("memno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<share_list_Result>("share_list", memnoParameter);
+        }
+    
+        public virtual int SMS_CRB_Loan_Clearance()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMS_CRB_Loan_Clearance");
+        }
+    
+        public virtual int SMS_Loan_and_Advance_Defaulters()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMS_Loan_and_Advance_Defaulters");
+        }
+    
+        public virtual int SMS_Loan_Defaulters()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMS_Loan_Defaulters");
+        }
+    
+        public virtual int SMS_Loan_Guarantors()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SMS_Loan_Guarantors");
+        }
+    
+        public virtual int sp_accno_inquiry(string accno)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_accno_inquiry", accnoParameter);
+        }
+    
+        public virtual int sp_accno_master(string accno)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_accno_master", accnoParameter);
+        }
+    
+        public virtual int sp_add_Loan(string loanNo, string memberNo, string loanCode, Nullable<System.DateTime> applicDate, Nullable<decimal> loanAmt, Nullable<int> repayPeriod, Nullable<decimal> basicSalary, string purpose, string preparedBy, string auditID, Nullable<System.DateTime> auditTime)
+        {
+            var loanNoParameter = loanNo != null ?
+                new ObjectParameter("LoanNo", loanNo) :
+                new ObjectParameter("LoanNo", typeof(string));
+    
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            var loanCodeParameter = loanCode != null ?
+                new ObjectParameter("LoanCode", loanCode) :
+                new ObjectParameter("LoanCode", typeof(string));
+    
+            var applicDateParameter = applicDate.HasValue ?
+                new ObjectParameter("ApplicDate", applicDate) :
+                new ObjectParameter("ApplicDate", typeof(System.DateTime));
+    
+            var loanAmtParameter = loanAmt.HasValue ?
+                new ObjectParameter("LoanAmt", loanAmt) :
+                new ObjectParameter("LoanAmt", typeof(decimal));
+    
+            var repayPeriodParameter = repayPeriod.HasValue ?
+                new ObjectParameter("RepayPeriod", repayPeriod) :
+                new ObjectParameter("RepayPeriod", typeof(int));
+    
+            var basicSalaryParameter = basicSalary.HasValue ?
+                new ObjectParameter("BasicSalary", basicSalary) :
+                new ObjectParameter("BasicSalary", typeof(decimal));
+    
+            var purposeParameter = purpose != null ?
+                new ObjectParameter("purpose", purpose) :
+                new ObjectParameter("purpose", typeof(string));
+    
+            var preparedByParameter = preparedBy != null ?
+                new ObjectParameter("PreparedBy", preparedBy) :
+                new ObjectParameter("PreparedBy", typeof(string));
+    
+            var auditIDParameter = auditID != null ?
+                new ObjectParameter("AuditID", auditID) :
+                new ObjectParameter("AuditID", typeof(string));
+    
+            var auditTimeParameter = auditTime.HasValue ?
+                new ObjectParameter("AuditTime", auditTime) :
+                new ObjectParameter("AuditTime", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_add_Loan", loanNoParameter, memberNoParameter, loanCodeParameter, applicDateParameter, loanAmtParameter, repayPeriodParameter, basicSalaryParameter, purposeParameter, preparedByParameter, auditIDParameter, auditTimeParameter);
+        }
+    
+        public virtual int sp_add_mqster(string surnames, string othernames, string accno, Nullable<System.DateTime> transdate, string auditid, Nullable<System.DateTime> auditdatetime, string sTATUS, string seq, string bname, string box, string town, string mobno, string offtelno, string acctype, string surnames1, string othernames1, string accno1, string box1, string town1, string mobno1, string offtelno1, Nullable<bool> type)
+        {
+            var surnamesParameter = surnames != null ?
+                new ObjectParameter("Surnames", surnames) :
+                new ObjectParameter("Surnames", typeof(string));
+    
+            var othernamesParameter = othernames != null ?
+                new ObjectParameter("othernames", othernames) :
+                new ObjectParameter("othernames", typeof(string));
+    
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            var transdateParameter = transdate.HasValue ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(System.DateTime));
+    
+            var auditidParameter = auditid != null ?
+                new ObjectParameter("auditid", auditid) :
+                new ObjectParameter("auditid", typeof(string));
+    
+            var auditdatetimeParameter = auditdatetime.HasValue ?
+                new ObjectParameter("auditdatetime", auditdatetime) :
+                new ObjectParameter("auditdatetime", typeof(System.DateTime));
+    
+            var sTATUSParameter = sTATUS != null ?
+                new ObjectParameter("STATUS", sTATUS) :
+                new ObjectParameter("STATUS", typeof(string));
+    
+            var seqParameter = seq != null ?
+                new ObjectParameter("Seq", seq) :
+                new ObjectParameter("Seq", typeof(string));
+    
+            var bnameParameter = bname != null ?
+                new ObjectParameter("bname", bname) :
+                new ObjectParameter("bname", typeof(string));
+    
+            var boxParameter = box != null ?
+                new ObjectParameter("box", box) :
+                new ObjectParameter("box", typeof(string));
+    
+            var townParameter = town != null ?
+                new ObjectParameter("town", town) :
+                new ObjectParameter("town", typeof(string));
+    
+            var mobnoParameter = mobno != null ?
+                new ObjectParameter("mobno", mobno) :
+                new ObjectParameter("mobno", typeof(string));
+    
+            var offtelnoParameter = offtelno != null ?
+                new ObjectParameter("offtelno", offtelno) :
+                new ObjectParameter("offtelno", typeof(string));
+    
+            var acctypeParameter = acctype != null ?
+                new ObjectParameter("acctype", acctype) :
+                new ObjectParameter("acctype", typeof(string));
+    
+            var surnames1Parameter = surnames1 != null ?
+                new ObjectParameter("Surnames1", surnames1) :
+                new ObjectParameter("Surnames1", typeof(string));
+    
+            var othernames1Parameter = othernames1 != null ?
+                new ObjectParameter("othernames1", othernames1) :
+                new ObjectParameter("othernames1", typeof(string));
+    
+            var accno1Parameter = accno1 != null ?
+                new ObjectParameter("accno1", accno1) :
+                new ObjectParameter("accno1", typeof(string));
+    
+            var box1Parameter = box1 != null ?
+                new ObjectParameter("box1", box1) :
+                new ObjectParameter("box1", typeof(string));
+    
+            var town1Parameter = town1 != null ?
+                new ObjectParameter("town1", town1) :
+                new ObjectParameter("town1", typeof(string));
+    
+            var mobno1Parameter = mobno1 != null ?
+                new ObjectParameter("mobno1", mobno1) :
+                new ObjectParameter("mobno1", typeof(string));
+    
+            var offtelno1Parameter = offtelno1 != null ?
+                new ObjectParameter("offtelno1", offtelno1) :
+                new ObjectParameter("offtelno1", typeof(string));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_add_mqster", surnamesParameter, othernamesParameter, accnoParameter, transdateParameter, auditidParameter, auditdatetimeParameter, sTATUSParameter, seqParameter, bnameParameter, boxParameter, townParameter, mobnoParameter, offtelnoParameter, acctypeParameter, surnames1Parameter, othernames1Parameter, accno1Parameter, box1Parameter, town1Parameter, mobno1Parameter, offtelno1Parameter, typeParameter);
+        }
+    
+        public virtual int sp_add_nonj_master(string surnames, string othernames, string accno, Nullable<System.DateTime> transdate, string auditid, Nullable<System.DateTime> auditdatetime, string sTATUS, string seq, string bname, string box, string town, string mobno, string offtelno, string acctype, string accnolink1, string accnolink2, string accnolink3, string comments, Nullable<bool> type)
+        {
+            var surnamesParameter = surnames != null ?
+                new ObjectParameter("Surnames", surnames) :
+                new ObjectParameter("Surnames", typeof(string));
+    
+            var othernamesParameter = othernames != null ?
+                new ObjectParameter("othernames", othernames) :
+                new ObjectParameter("othernames", typeof(string));
+    
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            var transdateParameter = transdate.HasValue ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(System.DateTime));
+    
+            var auditidParameter = auditid != null ?
+                new ObjectParameter("auditid", auditid) :
+                new ObjectParameter("auditid", typeof(string));
+    
+            var auditdatetimeParameter = auditdatetime.HasValue ?
+                new ObjectParameter("auditdatetime", auditdatetime) :
+                new ObjectParameter("auditdatetime", typeof(System.DateTime));
+    
+            var sTATUSParameter = sTATUS != null ?
+                new ObjectParameter("STATUS", sTATUS) :
+                new ObjectParameter("STATUS", typeof(string));
+    
+            var seqParameter = seq != null ?
+                new ObjectParameter("Seq", seq) :
+                new ObjectParameter("Seq", typeof(string));
+    
+            var bnameParameter = bname != null ?
+                new ObjectParameter("bname", bname) :
+                new ObjectParameter("bname", typeof(string));
+    
+            var boxParameter = box != null ?
+                new ObjectParameter("box", box) :
+                new ObjectParameter("box", typeof(string));
+    
+            var townParameter = town != null ?
+                new ObjectParameter("town", town) :
+                new ObjectParameter("town", typeof(string));
+    
+            var mobnoParameter = mobno != null ?
+                new ObjectParameter("mobno", mobno) :
+                new ObjectParameter("mobno", typeof(string));
+    
+            var offtelnoParameter = offtelno != null ?
+                new ObjectParameter("offtelno", offtelno) :
+                new ObjectParameter("offtelno", typeof(string));
+    
+            var acctypeParameter = acctype != null ?
+                new ObjectParameter("acctype", acctype) :
+                new ObjectParameter("acctype", typeof(string));
+    
+            var accnolink1Parameter = accnolink1 != null ?
+                new ObjectParameter("accnolink1", accnolink1) :
+                new ObjectParameter("accnolink1", typeof(string));
+    
+            var accnolink2Parameter = accnolink2 != null ?
+                new ObjectParameter("accnolink2", accnolink2) :
+                new ObjectParameter("accnolink2", typeof(string));
+    
+            var accnolink3Parameter = accnolink3 != null ?
+                new ObjectParameter("accnolink3", accnolink3) :
+                new ObjectParameter("accnolink3", typeof(string));
+    
+            var commentsParameter = comments != null ?
+                new ObjectParameter("comments", comments) :
+                new ObjectParameter("comments", typeof(string));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_add_nonj_master", surnamesParameter, othernamesParameter, accnoParameter, transdateParameter, auditidParameter, auditdatetimeParameter, sTATUSParameter, seqParameter, bnameParameter, boxParameter, townParameter, mobnoParameter, offtelnoParameter, acctypeParameter, accnolink1Parameter, accnolink2Parameter, accnolink3Parameter, commentsParameter, typeParameter);
+        }
+    
+        public virtual int sp_AddEditAss(string assetNo, string assetName, string assetCode, string assetCondtion, Nullable<System.DateTime> purchaseDate, Nullable<decimal> purchasePrice, string vendor, string location, string serialNo, Nullable<int> unitNo, Nullable<decimal> currentValue, Nullable<decimal> salvageValue, Nullable<int> usefulLife, Nullable<int> months, string departCode, string status, Nullable<System.DateTime> auditDate, string auditId, string assettype, string dRAccount, string cRAccount, Nullable<decimal> depRate, string branchCode)
+        {
+            var assetNoParameter = assetNo != null ?
+                new ObjectParameter("assetNo", assetNo) :
+                new ObjectParameter("assetNo", typeof(string));
+    
+            var assetNameParameter = assetName != null ?
+                new ObjectParameter("assetName", assetName) :
+                new ObjectParameter("assetName", typeof(string));
+    
+            var assetCodeParameter = assetCode != null ?
+                new ObjectParameter("assetCode", assetCode) :
+                new ObjectParameter("assetCode", typeof(string));
+    
+            var assetCondtionParameter = assetCondtion != null ?
+                new ObjectParameter("assetCondtion", assetCondtion) :
+                new ObjectParameter("assetCondtion", typeof(string));
+    
+            var purchaseDateParameter = purchaseDate.HasValue ?
+                new ObjectParameter("purchaseDate", purchaseDate) :
+                new ObjectParameter("purchaseDate", typeof(System.DateTime));
+    
+            var purchasePriceParameter = purchasePrice.HasValue ?
+                new ObjectParameter("purchasePrice", purchasePrice) :
+                new ObjectParameter("purchasePrice", typeof(decimal));
+    
+            var vendorParameter = vendor != null ?
+                new ObjectParameter("vendor", vendor) :
+                new ObjectParameter("vendor", typeof(string));
+    
+            var locationParameter = location != null ?
+                new ObjectParameter("location", location) :
+                new ObjectParameter("location", typeof(string));
+    
+            var serialNoParameter = serialNo != null ?
+                new ObjectParameter("serialNo", serialNo) :
+                new ObjectParameter("serialNo", typeof(string));
+    
+            var unitNoParameter = unitNo.HasValue ?
+                new ObjectParameter("unitNo", unitNo) :
+                new ObjectParameter("unitNo", typeof(int));
+    
+            var currentValueParameter = currentValue.HasValue ?
+                new ObjectParameter("currentValue", currentValue) :
+                new ObjectParameter("currentValue", typeof(decimal));
+    
+            var salvageValueParameter = salvageValue.HasValue ?
+                new ObjectParameter("salvageValue", salvageValue) :
+                new ObjectParameter("salvageValue", typeof(decimal));
+    
+            var usefulLifeParameter = usefulLife.HasValue ?
+                new ObjectParameter("usefulLife", usefulLife) :
+                new ObjectParameter("usefulLife", typeof(int));
+    
+            var monthsParameter = months.HasValue ?
+                new ObjectParameter("months", months) :
+                new ObjectParameter("months", typeof(int));
+    
+            var departCodeParameter = departCode != null ?
+                new ObjectParameter("departCode", departCode) :
+                new ObjectParameter("departCode", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(string));
+    
+            var auditDateParameter = auditDate.HasValue ?
+                new ObjectParameter("auditDate", auditDate) :
+                new ObjectParameter("auditDate", typeof(System.DateTime));
+    
+            var auditIdParameter = auditId != null ?
+                new ObjectParameter("auditId", auditId) :
+                new ObjectParameter("auditId", typeof(string));
+    
+            var assettypeParameter = assettype != null ?
+                new ObjectParameter("assettype", assettype) :
+                new ObjectParameter("assettype", typeof(string));
+    
+            var dRAccountParameter = dRAccount != null ?
+                new ObjectParameter("DRAccount", dRAccount) :
+                new ObjectParameter("DRAccount", typeof(string));
+    
+            var cRAccountParameter = cRAccount != null ?
+                new ObjectParameter("CRAccount", cRAccount) :
+                new ObjectParameter("CRAccount", typeof(string));
+    
+            var depRateParameter = depRate.HasValue ?
+                new ObjectParameter("DepRate", depRate) :
+                new ObjectParameter("DepRate", typeof(decimal));
+    
+            var branchCodeParameter = branchCode != null ?
+                new ObjectParameter("BranchCode", branchCode) :
+                new ObjectParameter("BranchCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_AddEditAss", assetNoParameter, assetNameParameter, assetCodeParameter, assetCondtionParameter, purchaseDateParameter, purchasePriceParameter, vendorParameter, locationParameter, serialNoParameter, unitNoParameter, currentValueParameter, salvageValueParameter, usefulLifeParameter, monthsParameter, departCodeParameter, statusParameter, auditDateParameter, auditIdParameter, assettypeParameter, dRAccountParameter, cRAccountParameter, depRateParameter, branchCodeParameter);
+        }
+    
+        public virtual int sp_AddEditAssCodes(string assetName, Nullable<double> rate, Nullable<int> method, Nullable<System.DateTime> auditDate, string auditId, Nullable<int> assetCode)
+        {
+            var assetNameParameter = assetName != null ?
+                new ObjectParameter("assetName", assetName) :
+                new ObjectParameter("assetName", typeof(string));
+    
+            var rateParameter = rate.HasValue ?
+                new ObjectParameter("rate", rate) :
+                new ObjectParameter("rate", typeof(double));
+    
+            var methodParameter = method.HasValue ?
+                new ObjectParameter("method", method) :
+                new ObjectParameter("method", typeof(int));
+    
+            var auditDateParameter = auditDate.HasValue ?
+                new ObjectParameter("auditDate", auditDate) :
+                new ObjectParameter("auditDate", typeof(System.DateTime));
+    
+            var auditIdParameter = auditId != null ?
+                new ObjectParameter("auditId", auditId) :
+                new ObjectParameter("auditId", typeof(string));
+    
+            var assetCodeParameter = assetCode.HasValue ?
+                new ObjectParameter("assetCode", assetCode) :
+                new ObjectParameter("assetCode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_AddEditAssCodes", assetNameParameter, rateParameter, methodParameter, auditDateParameter, auditIdParameter, assetCodeParameter);
+        }
+    
+        public virtual int sp_addp_codes(Nullable<long> p_code, string p_code_name, Nullable<decimal> chg_amount)
+        {
+            var p_codeParameter = p_code.HasValue ?
+                new ObjectParameter("p_code", p_code) :
+                new ObjectParameter("p_code", typeof(long));
+    
+            var p_code_nameParameter = p_code_name != null ?
+                new ObjectParameter("p_code_name", p_code_name) :
+                new ObjectParameter("p_code_name", typeof(string));
+    
+            var chg_amountParameter = chg_amount.HasValue ?
+                new ObjectParameter("chg_amount", chg_amount) :
+                new ObjectParameter("chg_amount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_addp_codes", p_codeParameter, p_code_nameParameter, chg_amountParameter);
+        }
+    
+        public virtual ObjectResult<sp_all_loans_Result> sp_all_loans(string caid)
+        {
+            var caidParameter = caid != null ?
+                new ObjectParameter("caid", caid) :
+                new ObjectParameter("caid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_all_loans_Result>("sp_all_loans", caidParameter);
+        }
+    
+        public virtual ObjectResult<sp_balances_Result> sp_balances(string accno)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_balances_Result>("sp_balances", accnoParameter);
+        }
+    
+        public virtual int sp_branch_name_sel(string br_code)
+        {
+            var br_codeParameter = br_code != null ?
+                new ObjectParameter("br_code", br_code) :
+                new ObjectParameter("br_code", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_branch_name_sel", br_codeParameter);
+        }
+    
+        public virtual int sp_Capital_Adequacy_Return(string processdate, Nullable<int> financialyear, string startyear, string endyear)
+        {
+            var processdateParameter = processdate != null ?
+                new ObjectParameter("Processdate", processdate) :
+                new ObjectParameter("Processdate", typeof(string));
+    
+            var financialyearParameter = financialyear.HasValue ?
+                new ObjectParameter("financialyear", financialyear) :
+                new ObjectParameter("financialyear", typeof(int));
+    
+            var startyearParameter = startyear != null ?
+                new ObjectParameter("startyear", startyear) :
+                new ObjectParameter("startyear", typeof(string));
+    
+            var endyearParameter = endyear != null ?
+                new ObjectParameter("endyear", endyear) :
+                new ObjectParameter("endyear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Capital_Adequacy_Return", processdateParameter, financialyearParameter, startyearParameter, endyearParameter);
+        }
+    
+        public virtual int sp_card_chg(Nullable<long> p_code, string p_code_name, Nullable<decimal> chg_amount)
+        {
+            var p_codeParameter = p_code.HasValue ?
+                new ObjectParameter("p_code", p_code) :
+                new ObjectParameter("p_code", typeof(long));
+    
+            var p_code_nameParameter = p_code_name != null ?
+                new ObjectParameter("p_code_name", p_code_name) :
+                new ObjectParameter("p_code_name", typeof(string));
+    
+            var chg_amountParameter = chg_amount.HasValue ?
+                new ObjectParameter("chg_amount", chg_amount) :
+                new ObjectParameter("chg_amount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_card_chg", p_codeParameter, p_code_nameParameter, chg_amountParameter);
+        }
+    
+        public virtual int sp_customerbal_update_reb(Nullable<decimal> avail, Nullable<decimal> actual, Nullable<long> id)
+        {
+            var availParameter = avail.HasValue ?
+                new ObjectParameter("avail", avail) :
+                new ObjectParameter("avail", typeof(decimal));
+    
+            var actualParameter = actual.HasValue ?
+                new ObjectParameter("actual", actual) :
+                new ObjectParameter("actual", typeof(decimal));
+    
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_customerbal_update_reb", availParameter, actualParameter, idParameter);
+        }
+    
+        public virtual int sp_delete_users(string userlogin)
+        {
+            var userloginParameter = userlogin != null ?
+                new ObjectParameter("userlogin", userlogin) :
+                new ObjectParameter("userlogin", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_delete_users", userloginParameter);
+        }
+    
+        public virtual int sp_DeleteAssets(string assetNo)
+        {
+            var assetNoParameter = assetNo != null ?
+                new ObjectParameter("assetNo", assetNo) :
+                new ObjectParameter("assetNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeleteAssets", assetNoParameter);
+        }
+    
+        public virtual int sp_editaccounts_details(string accno)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_editaccounts_details", accnoParameter);
+        }
+    
+        public virtual int sp_editaccounts_details_caid(Nullable<long> caid)
+        {
+            var caidParameter = caid.HasValue ?
+                new ObjectParameter("caid", caid) :
+                new ObjectParameter("caid", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_editaccounts_details_caid", caidParameter);
+        }
+    
+        public virtual int sp_editaccounts_details_caid_JOIN(Nullable<long> caid)
+        {
+            var caidParameter = caid.HasValue ?
+                new ObjectParameter("caid", caid) :
+                new ObjectParameter("caid", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_editaccounts_details_caid_JOIN", caidParameter);
+        }
+    
+        public virtual int sp_editp_codes(Nullable<long> p_code, string p_code_name, Nullable<decimal> chg_amount)
+        {
+            var p_codeParameter = p_code.HasValue ?
+                new ObjectParameter("p_code", p_code) :
+                new ObjectParameter("p_code", typeof(long));
+    
+            var p_code_nameParameter = p_code_name != null ?
+                new ObjectParameter("p_code_name", p_code_name) :
+                new ObjectParameter("p_code_name", typeof(string));
+    
+            var chg_amountParameter = chg_amount.HasValue ?
+                new ObjectParameter("chg_amount", chg_amount) :
+                new ObjectParameter("chg_amount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_editp_codes", p_codeParameter, p_code_nameParameter, chg_amountParameter);
+        }
+    
+        public virtual int sp_expected(string mmonth, string yyear)
+        {
+            var mmonthParameter = mmonth != null ?
+                new ObjectParameter("mmonth", mmonth) :
+                new ObjectParameter("mmonth", typeof(string));
+    
+            var yyearParameter = yyear != null ?
+                new ObjectParameter("yyear", yyear) :
+                new ObjectParameter("yyear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_expected", mmonthParameter, yyearParameter);
+        }
+    
+        public virtual int sp_Financial_position(string processdate, Nullable<int> financialyear, string startyear, string endYear, Nullable<int> reportType, string enddate)
+        {
+            var processdateParameter = processdate != null ?
+                new ObjectParameter("processdate", processdate) :
+                new ObjectParameter("processdate", typeof(string));
+    
+            var financialyearParameter = financialyear.HasValue ?
+                new ObjectParameter("Financialyear", financialyear) :
+                new ObjectParameter("Financialyear", typeof(int));
+    
+            var startyearParameter = startyear != null ?
+                new ObjectParameter("startyear", startyear) :
+                new ObjectParameter("startyear", typeof(string));
+    
+            var endYearParameter = endYear != null ?
+                new ObjectParameter("endYear", endYear) :
+                new ObjectParameter("endYear", typeof(string));
+    
+            var reportTypeParameter = reportType.HasValue ?
+                new ObjectParameter("ReportType", reportType) :
+                new ObjectParameter("ReportType", typeof(int));
+    
+            var enddateParameter = enddate != null ?
+                new ObjectParameter("Enddate", enddate) :
+                new ObjectParameter("Enddate", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Financial_position", processdateParameter, financialyearParameter, startyearParameter, endYearParameter, reportTypeParameter, enddateParameter);
+        }
+    
+        public virtual ObjectResult<sp_Get_Loan_Guaranteed_Result> sp_Get_Loan_Guaranteed(string memberno)
+        {
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Get_Loan_Guaranteed_Result>("sp_Get_Loan_Guaranteed", membernoParameter);
+        }
+    
+        public virtual ObjectResult<sp_Get_loanbalance_Result> sp_Get_loanbalance(string memberno)
+        {
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Get_loanbalance_Result>("sp_Get_loanbalance", membernoParameter);
+        }
+    
+        public virtual ObjectResult<sp_getNames_Result> sp_getNames(string memberno)
+        {
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getNames_Result>("sp_getNames", membernoParameter);
+        }
+    
+        public virtual ObjectResult<sp_inquiry_Result> sp_inquiry(string accno)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_inquiry_Result>("sp_inquiry", accnoParameter);
+        }
+    
+        public virtual int sp_insert_customerbalance(string customerNo, string iDNo, string accName, Nullable<decimal> amount, Nullable<decimal> availableBalance, string accNO, string transDescription, Nullable<System.DateTime> transDate, Nullable<decimal> commission, string chequeNo, string period, Nullable<bool> posted, Nullable<bool> locked, string transType, Nullable<bool> status, string vno, string auditid, Nullable<System.DateTime> auditdate, string moduleid, string accd, Nullable<System.DateTime> valuedate, Nullable<decimal> actualbalance, Nullable<bool> cash, string bcode)
+        {
+            var customerNoParameter = customerNo != null ?
+                new ObjectParameter("CustomerNo", customerNo) :
+                new ObjectParameter("CustomerNo", typeof(string));
+    
+            var iDNoParameter = iDNo != null ?
+                new ObjectParameter("IDNo", iDNo) :
+                new ObjectParameter("IDNo", typeof(string));
+    
+            var accNameParameter = accName != null ?
+                new ObjectParameter("AccName", accName) :
+                new ObjectParameter("AccName", typeof(string));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(decimal));
+    
+            var availableBalanceParameter = availableBalance.HasValue ?
+                new ObjectParameter("AvailableBalance", availableBalance) :
+                new ObjectParameter("AvailableBalance", typeof(decimal));
+    
+            var accNOParameter = accNO != null ?
+                new ObjectParameter("AccNO", accNO) :
+                new ObjectParameter("AccNO", typeof(string));
+    
+            var transDescriptionParameter = transDescription != null ?
+                new ObjectParameter("TransDescription", transDescription) :
+                new ObjectParameter("TransDescription", typeof(string));
+    
+            var transDateParameter = transDate.HasValue ?
+                new ObjectParameter("TransDate", transDate) :
+                new ObjectParameter("TransDate", typeof(System.DateTime));
+    
+            var commissionParameter = commission.HasValue ?
+                new ObjectParameter("Commission", commission) :
+                new ObjectParameter("Commission", typeof(decimal));
+    
+            var chequeNoParameter = chequeNo != null ?
+                new ObjectParameter("ChequeNo", chequeNo) :
+                new ObjectParameter("ChequeNo", typeof(string));
+    
+            var periodParameter = period != null ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(string));
+    
+            var postedParameter = posted.HasValue ?
+                new ObjectParameter("Posted", posted) :
+                new ObjectParameter("Posted", typeof(bool));
+    
+            var lockedParameter = locked.HasValue ?
+                new ObjectParameter("Locked", locked) :
+                new ObjectParameter("Locked", typeof(bool));
+    
+            var transTypeParameter = transType != null ?
+                new ObjectParameter("transType", transType) :
+                new ObjectParameter("transType", typeof(string));
+    
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(bool));
+    
+            var vnoParameter = vno != null ?
+                new ObjectParameter("vno", vno) :
+                new ObjectParameter("vno", typeof(string));
+    
+            var auditidParameter = auditid != null ?
+                new ObjectParameter("Auditid", auditid) :
+                new ObjectParameter("Auditid", typeof(string));
+    
+            var auditdateParameter = auditdate.HasValue ?
+                new ObjectParameter("auditdate", auditdate) :
+                new ObjectParameter("auditdate", typeof(System.DateTime));
+    
+            var moduleidParameter = moduleid != null ?
+                new ObjectParameter("moduleid", moduleid) :
+                new ObjectParameter("moduleid", typeof(string));
+    
+            var accdParameter = accd != null ?
+                new ObjectParameter("accd", accd) :
+                new ObjectParameter("accd", typeof(string));
+    
+            var valuedateParameter = valuedate.HasValue ?
+                new ObjectParameter("valuedate", valuedate) :
+                new ObjectParameter("valuedate", typeof(System.DateTime));
+    
+            var actualbalanceParameter = actualbalance.HasValue ?
+                new ObjectParameter("actualbalance", actualbalance) :
+                new ObjectParameter("actualbalance", typeof(decimal));
+    
+            var cashParameter = cash.HasValue ?
+                new ObjectParameter("Cash", cash) :
+                new ObjectParameter("Cash", typeof(bool));
+    
+            var bcodeParameter = bcode != null ?
+                new ObjectParameter("bcode", bcode) :
+                new ObjectParameter("bcode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_insert_customerbalance", customerNoParameter, iDNoParameter, accNameParameter, amountParameter, availableBalanceParameter, accNOParameter, transDescriptionParameter, transDateParameter, commissionParameter, chequeNoParameter, periodParameter, postedParameter, lockedParameter, transTypeParameter, statusParameter, vnoParameter, auditidParameter, auditdateParameter, moduleidParameter, accdParameter, valuedateParameter, actualbalanceParameter, cashParameter, bcodeParameter);
+        }
+    
+        public virtual int sp_insert_Logins(string userLogin, string ttime)
+        {
+            var userLoginParameter = userLogin != null ?
+                new ObjectParameter("UserLogin", userLogin) :
+                new ObjectParameter("UserLogin", typeof(string));
+    
+            var ttimeParameter = ttime != null ?
+                new ObjectParameter("ttime", ttime) :
+                new ObjectParameter("ttime", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_insert_Logins", userLoginParameter, ttimeParameter);
+        }
+    
+        public virtual int sp_insert_master(string mEMNO, string aCCOUNTNAME, string aCCNO, string pAYNO, string iDNO)
+        {
+            var mEMNOParameter = mEMNO != null ?
+                new ObjectParameter("MEMNO", mEMNO) :
+                new ObjectParameter("MEMNO", typeof(string));
+    
+            var aCCOUNTNAMEParameter = aCCOUNTNAME != null ?
+                new ObjectParameter("ACCOUNTNAME", aCCOUNTNAME) :
+                new ObjectParameter("ACCOUNTNAME", typeof(string));
+    
+            var aCCNOParameter = aCCNO != null ?
+                new ObjectParameter("ACCNO", aCCNO) :
+                new ObjectParameter("ACCNO", typeof(string));
+    
+            var pAYNOParameter = pAYNO != null ?
+                new ObjectParameter("PAYNO", pAYNO) :
+                new ObjectParameter("PAYNO", typeof(string));
+    
+            var iDNOParameter = iDNO != null ?
+                new ObjectParameter("IDNO", iDNO) :
+                new ObjectParameter("IDNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_insert_master", mEMNOParameter, aCCOUNTNAMEParameter, aCCNOParameter, pAYNOParameter, iDNOParameter);
+        }
+    
+        public virtual int sp_insert_user(string userid, string username, Nullable<System.DateTime> datecreated)
+        {
+            var useridParameter = userid != null ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(string));
+    
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var datecreatedParameter = datecreated.HasValue ?
+                new ObjectParameter("datecreated", datecreated) :
+                new ObjectParameter("datecreated", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_insert_user", useridParameter, usernameParameter, datecreatedParameter);
+        }
+    
+        public virtual int SP_Investment_procedure(string processdate, Nullable<int> financial, string startyear, string endyear)
+        {
+            var processdateParameter = processdate != null ?
+                new ObjectParameter("processdate", processdate) :
+                new ObjectParameter("processdate", typeof(string));
+    
+            var financialParameter = financial.HasValue ?
+                new ObjectParameter("financial", financial) :
+                new ObjectParameter("financial", typeof(int));
+    
+            var startyearParameter = startyear != null ?
+                new ObjectParameter("startyear", startyear) :
+                new ObjectParameter("startyear", typeof(string));
+    
+            var endyearParameter = endyear != null ?
+                new ObjectParameter("endyear", endyear) :
+                new ObjectParameter("endyear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Investment_procedure", processdateParameter, financialParameter, startyearParameter, endyearParameter);
+        }
+    
+        public virtual int sp_list(Nullable<long> br_code)
+        {
+            var br_codeParameter = br_code.HasValue ?
+                new ObjectParameter("br_code", br_code) :
+                new ObjectParameter("br_code", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_list", br_codeParameter);
+        }
+    
+        public virtual int sp_list_atmid()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_list_atmid");
+        }
+    
+        public virtual int sp_list_branch_list(string bname)
+        {
+            var bnameParameter = bname != null ?
+                new ObjectParameter("bname", bname) :
+                new ObjectParameter("bname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_list_branch_list", bnameParameter);
+        }
+    
+        public virtual int sp_list_daily(string bname, Nullable<System.DateTime> transdate)
+        {
+            var bnameParameter = bname != null ?
+                new ObjectParameter("bname", bname) :
+                new ObjectParameter("bname", typeof(string));
+    
+            var transdateParameter = transdate.HasValue ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_list_daily", bnameParameter, transdateParameter);
+        }
+    
+        public virtual int sp_list_pcodes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_list_pcodes");
+        }
+    
+        public virtual ObjectResult<Sp_Members_Result> Sp_Members()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_Members_Result>("Sp_Members");
+        }
+    
+        public virtual ObjectResult<sp_members1_Result> sp_members1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_members1_Result>("sp_members1");
+        }
+    
+        public virtual int sp_SaveMessageLog(string receivedFromIP, string receivedFromPort, string inFormatID, string outFormatID, string inMessageType, string outMessageType, string inField1, string inField2, string inField3, string inField4, string inField5, string inField6, string inField7, string inField8, string inField9, string inField10, string inField11, string inField12, string inField13, string inField14, string inField15, string inField16, string inField17, string inField18, string inField19, string inField20, string inField21, string inField22, string inField23, string inField24, string inField25, string inField26, string inField27, string inField28, string inField29, string inField30, string inField31, string inField32, string inField33, string inField34, string inField35, string inField36, string inField37, string inField38, string inField39, string inField40, string inField41, string inField42, string inField43, string inField44, string inField45, string inField46, string inField47, string inField48, string inField49, string inField50, string inField51, string inField52, string inField53, string inField54, string inField55, string inField56, string inField57, string inField58, string inField59, string inField60, string inField61, string inField62, string inField63, string inField64, string inField65, string inField66, string inField67, string inField68, string inField69, string inField70, string inField71, string inField72, string inField73, string inField74, string inField75, string inField76, string inField77, string inField78, string inField79, string inField80, string inField81, string inField82, string inField83, string inField84, string inField85, string inField86, string inField87, string inField88, string inField89, string inField90, string inField91, string inField92, string inField93, string inField94, string inField95, string inField96, string inField97, string inField98, string inField99, string inField100, string inField101, string inField102, string inField103, string inField104, string inField105, string inField106, string inField107, string inField108, string inField109, string inField110, string inField111, string inField112, string inField113, string inField114, string inField115, string inField116, string inField117, string inField118, string inField119, string inField120, string inField121, string inField122, string inField123, string inField124, string inField125, string inField126, string inField127, string inField128, string outField1, string outField2, string outField3, string outField4, string outField5, string outField6, string outField7, string outField8, string outField9, string outField10, string outField11, string outField12, string outField13, string outField14, string outField15, string outField16, string outField17, string outField18, string outField19, string outField20, string outField21, string outField22, string outField23, string outField24, string outField25, string outField26, string outField27, string outField28, string outField29, string outField30, string outField31, string outField32, string outField33, string outField34, string outField35, string outField36, string outField37, string outField38, string outField39, string outField40, string outField41, string outField42, string outField43, string outField44, string outField45, string outField46, string outField47, string outField48, string outField49, string outField50, string outField51, string outField52, string outField53, string outField54, string outField55, string outField56, string outField57, string outField58, string outField59, string outField60, string outField61, string outField62, string outField63, string outField64, string outField65, string outField66, string outField67, string outField68, string outField69, string outField70, string outField71, string outField72, string outField73, string outField74, string outField75, string outField76, string outField77, string outField78, string outField79, string outField80, string outField81, string outField82, string outField83, string outField84, string outField85, string outField86, string outField87, string outField88, string outField89, string outField90, string outField91, string outField92, string outField93, string outField94, string outField95, string outField96, string outField97, string outField98, string outField99, string outField100, string outField101, string outField102, string outField103, string outField104, string outField105, string outField106, string outField107, string outField108, string outField109, string outField110, string outField111, string outField112, string outField113, string outField114, string outField115, string outField116, string outField117, string outField118, string outField119, string outField120, string outField121, string outField122, string outField123, string outField124, string outField125, string outField126, string outField127, string outField128)
+        {
+            var receivedFromIPParameter = receivedFromIP != null ?
+                new ObjectParameter("ReceivedFromIP", receivedFromIP) :
+                new ObjectParameter("ReceivedFromIP", typeof(string));
+    
+            var receivedFromPortParameter = receivedFromPort != null ?
+                new ObjectParameter("ReceivedFromPort", receivedFromPort) :
+                new ObjectParameter("ReceivedFromPort", typeof(string));
+    
+            var inFormatIDParameter = inFormatID != null ?
+                new ObjectParameter("InFormatID", inFormatID) :
+                new ObjectParameter("InFormatID", typeof(string));
+    
+            var outFormatIDParameter = outFormatID != null ?
+                new ObjectParameter("OutFormatID", outFormatID) :
+                new ObjectParameter("OutFormatID", typeof(string));
+    
+            var inMessageTypeParameter = inMessageType != null ?
+                new ObjectParameter("InMessageType", inMessageType) :
+                new ObjectParameter("InMessageType", typeof(string));
+    
+            var outMessageTypeParameter = outMessageType != null ?
+                new ObjectParameter("OutMessageType", outMessageType) :
+                new ObjectParameter("OutMessageType", typeof(string));
+    
+            var inField1Parameter = inField1 != null ?
+                new ObjectParameter("InField1", inField1) :
+                new ObjectParameter("InField1", typeof(string));
+    
+            var inField2Parameter = inField2 != null ?
+                new ObjectParameter("InField2", inField2) :
+                new ObjectParameter("InField2", typeof(string));
+    
+            var inField3Parameter = inField3 != null ?
+                new ObjectParameter("InField3", inField3) :
+                new ObjectParameter("InField3", typeof(string));
+    
+            var inField4Parameter = inField4 != null ?
+                new ObjectParameter("InField4", inField4) :
+                new ObjectParameter("InField4", typeof(string));
+    
+            var inField5Parameter = inField5 != null ?
+                new ObjectParameter("InField5", inField5) :
+                new ObjectParameter("InField5", typeof(string));
+    
+            var inField6Parameter = inField6 != null ?
+                new ObjectParameter("InField6", inField6) :
+                new ObjectParameter("InField6", typeof(string));
+    
+            var inField7Parameter = inField7 != null ?
+                new ObjectParameter("InField7", inField7) :
+                new ObjectParameter("InField7", typeof(string));
+    
+            var inField8Parameter = inField8 != null ?
+                new ObjectParameter("InField8", inField8) :
+                new ObjectParameter("InField8", typeof(string));
+    
+            var inField9Parameter = inField9 != null ?
+                new ObjectParameter("InField9", inField9) :
+                new ObjectParameter("InField9", typeof(string));
+    
+            var inField10Parameter = inField10 != null ?
+                new ObjectParameter("InField10", inField10) :
+                new ObjectParameter("InField10", typeof(string));
+    
+            var inField11Parameter = inField11 != null ?
+                new ObjectParameter("InField11", inField11) :
+                new ObjectParameter("InField11", typeof(string));
+    
+            var inField12Parameter = inField12 != null ?
+                new ObjectParameter("InField12", inField12) :
+                new ObjectParameter("InField12", typeof(string));
+    
+            var inField13Parameter = inField13 != null ?
+                new ObjectParameter("InField13", inField13) :
+                new ObjectParameter("InField13", typeof(string));
+    
+            var inField14Parameter = inField14 != null ?
+                new ObjectParameter("InField14", inField14) :
+                new ObjectParameter("InField14", typeof(string));
+    
+            var inField15Parameter = inField15 != null ?
+                new ObjectParameter("InField15", inField15) :
+                new ObjectParameter("InField15", typeof(string));
+    
+            var inField16Parameter = inField16 != null ?
+                new ObjectParameter("InField16", inField16) :
+                new ObjectParameter("InField16", typeof(string));
+    
+            var inField17Parameter = inField17 != null ?
+                new ObjectParameter("InField17", inField17) :
+                new ObjectParameter("InField17", typeof(string));
+    
+            var inField18Parameter = inField18 != null ?
+                new ObjectParameter("InField18", inField18) :
+                new ObjectParameter("InField18", typeof(string));
+    
+            var inField19Parameter = inField19 != null ?
+                new ObjectParameter("InField19", inField19) :
+                new ObjectParameter("InField19", typeof(string));
+    
+            var inField20Parameter = inField20 != null ?
+                new ObjectParameter("InField20", inField20) :
+                new ObjectParameter("InField20", typeof(string));
+    
+            var inField21Parameter = inField21 != null ?
+                new ObjectParameter("InField21", inField21) :
+                new ObjectParameter("InField21", typeof(string));
+    
+            var inField22Parameter = inField22 != null ?
+                new ObjectParameter("InField22", inField22) :
+                new ObjectParameter("InField22", typeof(string));
+    
+            var inField23Parameter = inField23 != null ?
+                new ObjectParameter("InField23", inField23) :
+                new ObjectParameter("InField23", typeof(string));
+    
+            var inField24Parameter = inField24 != null ?
+                new ObjectParameter("InField24", inField24) :
+                new ObjectParameter("InField24", typeof(string));
+    
+            var inField25Parameter = inField25 != null ?
+                new ObjectParameter("InField25", inField25) :
+                new ObjectParameter("InField25", typeof(string));
+    
+            var inField26Parameter = inField26 != null ?
+                new ObjectParameter("InField26", inField26) :
+                new ObjectParameter("InField26", typeof(string));
+    
+            var inField27Parameter = inField27 != null ?
+                new ObjectParameter("InField27", inField27) :
+                new ObjectParameter("InField27", typeof(string));
+    
+            var inField28Parameter = inField28 != null ?
+                new ObjectParameter("InField28", inField28) :
+                new ObjectParameter("InField28", typeof(string));
+    
+            var inField29Parameter = inField29 != null ?
+                new ObjectParameter("InField29", inField29) :
+                new ObjectParameter("InField29", typeof(string));
+    
+            var inField30Parameter = inField30 != null ?
+                new ObjectParameter("InField30", inField30) :
+                new ObjectParameter("InField30", typeof(string));
+    
+            var inField31Parameter = inField31 != null ?
+                new ObjectParameter("InField31", inField31) :
+                new ObjectParameter("InField31", typeof(string));
+    
+            var inField32Parameter = inField32 != null ?
+                new ObjectParameter("InField32", inField32) :
+                new ObjectParameter("InField32", typeof(string));
+    
+            var inField33Parameter = inField33 != null ?
+                new ObjectParameter("InField33", inField33) :
+                new ObjectParameter("InField33", typeof(string));
+    
+            var inField34Parameter = inField34 != null ?
+                new ObjectParameter("InField34", inField34) :
+                new ObjectParameter("InField34", typeof(string));
+    
+            var inField35Parameter = inField35 != null ?
+                new ObjectParameter("InField35", inField35) :
+                new ObjectParameter("InField35", typeof(string));
+    
+            var inField36Parameter = inField36 != null ?
+                new ObjectParameter("InField36", inField36) :
+                new ObjectParameter("InField36", typeof(string));
+    
+            var inField37Parameter = inField37 != null ?
+                new ObjectParameter("InField37", inField37) :
+                new ObjectParameter("InField37", typeof(string));
+    
+            var inField38Parameter = inField38 != null ?
+                new ObjectParameter("InField38", inField38) :
+                new ObjectParameter("InField38", typeof(string));
+    
+            var inField39Parameter = inField39 != null ?
+                new ObjectParameter("InField39", inField39) :
+                new ObjectParameter("InField39", typeof(string));
+    
+            var inField40Parameter = inField40 != null ?
+                new ObjectParameter("InField40", inField40) :
+                new ObjectParameter("InField40", typeof(string));
+    
+            var inField41Parameter = inField41 != null ?
+                new ObjectParameter("InField41", inField41) :
+                new ObjectParameter("InField41", typeof(string));
+    
+            var inField42Parameter = inField42 != null ?
+                new ObjectParameter("InField42", inField42) :
+                new ObjectParameter("InField42", typeof(string));
+    
+            var inField43Parameter = inField43 != null ?
+                new ObjectParameter("InField43", inField43) :
+                new ObjectParameter("InField43", typeof(string));
+    
+            var inField44Parameter = inField44 != null ?
+                new ObjectParameter("InField44", inField44) :
+                new ObjectParameter("InField44", typeof(string));
+    
+            var inField45Parameter = inField45 != null ?
+                new ObjectParameter("InField45", inField45) :
+                new ObjectParameter("InField45", typeof(string));
+    
+            var inField46Parameter = inField46 != null ?
+                new ObjectParameter("InField46", inField46) :
+                new ObjectParameter("InField46", typeof(string));
+    
+            var inField47Parameter = inField47 != null ?
+                new ObjectParameter("InField47", inField47) :
+                new ObjectParameter("InField47", typeof(string));
+    
+            var inField48Parameter = inField48 != null ?
+                new ObjectParameter("InField48", inField48) :
+                new ObjectParameter("InField48", typeof(string));
+    
+            var inField49Parameter = inField49 != null ?
+                new ObjectParameter("InField49", inField49) :
+                new ObjectParameter("InField49", typeof(string));
+    
+            var inField50Parameter = inField50 != null ?
+                new ObjectParameter("InField50", inField50) :
+                new ObjectParameter("InField50", typeof(string));
+    
+            var inField51Parameter = inField51 != null ?
+                new ObjectParameter("InField51", inField51) :
+                new ObjectParameter("InField51", typeof(string));
+    
+            var inField52Parameter = inField52 != null ?
+                new ObjectParameter("InField52", inField52) :
+                new ObjectParameter("InField52", typeof(string));
+    
+            var inField53Parameter = inField53 != null ?
+                new ObjectParameter("InField53", inField53) :
+                new ObjectParameter("InField53", typeof(string));
+    
+            var inField54Parameter = inField54 != null ?
+                new ObjectParameter("InField54", inField54) :
+                new ObjectParameter("InField54", typeof(string));
+    
+            var inField55Parameter = inField55 != null ?
+                new ObjectParameter("InField55", inField55) :
+                new ObjectParameter("InField55", typeof(string));
+    
+            var inField56Parameter = inField56 != null ?
+                new ObjectParameter("InField56", inField56) :
+                new ObjectParameter("InField56", typeof(string));
+    
+            var inField57Parameter = inField57 != null ?
+                new ObjectParameter("InField57", inField57) :
+                new ObjectParameter("InField57", typeof(string));
+    
+            var inField58Parameter = inField58 != null ?
+                new ObjectParameter("InField58", inField58) :
+                new ObjectParameter("InField58", typeof(string));
+    
+            var inField59Parameter = inField59 != null ?
+                new ObjectParameter("InField59", inField59) :
+                new ObjectParameter("InField59", typeof(string));
+    
+            var inField60Parameter = inField60 != null ?
+                new ObjectParameter("InField60", inField60) :
+                new ObjectParameter("InField60", typeof(string));
+    
+            var inField61Parameter = inField61 != null ?
+                new ObjectParameter("InField61", inField61) :
+                new ObjectParameter("InField61", typeof(string));
+    
+            var inField62Parameter = inField62 != null ?
+                new ObjectParameter("InField62", inField62) :
+                new ObjectParameter("InField62", typeof(string));
+    
+            var inField63Parameter = inField63 != null ?
+                new ObjectParameter("InField63", inField63) :
+                new ObjectParameter("InField63", typeof(string));
+    
+            var inField64Parameter = inField64 != null ?
+                new ObjectParameter("InField64", inField64) :
+                new ObjectParameter("InField64", typeof(string));
+    
+            var inField65Parameter = inField65 != null ?
+                new ObjectParameter("InField65", inField65) :
+                new ObjectParameter("InField65", typeof(string));
+    
+            var inField66Parameter = inField66 != null ?
+                new ObjectParameter("InField66", inField66) :
+                new ObjectParameter("InField66", typeof(string));
+    
+            var inField67Parameter = inField67 != null ?
+                new ObjectParameter("InField67", inField67) :
+                new ObjectParameter("InField67", typeof(string));
+    
+            var inField68Parameter = inField68 != null ?
+                new ObjectParameter("InField68", inField68) :
+                new ObjectParameter("InField68", typeof(string));
+    
+            var inField69Parameter = inField69 != null ?
+                new ObjectParameter("InField69", inField69) :
+                new ObjectParameter("InField69", typeof(string));
+    
+            var inField70Parameter = inField70 != null ?
+                new ObjectParameter("InField70", inField70) :
+                new ObjectParameter("InField70", typeof(string));
+    
+            var inField71Parameter = inField71 != null ?
+                new ObjectParameter("InField71", inField71) :
+                new ObjectParameter("InField71", typeof(string));
+    
+            var inField72Parameter = inField72 != null ?
+                new ObjectParameter("InField72", inField72) :
+                new ObjectParameter("InField72", typeof(string));
+    
+            var inField73Parameter = inField73 != null ?
+                new ObjectParameter("InField73", inField73) :
+                new ObjectParameter("InField73", typeof(string));
+    
+            var inField74Parameter = inField74 != null ?
+                new ObjectParameter("InField74", inField74) :
+                new ObjectParameter("InField74", typeof(string));
+    
+            var inField75Parameter = inField75 != null ?
+                new ObjectParameter("InField75", inField75) :
+                new ObjectParameter("InField75", typeof(string));
+    
+            var inField76Parameter = inField76 != null ?
+                new ObjectParameter("InField76", inField76) :
+                new ObjectParameter("InField76", typeof(string));
+    
+            var inField77Parameter = inField77 != null ?
+                new ObjectParameter("InField77", inField77) :
+                new ObjectParameter("InField77", typeof(string));
+    
+            var inField78Parameter = inField78 != null ?
+                new ObjectParameter("InField78", inField78) :
+                new ObjectParameter("InField78", typeof(string));
+    
+            var inField79Parameter = inField79 != null ?
+                new ObjectParameter("InField79", inField79) :
+                new ObjectParameter("InField79", typeof(string));
+    
+            var inField80Parameter = inField80 != null ?
+                new ObjectParameter("InField80", inField80) :
+                new ObjectParameter("InField80", typeof(string));
+    
+            var inField81Parameter = inField81 != null ?
+                new ObjectParameter("InField81", inField81) :
+                new ObjectParameter("InField81", typeof(string));
+    
+            var inField82Parameter = inField82 != null ?
+                new ObjectParameter("InField82", inField82) :
+                new ObjectParameter("InField82", typeof(string));
+    
+            var inField83Parameter = inField83 != null ?
+                new ObjectParameter("InField83", inField83) :
+                new ObjectParameter("InField83", typeof(string));
+    
+            var inField84Parameter = inField84 != null ?
+                new ObjectParameter("InField84", inField84) :
+                new ObjectParameter("InField84", typeof(string));
+    
+            var inField85Parameter = inField85 != null ?
+                new ObjectParameter("InField85", inField85) :
+                new ObjectParameter("InField85", typeof(string));
+    
+            var inField86Parameter = inField86 != null ?
+                new ObjectParameter("InField86", inField86) :
+                new ObjectParameter("InField86", typeof(string));
+    
+            var inField87Parameter = inField87 != null ?
+                new ObjectParameter("InField87", inField87) :
+                new ObjectParameter("InField87", typeof(string));
+    
+            var inField88Parameter = inField88 != null ?
+                new ObjectParameter("InField88", inField88) :
+                new ObjectParameter("InField88", typeof(string));
+    
+            var inField89Parameter = inField89 != null ?
+                new ObjectParameter("InField89", inField89) :
+                new ObjectParameter("InField89", typeof(string));
+    
+            var inField90Parameter = inField90 != null ?
+                new ObjectParameter("InField90", inField90) :
+                new ObjectParameter("InField90", typeof(string));
+    
+            var inField91Parameter = inField91 != null ?
+                new ObjectParameter("InField91", inField91) :
+                new ObjectParameter("InField91", typeof(string));
+    
+            var inField92Parameter = inField92 != null ?
+                new ObjectParameter("InField92", inField92) :
+                new ObjectParameter("InField92", typeof(string));
+    
+            var inField93Parameter = inField93 != null ?
+                new ObjectParameter("InField93", inField93) :
+                new ObjectParameter("InField93", typeof(string));
+    
+            var inField94Parameter = inField94 != null ?
+                new ObjectParameter("InField94", inField94) :
+                new ObjectParameter("InField94", typeof(string));
+    
+            var inField95Parameter = inField95 != null ?
+                new ObjectParameter("InField95", inField95) :
+                new ObjectParameter("InField95", typeof(string));
+    
+            var inField96Parameter = inField96 != null ?
+                new ObjectParameter("InField96", inField96) :
+                new ObjectParameter("InField96", typeof(string));
+    
+            var inField97Parameter = inField97 != null ?
+                new ObjectParameter("InField97", inField97) :
+                new ObjectParameter("InField97", typeof(string));
+    
+            var inField98Parameter = inField98 != null ?
+                new ObjectParameter("InField98", inField98) :
+                new ObjectParameter("InField98", typeof(string));
+    
+            var inField99Parameter = inField99 != null ?
+                new ObjectParameter("InField99", inField99) :
+                new ObjectParameter("InField99", typeof(string));
+    
+            var inField100Parameter = inField100 != null ?
+                new ObjectParameter("InField100", inField100) :
+                new ObjectParameter("InField100", typeof(string));
+    
+            var inField101Parameter = inField101 != null ?
+                new ObjectParameter("InField101", inField101) :
+                new ObjectParameter("InField101", typeof(string));
+    
+            var inField102Parameter = inField102 != null ?
+                new ObjectParameter("InField102", inField102) :
+                new ObjectParameter("InField102", typeof(string));
+    
+            var inField103Parameter = inField103 != null ?
+                new ObjectParameter("InField103", inField103) :
+                new ObjectParameter("InField103", typeof(string));
+    
+            var inField104Parameter = inField104 != null ?
+                new ObjectParameter("InField104", inField104) :
+                new ObjectParameter("InField104", typeof(string));
+    
+            var inField105Parameter = inField105 != null ?
+                new ObjectParameter("InField105", inField105) :
+                new ObjectParameter("InField105", typeof(string));
+    
+            var inField106Parameter = inField106 != null ?
+                new ObjectParameter("InField106", inField106) :
+                new ObjectParameter("InField106", typeof(string));
+    
+            var inField107Parameter = inField107 != null ?
+                new ObjectParameter("InField107", inField107) :
+                new ObjectParameter("InField107", typeof(string));
+    
+            var inField108Parameter = inField108 != null ?
+                new ObjectParameter("InField108", inField108) :
+                new ObjectParameter("InField108", typeof(string));
+    
+            var inField109Parameter = inField109 != null ?
+                new ObjectParameter("InField109", inField109) :
+                new ObjectParameter("InField109", typeof(string));
+    
+            var inField110Parameter = inField110 != null ?
+                new ObjectParameter("InField110", inField110) :
+                new ObjectParameter("InField110", typeof(string));
+    
+            var inField111Parameter = inField111 != null ?
+                new ObjectParameter("InField111", inField111) :
+                new ObjectParameter("InField111", typeof(string));
+    
+            var inField112Parameter = inField112 != null ?
+                new ObjectParameter("InField112", inField112) :
+                new ObjectParameter("InField112", typeof(string));
+    
+            var inField113Parameter = inField113 != null ?
+                new ObjectParameter("InField113", inField113) :
+                new ObjectParameter("InField113", typeof(string));
+    
+            var inField114Parameter = inField114 != null ?
+                new ObjectParameter("InField114", inField114) :
+                new ObjectParameter("InField114", typeof(string));
+    
+            var inField115Parameter = inField115 != null ?
+                new ObjectParameter("InField115", inField115) :
+                new ObjectParameter("InField115", typeof(string));
+    
+            var inField116Parameter = inField116 != null ?
+                new ObjectParameter("InField116", inField116) :
+                new ObjectParameter("InField116", typeof(string));
+    
+            var inField117Parameter = inField117 != null ?
+                new ObjectParameter("InField117", inField117) :
+                new ObjectParameter("InField117", typeof(string));
+    
+            var inField118Parameter = inField118 != null ?
+                new ObjectParameter("InField118", inField118) :
+                new ObjectParameter("InField118", typeof(string));
+    
+            var inField119Parameter = inField119 != null ?
+                new ObjectParameter("InField119", inField119) :
+                new ObjectParameter("InField119", typeof(string));
+    
+            var inField120Parameter = inField120 != null ?
+                new ObjectParameter("InField120", inField120) :
+                new ObjectParameter("InField120", typeof(string));
+    
+            var inField121Parameter = inField121 != null ?
+                new ObjectParameter("InField121", inField121) :
+                new ObjectParameter("InField121", typeof(string));
+    
+            var inField122Parameter = inField122 != null ?
+                new ObjectParameter("InField122", inField122) :
+                new ObjectParameter("InField122", typeof(string));
+    
+            var inField123Parameter = inField123 != null ?
+                new ObjectParameter("InField123", inField123) :
+                new ObjectParameter("InField123", typeof(string));
+    
+            var inField124Parameter = inField124 != null ?
+                new ObjectParameter("InField124", inField124) :
+                new ObjectParameter("InField124", typeof(string));
+    
+            var inField125Parameter = inField125 != null ?
+                new ObjectParameter("InField125", inField125) :
+                new ObjectParameter("InField125", typeof(string));
+    
+            var inField126Parameter = inField126 != null ?
+                new ObjectParameter("InField126", inField126) :
+                new ObjectParameter("InField126", typeof(string));
+    
+            var inField127Parameter = inField127 != null ?
+                new ObjectParameter("InField127", inField127) :
+                new ObjectParameter("InField127", typeof(string));
+    
+            var inField128Parameter = inField128 != null ?
+                new ObjectParameter("InField128", inField128) :
+                new ObjectParameter("InField128", typeof(string));
+    
+            var outField1Parameter = outField1 != null ?
+                new ObjectParameter("OutField1", outField1) :
+                new ObjectParameter("OutField1", typeof(string));
+    
+            var outField2Parameter = outField2 != null ?
+                new ObjectParameter("OutField2", outField2) :
+                new ObjectParameter("OutField2", typeof(string));
+    
+            var outField3Parameter = outField3 != null ?
+                new ObjectParameter("OutField3", outField3) :
+                new ObjectParameter("OutField3", typeof(string));
+    
+            var outField4Parameter = outField4 != null ?
+                new ObjectParameter("OutField4", outField4) :
+                new ObjectParameter("OutField4", typeof(string));
+    
+            var outField5Parameter = outField5 != null ?
+                new ObjectParameter("OutField5", outField5) :
+                new ObjectParameter("OutField5", typeof(string));
+    
+            var outField6Parameter = outField6 != null ?
+                new ObjectParameter("OutField6", outField6) :
+                new ObjectParameter("OutField6", typeof(string));
+    
+            var outField7Parameter = outField7 != null ?
+                new ObjectParameter("OutField7", outField7) :
+                new ObjectParameter("OutField7", typeof(string));
+    
+            var outField8Parameter = outField8 != null ?
+                new ObjectParameter("OutField8", outField8) :
+                new ObjectParameter("OutField8", typeof(string));
+    
+            var outField9Parameter = outField9 != null ?
+                new ObjectParameter("OutField9", outField9) :
+                new ObjectParameter("OutField9", typeof(string));
+    
+            var outField10Parameter = outField10 != null ?
+                new ObjectParameter("OutField10", outField10) :
+                new ObjectParameter("OutField10", typeof(string));
+    
+            var outField11Parameter = outField11 != null ?
+                new ObjectParameter("OutField11", outField11) :
+                new ObjectParameter("OutField11", typeof(string));
+    
+            var outField12Parameter = outField12 != null ?
+                new ObjectParameter("OutField12", outField12) :
+                new ObjectParameter("OutField12", typeof(string));
+    
+            var outField13Parameter = outField13 != null ?
+                new ObjectParameter("OutField13", outField13) :
+                new ObjectParameter("OutField13", typeof(string));
+    
+            var outField14Parameter = outField14 != null ?
+                new ObjectParameter("OutField14", outField14) :
+                new ObjectParameter("OutField14", typeof(string));
+    
+            var outField15Parameter = outField15 != null ?
+                new ObjectParameter("OutField15", outField15) :
+                new ObjectParameter("OutField15", typeof(string));
+    
+            var outField16Parameter = outField16 != null ?
+                new ObjectParameter("OutField16", outField16) :
+                new ObjectParameter("OutField16", typeof(string));
+    
+            var outField17Parameter = outField17 != null ?
+                new ObjectParameter("OutField17", outField17) :
+                new ObjectParameter("OutField17", typeof(string));
+    
+            var outField18Parameter = outField18 != null ?
+                new ObjectParameter("OutField18", outField18) :
+                new ObjectParameter("OutField18", typeof(string));
+    
+            var outField19Parameter = outField19 != null ?
+                new ObjectParameter("OutField19", outField19) :
+                new ObjectParameter("OutField19", typeof(string));
+    
+            var outField20Parameter = outField20 != null ?
+                new ObjectParameter("OutField20", outField20) :
+                new ObjectParameter("OutField20", typeof(string));
+    
+            var outField21Parameter = outField21 != null ?
+                new ObjectParameter("OutField21", outField21) :
+                new ObjectParameter("OutField21", typeof(string));
+    
+            var outField22Parameter = outField22 != null ?
+                new ObjectParameter("OutField22", outField22) :
+                new ObjectParameter("OutField22", typeof(string));
+    
+            var outField23Parameter = outField23 != null ?
+                new ObjectParameter("OutField23", outField23) :
+                new ObjectParameter("OutField23", typeof(string));
+    
+            var outField24Parameter = outField24 != null ?
+                new ObjectParameter("OutField24", outField24) :
+                new ObjectParameter("OutField24", typeof(string));
+    
+            var outField25Parameter = outField25 != null ?
+                new ObjectParameter("OutField25", outField25) :
+                new ObjectParameter("OutField25", typeof(string));
+    
+            var outField26Parameter = outField26 != null ?
+                new ObjectParameter("OutField26", outField26) :
+                new ObjectParameter("OutField26", typeof(string));
+    
+            var outField27Parameter = outField27 != null ?
+                new ObjectParameter("OutField27", outField27) :
+                new ObjectParameter("OutField27", typeof(string));
+    
+            var outField28Parameter = outField28 != null ?
+                new ObjectParameter("OutField28", outField28) :
+                new ObjectParameter("OutField28", typeof(string));
+    
+            var outField29Parameter = outField29 != null ?
+                new ObjectParameter("OutField29", outField29) :
+                new ObjectParameter("OutField29", typeof(string));
+    
+            var outField30Parameter = outField30 != null ?
+                new ObjectParameter("OutField30", outField30) :
+                new ObjectParameter("OutField30", typeof(string));
+    
+            var outField31Parameter = outField31 != null ?
+                new ObjectParameter("OutField31", outField31) :
+                new ObjectParameter("OutField31", typeof(string));
+    
+            var outField32Parameter = outField32 != null ?
+                new ObjectParameter("OutField32", outField32) :
+                new ObjectParameter("OutField32", typeof(string));
+    
+            var outField33Parameter = outField33 != null ?
+                new ObjectParameter("OutField33", outField33) :
+                new ObjectParameter("OutField33", typeof(string));
+    
+            var outField34Parameter = outField34 != null ?
+                new ObjectParameter("OutField34", outField34) :
+                new ObjectParameter("OutField34", typeof(string));
+    
+            var outField35Parameter = outField35 != null ?
+                new ObjectParameter("OutField35", outField35) :
+                new ObjectParameter("OutField35", typeof(string));
+    
+            var outField36Parameter = outField36 != null ?
+                new ObjectParameter("OutField36", outField36) :
+                new ObjectParameter("OutField36", typeof(string));
+    
+            var outField37Parameter = outField37 != null ?
+                new ObjectParameter("OutField37", outField37) :
+                new ObjectParameter("OutField37", typeof(string));
+    
+            var outField38Parameter = outField38 != null ?
+                new ObjectParameter("OutField38", outField38) :
+                new ObjectParameter("OutField38", typeof(string));
+    
+            var outField39Parameter = outField39 != null ?
+                new ObjectParameter("OutField39", outField39) :
+                new ObjectParameter("OutField39", typeof(string));
+    
+            var outField40Parameter = outField40 != null ?
+                new ObjectParameter("OutField40", outField40) :
+                new ObjectParameter("OutField40", typeof(string));
+    
+            var outField41Parameter = outField41 != null ?
+                new ObjectParameter("OutField41", outField41) :
+                new ObjectParameter("OutField41", typeof(string));
+    
+            var outField42Parameter = outField42 != null ?
+                new ObjectParameter("OutField42", outField42) :
+                new ObjectParameter("OutField42", typeof(string));
+    
+            var outField43Parameter = outField43 != null ?
+                new ObjectParameter("OutField43", outField43) :
+                new ObjectParameter("OutField43", typeof(string));
+    
+            var outField44Parameter = outField44 != null ?
+                new ObjectParameter("OutField44", outField44) :
+                new ObjectParameter("OutField44", typeof(string));
+    
+            var outField45Parameter = outField45 != null ?
+                new ObjectParameter("OutField45", outField45) :
+                new ObjectParameter("OutField45", typeof(string));
+    
+            var outField46Parameter = outField46 != null ?
+                new ObjectParameter("OutField46", outField46) :
+                new ObjectParameter("OutField46", typeof(string));
+    
+            var outField47Parameter = outField47 != null ?
+                new ObjectParameter("OutField47", outField47) :
+                new ObjectParameter("OutField47", typeof(string));
+    
+            var outField48Parameter = outField48 != null ?
+                new ObjectParameter("OutField48", outField48) :
+                new ObjectParameter("OutField48", typeof(string));
+    
+            var outField49Parameter = outField49 != null ?
+                new ObjectParameter("OutField49", outField49) :
+                new ObjectParameter("OutField49", typeof(string));
+    
+            var outField50Parameter = outField50 != null ?
+                new ObjectParameter("OutField50", outField50) :
+                new ObjectParameter("OutField50", typeof(string));
+    
+            var outField51Parameter = outField51 != null ?
+                new ObjectParameter("OutField51", outField51) :
+                new ObjectParameter("OutField51", typeof(string));
+    
+            var outField52Parameter = outField52 != null ?
+                new ObjectParameter("OutField52", outField52) :
+                new ObjectParameter("OutField52", typeof(string));
+    
+            var outField53Parameter = outField53 != null ?
+                new ObjectParameter("OutField53", outField53) :
+                new ObjectParameter("OutField53", typeof(string));
+    
+            var outField54Parameter = outField54 != null ?
+                new ObjectParameter("OutField54", outField54) :
+                new ObjectParameter("OutField54", typeof(string));
+    
+            var outField55Parameter = outField55 != null ?
+                new ObjectParameter("OutField55", outField55) :
+                new ObjectParameter("OutField55", typeof(string));
+    
+            var outField56Parameter = outField56 != null ?
+                new ObjectParameter("OutField56", outField56) :
+                new ObjectParameter("OutField56", typeof(string));
+    
+            var outField57Parameter = outField57 != null ?
+                new ObjectParameter("OutField57", outField57) :
+                new ObjectParameter("OutField57", typeof(string));
+    
+            var outField58Parameter = outField58 != null ?
+                new ObjectParameter("OutField58", outField58) :
+                new ObjectParameter("OutField58", typeof(string));
+    
+            var outField59Parameter = outField59 != null ?
+                new ObjectParameter("OutField59", outField59) :
+                new ObjectParameter("OutField59", typeof(string));
+    
+            var outField60Parameter = outField60 != null ?
+                new ObjectParameter("OutField60", outField60) :
+                new ObjectParameter("OutField60", typeof(string));
+    
+            var outField61Parameter = outField61 != null ?
+                new ObjectParameter("OutField61", outField61) :
+                new ObjectParameter("OutField61", typeof(string));
+    
+            var outField62Parameter = outField62 != null ?
+                new ObjectParameter("OutField62", outField62) :
+                new ObjectParameter("OutField62", typeof(string));
+    
+            var outField63Parameter = outField63 != null ?
+                new ObjectParameter("OutField63", outField63) :
+                new ObjectParameter("OutField63", typeof(string));
+    
+            var outField64Parameter = outField64 != null ?
+                new ObjectParameter("OutField64", outField64) :
+                new ObjectParameter("OutField64", typeof(string));
+    
+            var outField65Parameter = outField65 != null ?
+                new ObjectParameter("OutField65", outField65) :
+                new ObjectParameter("OutField65", typeof(string));
+    
+            var outField66Parameter = outField66 != null ?
+                new ObjectParameter("OutField66", outField66) :
+                new ObjectParameter("OutField66", typeof(string));
+    
+            var outField67Parameter = outField67 != null ?
+                new ObjectParameter("OutField67", outField67) :
+                new ObjectParameter("OutField67", typeof(string));
+    
+            var outField68Parameter = outField68 != null ?
+                new ObjectParameter("OutField68", outField68) :
+                new ObjectParameter("OutField68", typeof(string));
+    
+            var outField69Parameter = outField69 != null ?
+                new ObjectParameter("OutField69", outField69) :
+                new ObjectParameter("OutField69", typeof(string));
+    
+            var outField70Parameter = outField70 != null ?
+                new ObjectParameter("OutField70", outField70) :
+                new ObjectParameter("OutField70", typeof(string));
+    
+            var outField71Parameter = outField71 != null ?
+                new ObjectParameter("OutField71", outField71) :
+                new ObjectParameter("OutField71", typeof(string));
+    
+            var outField72Parameter = outField72 != null ?
+                new ObjectParameter("OutField72", outField72) :
+                new ObjectParameter("OutField72", typeof(string));
+    
+            var outField73Parameter = outField73 != null ?
+                new ObjectParameter("OutField73", outField73) :
+                new ObjectParameter("OutField73", typeof(string));
+    
+            var outField74Parameter = outField74 != null ?
+                new ObjectParameter("OutField74", outField74) :
+                new ObjectParameter("OutField74", typeof(string));
+    
+            var outField75Parameter = outField75 != null ?
+                new ObjectParameter("OutField75", outField75) :
+                new ObjectParameter("OutField75", typeof(string));
+    
+            var outField76Parameter = outField76 != null ?
+                new ObjectParameter("OutField76", outField76) :
+                new ObjectParameter("OutField76", typeof(string));
+    
+            var outField77Parameter = outField77 != null ?
+                new ObjectParameter("OutField77", outField77) :
+                new ObjectParameter("OutField77", typeof(string));
+    
+            var outField78Parameter = outField78 != null ?
+                new ObjectParameter("OutField78", outField78) :
+                new ObjectParameter("OutField78", typeof(string));
+    
+            var outField79Parameter = outField79 != null ?
+                new ObjectParameter("OutField79", outField79) :
+                new ObjectParameter("OutField79", typeof(string));
+    
+            var outField80Parameter = outField80 != null ?
+                new ObjectParameter("OutField80", outField80) :
+                new ObjectParameter("OutField80", typeof(string));
+    
+            var outField81Parameter = outField81 != null ?
+                new ObjectParameter("OutField81", outField81) :
+                new ObjectParameter("OutField81", typeof(string));
+    
+            var outField82Parameter = outField82 != null ?
+                new ObjectParameter("OutField82", outField82) :
+                new ObjectParameter("OutField82", typeof(string));
+    
+            var outField83Parameter = outField83 != null ?
+                new ObjectParameter("OutField83", outField83) :
+                new ObjectParameter("OutField83", typeof(string));
+    
+            var outField84Parameter = outField84 != null ?
+                new ObjectParameter("OutField84", outField84) :
+                new ObjectParameter("OutField84", typeof(string));
+    
+            var outField85Parameter = outField85 != null ?
+                new ObjectParameter("OutField85", outField85) :
+                new ObjectParameter("OutField85", typeof(string));
+    
+            var outField86Parameter = outField86 != null ?
+                new ObjectParameter("OutField86", outField86) :
+                new ObjectParameter("OutField86", typeof(string));
+    
+            var outField87Parameter = outField87 != null ?
+                new ObjectParameter("OutField87", outField87) :
+                new ObjectParameter("OutField87", typeof(string));
+    
+            var outField88Parameter = outField88 != null ?
+                new ObjectParameter("OutField88", outField88) :
+                new ObjectParameter("OutField88", typeof(string));
+    
+            var outField89Parameter = outField89 != null ?
+                new ObjectParameter("OutField89", outField89) :
+                new ObjectParameter("OutField89", typeof(string));
+    
+            var outField90Parameter = outField90 != null ?
+                new ObjectParameter("OutField90", outField90) :
+                new ObjectParameter("OutField90", typeof(string));
+    
+            var outField91Parameter = outField91 != null ?
+                new ObjectParameter("OutField91", outField91) :
+                new ObjectParameter("OutField91", typeof(string));
+    
+            var outField92Parameter = outField92 != null ?
+                new ObjectParameter("OutField92", outField92) :
+                new ObjectParameter("OutField92", typeof(string));
+    
+            var outField93Parameter = outField93 != null ?
+                new ObjectParameter("OutField93", outField93) :
+                new ObjectParameter("OutField93", typeof(string));
+    
+            var outField94Parameter = outField94 != null ?
+                new ObjectParameter("OutField94", outField94) :
+                new ObjectParameter("OutField94", typeof(string));
+    
+            var outField95Parameter = outField95 != null ?
+                new ObjectParameter("OutField95", outField95) :
+                new ObjectParameter("OutField95", typeof(string));
+    
+            var outField96Parameter = outField96 != null ?
+                new ObjectParameter("OutField96", outField96) :
+                new ObjectParameter("OutField96", typeof(string));
+    
+            var outField97Parameter = outField97 != null ?
+                new ObjectParameter("OutField97", outField97) :
+                new ObjectParameter("OutField97", typeof(string));
+    
+            var outField98Parameter = outField98 != null ?
+                new ObjectParameter("OutField98", outField98) :
+                new ObjectParameter("OutField98", typeof(string));
+    
+            var outField99Parameter = outField99 != null ?
+                new ObjectParameter("OutField99", outField99) :
+                new ObjectParameter("OutField99", typeof(string));
+    
+            var outField100Parameter = outField100 != null ?
+                new ObjectParameter("OutField100", outField100) :
+                new ObjectParameter("OutField100", typeof(string));
+    
+            var outField101Parameter = outField101 != null ?
+                new ObjectParameter("OutField101", outField101) :
+                new ObjectParameter("OutField101", typeof(string));
+    
+            var outField102Parameter = outField102 != null ?
+                new ObjectParameter("OutField102", outField102) :
+                new ObjectParameter("OutField102", typeof(string));
+    
+            var outField103Parameter = outField103 != null ?
+                new ObjectParameter("OutField103", outField103) :
+                new ObjectParameter("OutField103", typeof(string));
+    
+            var outField104Parameter = outField104 != null ?
+                new ObjectParameter("OutField104", outField104) :
+                new ObjectParameter("OutField104", typeof(string));
+    
+            var outField105Parameter = outField105 != null ?
+                new ObjectParameter("OutField105", outField105) :
+                new ObjectParameter("OutField105", typeof(string));
+    
+            var outField106Parameter = outField106 != null ?
+                new ObjectParameter("OutField106", outField106) :
+                new ObjectParameter("OutField106", typeof(string));
+    
+            var outField107Parameter = outField107 != null ?
+                new ObjectParameter("OutField107", outField107) :
+                new ObjectParameter("OutField107", typeof(string));
+    
+            var outField108Parameter = outField108 != null ?
+                new ObjectParameter("OutField108", outField108) :
+                new ObjectParameter("OutField108", typeof(string));
+    
+            var outField109Parameter = outField109 != null ?
+                new ObjectParameter("OutField109", outField109) :
+                new ObjectParameter("OutField109", typeof(string));
+    
+            var outField110Parameter = outField110 != null ?
+                new ObjectParameter("OutField110", outField110) :
+                new ObjectParameter("OutField110", typeof(string));
+    
+            var outField111Parameter = outField111 != null ?
+                new ObjectParameter("OutField111", outField111) :
+                new ObjectParameter("OutField111", typeof(string));
+    
+            var outField112Parameter = outField112 != null ?
+                new ObjectParameter("OutField112", outField112) :
+                new ObjectParameter("OutField112", typeof(string));
+    
+            var outField113Parameter = outField113 != null ?
+                new ObjectParameter("OutField113", outField113) :
+                new ObjectParameter("OutField113", typeof(string));
+    
+            var outField114Parameter = outField114 != null ?
+                new ObjectParameter("OutField114", outField114) :
+                new ObjectParameter("OutField114", typeof(string));
+    
+            var outField115Parameter = outField115 != null ?
+                new ObjectParameter("OutField115", outField115) :
+                new ObjectParameter("OutField115", typeof(string));
+    
+            var outField116Parameter = outField116 != null ?
+                new ObjectParameter("OutField116", outField116) :
+                new ObjectParameter("OutField116", typeof(string));
+    
+            var outField117Parameter = outField117 != null ?
+                new ObjectParameter("OutField117", outField117) :
+                new ObjectParameter("OutField117", typeof(string));
+    
+            var outField118Parameter = outField118 != null ?
+                new ObjectParameter("OutField118", outField118) :
+                new ObjectParameter("OutField118", typeof(string));
+    
+            var outField119Parameter = outField119 != null ?
+                new ObjectParameter("OutField119", outField119) :
+                new ObjectParameter("OutField119", typeof(string));
+    
+            var outField120Parameter = outField120 != null ?
+                new ObjectParameter("OutField120", outField120) :
+                new ObjectParameter("OutField120", typeof(string));
+    
+            var outField121Parameter = outField121 != null ?
+                new ObjectParameter("OutField121", outField121) :
+                new ObjectParameter("OutField121", typeof(string));
+    
+            var outField122Parameter = outField122 != null ?
+                new ObjectParameter("OutField122", outField122) :
+                new ObjectParameter("OutField122", typeof(string));
+    
+            var outField123Parameter = outField123 != null ?
+                new ObjectParameter("OutField123", outField123) :
+                new ObjectParameter("OutField123", typeof(string));
+    
+            var outField124Parameter = outField124 != null ?
+                new ObjectParameter("OutField124", outField124) :
+                new ObjectParameter("OutField124", typeof(string));
+    
+            var outField125Parameter = outField125 != null ?
+                new ObjectParameter("OutField125", outField125) :
+                new ObjectParameter("OutField125", typeof(string));
+    
+            var outField126Parameter = outField126 != null ?
+                new ObjectParameter("OutField126", outField126) :
+                new ObjectParameter("OutField126", typeof(string));
+    
+            var outField127Parameter = outField127 != null ?
+                new ObjectParameter("OutField127", outField127) :
+                new ObjectParameter("OutField127", typeof(string));
+    
+            var outField128Parameter = outField128 != null ?
+                new ObjectParameter("OutField128", outField128) :
+                new ObjectParameter("OutField128", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_SaveMessageLog", receivedFromIPParameter, receivedFromPortParameter, inFormatIDParameter, outFormatIDParameter, inMessageTypeParameter, outMessageTypeParameter, inField1Parameter, inField2Parameter, inField3Parameter, inField4Parameter, inField5Parameter, inField6Parameter, inField7Parameter, inField8Parameter, inField9Parameter, inField10Parameter, inField11Parameter, inField12Parameter, inField13Parameter, inField14Parameter, inField15Parameter, inField16Parameter, inField17Parameter, inField18Parameter, inField19Parameter, inField20Parameter, inField21Parameter, inField22Parameter, inField23Parameter, inField24Parameter, inField25Parameter, inField26Parameter, inField27Parameter, inField28Parameter, inField29Parameter, inField30Parameter, inField31Parameter, inField32Parameter, inField33Parameter, inField34Parameter, inField35Parameter, inField36Parameter, inField37Parameter, inField38Parameter, inField39Parameter, inField40Parameter, inField41Parameter, inField42Parameter, inField43Parameter, inField44Parameter, inField45Parameter, inField46Parameter, inField47Parameter, inField48Parameter, inField49Parameter, inField50Parameter, inField51Parameter, inField52Parameter, inField53Parameter, inField54Parameter, inField55Parameter, inField56Parameter, inField57Parameter, inField58Parameter, inField59Parameter, inField60Parameter, inField61Parameter, inField62Parameter, inField63Parameter, inField64Parameter, inField65Parameter, inField66Parameter, inField67Parameter, inField68Parameter, inField69Parameter, inField70Parameter, inField71Parameter, inField72Parameter, inField73Parameter, inField74Parameter, inField75Parameter, inField76Parameter, inField77Parameter, inField78Parameter, inField79Parameter, inField80Parameter, inField81Parameter, inField82Parameter, inField83Parameter, inField84Parameter, inField85Parameter, inField86Parameter, inField87Parameter, inField88Parameter, inField89Parameter, inField90Parameter, inField91Parameter, inField92Parameter, inField93Parameter, inField94Parameter, inField95Parameter, inField96Parameter, inField97Parameter, inField98Parameter, inField99Parameter, inField100Parameter, inField101Parameter, inField102Parameter, inField103Parameter, inField104Parameter, inField105Parameter, inField106Parameter, inField107Parameter, inField108Parameter, inField109Parameter, inField110Parameter, inField111Parameter, inField112Parameter, inField113Parameter, inField114Parameter, inField115Parameter, inField116Parameter, inField117Parameter, inField118Parameter, inField119Parameter, inField120Parameter, inField121Parameter, inField122Parameter, inField123Parameter, inField124Parameter, inField125Parameter, inField126Parameter, inField127Parameter, inField128Parameter, outField1Parameter, outField2Parameter, outField3Parameter, outField4Parameter, outField5Parameter, outField6Parameter, outField7Parameter, outField8Parameter, outField9Parameter, outField10Parameter, outField11Parameter, outField12Parameter, outField13Parameter, outField14Parameter, outField15Parameter, outField16Parameter, outField17Parameter, outField18Parameter, outField19Parameter, outField20Parameter, outField21Parameter, outField22Parameter, outField23Parameter, outField24Parameter, outField25Parameter, outField26Parameter, outField27Parameter, outField28Parameter, outField29Parameter, outField30Parameter, outField31Parameter, outField32Parameter, outField33Parameter, outField34Parameter, outField35Parameter, outField36Parameter, outField37Parameter, outField38Parameter, outField39Parameter, outField40Parameter, outField41Parameter, outField42Parameter, outField43Parameter, outField44Parameter, outField45Parameter, outField46Parameter, outField47Parameter, outField48Parameter, outField49Parameter, outField50Parameter, outField51Parameter, outField52Parameter, outField53Parameter, outField54Parameter, outField55Parameter, outField56Parameter, outField57Parameter, outField58Parameter, outField59Parameter, outField60Parameter, outField61Parameter, outField62Parameter, outField63Parameter, outField64Parameter, outField65Parameter, outField66Parameter, outField67Parameter, outField68Parameter, outField69Parameter, outField70Parameter, outField71Parameter, outField72Parameter, outField73Parameter, outField74Parameter, outField75Parameter, outField76Parameter, outField77Parameter, outField78Parameter, outField79Parameter, outField80Parameter, outField81Parameter, outField82Parameter, outField83Parameter, outField84Parameter, outField85Parameter, outField86Parameter, outField87Parameter, outField88Parameter, outField89Parameter, outField90Parameter, outField91Parameter, outField92Parameter, outField93Parameter, outField94Parameter, outField95Parameter, outField96Parameter, outField97Parameter, outField98Parameter, outField99Parameter, outField100Parameter, outField101Parameter, outField102Parameter, outField103Parameter, outField104Parameter, outField105Parameter, outField106Parameter, outField107Parameter, outField108Parameter, outField109Parameter, outField110Parameter, outField111Parameter, outField112Parameter, outField113Parameter, outField114Parameter, outField115Parameter, outField116Parameter, outField117Parameter, outField118Parameter, outField119Parameter, outField120Parameter, outField121Parameter, outField122Parameter, outField123Parameter, outField124Parameter, outField125Parameter, outField126Parameter, outField127Parameter, outField128Parameter);
+        }
+    
+        public virtual ObjectResult<sp_Select_mdeduct_Result> sp_Select_mdeduct(string memberno, string mmonth, string yyear)
+        {
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            var mmonthParameter = mmonth != null ?
+                new ObjectParameter("mmonth", mmonth) :
+                new ObjectParameter("mmonth", typeof(string));
+    
+            var yyearParameter = yyear != null ?
+                new ObjectParameter("yyear", yyear) :
+                new ObjectParameter("yyear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Select_mdeduct_Result>("sp_Select_mdeduct", membernoParameter, mmonthParameter, yyearParameter);
+        }
+    
+        public virtual int sp_select_Overdeduction(string mmonth, string yyear)
+        {
+            var mmonthParameter = mmonth != null ?
+                new ObjectParameter("mmonth", mmonth) :
+                new ObjectParameter("mmonth", typeof(string));
+    
+            var yyearParameter = yyear != null ?
+                new ObjectParameter("yyear", yyear) :
+                new ObjectParameter("yyear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_select_Overdeduction", mmonthParameter, yyearParameter);
+        }
+    
+        public virtual int sp_select_per_date(string bname, Nullable<System.DateTime> transdate)
+        {
+            var bnameParameter = bname != null ?
+                new ObjectParameter("bname", bname) :
+                new ObjectParameter("bname", typeof(string));
+    
+            var transdateParameter = transdate.HasValue ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_select_per_date", bnameParameter, transdateParameter);
+        }
+    
+        public virtual int sp_sfi(Nullable<System.DateTime> transdate, string status, string rtype, string accno, string filler16, string filler23, string filer33, string transtype, string filler36, string amount, string vdate, string mdate, string intrate, string filler73, string bequivalent, string mflag, string filler90, string brokerno, string transref, string narrativeline1, string rbflag, string memenote, string banksortcode, string v03140344, string exchangerate, string filler350, string nErate, string filler364, string nVB, Nullable<long> batchno)
+        {
+            var transdateParameter = transdate.HasValue ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(System.DateTime));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(string));
+    
+            var rtypeParameter = rtype != null ?
+                new ObjectParameter("rtype", rtype) :
+                new ObjectParameter("rtype", typeof(string));
+    
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            var filler16Parameter = filler16 != null ?
+                new ObjectParameter("filler16", filler16) :
+                new ObjectParameter("filler16", typeof(string));
+    
+            var filler23Parameter = filler23 != null ?
+                new ObjectParameter("filler23", filler23) :
+                new ObjectParameter("filler23", typeof(string));
+    
+            var filer33Parameter = filer33 != null ?
+                new ObjectParameter("filer33", filer33) :
+                new ObjectParameter("filer33", typeof(string));
+    
+            var transtypeParameter = transtype != null ?
+                new ObjectParameter("transtype", transtype) :
+                new ObjectParameter("transtype", typeof(string));
+    
+            var filler36Parameter = filler36 != null ?
+                new ObjectParameter("filler36", filler36) :
+                new ObjectParameter("filler36", typeof(string));
+    
+            var amountParameter = amount != null ?
+                new ObjectParameter("amount", amount) :
+                new ObjectParameter("amount", typeof(string));
+    
+            var vdateParameter = vdate != null ?
+                new ObjectParameter("vdate", vdate) :
+                new ObjectParameter("vdate", typeof(string));
+    
+            var mdateParameter = mdate != null ?
+                new ObjectParameter("mdate", mdate) :
+                new ObjectParameter("mdate", typeof(string));
+    
+            var intrateParameter = intrate != null ?
+                new ObjectParameter("intrate", intrate) :
+                new ObjectParameter("intrate", typeof(string));
+    
+            var filler73Parameter = filler73 != null ?
+                new ObjectParameter("filler73", filler73) :
+                new ObjectParameter("filler73", typeof(string));
+    
+            var bequivalentParameter = bequivalent != null ?
+                new ObjectParameter("bequivalent", bequivalent) :
+                new ObjectParameter("bequivalent", typeof(string));
+    
+            var mflagParameter = mflag != null ?
+                new ObjectParameter("mflag", mflag) :
+                new ObjectParameter("mflag", typeof(string));
+    
+            var filler90Parameter = filler90 != null ?
+                new ObjectParameter("filler90", filler90) :
+                new ObjectParameter("filler90", typeof(string));
+    
+            var brokernoParameter = brokerno != null ?
+                new ObjectParameter("brokerno", brokerno) :
+                new ObjectParameter("brokerno", typeof(string));
+    
+            var transrefParameter = transref != null ?
+                new ObjectParameter("transref", transref) :
+                new ObjectParameter("transref", typeof(string));
+    
+            var narrativeline1Parameter = narrativeline1 != null ?
+                new ObjectParameter("narrativeline1", narrativeline1) :
+                new ObjectParameter("narrativeline1", typeof(string));
+    
+            var rbflagParameter = rbflag != null ?
+                new ObjectParameter("rbflag", rbflag) :
+                new ObjectParameter("rbflag", typeof(string));
+    
+            var memenoteParameter = memenote != null ?
+                new ObjectParameter("memenote", memenote) :
+                new ObjectParameter("memenote", typeof(string));
+    
+            var banksortcodeParameter = banksortcode != null ?
+                new ObjectParameter("banksortcode", banksortcode) :
+                new ObjectParameter("banksortcode", typeof(string));
+    
+            var v03140344Parameter = v03140344 != null ?
+                new ObjectParameter("v03140344", v03140344) :
+                new ObjectParameter("v03140344", typeof(string));
+    
+            var exchangerateParameter = exchangerate != null ?
+                new ObjectParameter("exchangerate", exchangerate) :
+                new ObjectParameter("exchangerate", typeof(string));
+    
+            var filler350Parameter = filler350 != null ?
+                new ObjectParameter("filler350", filler350) :
+                new ObjectParameter("filler350", typeof(string));
+    
+            var nErateParameter = nErate != null ?
+                new ObjectParameter("NErate", nErate) :
+                new ObjectParameter("NErate", typeof(string));
+    
+            var filler364Parameter = filler364 != null ?
+                new ObjectParameter("filler364", filler364) :
+                new ObjectParameter("filler364", typeof(string));
+    
+            var nVBParameter = nVB != null ?
+                new ObjectParameter("NVB", nVB) :
+                new ObjectParameter("NVB", typeof(string));
+    
+            var batchnoParameter = batchno.HasValue ?
+                new ObjectParameter("batchno", batchno) :
+                new ObjectParameter("batchno", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_sfi", transdateParameter, statusParameter, rtypeParameter, accnoParameter, filler16Parameter, filler23Parameter, filer33Parameter, transtypeParameter, filler36Parameter, amountParameter, vdateParameter, mdateParameter, intrateParameter, filler73Parameter, bequivalentParameter, mflagParameter, filler90Parameter, brokernoParameter, transrefParameter, narrativeline1Parameter, rbflagParameter, memenoteParameter, banksortcodeParameter, v03140344Parameter, exchangerateParameter, filler350Parameter, nErateParameter, filler364Parameter, nVBParameter, batchnoParameter);
+        }
+    
+        public virtual int sp_sfi_atm(Nullable<System.DateTime> transdate, string status, string rtype, string accno, string filler16, string filler23, string filer33, string transtype, string filler36, string amount, string vdate, string mdate, string intrate, string filler73, string bequivalent, string mflag, string filler90, string brokerno, string transref, string narrativeline1, string rbflag, string memenote, string banksortcode, string v03140344, string exchangerate, string filler350, string nErate, string filler364, string nVB, Nullable<long> batchno)
+        {
+            var transdateParameter = transdate.HasValue ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(System.DateTime));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(string));
+    
+            var rtypeParameter = rtype != null ?
+                new ObjectParameter("rtype", rtype) :
+                new ObjectParameter("rtype", typeof(string));
+    
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            var filler16Parameter = filler16 != null ?
+                new ObjectParameter("filler16", filler16) :
+                new ObjectParameter("filler16", typeof(string));
+    
+            var filler23Parameter = filler23 != null ?
+                new ObjectParameter("filler23", filler23) :
+                new ObjectParameter("filler23", typeof(string));
+    
+            var filer33Parameter = filer33 != null ?
+                new ObjectParameter("filer33", filer33) :
+                new ObjectParameter("filer33", typeof(string));
+    
+            var transtypeParameter = transtype != null ?
+                new ObjectParameter("transtype", transtype) :
+                new ObjectParameter("transtype", typeof(string));
+    
+            var filler36Parameter = filler36 != null ?
+                new ObjectParameter("filler36", filler36) :
+                new ObjectParameter("filler36", typeof(string));
+    
+            var amountParameter = amount != null ?
+                new ObjectParameter("amount", amount) :
+                new ObjectParameter("amount", typeof(string));
+    
+            var vdateParameter = vdate != null ?
+                new ObjectParameter("vdate", vdate) :
+                new ObjectParameter("vdate", typeof(string));
+    
+            var mdateParameter = mdate != null ?
+                new ObjectParameter("mdate", mdate) :
+                new ObjectParameter("mdate", typeof(string));
+    
+            var intrateParameter = intrate != null ?
+                new ObjectParameter("intrate", intrate) :
+                new ObjectParameter("intrate", typeof(string));
+    
+            var filler73Parameter = filler73 != null ?
+                new ObjectParameter("filler73", filler73) :
+                new ObjectParameter("filler73", typeof(string));
+    
+            var bequivalentParameter = bequivalent != null ?
+                new ObjectParameter("bequivalent", bequivalent) :
+                new ObjectParameter("bequivalent", typeof(string));
+    
+            var mflagParameter = mflag != null ?
+                new ObjectParameter("mflag", mflag) :
+                new ObjectParameter("mflag", typeof(string));
+    
+            var filler90Parameter = filler90 != null ?
+                new ObjectParameter("filler90", filler90) :
+                new ObjectParameter("filler90", typeof(string));
+    
+            var brokernoParameter = brokerno != null ?
+                new ObjectParameter("brokerno", brokerno) :
+                new ObjectParameter("brokerno", typeof(string));
+    
+            var transrefParameter = transref != null ?
+                new ObjectParameter("transref", transref) :
+                new ObjectParameter("transref", typeof(string));
+    
+            var narrativeline1Parameter = narrativeline1 != null ?
+                new ObjectParameter("narrativeline1", narrativeline1) :
+                new ObjectParameter("narrativeline1", typeof(string));
+    
+            var rbflagParameter = rbflag != null ?
+                new ObjectParameter("rbflag", rbflag) :
+                new ObjectParameter("rbflag", typeof(string));
+    
+            var memenoteParameter = memenote != null ?
+                new ObjectParameter("memenote", memenote) :
+                new ObjectParameter("memenote", typeof(string));
+    
+            var banksortcodeParameter = banksortcode != null ?
+                new ObjectParameter("banksortcode", banksortcode) :
+                new ObjectParameter("banksortcode", typeof(string));
+    
+            var v03140344Parameter = v03140344 != null ?
+                new ObjectParameter("v03140344", v03140344) :
+                new ObjectParameter("v03140344", typeof(string));
+    
+            var exchangerateParameter = exchangerate != null ?
+                new ObjectParameter("exchangerate", exchangerate) :
+                new ObjectParameter("exchangerate", typeof(string));
+    
+            var filler350Parameter = filler350 != null ?
+                new ObjectParameter("filler350", filler350) :
+                new ObjectParameter("filler350", typeof(string));
+    
+            var nErateParameter = nErate != null ?
+                new ObjectParameter("NErate", nErate) :
+                new ObjectParameter("NErate", typeof(string));
+    
+            var filler364Parameter = filler364 != null ?
+                new ObjectParameter("filler364", filler364) :
+                new ObjectParameter("filler364", typeof(string));
+    
+            var nVBParameter = nVB != null ?
+                new ObjectParameter("NVB", nVB) :
+                new ObjectParameter("NVB", typeof(string));
+    
+            var batchnoParameter = batchno.HasValue ?
+                new ObjectParameter("batchno", batchno) :
+                new ObjectParameter("batchno", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_sfi_atm", transdateParameter, statusParameter, rtypeParameter, accnoParameter, filler16Parameter, filler23Parameter, filer33Parameter, transtypeParameter, filler36Parameter, amountParameter, vdateParameter, mdateParameter, intrateParameter, filler73Parameter, bequivalentParameter, mflagParameter, filler90Parameter, brokernoParameter, transrefParameter, narrativeline1Parameter, rbflagParameter, memenoteParameter, banksortcodeParameter, v03140344Parameter, exchangerateParameter, filler350Parameter, nErateParameter, filler364Parameter, nVBParameter, batchnoParameter);
+        }
+    
+        public virtual ObjectResult<sp_shares_total_Result> sp_shares_total(string caid)
+        {
+            var caidParameter = caid != null ?
+                new ObjectParameter("caid", caid) :
+                new ObjectParameter("caid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_shares_total_Result>("sp_shares_total", caidParameter);
+        }
+    
+        public virtual int sp_statement_of_deposit(string processdate, Nullable<int> financialyear, string startyear, string endyear)
+        {
+            var processdateParameter = processdate != null ?
+                new ObjectParameter("processdate", processdate) :
+                new ObjectParameter("processdate", typeof(string));
+    
+            var financialyearParameter = financialyear.HasValue ?
+                new ObjectParameter("financialyear", financialyear) :
+                new ObjectParameter("financialyear", typeof(int));
+    
+            var startyearParameter = startyear != null ?
+                new ObjectParameter("startyear", startyear) :
+                new ObjectParameter("startyear", typeof(string));
+    
+            var endyearParameter = endyear != null ?
+                new ObjectParameter("endyear", endyear) :
+                new ObjectParameter("endyear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_statement_of_deposit", processdateParameter, financialyearParameter, startyearParameter, endyearParameter);
+        }
+    
+        public virtual int sp_status_list()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_status_list");
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> sp_sumall_loans(string caid)
+        {
+            var caidParameter = caid != null ?
+                new ObjectParameter("caid", caid) :
+                new ObjectParameter("caid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("sp_sumall_loans", caidParameter);
+        }
+    
+        public virtual ObjectResult<sp_sysparam_Result> sp_sysparam()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_sysparam_Result>("sp_sysparam");
+        }
+    
+        public virtual int sp_update_cardno(string accno, string cardno, string status)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            var cardnoParameter = cardno != null ?
+                new ObjectParameter("cardno", cardno) :
+                new ObjectParameter("cardno", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_update_cardno", accnoParameter, cardnoParameter, statusParameter);
+        }
+    
+        public virtual int sp_update_cub(Nullable<decimal> amount, Nullable<decimal> avail, Nullable<decimal> actuabal, string accno, string transdescription, Nullable<System.DateTime> transdate, string vno)
+        {
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("amount", amount) :
+                new ObjectParameter("amount", typeof(decimal));
+    
+            var availParameter = avail.HasValue ?
+                new ObjectParameter("avail", avail) :
+                new ObjectParameter("avail", typeof(decimal));
+    
+            var actuabalParameter = actuabal.HasValue ?
+                new ObjectParameter("actuabal", actuabal) :
+                new ObjectParameter("actuabal", typeof(decimal));
+    
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            var transdescriptionParameter = transdescription != null ?
+                new ObjectParameter("transdescription", transdescription) :
+                new ObjectParameter("transdescription", typeof(string));
+    
+            var transdateParameter = transdate.HasValue ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(System.DateTime));
+    
+            var vnoParameter = vno != null ?
+                new ObjectParameter("vno", vno) :
+                new ObjectParameter("vno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_update_cub", amountParameter, availParameter, actuabalParameter, accnoParameter, transdescriptionParameter, transdateParameter, vnoParameter);
+        }
+    
+        public virtual int sp_update_cub_rebuild(Nullable<decimal> avail, Nullable<decimal> actuabal, string accno)
+        {
+            var availParameter = avail.HasValue ?
+                new ObjectParameter("avail", avail) :
+                new ObjectParameter("avail", typeof(decimal));
+    
+            var actuabalParameter = actuabal.HasValue ?
+                new ObjectParameter("actuabal", actuabal) :
+                new ObjectParameter("actuabal", typeof(decimal));
+    
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_update_cub_rebuild", availParameter, actuabalParameter, accnoParameter);
+        }
+    
+        public virtual int sp_update_mqster(Nullable<long> caid, string surnames, string othernames, string accno, Nullable<System.DateTime> transdate, string auditid, Nullable<System.DateTime> auditdatetime, string sTATUS, string seq, string bname, string box, string town, string mobno, string offtelno, string acctype, string surnames1, string othernames1, string accno1, string box1, string town1, string mobno1, string offtelno1, Nullable<bool> type)
+        {
+            var caidParameter = caid.HasValue ?
+                new ObjectParameter("caid", caid) :
+                new ObjectParameter("caid", typeof(long));
+    
+            var surnamesParameter = surnames != null ?
+                new ObjectParameter("Surnames", surnames) :
+                new ObjectParameter("Surnames", typeof(string));
+    
+            var othernamesParameter = othernames != null ?
+                new ObjectParameter("othernames", othernames) :
+                new ObjectParameter("othernames", typeof(string));
+    
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            var transdateParameter = transdate.HasValue ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(System.DateTime));
+    
+            var auditidParameter = auditid != null ?
+                new ObjectParameter("auditid", auditid) :
+                new ObjectParameter("auditid", typeof(string));
+    
+            var auditdatetimeParameter = auditdatetime.HasValue ?
+                new ObjectParameter("auditdatetime", auditdatetime) :
+                new ObjectParameter("auditdatetime", typeof(System.DateTime));
+    
+            var sTATUSParameter = sTATUS != null ?
+                new ObjectParameter("STATUS", sTATUS) :
+                new ObjectParameter("STATUS", typeof(string));
+    
+            var seqParameter = seq != null ?
+                new ObjectParameter("Seq", seq) :
+                new ObjectParameter("Seq", typeof(string));
+    
+            var bnameParameter = bname != null ?
+                new ObjectParameter("bname", bname) :
+                new ObjectParameter("bname", typeof(string));
+    
+            var boxParameter = box != null ?
+                new ObjectParameter("box", box) :
+                new ObjectParameter("box", typeof(string));
+    
+            var townParameter = town != null ?
+                new ObjectParameter("town", town) :
+                new ObjectParameter("town", typeof(string));
+    
+            var mobnoParameter = mobno != null ?
+                new ObjectParameter("mobno", mobno) :
+                new ObjectParameter("mobno", typeof(string));
+    
+            var offtelnoParameter = offtelno != null ?
+                new ObjectParameter("offtelno", offtelno) :
+                new ObjectParameter("offtelno", typeof(string));
+    
+            var acctypeParameter = acctype != null ?
+                new ObjectParameter("acctype", acctype) :
+                new ObjectParameter("acctype", typeof(string));
+    
+            var surnames1Parameter = surnames1 != null ?
+                new ObjectParameter("Surnames1", surnames1) :
+                new ObjectParameter("Surnames1", typeof(string));
+    
+            var othernames1Parameter = othernames1 != null ?
+                new ObjectParameter("othernames1", othernames1) :
+                new ObjectParameter("othernames1", typeof(string));
+    
+            var accno1Parameter = accno1 != null ?
+                new ObjectParameter("accno1", accno1) :
+                new ObjectParameter("accno1", typeof(string));
+    
+            var box1Parameter = box1 != null ?
+                new ObjectParameter("box1", box1) :
+                new ObjectParameter("box1", typeof(string));
+    
+            var town1Parameter = town1 != null ?
+                new ObjectParameter("town1", town1) :
+                new ObjectParameter("town1", typeof(string));
+    
+            var mobno1Parameter = mobno1 != null ?
+                new ObjectParameter("mobno1", mobno1) :
+                new ObjectParameter("mobno1", typeof(string));
+    
+            var offtelno1Parameter = offtelno1 != null ?
+                new ObjectParameter("offtelno1", offtelno1) :
+                new ObjectParameter("offtelno1", typeof(string));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_update_mqster", caidParameter, surnamesParameter, othernamesParameter, accnoParameter, transdateParameter, auditidParameter, auditdatetimeParameter, sTATUSParameter, seqParameter, bnameParameter, boxParameter, townParameter, mobnoParameter, offtelnoParameter, acctypeParameter, surnames1Parameter, othernames1Parameter, accno1Parameter, box1Parameter, town1Parameter, mobno1Parameter, offtelno1Parameter, typeParameter);
+        }
+    
+        public virtual int sp_update_nonj_master(Nullable<long> caid, string surnames, string othernames, string accno, Nullable<System.DateTime> transdate, string auditid, Nullable<System.DateTime> auditdatetime, string sTATUS, string seq, string bname, string box, string town, string mobno, string offtelno, string acctype)
+        {
+            var caidParameter = caid.HasValue ?
+                new ObjectParameter("caid", caid) :
+                new ObjectParameter("caid", typeof(long));
+    
+            var surnamesParameter = surnames != null ?
+                new ObjectParameter("Surnames", surnames) :
+                new ObjectParameter("Surnames", typeof(string));
+    
+            var othernamesParameter = othernames != null ?
+                new ObjectParameter("othernames", othernames) :
+                new ObjectParameter("othernames", typeof(string));
+    
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            var transdateParameter = transdate.HasValue ?
+                new ObjectParameter("transdate", transdate) :
+                new ObjectParameter("transdate", typeof(System.DateTime));
+    
+            var auditidParameter = auditid != null ?
+                new ObjectParameter("auditid", auditid) :
+                new ObjectParameter("auditid", typeof(string));
+    
+            var auditdatetimeParameter = auditdatetime.HasValue ?
+                new ObjectParameter("auditdatetime", auditdatetime) :
+                new ObjectParameter("auditdatetime", typeof(System.DateTime));
+    
+            var sTATUSParameter = sTATUS != null ?
+                new ObjectParameter("STATUS", sTATUS) :
+                new ObjectParameter("STATUS", typeof(string));
+    
+            var seqParameter = seq != null ?
+                new ObjectParameter("Seq", seq) :
+                new ObjectParameter("Seq", typeof(string));
+    
+            var bnameParameter = bname != null ?
+                new ObjectParameter("bname", bname) :
+                new ObjectParameter("bname", typeof(string));
+    
+            var boxParameter = box != null ?
+                new ObjectParameter("box", box) :
+                new ObjectParameter("box", typeof(string));
+    
+            var townParameter = town != null ?
+                new ObjectParameter("town", town) :
+                new ObjectParameter("town", typeof(string));
+    
+            var mobnoParameter = mobno != null ?
+                new ObjectParameter("mobno", mobno) :
+                new ObjectParameter("mobno", typeof(string));
+    
+            var offtelnoParameter = offtelno != null ?
+                new ObjectParameter("offtelno", offtelno) :
+                new ObjectParameter("offtelno", typeof(string));
+    
+            var acctypeParameter = acctype != null ?
+                new ObjectParameter("acctype", acctype) :
+                new ObjectParameter("acctype", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_update_nonj_master", caidParameter, surnamesParameter, othernamesParameter, accnoParameter, transdateParameter, auditidParameter, auditdatetimeParameter, sTATUSParameter, seqParameter, bnameParameter, boxParameter, townParameter, mobnoParameter, offtelnoParameter, acctypeParameter);
+        }
+    
+        public virtual int sp_Update_Overdeduction(string memberno, Nullable<decimal> expectedamount, string mmonth, string yyear)
+        {
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            var expectedamountParameter = expectedamount.HasValue ?
+                new ObjectParameter("Expectedamount", expectedamount) :
+                new ObjectParameter("Expectedamount", typeof(decimal));
+    
+            var mmonthParameter = mmonth != null ?
+                new ObjectParameter("mmonth", mmonth) :
+                new ObjectParameter("mmonth", typeof(string));
+    
+            var yyearParameter = yyear != null ?
+                new ObjectParameter("yyear", yyear) :
+                new ObjectParameter("yyear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Update_Overdeduction", membernoParameter, expectedamountParameter, mmonthParameter, yyearParameter);
+        }
+    
+        public virtual int sp_Update_Overdeduction_mdeduct(string memberno, Nullable<decimal> amountded)
+        {
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            var amountdedParameter = amountded.HasValue ?
+                new ObjectParameter("amountded", amountded) :
+                new ObjectParameter("amountded", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Update_Overdeduction_mdeduct", membernoParameter, amountdedParameter);
+        }
+    
+        public virtual int sp_update_status(string accno, string status)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_update_status", accnoParameter, statusParameter);
+        }
+    
+        public virtual int sp_update_users(string userloginid, string username)
+        {
+            var userloginidParameter = userloginid != null ?
+                new ObjectParameter("userloginid", userloginid) :
+                new ObjectParameter("userloginid", typeof(string));
+    
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_update_users", userloginidParameter, usernameParameter);
+        }
+    
+        public virtual ObjectResult<sp_users_Result> sp_users()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_users_Result>("sp_users");
+        }
+    
+        public virtual ObjectResult<spAccountStatement_Result> spAccountStatement(string accno, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("Accno", accno) :
+                new ObjectParameter("Accno", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("fromDate", fromDate) :
+                new ObjectParameter("fromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("toDate", toDate) :
+                new ObjectParameter("toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spAccountStatement_Result>("spAccountStatement", accnoParameter, fromDateParameter, toDateParameter);
+        }
+    
+        public virtual ObjectResult<spAccountStatementsummary_Result> spAccountStatementsummary(string accno, Nullable<System.DateTime> fromDate)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("Accno", accno) :
+                new ObjectParameter("Accno", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("fromDate", fromDate) :
+                new ObjectParameter("fromDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spAccountStatementsummary_Result>("spAccountStatementsummary", accnoParameter, fromDateParameter);
+        }
+    
+        public virtual ObjectResult<spPeriodicShares_Result> spPeriodicShares(Nullable<System.DateTime> asAt)
+        {
+            var asAtParameter = asAt.HasValue ?
+                new ObjectParameter("asAt", asAt) :
+                new ObjectParameter("asAt", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spPeriodicShares_Result>("spPeriodicShares", asAtParameter);
+        }
+    
+        public virtual ObjectResult<summarycollection_Report_Result> summarycollection_Report(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<summarycollection_Report_Result>("summarycollection_Report", startDateParameter, endDateParameter);
+        }
+    
+        public virtual int Swift_Cash(Nullable<decimal> transAmt, string transDescription, string donorAccNo, string recipientAccNo, string processingCode, string phoneNo, string refNo, string productID, string clientName, string processingCode2, string processingCode3)
+        {
+            var transAmtParameter = transAmt.HasValue ?
+                new ObjectParameter("TransAmt", transAmt) :
+                new ObjectParameter("TransAmt", typeof(decimal));
+    
+            var transDescriptionParameter = transDescription != null ?
+                new ObjectParameter("TransDescription", transDescription) :
+                new ObjectParameter("TransDescription", typeof(string));
+    
+            var donorAccNoParameter = donorAccNo != null ?
+                new ObjectParameter("DonorAccNo", donorAccNo) :
+                new ObjectParameter("DonorAccNo", typeof(string));
+    
+            var recipientAccNoParameter = recipientAccNo != null ?
+                new ObjectParameter("RecipientAccNo", recipientAccNo) :
+                new ObjectParameter("RecipientAccNo", typeof(string));
+    
+            var processingCodeParameter = processingCode != null ?
+                new ObjectParameter("ProcessingCode", processingCode) :
+                new ObjectParameter("ProcessingCode", typeof(string));
+    
+            var phoneNoParameter = phoneNo != null ?
+                new ObjectParameter("PhoneNo", phoneNo) :
+                new ObjectParameter("PhoneNo", typeof(string));
+    
+            var refNoParameter = refNo != null ?
+                new ObjectParameter("RefNo", refNo) :
+                new ObjectParameter("RefNo", typeof(string));
+    
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            var clientNameParameter = clientName != null ?
+                new ObjectParameter("ClientName", clientName) :
+                new ObjectParameter("ClientName", typeof(string));
+    
+            var processingCode2Parameter = processingCode2 != null ?
+                new ObjectParameter("ProcessingCode2", processingCode2) :
+                new ObjectParameter("ProcessingCode2", typeof(string));
+    
+            var processingCode3Parameter = processingCode3 != null ?
+                new ObjectParameter("ProcessingCode3", processingCode3) :
+                new ObjectParameter("ProcessingCode3", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Swift_Cash", transAmtParameter, transDescriptionParameter, donorAccNoParameter, recipientAccNoParameter, processingCodeParameter, phoneNoParameter, refNoParameter, productIDParameter, clientNameParameter, processingCode2Parameter, processingCode3Parameter);
+        }
+    
+        public virtual int Swift_Cash_Reversal(Nullable<decimal> transAmt, string transDescription, string donorAccNo, string recipientAccNo, string processingCode, string phoneNo, string refNo, string productID, string myTransDate, string processingCode2, string processingCode3)
+        {
+            var transAmtParameter = transAmt.HasValue ?
+                new ObjectParameter("TransAmt", transAmt) :
+                new ObjectParameter("TransAmt", typeof(decimal));
+    
+            var transDescriptionParameter = transDescription != null ?
+                new ObjectParameter("TransDescription", transDescription) :
+                new ObjectParameter("TransDescription", typeof(string));
+    
+            var donorAccNoParameter = donorAccNo != null ?
+                new ObjectParameter("DonorAccNo", donorAccNo) :
+                new ObjectParameter("DonorAccNo", typeof(string));
+    
+            var recipientAccNoParameter = recipientAccNo != null ?
+                new ObjectParameter("RecipientAccNo", recipientAccNo) :
+                new ObjectParameter("RecipientAccNo", typeof(string));
+    
+            var processingCodeParameter = processingCode != null ?
+                new ObjectParameter("ProcessingCode", processingCode) :
+                new ObjectParameter("ProcessingCode", typeof(string));
+    
+            var phoneNoParameter = phoneNo != null ?
+                new ObjectParameter("PhoneNo", phoneNo) :
+                new ObjectParameter("PhoneNo", typeof(string));
+    
+            var refNoParameter = refNo != null ?
+                new ObjectParameter("RefNo", refNo) :
+                new ObjectParameter("RefNo", typeof(string));
+    
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            var myTransDateParameter = myTransDate != null ?
+                new ObjectParameter("myTransDate", myTransDate) :
+                new ObjectParameter("myTransDate", typeof(string));
+    
+            var processingCode2Parameter = processingCode2 != null ?
+                new ObjectParameter("ProcessingCode2", processingCode2) :
+                new ObjectParameter("ProcessingCode2", typeof(string));
+    
+            var processingCode3Parameter = processingCode3 != null ?
+                new ObjectParameter("ProcessingCode3", processingCode3) :
+                new ObjectParameter("ProcessingCode3", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Swift_Cash_Reversal", transAmtParameter, transDescriptionParameter, donorAccNoParameter, recipientAccNoParameter, processingCodeParameter, phoneNoParameter, refNoParameter, productIDParameter, myTransDateParameter, processingCode2Parameter, processingCode3Parameter);
+        }
+    
+        public virtual int SWIFTCash_0200(string field1, string field2, string field3, string field4, string field5, string field6, string field7, string field8, string field9, string field10, string field11, string field12, string field13, string field14, string field15, string field16, string field17, string field18, string field19, string field20, string field21, string field22, string field23, string field24, string field25, string field26, string field27, string field28, string field29, string field30, string field31, string field32, string field33, string field34, string field35, string field36, string field37, string field38, string field39, string field40, string field41, string field42, string field43, string field44, string field45, string field46, string field47, string field48, string field49, string field50, string field51, string field52, string field53, string field54, string field55, string field56, string field57, string field58, string field59, string field60, string field61, string field62, string field63, string field64, string field65, string field66, string field67, string field68, string field69, string field70, string field71, string field72, string field73, string field74, string field75, string field76, string field77, string field78, string field79, string field80, string field81, string field82, string field83, string field84, string field85, string field86, string field87, string field88, string field89, string field90, string field91, string field92, string field93, string field94, string field95, string field96, string field97, string field98, string field99, string field100, string field101, string field102, string field103, string field104, string field105, string field106, string field107, string field108, string field109, string field110, string field111, string field112, string field113, string field114, string field115, string field116, string field117, string field118, string field119, string field120, string field121, string field122, string field123, string field124, string field125, string field126, string field127, string field128, Nullable<decimal> portNumber)
+        {
+            var field1Parameter = field1 != null ?
+                new ObjectParameter("Field1", field1) :
+                new ObjectParameter("Field1", typeof(string));
+    
+            var field2Parameter = field2 != null ?
+                new ObjectParameter("Field2", field2) :
+                new ObjectParameter("Field2", typeof(string));
+    
+            var field3Parameter = field3 != null ?
+                new ObjectParameter("Field3", field3) :
+                new ObjectParameter("Field3", typeof(string));
+    
+            var field4Parameter = field4 != null ?
+                new ObjectParameter("Field4", field4) :
+                new ObjectParameter("Field4", typeof(string));
+    
+            var field5Parameter = field5 != null ?
+                new ObjectParameter("Field5", field5) :
+                new ObjectParameter("Field5", typeof(string));
+    
+            var field6Parameter = field6 != null ?
+                new ObjectParameter("Field6", field6) :
+                new ObjectParameter("Field6", typeof(string));
+    
+            var field7Parameter = field7 != null ?
+                new ObjectParameter("Field7", field7) :
+                new ObjectParameter("Field7", typeof(string));
+    
+            var field8Parameter = field8 != null ?
+                new ObjectParameter("Field8", field8) :
+                new ObjectParameter("Field8", typeof(string));
+    
+            var field9Parameter = field9 != null ?
+                new ObjectParameter("Field9", field9) :
+                new ObjectParameter("Field9", typeof(string));
+    
+            var field10Parameter = field10 != null ?
+                new ObjectParameter("Field10", field10) :
+                new ObjectParameter("Field10", typeof(string));
+    
+            var field11Parameter = field11 != null ?
+                new ObjectParameter("Field11", field11) :
+                new ObjectParameter("Field11", typeof(string));
+    
+            var field12Parameter = field12 != null ?
+                new ObjectParameter("Field12", field12) :
+                new ObjectParameter("Field12", typeof(string));
+    
+            var field13Parameter = field13 != null ?
+                new ObjectParameter("Field13", field13) :
+                new ObjectParameter("Field13", typeof(string));
+    
+            var field14Parameter = field14 != null ?
+                new ObjectParameter("Field14", field14) :
+                new ObjectParameter("Field14", typeof(string));
+    
+            var field15Parameter = field15 != null ?
+                new ObjectParameter("Field15", field15) :
+                new ObjectParameter("Field15", typeof(string));
+    
+            var field16Parameter = field16 != null ?
+                new ObjectParameter("Field16", field16) :
+                new ObjectParameter("Field16", typeof(string));
+    
+            var field17Parameter = field17 != null ?
+                new ObjectParameter("Field17", field17) :
+                new ObjectParameter("Field17", typeof(string));
+    
+            var field18Parameter = field18 != null ?
+                new ObjectParameter("Field18", field18) :
+                new ObjectParameter("Field18", typeof(string));
+    
+            var field19Parameter = field19 != null ?
+                new ObjectParameter("Field19", field19) :
+                new ObjectParameter("Field19", typeof(string));
+    
+            var field20Parameter = field20 != null ?
+                new ObjectParameter("Field20", field20) :
+                new ObjectParameter("Field20", typeof(string));
+    
+            var field21Parameter = field21 != null ?
+                new ObjectParameter("Field21", field21) :
+                new ObjectParameter("Field21", typeof(string));
+    
+            var field22Parameter = field22 != null ?
+                new ObjectParameter("Field22", field22) :
+                new ObjectParameter("Field22", typeof(string));
+    
+            var field23Parameter = field23 != null ?
+                new ObjectParameter("Field23", field23) :
+                new ObjectParameter("Field23", typeof(string));
+    
+            var field24Parameter = field24 != null ?
+                new ObjectParameter("Field24", field24) :
+                new ObjectParameter("Field24", typeof(string));
+    
+            var field25Parameter = field25 != null ?
+                new ObjectParameter("Field25", field25) :
+                new ObjectParameter("Field25", typeof(string));
+    
+            var field26Parameter = field26 != null ?
+                new ObjectParameter("Field26", field26) :
+                new ObjectParameter("Field26", typeof(string));
+    
+            var field27Parameter = field27 != null ?
+                new ObjectParameter("Field27", field27) :
+                new ObjectParameter("Field27", typeof(string));
+    
+            var field28Parameter = field28 != null ?
+                new ObjectParameter("Field28", field28) :
+                new ObjectParameter("Field28", typeof(string));
+    
+            var field29Parameter = field29 != null ?
+                new ObjectParameter("Field29", field29) :
+                new ObjectParameter("Field29", typeof(string));
+    
+            var field30Parameter = field30 != null ?
+                new ObjectParameter("Field30", field30) :
+                new ObjectParameter("Field30", typeof(string));
+    
+            var field31Parameter = field31 != null ?
+                new ObjectParameter("Field31", field31) :
+                new ObjectParameter("Field31", typeof(string));
+    
+            var field32Parameter = field32 != null ?
+                new ObjectParameter("Field32", field32) :
+                new ObjectParameter("Field32", typeof(string));
+    
+            var field33Parameter = field33 != null ?
+                new ObjectParameter("Field33", field33) :
+                new ObjectParameter("Field33", typeof(string));
+    
+            var field34Parameter = field34 != null ?
+                new ObjectParameter("Field34", field34) :
+                new ObjectParameter("Field34", typeof(string));
+    
+            var field35Parameter = field35 != null ?
+                new ObjectParameter("Field35", field35) :
+                new ObjectParameter("Field35", typeof(string));
+    
+            var field36Parameter = field36 != null ?
+                new ObjectParameter("Field36", field36) :
+                new ObjectParameter("Field36", typeof(string));
+    
+            var field37Parameter = field37 != null ?
+                new ObjectParameter("Field37", field37) :
+                new ObjectParameter("Field37", typeof(string));
+    
+            var field38Parameter = field38 != null ?
+                new ObjectParameter("Field38", field38) :
+                new ObjectParameter("Field38", typeof(string));
+    
+            var field39Parameter = field39 != null ?
+                new ObjectParameter("Field39", field39) :
+                new ObjectParameter("Field39", typeof(string));
+    
+            var field40Parameter = field40 != null ?
+                new ObjectParameter("Field40", field40) :
+                new ObjectParameter("Field40", typeof(string));
+    
+            var field41Parameter = field41 != null ?
+                new ObjectParameter("Field41", field41) :
+                new ObjectParameter("Field41", typeof(string));
+    
+            var field42Parameter = field42 != null ?
+                new ObjectParameter("Field42", field42) :
+                new ObjectParameter("Field42", typeof(string));
+    
+            var field43Parameter = field43 != null ?
+                new ObjectParameter("Field43", field43) :
+                new ObjectParameter("Field43", typeof(string));
+    
+            var field44Parameter = field44 != null ?
+                new ObjectParameter("Field44", field44) :
+                new ObjectParameter("Field44", typeof(string));
+    
+            var field45Parameter = field45 != null ?
+                new ObjectParameter("Field45", field45) :
+                new ObjectParameter("Field45", typeof(string));
+    
+            var field46Parameter = field46 != null ?
+                new ObjectParameter("Field46", field46) :
+                new ObjectParameter("Field46", typeof(string));
+    
+            var field47Parameter = field47 != null ?
+                new ObjectParameter("Field47", field47) :
+                new ObjectParameter("Field47", typeof(string));
+    
+            var field48Parameter = field48 != null ?
+                new ObjectParameter("Field48", field48) :
+                new ObjectParameter("Field48", typeof(string));
+    
+            var field49Parameter = field49 != null ?
+                new ObjectParameter("Field49", field49) :
+                new ObjectParameter("Field49", typeof(string));
+    
+            var field50Parameter = field50 != null ?
+                new ObjectParameter("Field50", field50) :
+                new ObjectParameter("Field50", typeof(string));
+    
+            var field51Parameter = field51 != null ?
+                new ObjectParameter("Field51", field51) :
+                new ObjectParameter("Field51", typeof(string));
+    
+            var field52Parameter = field52 != null ?
+                new ObjectParameter("Field52", field52) :
+                new ObjectParameter("Field52", typeof(string));
+    
+            var field53Parameter = field53 != null ?
+                new ObjectParameter("Field53", field53) :
+                new ObjectParameter("Field53", typeof(string));
+    
+            var field54Parameter = field54 != null ?
+                new ObjectParameter("Field54", field54) :
+                new ObjectParameter("Field54", typeof(string));
+    
+            var field55Parameter = field55 != null ?
+                new ObjectParameter("Field55", field55) :
+                new ObjectParameter("Field55", typeof(string));
+    
+            var field56Parameter = field56 != null ?
+                new ObjectParameter("Field56", field56) :
+                new ObjectParameter("Field56", typeof(string));
+    
+            var field57Parameter = field57 != null ?
+                new ObjectParameter("Field57", field57) :
+                new ObjectParameter("Field57", typeof(string));
+    
+            var field58Parameter = field58 != null ?
+                new ObjectParameter("Field58", field58) :
+                new ObjectParameter("Field58", typeof(string));
+    
+            var field59Parameter = field59 != null ?
+                new ObjectParameter("Field59", field59) :
+                new ObjectParameter("Field59", typeof(string));
+    
+            var field60Parameter = field60 != null ?
+                new ObjectParameter("Field60", field60) :
+                new ObjectParameter("Field60", typeof(string));
+    
+            var field61Parameter = field61 != null ?
+                new ObjectParameter("Field61", field61) :
+                new ObjectParameter("Field61", typeof(string));
+    
+            var field62Parameter = field62 != null ?
+                new ObjectParameter("Field62", field62) :
+                new ObjectParameter("Field62", typeof(string));
+    
+            var field63Parameter = field63 != null ?
+                new ObjectParameter("Field63", field63) :
+                new ObjectParameter("Field63", typeof(string));
+    
+            var field64Parameter = field64 != null ?
+                new ObjectParameter("Field64", field64) :
+                new ObjectParameter("Field64", typeof(string));
+    
+            var field65Parameter = field65 != null ?
+                new ObjectParameter("Field65", field65) :
+                new ObjectParameter("Field65", typeof(string));
+    
+            var field66Parameter = field66 != null ?
+                new ObjectParameter("Field66", field66) :
+                new ObjectParameter("Field66", typeof(string));
+    
+            var field67Parameter = field67 != null ?
+                new ObjectParameter("Field67", field67) :
+                new ObjectParameter("Field67", typeof(string));
+    
+            var field68Parameter = field68 != null ?
+                new ObjectParameter("Field68", field68) :
+                new ObjectParameter("Field68", typeof(string));
+    
+            var field69Parameter = field69 != null ?
+                new ObjectParameter("Field69", field69) :
+                new ObjectParameter("Field69", typeof(string));
+    
+            var field70Parameter = field70 != null ?
+                new ObjectParameter("Field70", field70) :
+                new ObjectParameter("Field70", typeof(string));
+    
+            var field71Parameter = field71 != null ?
+                new ObjectParameter("Field71", field71) :
+                new ObjectParameter("Field71", typeof(string));
+    
+            var field72Parameter = field72 != null ?
+                new ObjectParameter("Field72", field72) :
+                new ObjectParameter("Field72", typeof(string));
+    
+            var field73Parameter = field73 != null ?
+                new ObjectParameter("Field73", field73) :
+                new ObjectParameter("Field73", typeof(string));
+    
+            var field74Parameter = field74 != null ?
+                new ObjectParameter("Field74", field74) :
+                new ObjectParameter("Field74", typeof(string));
+    
+            var field75Parameter = field75 != null ?
+                new ObjectParameter("Field75", field75) :
+                new ObjectParameter("Field75", typeof(string));
+    
+            var field76Parameter = field76 != null ?
+                new ObjectParameter("Field76", field76) :
+                new ObjectParameter("Field76", typeof(string));
+    
+            var field77Parameter = field77 != null ?
+                new ObjectParameter("Field77", field77) :
+                new ObjectParameter("Field77", typeof(string));
+    
+            var field78Parameter = field78 != null ?
+                new ObjectParameter("Field78", field78) :
+                new ObjectParameter("Field78", typeof(string));
+    
+            var field79Parameter = field79 != null ?
+                new ObjectParameter("Field79", field79) :
+                new ObjectParameter("Field79", typeof(string));
+    
+            var field80Parameter = field80 != null ?
+                new ObjectParameter("Field80", field80) :
+                new ObjectParameter("Field80", typeof(string));
+    
+            var field81Parameter = field81 != null ?
+                new ObjectParameter("Field81", field81) :
+                new ObjectParameter("Field81", typeof(string));
+    
+            var field82Parameter = field82 != null ?
+                new ObjectParameter("Field82", field82) :
+                new ObjectParameter("Field82", typeof(string));
+    
+            var field83Parameter = field83 != null ?
+                new ObjectParameter("Field83", field83) :
+                new ObjectParameter("Field83", typeof(string));
+    
+            var field84Parameter = field84 != null ?
+                new ObjectParameter("Field84", field84) :
+                new ObjectParameter("Field84", typeof(string));
+    
+            var field85Parameter = field85 != null ?
+                new ObjectParameter("Field85", field85) :
+                new ObjectParameter("Field85", typeof(string));
+    
+            var field86Parameter = field86 != null ?
+                new ObjectParameter("Field86", field86) :
+                new ObjectParameter("Field86", typeof(string));
+    
+            var field87Parameter = field87 != null ?
+                new ObjectParameter("Field87", field87) :
+                new ObjectParameter("Field87", typeof(string));
+    
+            var field88Parameter = field88 != null ?
+                new ObjectParameter("Field88", field88) :
+                new ObjectParameter("Field88", typeof(string));
+    
+            var field89Parameter = field89 != null ?
+                new ObjectParameter("Field89", field89) :
+                new ObjectParameter("Field89", typeof(string));
+    
+            var field90Parameter = field90 != null ?
+                new ObjectParameter("Field90", field90) :
+                new ObjectParameter("Field90", typeof(string));
+    
+            var field91Parameter = field91 != null ?
+                new ObjectParameter("Field91", field91) :
+                new ObjectParameter("Field91", typeof(string));
+    
+            var field92Parameter = field92 != null ?
+                new ObjectParameter("Field92", field92) :
+                new ObjectParameter("Field92", typeof(string));
+    
+            var field93Parameter = field93 != null ?
+                new ObjectParameter("Field93", field93) :
+                new ObjectParameter("Field93", typeof(string));
+    
+            var field94Parameter = field94 != null ?
+                new ObjectParameter("Field94", field94) :
+                new ObjectParameter("Field94", typeof(string));
+    
+            var field95Parameter = field95 != null ?
+                new ObjectParameter("Field95", field95) :
+                new ObjectParameter("Field95", typeof(string));
+    
+            var field96Parameter = field96 != null ?
+                new ObjectParameter("Field96", field96) :
+                new ObjectParameter("Field96", typeof(string));
+    
+            var field97Parameter = field97 != null ?
+                new ObjectParameter("Field97", field97) :
+                new ObjectParameter("Field97", typeof(string));
+    
+            var field98Parameter = field98 != null ?
+                new ObjectParameter("Field98", field98) :
+                new ObjectParameter("Field98", typeof(string));
+    
+            var field99Parameter = field99 != null ?
+                new ObjectParameter("Field99", field99) :
+                new ObjectParameter("Field99", typeof(string));
+    
+            var field100Parameter = field100 != null ?
+                new ObjectParameter("Field100", field100) :
+                new ObjectParameter("Field100", typeof(string));
+    
+            var field101Parameter = field101 != null ?
+                new ObjectParameter("Field101", field101) :
+                new ObjectParameter("Field101", typeof(string));
+    
+            var field102Parameter = field102 != null ?
+                new ObjectParameter("Field102", field102) :
+                new ObjectParameter("Field102", typeof(string));
+    
+            var field103Parameter = field103 != null ?
+                new ObjectParameter("Field103", field103) :
+                new ObjectParameter("Field103", typeof(string));
+    
+            var field104Parameter = field104 != null ?
+                new ObjectParameter("Field104", field104) :
+                new ObjectParameter("Field104", typeof(string));
+    
+            var field105Parameter = field105 != null ?
+                new ObjectParameter("Field105", field105) :
+                new ObjectParameter("Field105", typeof(string));
+    
+            var field106Parameter = field106 != null ?
+                new ObjectParameter("Field106", field106) :
+                new ObjectParameter("Field106", typeof(string));
+    
+            var field107Parameter = field107 != null ?
+                new ObjectParameter("Field107", field107) :
+                new ObjectParameter("Field107", typeof(string));
+    
+            var field108Parameter = field108 != null ?
+                new ObjectParameter("Field108", field108) :
+                new ObjectParameter("Field108", typeof(string));
+    
+            var field109Parameter = field109 != null ?
+                new ObjectParameter("Field109", field109) :
+                new ObjectParameter("Field109", typeof(string));
+    
+            var field110Parameter = field110 != null ?
+                new ObjectParameter("Field110", field110) :
+                new ObjectParameter("Field110", typeof(string));
+    
+            var field111Parameter = field111 != null ?
+                new ObjectParameter("Field111", field111) :
+                new ObjectParameter("Field111", typeof(string));
+    
+            var field112Parameter = field112 != null ?
+                new ObjectParameter("Field112", field112) :
+                new ObjectParameter("Field112", typeof(string));
+    
+            var field113Parameter = field113 != null ?
+                new ObjectParameter("Field113", field113) :
+                new ObjectParameter("Field113", typeof(string));
+    
+            var field114Parameter = field114 != null ?
+                new ObjectParameter("Field114", field114) :
+                new ObjectParameter("Field114", typeof(string));
+    
+            var field115Parameter = field115 != null ?
+                new ObjectParameter("Field115", field115) :
+                new ObjectParameter("Field115", typeof(string));
+    
+            var field116Parameter = field116 != null ?
+                new ObjectParameter("Field116", field116) :
+                new ObjectParameter("Field116", typeof(string));
+    
+            var field117Parameter = field117 != null ?
+                new ObjectParameter("Field117", field117) :
+                new ObjectParameter("Field117", typeof(string));
+    
+            var field118Parameter = field118 != null ?
+                new ObjectParameter("Field118", field118) :
+                new ObjectParameter("Field118", typeof(string));
+    
+            var field119Parameter = field119 != null ?
+                new ObjectParameter("Field119", field119) :
+                new ObjectParameter("Field119", typeof(string));
+    
+            var field120Parameter = field120 != null ?
+                new ObjectParameter("Field120", field120) :
+                new ObjectParameter("Field120", typeof(string));
+    
+            var field121Parameter = field121 != null ?
+                new ObjectParameter("Field121", field121) :
+                new ObjectParameter("Field121", typeof(string));
+    
+            var field122Parameter = field122 != null ?
+                new ObjectParameter("Field122", field122) :
+                new ObjectParameter("Field122", typeof(string));
+    
+            var field123Parameter = field123 != null ?
+                new ObjectParameter("Field123", field123) :
+                new ObjectParameter("Field123", typeof(string));
+    
+            var field124Parameter = field124 != null ?
+                new ObjectParameter("Field124", field124) :
+                new ObjectParameter("Field124", typeof(string));
+    
+            var field125Parameter = field125 != null ?
+                new ObjectParameter("Field125", field125) :
+                new ObjectParameter("Field125", typeof(string));
+    
+            var field126Parameter = field126 != null ?
+                new ObjectParameter("Field126", field126) :
+                new ObjectParameter("Field126", typeof(string));
+    
+            var field127Parameter = field127 != null ?
+                new ObjectParameter("Field127", field127) :
+                new ObjectParameter("Field127", typeof(string));
+    
+            var field128Parameter = field128 != null ?
+                new ObjectParameter("Field128", field128) :
+                new ObjectParameter("Field128", typeof(string));
+    
+            var portNumberParameter = portNumber.HasValue ?
+                new ObjectParameter("PortNumber", portNumber) :
+                new ObjectParameter("PortNumber", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SWIFTCash_0200", field1Parameter, field2Parameter, field3Parameter, field4Parameter, field5Parameter, field6Parameter, field7Parameter, field8Parameter, field9Parameter, field10Parameter, field11Parameter, field12Parameter, field13Parameter, field14Parameter, field15Parameter, field16Parameter, field17Parameter, field18Parameter, field19Parameter, field20Parameter, field21Parameter, field22Parameter, field23Parameter, field24Parameter, field25Parameter, field26Parameter, field27Parameter, field28Parameter, field29Parameter, field30Parameter, field31Parameter, field32Parameter, field33Parameter, field34Parameter, field35Parameter, field36Parameter, field37Parameter, field38Parameter, field39Parameter, field40Parameter, field41Parameter, field42Parameter, field43Parameter, field44Parameter, field45Parameter, field46Parameter, field47Parameter, field48Parameter, field49Parameter, field50Parameter, field51Parameter, field52Parameter, field53Parameter, field54Parameter, field55Parameter, field56Parameter, field57Parameter, field58Parameter, field59Parameter, field60Parameter, field61Parameter, field62Parameter, field63Parameter, field64Parameter, field65Parameter, field66Parameter, field67Parameter, field68Parameter, field69Parameter, field70Parameter, field71Parameter, field72Parameter, field73Parameter, field74Parameter, field75Parameter, field76Parameter, field77Parameter, field78Parameter, field79Parameter, field80Parameter, field81Parameter, field82Parameter, field83Parameter, field84Parameter, field85Parameter, field86Parameter, field87Parameter, field88Parameter, field89Parameter, field90Parameter, field91Parameter, field92Parameter, field93Parameter, field94Parameter, field95Parameter, field96Parameter, field97Parameter, field98Parameter, field99Parameter, field100Parameter, field101Parameter, field102Parameter, field103Parameter, field104Parameter, field105Parameter, field106Parameter, field107Parameter, field108Parameter, field109Parameter, field110Parameter, field111Parameter, field112Parameter, field113Parameter, field114Parameter, field115Parameter, field116Parameter, field117Parameter, field118Parameter, field119Parameter, field120Parameter, field121Parameter, field122Parameter, field123Parameter, field124Parameter, field125Parameter, field126Parameter, field127Parameter, field128Parameter, portNumberParameter);
+        }
+    
+        public virtual int SWIFTCash_0400(string field1, string field2, string field3, string field4, string field5, string field6, string field7, string field8, string field9, string field10, string field11, string field12, string field13, string field14, string field15, string field16, string field17, string field18, string field19, string field20, string field21, string field22, string field23, string field24, string field25, string field26, string field27, string field28, string field29, string field30, string field31, string field32, string field33, string field34, string field35, string field36, string field37, string field38, string field39, string field40, string field41, string field42, string field43, string field44, string field45, string field46, string field47, string field48, string field49, string field50, string field51, string field52, string field53, string field54, string field55, string field56, string field57, string field58, string field59, string field60, string field61, string field62, string field63, string field64, string field65, string field66, string field67, string field68, string field69, string field70, string field71, string field72, string field73, string field74, string field75, string field76, string field77, string field78, string field79, string field80, string field81, string field82, string field83, string field84, string field85, string field86, string field87, string field88, string field89, string field90, string field91, string field92, string field93, string field94, string field95, string field96, string field97, string field98, string field99, string field100, string field101, string field102, string field103, string field104, string field105, string field106, string field107, string field108, string field109, string field110, string field111, string field112, string field113, string field114, string field115, string field116, string field117, string field118, string field119, string field120, string field121, string field122, string field123, string field124, string field125, string field126, string field127, string field128, Nullable<decimal> portNumber)
+        {
+            var field1Parameter = field1 != null ?
+                new ObjectParameter("Field1", field1) :
+                new ObjectParameter("Field1", typeof(string));
+    
+            var field2Parameter = field2 != null ?
+                new ObjectParameter("Field2", field2) :
+                new ObjectParameter("Field2", typeof(string));
+    
+            var field3Parameter = field3 != null ?
+                new ObjectParameter("Field3", field3) :
+                new ObjectParameter("Field3", typeof(string));
+    
+            var field4Parameter = field4 != null ?
+                new ObjectParameter("Field4", field4) :
+                new ObjectParameter("Field4", typeof(string));
+    
+            var field5Parameter = field5 != null ?
+                new ObjectParameter("Field5", field5) :
+                new ObjectParameter("Field5", typeof(string));
+    
+            var field6Parameter = field6 != null ?
+                new ObjectParameter("Field6", field6) :
+                new ObjectParameter("Field6", typeof(string));
+    
+            var field7Parameter = field7 != null ?
+                new ObjectParameter("Field7", field7) :
+                new ObjectParameter("Field7", typeof(string));
+    
+            var field8Parameter = field8 != null ?
+                new ObjectParameter("Field8", field8) :
+                new ObjectParameter("Field8", typeof(string));
+    
+            var field9Parameter = field9 != null ?
+                new ObjectParameter("Field9", field9) :
+                new ObjectParameter("Field9", typeof(string));
+    
+            var field10Parameter = field10 != null ?
+                new ObjectParameter("Field10", field10) :
+                new ObjectParameter("Field10", typeof(string));
+    
+            var field11Parameter = field11 != null ?
+                new ObjectParameter("Field11", field11) :
+                new ObjectParameter("Field11", typeof(string));
+    
+            var field12Parameter = field12 != null ?
+                new ObjectParameter("Field12", field12) :
+                new ObjectParameter("Field12", typeof(string));
+    
+            var field13Parameter = field13 != null ?
+                new ObjectParameter("Field13", field13) :
+                new ObjectParameter("Field13", typeof(string));
+    
+            var field14Parameter = field14 != null ?
+                new ObjectParameter("Field14", field14) :
+                new ObjectParameter("Field14", typeof(string));
+    
+            var field15Parameter = field15 != null ?
+                new ObjectParameter("Field15", field15) :
+                new ObjectParameter("Field15", typeof(string));
+    
+            var field16Parameter = field16 != null ?
+                new ObjectParameter("Field16", field16) :
+                new ObjectParameter("Field16", typeof(string));
+    
+            var field17Parameter = field17 != null ?
+                new ObjectParameter("Field17", field17) :
+                new ObjectParameter("Field17", typeof(string));
+    
+            var field18Parameter = field18 != null ?
+                new ObjectParameter("Field18", field18) :
+                new ObjectParameter("Field18", typeof(string));
+    
+            var field19Parameter = field19 != null ?
+                new ObjectParameter("Field19", field19) :
+                new ObjectParameter("Field19", typeof(string));
+    
+            var field20Parameter = field20 != null ?
+                new ObjectParameter("Field20", field20) :
+                new ObjectParameter("Field20", typeof(string));
+    
+            var field21Parameter = field21 != null ?
+                new ObjectParameter("Field21", field21) :
+                new ObjectParameter("Field21", typeof(string));
+    
+            var field22Parameter = field22 != null ?
+                new ObjectParameter("Field22", field22) :
+                new ObjectParameter("Field22", typeof(string));
+    
+            var field23Parameter = field23 != null ?
+                new ObjectParameter("Field23", field23) :
+                new ObjectParameter("Field23", typeof(string));
+    
+            var field24Parameter = field24 != null ?
+                new ObjectParameter("Field24", field24) :
+                new ObjectParameter("Field24", typeof(string));
+    
+            var field25Parameter = field25 != null ?
+                new ObjectParameter("Field25", field25) :
+                new ObjectParameter("Field25", typeof(string));
+    
+            var field26Parameter = field26 != null ?
+                new ObjectParameter("Field26", field26) :
+                new ObjectParameter("Field26", typeof(string));
+    
+            var field27Parameter = field27 != null ?
+                new ObjectParameter("Field27", field27) :
+                new ObjectParameter("Field27", typeof(string));
+    
+            var field28Parameter = field28 != null ?
+                new ObjectParameter("Field28", field28) :
+                new ObjectParameter("Field28", typeof(string));
+    
+            var field29Parameter = field29 != null ?
+                new ObjectParameter("Field29", field29) :
+                new ObjectParameter("Field29", typeof(string));
+    
+            var field30Parameter = field30 != null ?
+                new ObjectParameter("Field30", field30) :
+                new ObjectParameter("Field30", typeof(string));
+    
+            var field31Parameter = field31 != null ?
+                new ObjectParameter("Field31", field31) :
+                new ObjectParameter("Field31", typeof(string));
+    
+            var field32Parameter = field32 != null ?
+                new ObjectParameter("Field32", field32) :
+                new ObjectParameter("Field32", typeof(string));
+    
+            var field33Parameter = field33 != null ?
+                new ObjectParameter("Field33", field33) :
+                new ObjectParameter("Field33", typeof(string));
+    
+            var field34Parameter = field34 != null ?
+                new ObjectParameter("Field34", field34) :
+                new ObjectParameter("Field34", typeof(string));
+    
+            var field35Parameter = field35 != null ?
+                new ObjectParameter("Field35", field35) :
+                new ObjectParameter("Field35", typeof(string));
+    
+            var field36Parameter = field36 != null ?
+                new ObjectParameter("Field36", field36) :
+                new ObjectParameter("Field36", typeof(string));
+    
+            var field37Parameter = field37 != null ?
+                new ObjectParameter("Field37", field37) :
+                new ObjectParameter("Field37", typeof(string));
+    
+            var field38Parameter = field38 != null ?
+                new ObjectParameter("Field38", field38) :
+                new ObjectParameter("Field38", typeof(string));
+    
+            var field39Parameter = field39 != null ?
+                new ObjectParameter("Field39", field39) :
+                new ObjectParameter("Field39", typeof(string));
+    
+            var field40Parameter = field40 != null ?
+                new ObjectParameter("Field40", field40) :
+                new ObjectParameter("Field40", typeof(string));
+    
+            var field41Parameter = field41 != null ?
+                new ObjectParameter("Field41", field41) :
+                new ObjectParameter("Field41", typeof(string));
+    
+            var field42Parameter = field42 != null ?
+                new ObjectParameter("Field42", field42) :
+                new ObjectParameter("Field42", typeof(string));
+    
+            var field43Parameter = field43 != null ?
+                new ObjectParameter("Field43", field43) :
+                new ObjectParameter("Field43", typeof(string));
+    
+            var field44Parameter = field44 != null ?
+                new ObjectParameter("Field44", field44) :
+                new ObjectParameter("Field44", typeof(string));
+    
+            var field45Parameter = field45 != null ?
+                new ObjectParameter("Field45", field45) :
+                new ObjectParameter("Field45", typeof(string));
+    
+            var field46Parameter = field46 != null ?
+                new ObjectParameter("Field46", field46) :
+                new ObjectParameter("Field46", typeof(string));
+    
+            var field47Parameter = field47 != null ?
+                new ObjectParameter("Field47", field47) :
+                new ObjectParameter("Field47", typeof(string));
+    
+            var field48Parameter = field48 != null ?
+                new ObjectParameter("Field48", field48) :
+                new ObjectParameter("Field48", typeof(string));
+    
+            var field49Parameter = field49 != null ?
+                new ObjectParameter("Field49", field49) :
+                new ObjectParameter("Field49", typeof(string));
+    
+            var field50Parameter = field50 != null ?
+                new ObjectParameter("Field50", field50) :
+                new ObjectParameter("Field50", typeof(string));
+    
+            var field51Parameter = field51 != null ?
+                new ObjectParameter("Field51", field51) :
+                new ObjectParameter("Field51", typeof(string));
+    
+            var field52Parameter = field52 != null ?
+                new ObjectParameter("Field52", field52) :
+                new ObjectParameter("Field52", typeof(string));
+    
+            var field53Parameter = field53 != null ?
+                new ObjectParameter("Field53", field53) :
+                new ObjectParameter("Field53", typeof(string));
+    
+            var field54Parameter = field54 != null ?
+                new ObjectParameter("Field54", field54) :
+                new ObjectParameter("Field54", typeof(string));
+    
+            var field55Parameter = field55 != null ?
+                new ObjectParameter("Field55", field55) :
+                new ObjectParameter("Field55", typeof(string));
+    
+            var field56Parameter = field56 != null ?
+                new ObjectParameter("Field56", field56) :
+                new ObjectParameter("Field56", typeof(string));
+    
+            var field57Parameter = field57 != null ?
+                new ObjectParameter("Field57", field57) :
+                new ObjectParameter("Field57", typeof(string));
+    
+            var field58Parameter = field58 != null ?
+                new ObjectParameter("Field58", field58) :
+                new ObjectParameter("Field58", typeof(string));
+    
+            var field59Parameter = field59 != null ?
+                new ObjectParameter("Field59", field59) :
+                new ObjectParameter("Field59", typeof(string));
+    
+            var field60Parameter = field60 != null ?
+                new ObjectParameter("Field60", field60) :
+                new ObjectParameter("Field60", typeof(string));
+    
+            var field61Parameter = field61 != null ?
+                new ObjectParameter("Field61", field61) :
+                new ObjectParameter("Field61", typeof(string));
+    
+            var field62Parameter = field62 != null ?
+                new ObjectParameter("Field62", field62) :
+                new ObjectParameter("Field62", typeof(string));
+    
+            var field63Parameter = field63 != null ?
+                new ObjectParameter("Field63", field63) :
+                new ObjectParameter("Field63", typeof(string));
+    
+            var field64Parameter = field64 != null ?
+                new ObjectParameter("Field64", field64) :
+                new ObjectParameter("Field64", typeof(string));
+    
+            var field65Parameter = field65 != null ?
+                new ObjectParameter("Field65", field65) :
+                new ObjectParameter("Field65", typeof(string));
+    
+            var field66Parameter = field66 != null ?
+                new ObjectParameter("Field66", field66) :
+                new ObjectParameter("Field66", typeof(string));
+    
+            var field67Parameter = field67 != null ?
+                new ObjectParameter("Field67", field67) :
+                new ObjectParameter("Field67", typeof(string));
+    
+            var field68Parameter = field68 != null ?
+                new ObjectParameter("Field68", field68) :
+                new ObjectParameter("Field68", typeof(string));
+    
+            var field69Parameter = field69 != null ?
+                new ObjectParameter("Field69", field69) :
+                new ObjectParameter("Field69", typeof(string));
+    
+            var field70Parameter = field70 != null ?
+                new ObjectParameter("Field70", field70) :
+                new ObjectParameter("Field70", typeof(string));
+    
+            var field71Parameter = field71 != null ?
+                new ObjectParameter("Field71", field71) :
+                new ObjectParameter("Field71", typeof(string));
+    
+            var field72Parameter = field72 != null ?
+                new ObjectParameter("Field72", field72) :
+                new ObjectParameter("Field72", typeof(string));
+    
+            var field73Parameter = field73 != null ?
+                new ObjectParameter("Field73", field73) :
+                new ObjectParameter("Field73", typeof(string));
+    
+            var field74Parameter = field74 != null ?
+                new ObjectParameter("Field74", field74) :
+                new ObjectParameter("Field74", typeof(string));
+    
+            var field75Parameter = field75 != null ?
+                new ObjectParameter("Field75", field75) :
+                new ObjectParameter("Field75", typeof(string));
+    
+            var field76Parameter = field76 != null ?
+                new ObjectParameter("Field76", field76) :
+                new ObjectParameter("Field76", typeof(string));
+    
+            var field77Parameter = field77 != null ?
+                new ObjectParameter("Field77", field77) :
+                new ObjectParameter("Field77", typeof(string));
+    
+            var field78Parameter = field78 != null ?
+                new ObjectParameter("Field78", field78) :
+                new ObjectParameter("Field78", typeof(string));
+    
+            var field79Parameter = field79 != null ?
+                new ObjectParameter("Field79", field79) :
+                new ObjectParameter("Field79", typeof(string));
+    
+            var field80Parameter = field80 != null ?
+                new ObjectParameter("Field80", field80) :
+                new ObjectParameter("Field80", typeof(string));
+    
+            var field81Parameter = field81 != null ?
+                new ObjectParameter("Field81", field81) :
+                new ObjectParameter("Field81", typeof(string));
+    
+            var field82Parameter = field82 != null ?
+                new ObjectParameter("Field82", field82) :
+                new ObjectParameter("Field82", typeof(string));
+    
+            var field83Parameter = field83 != null ?
+                new ObjectParameter("Field83", field83) :
+                new ObjectParameter("Field83", typeof(string));
+    
+            var field84Parameter = field84 != null ?
+                new ObjectParameter("Field84", field84) :
+                new ObjectParameter("Field84", typeof(string));
+    
+            var field85Parameter = field85 != null ?
+                new ObjectParameter("Field85", field85) :
+                new ObjectParameter("Field85", typeof(string));
+    
+            var field86Parameter = field86 != null ?
+                new ObjectParameter("Field86", field86) :
+                new ObjectParameter("Field86", typeof(string));
+    
+            var field87Parameter = field87 != null ?
+                new ObjectParameter("Field87", field87) :
+                new ObjectParameter("Field87", typeof(string));
+    
+            var field88Parameter = field88 != null ?
+                new ObjectParameter("Field88", field88) :
+                new ObjectParameter("Field88", typeof(string));
+    
+            var field89Parameter = field89 != null ?
+                new ObjectParameter("Field89", field89) :
+                new ObjectParameter("Field89", typeof(string));
+    
+            var field90Parameter = field90 != null ?
+                new ObjectParameter("Field90", field90) :
+                new ObjectParameter("Field90", typeof(string));
+    
+            var field91Parameter = field91 != null ?
+                new ObjectParameter("Field91", field91) :
+                new ObjectParameter("Field91", typeof(string));
+    
+            var field92Parameter = field92 != null ?
+                new ObjectParameter("Field92", field92) :
+                new ObjectParameter("Field92", typeof(string));
+    
+            var field93Parameter = field93 != null ?
+                new ObjectParameter("Field93", field93) :
+                new ObjectParameter("Field93", typeof(string));
+    
+            var field94Parameter = field94 != null ?
+                new ObjectParameter("Field94", field94) :
+                new ObjectParameter("Field94", typeof(string));
+    
+            var field95Parameter = field95 != null ?
+                new ObjectParameter("Field95", field95) :
+                new ObjectParameter("Field95", typeof(string));
+    
+            var field96Parameter = field96 != null ?
+                new ObjectParameter("Field96", field96) :
+                new ObjectParameter("Field96", typeof(string));
+    
+            var field97Parameter = field97 != null ?
+                new ObjectParameter("Field97", field97) :
+                new ObjectParameter("Field97", typeof(string));
+    
+            var field98Parameter = field98 != null ?
+                new ObjectParameter("Field98", field98) :
+                new ObjectParameter("Field98", typeof(string));
+    
+            var field99Parameter = field99 != null ?
+                new ObjectParameter("Field99", field99) :
+                new ObjectParameter("Field99", typeof(string));
+    
+            var field100Parameter = field100 != null ?
+                new ObjectParameter("Field100", field100) :
+                new ObjectParameter("Field100", typeof(string));
+    
+            var field101Parameter = field101 != null ?
+                new ObjectParameter("Field101", field101) :
+                new ObjectParameter("Field101", typeof(string));
+    
+            var field102Parameter = field102 != null ?
+                new ObjectParameter("Field102", field102) :
+                new ObjectParameter("Field102", typeof(string));
+    
+            var field103Parameter = field103 != null ?
+                new ObjectParameter("Field103", field103) :
+                new ObjectParameter("Field103", typeof(string));
+    
+            var field104Parameter = field104 != null ?
+                new ObjectParameter("Field104", field104) :
+                new ObjectParameter("Field104", typeof(string));
+    
+            var field105Parameter = field105 != null ?
+                new ObjectParameter("Field105", field105) :
+                new ObjectParameter("Field105", typeof(string));
+    
+            var field106Parameter = field106 != null ?
+                new ObjectParameter("Field106", field106) :
+                new ObjectParameter("Field106", typeof(string));
+    
+            var field107Parameter = field107 != null ?
+                new ObjectParameter("Field107", field107) :
+                new ObjectParameter("Field107", typeof(string));
+    
+            var field108Parameter = field108 != null ?
+                new ObjectParameter("Field108", field108) :
+                new ObjectParameter("Field108", typeof(string));
+    
+            var field109Parameter = field109 != null ?
+                new ObjectParameter("Field109", field109) :
+                new ObjectParameter("Field109", typeof(string));
+    
+            var field110Parameter = field110 != null ?
+                new ObjectParameter("Field110", field110) :
+                new ObjectParameter("Field110", typeof(string));
+    
+            var field111Parameter = field111 != null ?
+                new ObjectParameter("Field111", field111) :
+                new ObjectParameter("Field111", typeof(string));
+    
+            var field112Parameter = field112 != null ?
+                new ObjectParameter("Field112", field112) :
+                new ObjectParameter("Field112", typeof(string));
+    
+            var field113Parameter = field113 != null ?
+                new ObjectParameter("Field113", field113) :
+                new ObjectParameter("Field113", typeof(string));
+    
+            var field114Parameter = field114 != null ?
+                new ObjectParameter("Field114", field114) :
+                new ObjectParameter("Field114", typeof(string));
+    
+            var field115Parameter = field115 != null ?
+                new ObjectParameter("Field115", field115) :
+                new ObjectParameter("Field115", typeof(string));
+    
+            var field116Parameter = field116 != null ?
+                new ObjectParameter("Field116", field116) :
+                new ObjectParameter("Field116", typeof(string));
+    
+            var field117Parameter = field117 != null ?
+                new ObjectParameter("Field117", field117) :
+                new ObjectParameter("Field117", typeof(string));
+    
+            var field118Parameter = field118 != null ?
+                new ObjectParameter("Field118", field118) :
+                new ObjectParameter("Field118", typeof(string));
+    
+            var field119Parameter = field119 != null ?
+                new ObjectParameter("Field119", field119) :
+                new ObjectParameter("Field119", typeof(string));
+    
+            var field120Parameter = field120 != null ?
+                new ObjectParameter("Field120", field120) :
+                new ObjectParameter("Field120", typeof(string));
+    
+            var field121Parameter = field121 != null ?
+                new ObjectParameter("Field121", field121) :
+                new ObjectParameter("Field121", typeof(string));
+    
+            var field122Parameter = field122 != null ?
+                new ObjectParameter("Field122", field122) :
+                new ObjectParameter("Field122", typeof(string));
+    
+            var field123Parameter = field123 != null ?
+                new ObjectParameter("Field123", field123) :
+                new ObjectParameter("Field123", typeof(string));
+    
+            var field124Parameter = field124 != null ?
+                new ObjectParameter("Field124", field124) :
+                new ObjectParameter("Field124", typeof(string));
+    
+            var field125Parameter = field125 != null ?
+                new ObjectParameter("Field125", field125) :
+                new ObjectParameter("Field125", typeof(string));
+    
+            var field126Parameter = field126 != null ?
+                new ObjectParameter("Field126", field126) :
+                new ObjectParameter("Field126", typeof(string));
+    
+            var field127Parameter = field127 != null ?
+                new ObjectParameter("Field127", field127) :
+                new ObjectParameter("Field127", typeof(string));
+    
+            var field128Parameter = field128 != null ?
+                new ObjectParameter("Field128", field128) :
+                new ObjectParameter("Field128", typeof(string));
+    
+            var portNumberParameter = portNumber.HasValue ?
+                new ObjectParameter("PortNumber", portNumber) :
+                new ObjectParameter("PortNumber", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SWIFTCash_0400", field1Parameter, field2Parameter, field3Parameter, field4Parameter, field5Parameter, field6Parameter, field7Parameter, field8Parameter, field9Parameter, field10Parameter, field11Parameter, field12Parameter, field13Parameter, field14Parameter, field15Parameter, field16Parameter, field17Parameter, field18Parameter, field19Parameter, field20Parameter, field21Parameter, field22Parameter, field23Parameter, field24Parameter, field25Parameter, field26Parameter, field27Parameter, field28Parameter, field29Parameter, field30Parameter, field31Parameter, field32Parameter, field33Parameter, field34Parameter, field35Parameter, field36Parameter, field37Parameter, field38Parameter, field39Parameter, field40Parameter, field41Parameter, field42Parameter, field43Parameter, field44Parameter, field45Parameter, field46Parameter, field47Parameter, field48Parameter, field49Parameter, field50Parameter, field51Parameter, field52Parameter, field53Parameter, field54Parameter, field55Parameter, field56Parameter, field57Parameter, field58Parameter, field59Parameter, field60Parameter, field61Parameter, field62Parameter, field63Parameter, field64Parameter, field65Parameter, field66Parameter, field67Parameter, field68Parameter, field69Parameter, field70Parameter, field71Parameter, field72Parameter, field73Parameter, field74Parameter, field75Parameter, field76Parameter, field77Parameter, field78Parameter, field79Parameter, field80Parameter, field81Parameter, field82Parameter, field83Parameter, field84Parameter, field85Parameter, field86Parameter, field87Parameter, field88Parameter, field89Parameter, field90Parameter, field91Parameter, field92Parameter, field93Parameter, field94Parameter, field95Parameter, field96Parameter, field97Parameter, field98Parameter, field99Parameter, field100Parameter, field101Parameter, field102Parameter, field103Parameter, field104Parameter, field105Parameter, field106Parameter, field107Parameter, field108Parameter, field109Parameter, field110Parameter, field111Parameter, field112Parameter, field113Parameter, field114Parameter, field115Parameter, field116Parameter, field117Parameter, field118Parameter, field119Parameter, field120Parameter, field121Parameter, field122Parameter, field123Parameter, field124Parameter, field125Parameter, field126Parameter, field127Parameter, field128Parameter, portNumberParameter);
+        }
+    
+        [DbFunction("kpillerEntities", "UDF_GL_Balance")]
+        public virtual IQueryable<UDF_GL_Balance_Result> UDF_GL_Balance(string accNo, Nullable<System.DateTime> lastDate)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var lastDateParameter = lastDate.HasValue ?
+                new ObjectParameter("LastDate", lastDate) :
+                new ObjectParameter("LastDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UDF_GL_Balance_Result>("[kpillerEntities].[UDF_GL_Balance](@AccNo, @LastDate)", accNoParameter, lastDateParameter);
+        }
+    
+        [DbFunction("kpillerEntities", "UDF_GL_OpeningBalance")]
+        public virtual IQueryable<UDF_GL_OpeningBalance_Result> UDF_GL_OpeningBalance(string accNo, Nullable<System.DateTime> lastDate)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var lastDateParameter = lastDate.HasValue ?
+                new ObjectParameter("LastDate", lastDate) :
+                new ObjectParameter("LastDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UDF_GL_OpeningBalance_Result>("[kpillerEntities].[UDF_GL_OpeningBalance](@AccNo, @LastDate)", accNoParameter, lastDateParameter);
+        }
+    
+        public virtual int Update_Account_Activity_Status()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Account_Activity_Status");
+        }
+    
+        public virtual int Update_AccountBalance(string memberDetail, Nullable<int> mparam)
+        {
+            var memberDetailParameter = memberDetail != null ?
+                new ObjectParameter("MemberDetail", memberDetail) :
+                new ObjectParameter("MemberDetail", typeof(string));
+    
+            var mparamParameter = mparam.HasValue ?
+                new ObjectParameter("mparam", mparam) :
+                new ObjectParameter("mparam", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_AccountBalance", memberDetailParameter, mparamParameter);
+        }
+    
+        public virtual int update_active(string accno)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("update_active", accnoParameter);
+        }
+    
+        public virtual int Update_Advances()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Advances");
+        }
+    
+        public virtual int Update_All_Loan_Arrears()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_All_Loan_Arrears");
+        }
+    
+        public virtual int Update_All_Loan_Plus_Interest_Arrears()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_All_Loan_Plus_Interest_Arrears");
+        }
+    
+        public virtual int Update_Arrears(string memberno)
+        {
+            var membernoParameter = memberno != null ?
+                new ObjectParameter("memberno", memberno) :
+                new ObjectParameter("memberno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Arrears", membernoParameter);
+        }
+    
+        public virtual int update_balances(string accno)
+        {
+            var accnoParameter = accno != null ?
+                new ObjectParameter("accno", accno) :
+                new ObjectParameter("accno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("update_balances", accnoParameter);
+        }
+    
+        public virtual int Update_CONTRIB(string memberNo_4, Nullable<System.DateTime> contrDate_5, Nullable<long> refNo_6, Nullable<decimal> amount_7, Nullable<decimal> shareBal_8, string transBy_9, string chequeNo_10, string receiptNo_11, string locked_12, string posted_13, string remarks_14, string auditID_15)
+        {
+            var memberNo_4Parameter = memberNo_4 != null ?
+                new ObjectParameter("MemberNo_4", memberNo_4) :
+                new ObjectParameter("MemberNo_4", typeof(string));
+    
+            var contrDate_5Parameter = contrDate_5.HasValue ?
+                new ObjectParameter("ContrDate_5", contrDate_5) :
+                new ObjectParameter("ContrDate_5", typeof(System.DateTime));
+    
+            var refNo_6Parameter = refNo_6.HasValue ?
+                new ObjectParameter("RefNo_6", refNo_6) :
+                new ObjectParameter("RefNo_6", typeof(long));
+    
+            var amount_7Parameter = amount_7.HasValue ?
+                new ObjectParameter("Amount_7", amount_7) :
+                new ObjectParameter("Amount_7", typeof(decimal));
+    
+            var shareBal_8Parameter = shareBal_8.HasValue ?
+                new ObjectParameter("ShareBal_8", shareBal_8) :
+                new ObjectParameter("ShareBal_8", typeof(decimal));
+    
+            var transBy_9Parameter = transBy_9 != null ?
+                new ObjectParameter("TransBy_9", transBy_9) :
+                new ObjectParameter("TransBy_9", typeof(string));
+    
+            var chequeNo_10Parameter = chequeNo_10 != null ?
+                new ObjectParameter("ChequeNo_10", chequeNo_10) :
+                new ObjectParameter("ChequeNo_10", typeof(string));
+    
+            var receiptNo_11Parameter = receiptNo_11 != null ?
+                new ObjectParameter("ReceiptNo_11", receiptNo_11) :
+                new ObjectParameter("ReceiptNo_11", typeof(string));
+    
+            var locked_12Parameter = locked_12 != null ?
+                new ObjectParameter("Locked_12", locked_12) :
+                new ObjectParameter("Locked_12", typeof(string));
+    
+            var posted_13Parameter = posted_13 != null ?
+                new ObjectParameter("Posted_13", posted_13) :
+                new ObjectParameter("Posted_13", typeof(string));
+    
+            var remarks_14Parameter = remarks_14 != null ?
+                new ObjectParameter("Remarks_14", remarks_14) :
+                new ObjectParameter("Remarks_14", typeof(string));
+    
+            var auditID_15Parameter = auditID_15 != null ?
+                new ObjectParameter("AuditID_15", auditID_15) :
+                new ObjectParameter("AuditID_15", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_CONTRIB", memberNo_4Parameter, contrDate_5Parameter, refNo_6Parameter, amount_7Parameter, shareBal_8Parameter, transBy_9Parameter, chequeNo_10Parameter, receiptNo_11Parameter, locked_12Parameter, posted_13Parameter, remarks_14Parameter, auditID_15Parameter);
+        }
+    
+        public virtual int Update_CUB_Balance(string accNo, Nullable<decimal> balance)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var balanceParameter = balance.HasValue ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_CUB_Balance", accNoParameter, balanceParameter);
+        }
+    
+        public virtual int Update_CUSTBAL_Balance(string accNo, Nullable<System.DateTime> transDate, string custBalID, Nullable<decimal> amount, Nullable<decimal> balance)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            var transDateParameter = transDate.HasValue ?
+                new ObjectParameter("TransDate", transDate) :
+                new ObjectParameter("TransDate", typeof(System.DateTime));
+    
+            var custBalIDParameter = custBalID != null ?
+                new ObjectParameter("CustBalID", custBalID) :
+                new ObjectParameter("CustBalID", typeof(string));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(decimal));
+    
+            var balanceParameter = balance.HasValue ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_CUSTBAL_Balance", accNoParameter, transDateParameter, custBalIDParameter, amountParameter, balanceParameter);
+        }
+    
+        public virtual int Update_Defaulter_Dividend(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Defaulter_Dividend", memberNoParameter);
+        }
+    
+        public virtual int Update_Directors_CRB_Loan_Exemptions()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Directors_CRB_Loan_Exemptions");
+        }
+    
+        public virtual int Update_Dormant_Dividend(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Dormant_Dividend", memberNoParameter);
+        }
+    
+        public virtual int Update_GLSetup(Nullable<long> glid_1, string glcode_2, string glaccname_3, string accno_4, string glacctype_5, string glaccgroup_6, string normalbal_7, string glaccstatus_8, Nullable<decimal> bal_9, Nullable<decimal> curr_code_10, string auditorg_11, string auditid_12, Nullable<System.DateTime> auditdate_13, string curr_14)
+        {
+            var glid_1Parameter = glid_1.HasValue ?
+                new ObjectParameter("glid_1", glid_1) :
+                new ObjectParameter("glid_1", typeof(long));
+    
+            var glcode_2Parameter = glcode_2 != null ?
+                new ObjectParameter("Glcode_2", glcode_2) :
+                new ObjectParameter("Glcode_2", typeof(string));
+    
+            var glaccname_3Parameter = glaccname_3 != null ?
+                new ObjectParameter("Glaccname_3", glaccname_3) :
+                new ObjectParameter("Glaccname_3", typeof(string));
+    
+            var accno_4Parameter = accno_4 != null ?
+                new ObjectParameter("accno_4", accno_4) :
+                new ObjectParameter("accno_4", typeof(string));
+    
+            var glacctype_5Parameter = glacctype_5 != null ?
+                new ObjectParameter("Glacctype_5", glacctype_5) :
+                new ObjectParameter("Glacctype_5", typeof(string));
+    
+            var glaccgroup_6Parameter = glaccgroup_6 != null ?
+                new ObjectParameter("Glaccgroup_6", glaccgroup_6) :
+                new ObjectParameter("Glaccgroup_6", typeof(string));
+    
+            var normalbal_7Parameter = normalbal_7 != null ?
+                new ObjectParameter("Normalbal_7", normalbal_7) :
+                new ObjectParameter("Normalbal_7", typeof(string));
+    
+            var glaccstatus_8Parameter = glaccstatus_8 != null ?
+                new ObjectParameter("Glaccstatus_8", glaccstatus_8) :
+                new ObjectParameter("Glaccstatus_8", typeof(string));
+    
+            var bal_9Parameter = bal_9.HasValue ?
+                new ObjectParameter("bal_9", bal_9) :
+                new ObjectParameter("bal_9", typeof(decimal));
+    
+            var curr_code_10Parameter = curr_code_10.HasValue ?
+                new ObjectParameter("curr_code_10", curr_code_10) :
+                new ObjectParameter("curr_code_10", typeof(decimal));
+    
+            var auditorg_11Parameter = auditorg_11 != null ?
+                new ObjectParameter("auditorg_11", auditorg_11) :
+                new ObjectParameter("auditorg_11", typeof(string));
+    
+            var auditid_12Parameter = auditid_12 != null ?
+                new ObjectParameter("auditid_12", auditid_12) :
+                new ObjectParameter("auditid_12", typeof(string));
+    
+            var auditdate_13Parameter = auditdate_13.HasValue ?
+                new ObjectParameter("auditdate_13", auditdate_13) :
+                new ObjectParameter("auditdate_13", typeof(System.DateTime));
+    
+            var curr_14Parameter = curr_14 != null ?
+                new ObjectParameter("curr_14", curr_14) :
+                new ObjectParameter("curr_14", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_GLSetup", glid_1Parameter, glcode_2Parameter, glaccname_3Parameter, accno_4Parameter, glacctype_5Parameter, glaccgroup_6Parameter, normalbal_7Parameter, glaccstatus_8Parameter, bal_9Parameter, curr_code_10Parameter, auditorg_11Parameter, auditid_12Parameter, auditdate_13Parameter, curr_14Parameter);
+        }
+    
+        public virtual int Update_Loan_Arrears(string mNo, string lNo, Nullable<bool> sASRA)
+        {
+            var mNoParameter = mNo != null ?
+                new ObjectParameter("MNo", mNo) :
+                new ObjectParameter("MNo", typeof(string));
+    
+            var lNoParameter = lNo != null ?
+                new ObjectParameter("LNo", lNo) :
+                new ObjectParameter("LNo", typeof(string));
+    
+            var sASRAParameter = sASRA.HasValue ?
+                new ObjectParameter("SASRA", sASRA) :
+                new ObjectParameter("SASRA", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Loan_Arrears", mNoParameter, lNoParameter, sASRAParameter);
+        }
+    
+        public virtual int Update_Loan_Classification()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Loan_Classification");
+        }
+    
+        public virtual int Update_LoanBal_Balance(string loanNo, Nullable<decimal> balance, Nullable<decimal> interestBal, Nullable<System.DateTime> transDate)
+        {
+            var loanNoParameter = loanNo != null ?
+                new ObjectParameter("LoanNo", loanNo) :
+                new ObjectParameter("LoanNo", typeof(string));
+    
+            var balanceParameter = balance.HasValue ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(decimal));
+    
+            var interestBalParameter = interestBal.HasValue ?
+                new ObjectParameter("InterestBal", interestBal) :
+                new ObjectParameter("InterestBal", typeof(decimal));
+    
+            var transDateParameter = transDate.HasValue ?
+                new ObjectParameter("TransDate", transDate) :
+                new ObjectParameter("TransDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_LoanBal_Balance", loanNoParameter, balanceParameter, interestBalParameter, transDateParameter);
+        }
+    
+        public virtual int Update_Member_Advances(string accNo)
+        {
+            var accNoParameter = accNo != null ?
+                new ObjectParameter("AccNo", accNo) :
+                new ObjectParameter("AccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Member_Advances", accNoParameter);
+        }
+    
+        public virtual int Update_Member_InitShares(string memberNo, Nullable<decimal> amount, Nullable<System.DateTime> transDate)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(decimal));
+    
+            var transDateParameter = transDate.HasValue ?
+                new ObjectParameter("TransDate", transDate) :
+                new ObjectParameter("TransDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Member_InitShares", memberNoParameter, amountParameter, transDateParameter);
+        }
+    
+        public virtual int Update_Member_Shares(string memberNo, Nullable<decimal> amount, Nullable<System.DateTime> transDate)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(decimal));
+    
+            var transDateParameter = transDate.HasValue ?
+                new ObjectParameter("TransDate", transDate) :
+                new ObjectParameter("TransDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Member_Shares", memberNoParameter, amountParameter, transDateParameter);
+        }
+    
+        public virtual int UPDATE_MEMBERDEDUCTIONS(string accNo_1, string deductionID_2, string sTONo_3, Nullable<decimal> dedAmount_4, string productID, string productID_5, string source_6, string sTONo_7, Nullable<decimal> dedAmount_8, string source_9, Nullable<decimal> interest_10, Nullable<decimal> principal_11)
+        {
+            var accNo_1Parameter = accNo_1 != null ?
+                new ObjectParameter("AccNo_1", accNo_1) :
+                new ObjectParameter("AccNo_1", typeof(string));
+    
+            var deductionID_2Parameter = deductionID_2 != null ?
+                new ObjectParameter("DeductionID_2", deductionID_2) :
+                new ObjectParameter("DeductionID_2", typeof(string));
+    
+            var sTONo_3Parameter = sTONo_3 != null ?
+                new ObjectParameter("STONo_3", sTONo_3) :
+                new ObjectParameter("STONo_3", typeof(string));
+    
+            var dedAmount_4Parameter = dedAmount_4.HasValue ?
+                new ObjectParameter("DedAmount_4", dedAmount_4) :
+                new ObjectParameter("DedAmount_4", typeof(decimal));
+    
+            var productIDParameter = productID != null ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(string));
+    
+            var productID_5Parameter = productID_5 != null ?
+                new ObjectParameter("ProductID_5", productID_5) :
+                new ObjectParameter("ProductID_5", typeof(string));
+    
+            var source_6Parameter = source_6 != null ?
+                new ObjectParameter("Source_6", source_6) :
+                new ObjectParameter("Source_6", typeof(string));
+    
+            var sTONo_7Parameter = sTONo_7 != null ?
+                new ObjectParameter("STONo_7", sTONo_7) :
+                new ObjectParameter("STONo_7", typeof(string));
+    
+            var dedAmount_8Parameter = dedAmount_8.HasValue ?
+                new ObjectParameter("DedAmount_8", dedAmount_8) :
+                new ObjectParameter("DedAmount_8", typeof(decimal));
+    
+            var source_9Parameter = source_9 != null ?
+                new ObjectParameter("Source_9", source_9) :
+                new ObjectParameter("Source_9", typeof(string));
+    
+            var interest_10Parameter = interest_10.HasValue ?
+                new ObjectParameter("Interest_10", interest_10) :
+                new ObjectParameter("Interest_10", typeof(decimal));
+    
+            var principal_11Parameter = principal_11.HasValue ?
+                new ObjectParameter("Principal_11", principal_11) :
+                new ObjectParameter("Principal_11", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UPDATE_MEMBERDEDUCTIONS", accNo_1Parameter, deductionID_2Parameter, sTONo_3Parameter, dedAmount_4Parameter, productIDParameter, productID_5Parameter, source_6Parameter, sTONo_7Parameter, dedAmount_8Parameter, source_9Parameter, interest_10Parameter, principal_11Parameter);
+        }
+    
+        public virtual int Update_New_Loan_Standing_Orders()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_New_Loan_Standing_Orders");
+        }
+    
+        public virtual int Update_Non_KTDA_Loan_Standing_Orders()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Non_KTDA_Loan_Standing_Orders");
+        }
+    
+        public virtual int Update_Particular_Loan_Standing_Order(string lNo)
+        {
+            var lNoParameter = lNo != null ?
+                new ObjectParameter("LNo", lNo) :
+                new ObjectParameter("LNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Particular_Loan_Standing_Order", lNoParameter);
+        }
+    
+        public virtual int UPDATE_POSTEDTRANSACTION(string voucherNo, string groupID)
+        {
+            var voucherNoParameter = voucherNo != null ?
+                new ObjectParameter("VoucherNo", voucherNo) :
+                new ObjectParameter("VoucherNo", typeof(string));
+    
+            var groupIDParameter = groupID != null ?
+                new ObjectParameter("GroupID", groupID) :
+                new ObjectParameter("GroupID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UPDATE_POSTEDTRANSACTION", voucherNoParameter, groupIDParameter);
+        }
+    
+        public virtual int Update_ShareCapital()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_ShareCapital");
+        }
+    
+        public virtual int Update_Shares(string memberNo, Nullable<decimal> totalShares, Nullable<System.DateTime> transDate, string sharescode)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            var totalSharesParameter = totalShares.HasValue ?
+                new ObjectParameter("TotalShares", totalShares) :
+                new ObjectParameter("TotalShares", typeof(decimal));
+    
+            var transDateParameter = transDate.HasValue ?
+                new ObjectParameter("TransDate", transDate) :
+                new ObjectParameter("TransDate", typeof(System.DateTime));
+    
+            var sharescodeParameter = sharescode != null ?
+                new ObjectParameter("sharescode", sharescode) :
+                new ObjectParameter("sharescode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Shares", memberNoParameter, totalSharesParameter, transDateParameter, sharescodeParameter);
+        }
+    
+        public virtual int Update_Statement_Shares(string memberNo, Nullable<decimal> shares)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            var sharesParameter = shares.HasValue ?
+                new ObjectParameter("Shares", shares) :
+                new ObjectParameter("Shares", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Statement_Shares", memberNoParameter, sharesParameter);
+        }
+    
+        public virtual int Update_Total_Shares(string memberNo, Nullable<decimal> totalShares, Nullable<System.DateTime> transDate)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            var totalSharesParameter = totalShares.HasValue ?
+                new ObjectParameter("TotalShares", totalShares) :
+                new ObjectParameter("TotalShares", typeof(decimal));
+    
+            var transDateParameter = transDate.HasValue ?
+                new ObjectParameter("TransDate", transDate) :
+                new ObjectParameter("TransDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Total_Shares", memberNoParameter, totalSharesParameter, transDateParameter);
+        }
+    
+        public virtual int Update_Unposted_Income_Loan_Arrears()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Unposted_Income_Loan_Arrears");
+        }
+    
+        public virtual int Update_Withdrawn_Dividend(string memberNo)
+        {
+            var memberNoParameter = memberNo != null ?
+                new ObjectParameter("MemberNo", memberNo) :
+                new ObjectParameter("MemberNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Withdrawn_Dividend", memberNoParameter);
+        }
+    
+        public virtual int usp_checksession(string sessionid)
+        {
+            var sessionidParameter = sessionid != null ?
+                new ObjectParameter("sessionid", sessionid) :
+                new ObjectParameter("sessionid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_checksession", sessionidParameter);
+        }
     }
 }

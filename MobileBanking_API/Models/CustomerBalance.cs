@@ -19,7 +19,7 @@ namespace MobileBanking_API.Models
         public string IDNo { get; set; }
         public string PayrollNo { get; set; }
         public string AccName { get; set; }
-        public decimal Amount { get; set; }
+        public Nullable<decimal> Amount { get; set; }
         public Nullable<decimal> AvailableBalance { get; set; }
         public string AccNO { get; set; }
         public string TransDescription { get; set; }
