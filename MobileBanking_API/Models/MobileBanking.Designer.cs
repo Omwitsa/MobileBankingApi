@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Console-apps2020\MobileBankingApi\MobileBanking_API\Models\MobileBanking.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\SourceCode\Amtech\MobileBankingAPI\MobileBanking_API\MobileBanking_API\Models\MobileBanking.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

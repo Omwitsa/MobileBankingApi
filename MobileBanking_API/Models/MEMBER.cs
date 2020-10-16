@@ -75,6 +75,5 @@ namespace MobileBanking_API.Models
         public string category { get; set; }
         public string Photo { get; set; }
         public string FingerPrint { get; set; }
-        public string FingerPrint1 { get; set; }
     }
 }

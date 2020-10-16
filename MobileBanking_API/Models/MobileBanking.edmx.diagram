@@ -232,51 +232,6 @@
         <EntityTypeShape EntityType="kpillerModel.Agentmember" Width="1.5" PointX="43.375" PointY="46.75" />
         <EntityTypeShape EntityType="kpillerModel.PosDevice" Width="1.5" PointX="45.375" PointY="46.75" />
         <EntityTypeShape EntityType="kpillerModel.PosUser" Width="1.5" PointX="3.375" PointY="47.75" />
-        <EntityTypeShape EntityType="kpillerModel.t_BinTable" Width="1.5" PointX="5.75" PointY="47.75" />
-        <EntityTypeShape EntityType="kpillerModel.t_CommunicationPorts" Width="1.5" PointX="11.75" PointY="47.75" />
-        <EntityTypeShape EntityType="kpillerModel.t_ISOFieldNames" Width="1.5" PointX="19.75" PointY="47.75" />
-        <EntityTypeShape EntityType="kpillerModel.t_MessageLog" Width="1.5" PointX="21.75" PointY="47.75" />
-        <EntityTypeShape EntityType="kpillerModel.t_MessageTypes" Width="1.5" PointX="31.75" PointY="47.75" />
-        <EntityTypeShape EntityType="kpillerModel.t_ProcessingCode" Width="1.5" PointX="33.75" PointY="47.75" />
-        <EntityTypeShape EntityType="kpillerModel.t_ReasonCodes" Width="1.5" PointX="47.75" PointY="38.75" />
-        <EntityTypeShape EntityType="kpillerModel.t_Devices" Width="1.5" PointX="39.75" PointY="47.75" />
-        <EntityTypeShape EntityType="kpillerModel.t_ISOMessageFormats" Width="1.5" PointX="47.75" PointY="41.75" />
-        <EntityTypeShape EntityType="kpillerModel.t_UserMessageFormats" Width="1.5" PointX="47.75" PointY="45.75" />
-        <EntityTypeShape EntityType="kpillerModel.Expected_Return" Width="1.5" PointX="0.75" PointY="48.75" />
-        <EntityTypeShape EntityType="kpillerModel.HENRYSHARELOANBAL" Width="1.5" PointX="47.75" PointY="48.75" />
-        <EntityTypeShape EntityType="kpillerModel.vbMicrofinanceCollection" Width="1.5" PointX="49.75" PointY="0.75" />
-        <EntityTypeShape EntityType="kpillerModel.vbMicrofinanceCollections1" Width="1.5" PointX="49.75" PointY="5.75" />
-        <EntityTypeShape EntityType="kpillerModel.vWBankTransaction" Width="1.5" PointX="49.75" PointY="10.75" />
-        <EntityTypeShape EntityType="kpillerModel.vwBOSALoanee" Width="1.5" PointX="13.75" PointY="49.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwContribListing" Width="1.5" PointX="49.75" PointY="14.75" />
-        <EntityTypeShape EntityType="kpillerModel.vwDefauter" Width="1.5" PointX="49.75" PointY="18.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwExpect" Width="1.5" PointX="49.75" PointY="24.75" />
-        <EntityTypeShape EntityType="kpillerModel.vWexpectedReturn" Width="1.5" PointX="27.75" PointY="49.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwFrontofficepayment" Width="1.5" PointX="49.75" PointY="29.75" />
-        <EntityTypeShape EntityType="kpillerModel.vwHousing" Width="1.5" PointX="49.75" PointY="33.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwImportData" Width="1.5" PointX="35.75" PointY="49.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwInterest" Width="1.5" PointX="49.75" PointY="36.75" />
-        <EntityTypeShape EntityType="kpillerModel.vwInterestAccrued" Width="1.5" PointX="49.75" PointY="39.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwInterestAccrued1" Width="1.5" PointX="49.75" PointY="43.75" />
-        <EntityTypeShape EntityType="kpillerModel.vWinterestCharged" Width="1.5" PointX="49.75" PointY="46.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwInterestReloaded333" Width="1.5" PointX="49.75" PointY="49.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwLoanBalance" Width="1.5" PointX="23.75" PointY="50.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwLoanBalance1" Width="1.5" PointX="41.75" PointY="50.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwLoanDeafulted" Width="1.5" PointX="43.75" PointY="50.75" />
-        <EntityTypeShape EntityType="kpillerModel.vwLoanDetail" Width="1.5" PointX="51.75" PointY="0.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwLoanEffectedMonthly" Width="1.5" PointX="2.75" PointY="51.75" />
-        <EntityTypeShape EntityType="kpillerModel.vwLoanGuarantorInformation" Width="1.5" PointX="51.75" PointY="4.75" />
-        <EntityTypeShape EntityType="kpillerModel.vwLoanGuarantor" Width="1.5" PointX="4.75" PointY="51.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwloanRepayment" Width="1.5" PointX="51.75" PointY="9.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwLoan" Width="1.5" PointX="51.75" PointY="13.75" />
-        <EntityTypeShape EntityType="kpillerModel.vwMemberShare" Width="1.5" PointX="15.75" PointY="51.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwMonthlyRepayment" Width="1.5" PointX="51.75" PointY="16.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwPettycash" Width="1.5" PointX="17.75" PointY="51.75" />
-        <EntityTypeShape EntityType="kpillerModel.vwShareBalance" Width="1.5" PointX="51.75" PointY="22.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwShareBalance1" Width="1.5" PointX="51.75" PointY="26.75" />
-        <EntityTypeShape EntityType="kpillerModel.vWSharesContrib" Width="1.5" PointX="29.75" PointY="51.75" />
-        <EntityTypeShape EntityType="kpillerModel.VwSharesHolder" Width="1.5" PointX="51.75" PointY="30.75" />
-        <EntityTypeShape EntityType="kpillerModel.zonesReport" Width="1.5" PointX="31.75" PointY="51.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
