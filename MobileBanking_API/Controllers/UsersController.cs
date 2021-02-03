@@ -19,33 +19,37 @@ namespace MobileBanking_API.Controllers
 		[Route("seedAdminUser")]
 		public ReturnData SeedAdminUser([FromBody] PosUser admin)
 		{
-			try
-			{
-				var isMembers = db.PosUsers.Any(a => a.username.ToUpper().Equals(admin.username.ToUpper()));
-				if (!isMembers)
-				{
-					admin.password = SecurePasswordHasher.Hash(admin.password);
-					db.PosUsers.Add(admin);
-				}
 
-				db.SaveChanges();
-				return new ReturnData
-				{
-					Success = true,
-					Message = "Account created successfully"
-				};
-			}
-			catch (Exception ex)
-			{
-				return new ReturnData
-				{
-					Success = false,
-					Message = "Sorry, An error occurred"
-				};
-			}
-		}
 
-		[Route("registerAgentMember")]
+
+            try
+            {
+                var isMembers = db.PosUsers.Any(a => a.username.ToUpper().Equals(admin.username.ToUpper()));
+                if (!isMembers)
+                {
+                    admin.password = Decryptor.Decript_String(admin.password);
+                    //admin.password = SecurePasswordHasher.Hash(admin.password);
+                    db.PosUsers.Add(admin);
+                }
+
+                db.SaveChanges();
+                return new ReturnData
+                {
+                    Success = true,
+                    Message = "Account created successfully"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ReturnData
+                {
+                    Success = false,
+                    Message = "Sorry, An error occurred"
+                };
+            }
+        }
+
+        [Route("registerAgentMember")]
 		public ReturnData RegisterAgentMember([FromBody] Agentmember agent)
 		{
 			try
@@ -88,7 +92,7 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var adminUser = db.PosUsers.FirstOrDefault(u => u.username.ToUpper().Equals(admin.username.ToUpper()));
+				var adminUser = db.UserAccounts.FirstOrDefault(u => u.UserLoginID.ToUpper().Equals(admin.username.ToUpper()));
 				if (adminUser == null)
 					return new ReturnData
 					{
@@ -96,7 +100,8 @@ namespace MobileBanking_API.Controllers
 						Message = "Sorry, Invalid username or password"
 					};
 
-				if (!SecurePasswordHasher.Verify(admin.password, adminUser.password))
+				if (!Decryptor.Decript_String (admin.password).Equals(adminUser.mPassword))
+
 					return new ReturnData
 					{
 						Success = false,
@@ -109,6 +114,8 @@ namespace MobileBanking_API.Controllers
 						Success = false,
 						Message = "Kindly use the device you were assigned"
 					};
+				
+				
 
 				return new ReturnData
 				{
@@ -173,6 +180,27 @@ namespace MobileBanking_API.Controllers
 			try
 			{
 				var accounts = db.MEMBERS.Where(m => m.IDNo == printModel.IdNo).Select(m => m.AccNo).ToList();
+				return new ReturnData
+				{
+					Success = true,
+					Data = accounts
+				};
+			}
+			catch (Exception)
+			{
+				return new ReturnData
+				{
+					Success = false,
+					Message = "Sorry, An error occurred"
+				};
+			}
+		}
+		[Route("PosAdmin")]
+		public ReturnData PosAdmin([FromBody] FingerPrintModel addModel)
+		{
+			try
+			{
+				var accounts = db.MEMBERS.Where(m => m.IDNo == addModel.IdNo).Select(m => m.AccNo).ToList();
 				return new ReturnData
 				{
 					Success = true,

@@ -232,6 +232,17 @@
         <EntityTypeShape EntityType="kpillerModel.Agentmember" Width="1.5" PointX="43.375" PointY="46.75" />
         <EntityTypeShape EntityType="kpillerModel.PosDevice" Width="1.5" PointX="45.375" PointY="46.75" />
         <EntityTypeShape EntityType="kpillerModel.PosUser" Width="1.5" PointX="3.375" PointY="47.75" />
+        <EntityTypeShape EntityType="kpillerModel.t_BinTable" Width="1.5" PointX="5.75" PointY="47.75" />
+        <EntityTypeShape EntityType="kpillerModel.t_CommunicationPorts" Width="1.5" PointX="11.75" PointY="47.75" />
+        <EntityTypeShape EntityType="kpillerModel.t_ISOFieldNames" Width="1.5" PointX="19.75" PointY="47.75" />
+        <EntityTypeShape EntityType="kpillerModel.t_MessageLog" Width="1.5" PointX="21.75" PointY="47.75" />
+        <EntityTypeShape EntityType="kpillerModel.t_MessageTypes" Width="1.5" PointX="31.75" PointY="47.75" />
+        <EntityTypeShape EntityType="kpillerModel.t_ProcessingCode" Width="1.5" PointX="33.75" PointY="47.75" />
+        <EntityTypeShape EntityType="kpillerModel.t_ReasonCodes" Width="1.5" PointX="47.75" PointY="38.75" />
+        <EntityTypeShape EntityType="kpillerModel.standingorder" Width="1.5" PointX="39.75" PointY="47.75" />
+        <EntityTypeShape EntityType="kpillerModel.t_Devices" Width="1.5" PointX="47.75" PointY="41.75" />
+        <EntityTypeShape EntityType="kpillerModel.t_ISOMessageFormats" Width="1.5" PointX="47.75" PointY="45.75" />
+        <EntityTypeShape EntityType="kpillerModel.t_UserMessageFormats" Width="1.5" PointX="0.75" PointY="48.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
