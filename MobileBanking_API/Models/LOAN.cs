@@ -43,5 +43,6 @@ namespace MobileBanking_API.Models
         public string PMode { get; set; }
         public Nullable<int> status { get; set; }
         public string PurposeCode { get; set; }
+        public string SpecialRemark { get; set; }
     }
 }

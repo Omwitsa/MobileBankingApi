@@ -25,5 +25,8 @@ namespace MobileBanking_API.Models
         public Nullable<System.DateTime> Date_created { get; set; }
         public string createdby { get; set; }
         public string Fingerprint { get; set; }
+        public int id { get; set; }
+        public string phoneno { get; set; }
+        public Nullable<bool> PosAdmin { get; set; }
     }
 }

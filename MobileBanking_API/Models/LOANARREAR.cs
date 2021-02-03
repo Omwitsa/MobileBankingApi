@@ -26,5 +26,6 @@ namespace MobileBanking_API.Models
         public System.DateTime LoanDate { get; set; }
         public decimal intArrears { get; set; }
         public int DaysInArrears { get; set; }
+        public long ID { get; set; }
     }
 }

@@ -108,15 +108,13 @@ namespace MobileBanking_API.Controllers
 						Message = "Sorry, Invalid username or password"
 					};
 
-				if (!adminUser.MachineId.Equals(admin.MachineId))
+				if (adminUser.PosAdmin.Equals(false))
 					return new ReturnData
 					{
 						Success = false,
-						Message = "Kindly use the device you were assigned"
+						Message = "You are not Authorised to use this device"
 					};
 				
-				
-
 				return new ReturnData
 				{
 					Success = true,

@@ -703,6 +703,9 @@
     <Compile Include="Models\SMTDR.cs">
       <DependentUpon>MobileBanking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\standingorder.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\STATEMENT.cs">
       <DependentUpon>MobileBanking.tt</DependentUpon>
     </Compile>
@@ -779,6 +782,36 @@
       <DependentUpon>MobileBanking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TransCode.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_BinTable.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_CommunicationPorts.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_Devices.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_ISOFieldNames.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_ISOMessageFormats.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_MessageLog.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_MessageTypes.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_ProcessingCode.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_ReasonCodes.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_UserMessageFormats.cs">
       <DependentUpon>MobileBanking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\t_x.cs">
