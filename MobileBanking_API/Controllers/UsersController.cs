@@ -49,7 +49,49 @@ namespace MobileBanking_API.Controllers
             }
         }
 
-        [Route("registerAgentMember")]
+        [Route("registerAgencyMember")]
+		public ReturnData RegisterAgencyMember([FromBody] Agencymember agencymember)
+		{
+			try
+			{
+				if (string.IsNullOrEmpty(agencymember.idno) || string.IsNullOrEmpty(agencymember.MachineID))
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, kindly provide member data"
+					};
+
+				var posAgent = db.PosAgents.FirstOrDefault(a => a.IDNo == agencymember.idno);
+				if (posAgent != null)
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, Member already exist"
+					};
+
+                
+				db.PosAgents.Add(new PosAgent
+				{
+					
+					
+				});
+				db.SaveChanges();
+				return new ReturnData
+				{
+					Success = true,
+					Message = "Member Registered successfully"
+				};
+			}
+			catch (Exception ex)
+			{
+				return new ReturnData
+				{
+					Success = false,
+					Message = "Sorry, An error occurred"
+				};
+			}
+		}
+		[Route("registerAgentMember")]
 		public ReturnData RegisterAgentMember([FromBody] Agentmember agent)
 		{
 			try
@@ -69,8 +111,8 @@ namespace MobileBanking_API.Controllers
 						Message = "Sorry, Member already exist"
 					};
 
-                db.Agentmembers.Add(agent);
-                db.SaveChanges();
+				db.Agentmembers.Add(agent);
+				db.SaveChanges();
 				return new ReturnData
 				{
 					Success = true,
@@ -215,4 +257,5 @@ namespace MobileBanking_API.Controllers
 			}
 		}
 	}
+
 }

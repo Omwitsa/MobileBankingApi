@@ -14,7 +14,6 @@ namespace MobileBanking_API.Models
     
     public partial class Agentmember
     {
-        public int Id { get; set; }
         public string Surname { get; set; }
         public string Other_names { get; set; }
         public string idno { get; set; }
@@ -24,5 +23,6 @@ namespace MobileBanking_API.Models
         public string fingerprint1 { get; set; }
         public string fingerprint2 { get; set; }
         public string Agentid { get; set; }
+        public int Id { get; set; }
     }
 }

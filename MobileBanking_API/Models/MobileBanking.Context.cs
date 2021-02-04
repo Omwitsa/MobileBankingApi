@@ -25,6 +25,7 @@ namespace MobileBanking_API.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<PosDevice> PosDevices { get; set; }
         public virtual DbSet<Advance> Advances { get; set; }
         public virtual DbSet<Advert> Adverts { get; set; }
         public virtual DbSet<APPRAISAL> APPRAISALs { get; set; }
@@ -72,6 +73,7 @@ namespace MobileBanking_API.Models
         public virtual DbSet<MONTHLYDEDUCTION> MONTHLYDEDUCTIONS { get; set; }
         public virtual DbSet<PIN_Lock_Request> PIN_Lock_Requests { get; set; }
         public virtual DbSet<PIN_Reset> PIN_Resets { get; set; }
+        public virtual DbSet<PosUser> PosUsers { get; set; }
         public virtual DbSet<PRODUCTINC> PRODUCTINCs { get; set; }
         public virtual DbSet<PRODUCTSETUP> PRODUCTSETUPs { get; set; }
         public virtual DbSet<REPAY> REPAYs { get; set; }
@@ -80,12 +82,20 @@ namespace MobileBanking_API.Models
         public virtual DbSet<SHARE> SHARES { get; set; }
         public virtual DbSet<sharetype> sharetypes { get; set; }
         public virtual DbSet<Subscriber> Subscribers { get; set; }
+        public virtual DbSet<t_BinTable> t_BinTable { get; set; }
+        public virtual DbSet<t_CommunicationPorts> t_CommunicationPorts { get; set; }
+        public virtual DbSet<t_ISOFieldNames> t_ISOFieldNames { get; set; }
+        public virtual DbSet<t_MessageLog> t_MessageLog { get; set; }
+        public virtual DbSet<t_MessageTypes> t_MessageTypes { get; set; }
+        public virtual DbSet<t_ProcessingCode> t_ProcessingCode { get; set; }
+        public virtual DbSet<t_ReasonCodes> t_ReasonCodes { get; set; }
         public virtual DbSet<Transactionno> Transactionnoes { get; set; }
         public virtual DbSet<A> A { get; set; }
         public virtual DbSet<AccountCode> AccountCodes { get; set; }
         public virtual DbSet<AdvanceGuarantor> AdvanceGuarantors { get; set; }
         public virtual DbSet<AdvanceStatement> AdvanceStatements { get; set; }
         public virtual DbSet<AdvanceStmt> AdvanceStmts { get; set; }
+        public virtual DbSet<Agentmember> Agentmembers { get; set; }
         public virtual DbSet<agingsummary> agingsummaries { get; set; }
         public virtual DbSet<AP> APs { get; set; }
         public virtual DbSet<Asset_Depreciation> Asset_Depreciations { get; set; }
@@ -199,6 +209,7 @@ namespace MobileBanking_API.Models
         public virtual DbSet<PaymentBooking> PaymentBookings { get; set; }
         public virtual DbSet<PERTRAN> PERTRANs { get; set; }
         public virtual DbSet<port> ports { get; set; }
+        public virtual DbSet<PosAgent> PosAgents { get; set; }
         public virtual DbSet<REASON> REASONS { get; set; }
         public virtual DbSet<ReceiptBooking> ReceiptBookings { get; set; }
         public virtual DbSet<Refund> Refunds { get; set; }
@@ -217,6 +228,7 @@ namespace MobileBanking_API.Models
         public virtual DbSet<smsLoanGuarantor> smsLoanGuarantors { get; set; }
         public virtual DbSet<SMSSetting> SMSSettings { get; set; }
         public virtual DbSet<SMTDR> SMTDRs { get; set; }
+        public virtual DbSet<standingorder> standingorders { get; set; }
         public virtual DbSet<STATEMENT> STATEMENTs { get; set; }
         public virtual DbSet<Stmt> Stmts { get; set; }
         public virtual DbSet<SubDepartment> SubDepartments { get; set; }
@@ -225,6 +237,9 @@ namespace MobileBanking_API.Models
         public virtual DbSet<SwM> SwMs { get; set; }
         public virtual DbSet<sysincome> sysincomes { get; set; }
         public virtual DbSet<SYSPARAM> SYSPARAMs { get; set; }
+        public virtual DbSet<t_Devices> t_Devices { get; set; }
+        public virtual DbSet<t_ISOMessageFormats> t_ISOMessageFormats { get; set; }
+        public virtual DbSet<t_UserMessageFormats> t_UserMessageFormats { get; set; }
         public virtual DbSet<t_x> t_x { get; set; }
         public virtual DbSet<TB> TBs { get; set; }
         public virtual DbSet<tbbalance> tbbalances { get; set; }
@@ -249,19 +264,5 @@ namespace MobileBanking_API.Models
         public virtual DbSet<VOUCHERNO> VOUCHERNOes { get; set; }
         public virtual DbSet<WCHARGE> WCHARGES { get; set; }
         public virtual DbSet<ZONE> ZONES { get; set; }
-        public virtual DbSet<Agentmember> Agentmembers { get; set; }
-        public virtual DbSet<PosDevice> PosDevices { get; set; }
-        public virtual DbSet<PosUser> PosUsers { get; set; }
-        public virtual DbSet<t_BinTable> t_BinTable { get; set; }
-        public virtual DbSet<t_CommunicationPorts> t_CommunicationPorts { get; set; }
-        public virtual DbSet<t_ISOFieldNames> t_ISOFieldNames { get; set; }
-        public virtual DbSet<t_MessageLog> t_MessageLog { get; set; }
-        public virtual DbSet<t_MessageTypes> t_MessageTypes { get; set; }
-        public virtual DbSet<t_ProcessingCode> t_ProcessingCode { get; set; }
-        public virtual DbSet<t_ReasonCodes> t_ReasonCodes { get; set; }
-        public virtual DbSet<standingorder> standingorders { get; set; }
-        public virtual DbSet<t_Devices> t_Devices { get; set; }
-        public virtual DbSet<t_ISOMessageFormats> t_ISOMessageFormats { get; set; }
-        public virtual DbSet<t_UserMessageFormats> t_UserMessageFormats { get; set; }
     }
 }

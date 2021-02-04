@@ -180,8 +180,8 @@ namespace MobileBanking_API.Controllers
 					TransDescript = transactionDescription,
 					AuditTime = DateTime.UtcNow.AddHours(3),
 					AuditID = transaction.AuditId,
-					AgentCommision = (decimal)agentCommision,
-					SaccoCommision = (decimal)saccoCommission,
+					agentCommission = (decimal)agentCommision,
+					saccoCommission = (decimal)saccoCommission,
 					Source = member.MemberNo
 				});
 
@@ -379,6 +379,21 @@ namespace MobileBanking_API.Controllers
 				return new List<AdvanceProduct>();
 			}
 		}
+		[Route("fetchAgencyAccounts")]
+		public List<string> fetchAgencyAccounts([FromBody] Transaction transaction)
+		{
+
+			try
+			{
+				var accountsQuery =$"select AgencyName from PosAgents";
+				var accounts = db.Database.SqlQuery<string>(accountsQuery).ToList();
+				return accounts;
+			}
+			catch (Exception ex)
+			{
+				return new List<string>();
+			}
+		}
 
 		[Route("fetchMemberAccounts")]
 		public List<string> FetchMemberAccounts([FromBody] Transaction transaction)
@@ -394,6 +409,8 @@ namespace MobileBanking_API.Controllers
 				return accounts;
 			}
 		}
+       
+
 
 		private ReturnData AdvanceService(Transaction transaction)
 		{

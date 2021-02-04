@@ -14,7 +14,7 @@ namespace MobileBanking_API.Models
     
     public partial class PosUser
     {
-        public int Id { get; set; }
+        public int id { get; set; }
         public string Full_Names { get; set; }
         public string username { get; set; }
         public string password { get; set; }
@@ -25,7 +25,6 @@ namespace MobileBanking_API.Models
         public Nullable<System.DateTime> Date_created { get; set; }
         public string createdby { get; set; }
         public string Fingerprint { get; set; }
-        public int id { get; set; }
         public string phoneno { get; set; }
         public Nullable<bool> PosAdmin { get; set; }
     }

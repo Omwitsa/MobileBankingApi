@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Agencymember.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Decryptor.cs" />
@@ -620,6 +621,9 @@
       <DependentUpon>MobileBanking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\port.cs">
+      <DependentUpon>MobileBanking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PosAgent.cs">
       <DependentUpon>MobileBanking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PosDevice.cs">
