@@ -106,65 +106,59 @@ namespace MobileBanking_API.Controllers
 				};
 			}
 		}
-		[Route("registerFingers")]
+		[Route("Login")]
 		public ReturnData RegisterFingers([FromBody] RegisterFingers fingerprint)
 		{
 			try
 			{
-				//if (!string.IsNullOrEmpty(printModel.FingerPrint))
-				var figuerPrintInfo = fingerprint.FingerPrint.Split('@');
-				fingerprint.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
-				int decimalFingerprint = int.Parse(fingerprint.FingerPrint, System.Globalization.NumberStyles.HexNumber);
+				
+				
 				//select the fingerprints from database
-				var idposuser = $"Select fingerprint1 from PosUsers  where IDNo='{fingerprint.IdNo}'";
-				int posuser = db.Database.SqlQuery<int>(idposuser).FirstOrDefault();
-				if (posuser >= decimalFingerprint)
+				var idposuser = $"Select fingerprint1 from PosUsers  where IDNo='{fingerprint.IdNo}'and PosSerialNo='{fingerprint.MachineId}'";
+				var posuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
+				if (posuser != null && posuser !="")
 				{
 					return new ReturnData
 					{
 						Success = true,
-						Message = "Verification was successfully"
+						Message = "FingerPrint Verification was successfully"
 					};
 				}
 				else
 				{
-					var idposuser1 = $"Select fingerprint2 from PosUsers  where IDNo='{fingerprint.IdNo}'";
-					int posuser1 = db.Database.SqlQuery<int>(idposuser1).FirstOrDefault();
-					if (posuser1 >= decimalFingerprint)
+					var idposuser1 = $"Select fingerprint2 from PosUsers  where IDNo='{fingerprint.IdNo}'and PosSerialNo='{fingerprint.MachineId}'";
+					var posuser1 = db.Database.SqlQuery<string>(idposuser1).FirstOrDefault();
+					if (posuser1 != null && posuser1 != "")
 					{
 						return new ReturnData
 						{
 							Success = true,
-							Message = "Verification was successfully"
+							Message = "FingerPrint Verification was successfully"
 
 						};
 					}
-					return new ReturnData
-					{
-						Success = true,
-						Message = "Verification was successfully"
-					};
+					
 					//verification for posMembers
-					var posmember = $"Select fingerprint1 from PosMembers  where IDNo='{fingerprint.IdNo}'";
-					int posmember1 = db.Database.SqlQuery<int>(posmember).FirstOrDefault();
-					if (posmember1 >= decimalFingerprint)
+					var posmember = $"Select fingerprint1 from PosMembers  where IDNo='{fingerprint.IdNo}'and PosSerialNo='{fingerprint.MachineId}'";
+					var posmember1 = db.Database.SqlQuery<string>(posmember).FirstOrDefault();
+					if (posmember1 != null && posmember1 != "")
 					{
 						return new ReturnData
 						{
 							Success = true,
-							Message = "Verification was successfully"
+							Message = "FingerPrint Verification was successfully"
 						};
 					}
 					else
 					{
-						var idposuser2 = $"Select fingerprint2 from PosUsers  where IDNo='{fingerprint.IdNo}'";
-						int posuser2 = db.Database.SqlQuery<int>(idposuser2).FirstOrDefault();
-						if (posuser2 >= decimalFingerprint)
+						var idposuser2 = $"Select fingerprint2 from PosMembers  where IDNo='{fingerprint.IdNo}'and PosSerialNo='{fingerprint.MachineId}'";
+						var posuser2 = db.Database.SqlQuery<string>(idposuser2).FirstOrDefault();
+						if (posuser2 != null && posuser2 != "")
 						{
 							return new ReturnData
 							{
 								Success = true,
-								Message = "Verification was successfully"
+								Message = "FingerPrint Verification was successfully"
 
 							};
 						}
@@ -233,124 +227,92 @@ namespace MobileBanking_API.Controllers
 ///
 //registerFingers
 [Route("registerFingerPrints")]
-		public ReturnData RegisterFingerPrints([FromBody] FingerPrintModel printModel)
+        public ReturnData RegisterFingerPrints([FromBody] FingerPrintModel printModel)
 		{
 			try
 			{
-				//verify idno in the database
-				var posUser = db.PosUsers.FirstOrDefault(a => a.IDNo == printModel.IdNo);
-				if (posUser == null)
-					return new ReturnData
-					{
-						Success = false,
-						Message = "Sorry, id number doesnot exist"
-					};
 				//if (!string.IsNullOrEmpty(printModel.FingerPrint))
 				var figuerPrintInfo = printModel.FingerPrint.Split('@');
 				printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
 				int decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
-				//check existence of id in the PosUser
-				var idposuser= $"Select FingerPrint1 from PosUsers  where IDNo='{printModel.IdNo}'";
-				var possuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
-				if (possuser == null)
+				//verify idno in the database
+				var posUser = db.PosUsers.FirstOrDefault(a => a.IDNo == printModel.IdNo);
+				if (posUser != null)
 				{
-					var posuserFingerprint = $"UPDATE PosUsers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
-					db.Database.ExecuteSqlCommand(posuserFingerprint);
-					return new ReturnData
+
+					
+					//check existence of id in the PosUser
+					var idposuser = $"Select FingerPrint1 from PosUsers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}'";
+					var possuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
+
+					if (possuser != null && possuser != "")
 					{
-						Success = true,
-						Message = "Fingerprint1 updated successfully"
-					};
-					//var posuserfingerprint = $"Select FingerPrint from PosUsers  where IDNo='{printModel.IdNo}'";
-					//var posuserdata = db.Database.SqlQuery<string>(posuserfingerprint).FirstOrDefault();
+						var posuserFingerprint = $"UPDATE PosUsers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}'";
+						db.Database.ExecuteSqlCommand(posuserFingerprint);
+						return new ReturnData
+						{
+							Success = true,
+							Message = "Fingerprint2 updated successfully"
+						};
+						
+					}
+					else
+					{
+						var posuserFingerprint1 = $"UPDATE PosUsers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}'";
+						db.Database.ExecuteSqlCommand(posuserFingerprint1);
+
+						return new ReturnData
+						{
+							Success = true,
+							Message = "Fingerprint1 updated successfully"
+						};
+					}
+
+					
 				}
-				else
+
+
+				var idsposmember = db.PosMembers.FirstOrDefault(a => a.IDNo == printModel.IdNo);
+				if (idsposmember != null)
+
 				{
-					var posuserFingerprint1 = $"UPDATE PosUsers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
-					db.Database.ExecuteSqlCommand(posuserFingerprint1);
-
-					return new ReturnData
+					//checked existence  if id in PosMembers
+					var idposmember = $"Select FingerPrint1 from posmembers  where IDNo='{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}'";
+					var posmember = db.Database.SqlQuery<string>(idposmember).FirstOrDefault();
+					if (posmember != null && posmember != "")
 					{
-						Success = true,
-						Message = "Fingerprint1 updated successfully"
-					};
-				}
 
-
-				
-                
-				//checked existence  if id in PosMembers
-				var idposmember = $"Select * from posmembers  where IDNo='{printModel.IdNo}'";
-				var posmember = db.Database.SqlQuery<string>(idposmember).FirstOrDefault();
-				if (posmember != null)
-				{
-					var posmemberfingerprint = $"Select FingerPrint1 from posmembers  where IDNo='{printModel.IdNo}'";
-					var posmemberdata = db.Database.SqlQuery<string>(posmemberfingerprint).FirstOrDefault();
-
-					if (posmemberdata != null)
-					{
-						var posmemberFingerprint = $"UPDATE posmembers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+						var posmemberFingerprint = $"UPDATE posmembers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}'";
 						db.Database.ExecuteSqlCommand(posmemberFingerprint);
 						var memberFingerprint1 = $"UPDATE members SET fingerprint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
 						db.Database.ExecuteSqlCommand(memberFingerprint1);
+						return new ReturnData
+						{
+							Success = true,
+							Message = "Fingerprint2 updated successfully"
+						};
 
 					}
 					else
 					{
-						var posuserFingerprint1 = $"UPDATE posmembers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+						var posuserFingerprint1 = $"UPDATE posmembers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}'";
 						db.Database.ExecuteSqlCommand(posuserFingerprint1);
 						var memberFingerprint2 = $"UPDATE members SET fingerprint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
 						db.Database.ExecuteSqlCommand(memberFingerprint2);
+						return new ReturnData
+						{
+							Success = true,
+							Message = "Fingerprint1 updated successfully"
+						};
 					}
 
-
 				}
-				else
-				{
-                    //var posAgent = db.PosAgents.FirstOrDefault(a => a.AgencyName == printModel.AgencyCode);
-                    //if (posAgent == null)
-                    //    return new ReturnData
-                    //    {
-                    //        Success = false,
-                    //        Message = ""
-                    //    };
-                    //db.PosMembers.Add(new PosMember
-                    //{
-                    //    IDNo = printModel.IdNo,
-                    //    FingerPrint1 = printModel.FingerPrint,
-                    //    FingerPrint2 = "",
-                    //    AuditID = printModel.AuditId,
-                    //    RegistrationDate = DateTime.UtcNow.Date,
-                    //    PosSerialNo = printModel.serialNo,
-                    //    AgencyCode = posAgent.AgencyCode
-
-                    //});
-
-					var memberFingerprint = $"UPDATE members SET fingerprint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
-					db.Database.ExecuteSqlCommand(memberFingerprint);
-                }
-
-				//Update members table with fingerprint
-				var accmeber = $"Select Fingerprint1 from MEMBERS  where IDNo='{printModel.IdNo}'";
-                var membeno = db.Database.SqlQuery<string>(accmeber).FirstOrDefault();
-                
-                if (membeno != null)
-                {
-                    var fingerUpdateQuery = $"UPDATE MEMBERS SET FingerPrint = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
-                    db.Database.ExecuteSqlCommand(fingerUpdateQuery);
-                }
-                else
-                {
-                 
-                    var fingerUpdateQuery1 = $"UPDATE MEMBERS SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
-                    db.Database.ExecuteSqlCommand(fingerUpdateQuery1);
-                }
-			
 				return new ReturnData
 				{
 					Success = true,
-					Message = "finger print saved successfully"
+					Message = "Fingerprints updated successfully"
 				};
+
 			}
 			catch (Exception ex)
 			{

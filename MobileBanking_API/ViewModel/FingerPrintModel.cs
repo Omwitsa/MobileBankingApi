@@ -4,5 +4,6 @@
 	{
 		public string FingerPrint { get; set; }
 		public string IdNo { get; set; }
+		public string MachineId { get; set; }
 	}
 }
