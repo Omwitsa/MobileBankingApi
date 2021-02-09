@@ -132,40 +132,50 @@ namespace MobileBanking_API.Controllers
 					int posuser1 = db.Database.SqlQuery<int>(idposuser1).FirstOrDefault();
 					if (posuser1 >= decimalFingerprint)
 					{
+						return new ReturnData
+						{
+							Success = true,
+							Message = "Verification was successfully"
 
+						};
 					}
-				}
-				return new ReturnData
-				{
-					Success = true,
-					Message = "Verification was successfully"
-				};
-				//verification for posMembers
-				var posmember = $"Select fingerprint1 from PosMembers  where IDNo='{fingerprint.IdNo}'";
-				int posmember1 = db.Database.SqlQuery<int>(posmember).FirstOrDefault();
-				if (posmember1 >= decimalFingerprint)
-				{
 					return new ReturnData
 					{
 						Success = true,
 						Message = "Verification was successfully"
 					};
-				}
-				else
-				{
-					var idposuser1 = $"Select fingerprint2 from PosUsers  where IDNo='{fingerprint.IdNo}'";
-					int posuser1 = db.Database.SqlQuery<int>(idposuser1).FirstOrDefault();
-					if (posuser1 >= decimalFingerprint)
+					//verification for posMembers
+					var posmember = $"Select fingerprint1 from PosMembers  where IDNo='{fingerprint.IdNo}'";
+					int posmember1 = db.Database.SqlQuery<int>(posmember).FirstOrDefault();
+					if (posmember1 >= decimalFingerprint)
 					{
-
+						return new ReturnData
+						{
+							Success = true,
+							Message = "Verification was successfully"
+						};
 					}
-				}
-				return new ReturnData
-				{
-					Success = true,
-					Message = "Verification was successfully"
+					else
+					{
+						var idposuser2 = $"Select fingerprint2 from PosUsers  where IDNo='{fingerprint.IdNo}'";
+						int posuser2 = db.Database.SqlQuery<int>(idposuser2).FirstOrDefault();
+						if (posuser2 >= decimalFingerprint)
+						{
+							return new ReturnData
+							{
+								Success = true,
+								Message = "Verification was successfully"
 
-				};
+							};
+						}
+					}
+					return new ReturnData
+					{
+						Success = true,
+						Message = "Verification was successfully"
+
+					};
+				}
 			}
 			catch (Exception ex)
 			{
