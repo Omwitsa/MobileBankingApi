@@ -242,35 +242,35 @@ namespace MobileBanking_API.Controllers
 				printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
 				int decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
 				//check existence of id in the PosUser
-				var idposuser= $"Select * from PosUsers  where IDNo='{printModel.IdNo}'";
+				var idposuser= $"Select fingerprint1 from PosUsers  where IDNo='{printModel.IdNo}'";
 				var posuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
-				if(posuser != null) 
+				if (posuser != null)
 				{
-					var posuserfingerprint = $"Select FingerPrint from PosUsers  where IDNo='{printModel.IdNo}'";
-					var posuserdata = db.Database.SqlQuery<string>(posuserfingerprint).FirstOrDefault();
-
-					if (posuserdata != null)
-					{
-						var posuserFingerprint = $"UPDATE PosUsers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
-						db.Database.ExecuteSqlCommand(posuserFingerprint);
-
-					}
-					else
-					{
-						var posuserFingerprint1 = $"UPDATE PosUsers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
-						db.Database.ExecuteSqlCommand(posuserFingerprint1);
-					}
-
-
-				}
-                else 
-				{
+					var posuserFingerprint = $"UPDATE PosUsers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+					db.Database.ExecuteSqlCommand(posuserFingerprint);
 					return new ReturnData
 					{
 						Success = true,
 						Message = "User doesnot exist  in the system"
 					};
+					//var posuserfingerprint = $"Select FingerPrint from PosUsers  where IDNo='{printModel.IdNo}'";
+					//var posuserdata = db.Database.SqlQuery<string>(posuserfingerprint).FirstOrDefault();
 				}
+				else
+				{
+					var posuserFingerprint1 = $"UPDATE PosUsers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+					db.Database.ExecuteSqlCommand(posuserFingerprint1);
+
+					return new ReturnData
+					{
+						Success = true,
+						Message = "Fingerprint2 updated successfully"
+					};
+				}
+
+
+				
+                
 				//checked existence  if id in PosMembers
 				var idposmember = $"Select * from posmembers  where IDNo='{printModel.IdNo}'";
 				var posmember = db.Database.SqlQuery<string>(idposmember).FirstOrDefault();
