@@ -3888,11 +3888,12 @@ warning 6002: The table/view 'TEST.dbo.port' does not have a primary key defined
           <Property Name="AgencyCode" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PhoneNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
-          <Property Name="FingerPrint" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FingerPrint1" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PosSerialNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Admin" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="FingerPrint2" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="PRODUCTINC">
           <Key>
@@ -13143,11 +13144,12 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <Property Name="AgencyCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="FingerPrint" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FingerPrint1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PosSerialNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Admin" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FingerPrint2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="PRODUCTINC">
           <Key>
@@ -17372,7 +17374,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <Property Name="ShareCapital" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Deposits" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
-        <EntityContainer Name="TESTEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TESTEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Advances" EntityType="Self.Advance" />
           <EntitySet Name="Adverts" EntityType="Self.Advert" />
           <EntitySet Name="APPRAISALs" EntityType="Self.APPRAISAL" />
@@ -23355,7 +23357,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TESTModelStoreContainer" CdmEntityContainer="TESTEntities1">
+        <EntityContainerMapping StorageEntityContainer="TESTModelStoreContainer" CdmEntityContainer="TESTEntities">
           <EntitySetMapping Name="Advances">
             <EntityTypeMapping TypeName="TESTModel.Advance">
               <MappingFragment StoreEntitySet="Advance">
@@ -24508,11 +24510,12 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
                 <ScalarProperty Name="AgencyCode" ColumnName="AgencyCode" />
                 <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="FingerPrint" ColumnName="FingerPrint" />
+                <ScalarProperty Name="FingerPrint1" ColumnName="FingerPrint1" />
                 <ScalarProperty Name="PosSerialNo" ColumnName="PosSerialNo" />
                 <ScalarProperty Name="Admin" ColumnName="Admin" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="FingerPrint2" ColumnName="FingerPrint2" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

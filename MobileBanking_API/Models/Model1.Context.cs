@@ -15,10 +15,10 @@ namespace MobileBanking_API.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class TESTEntities1 : DbContext
+    public partial class TESTEntities : DbContext
     {
-        public TESTEntities1()
-            : base("name=TESTEntities1")
+        public TESTEntities()
+            : base("name=TESTEntities")
         {
         }
     
@@ -302,7 +302,7 @@ namespace MobileBanking_API.Models
         public virtual DbSet<VwSharesHolder> VwSharesHolders { get; set; }
         public virtual DbSet<zonesReport> zonesReports { get; set; }
     
-        [DbFunction("TESTEntities1", "Advance_Appraisal")]
+        [DbFunction("TESTEntities", "Advance_Appraisal")]
         public virtual IQueryable<Advance_Appraisal_Result> Advance_Appraisal(string accNo, string productID)
         {
             var accNoParameter = accNo != null ?
@@ -313,30 +313,30 @@ namespace MobileBanking_API.Models
                 new ObjectParameter("ProductID", productID) :
                 new ObjectParameter("ProductID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Advance_Appraisal_Result>("[TESTEntities1].[Advance_Appraisal](@AccNo, @ProductID)", accNoParameter, productIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Advance_Appraisal_Result>("[TESTEntities].[Advance_Appraisal](@AccNo, @ProductID)", accNoParameter, productIDParameter);
         }
     
-        [DbFunction("TESTEntities1", "Get_B2C_Charges")]
+        [DbFunction("TESTEntities", "Get_B2C_Charges")]
         public virtual IQueryable<Get_B2C_Charges_Result> Get_B2C_Charges(Nullable<decimal> amount)
         {
             var amountParameter = amount.HasValue ?
                 new ObjectParameter("Amount", amount) :
                 new ObjectParameter("Amount", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Get_B2C_Charges_Result>("[TESTEntities1].[Get_B2C_Charges](@Amount)", amountParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Get_B2C_Charges_Result>("[TESTEntities].[Get_B2C_Charges](@Amount)", amountParameter);
         }
     
-        [DbFunction("TESTEntities1", "LoanInstalmentDetails")]
+        [DbFunction("TESTEntities", "LoanInstalmentDetails")]
         public virtual IQueryable<LoanInstalmentDetails_Result> LoanInstalmentDetails(string lNo)
         {
             var lNoParameter = lNo != null ?
                 new ObjectParameter("LNo", lNo) :
                 new ObjectParameter("LNo", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<LoanInstalmentDetails_Result>("[TESTEntities1].[LoanInstalmentDetails](@LNo)", lNoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<LoanInstalmentDetails_Result>("[TESTEntities].[LoanInstalmentDetails](@LNo)", lNoParameter);
         }
     
-        [DbFunction("TESTEntities1", "UDF_GL_Balance")]
+        [DbFunction("TESTEntities", "UDF_GL_Balance")]
         public virtual IQueryable<UDF_GL_Balance_Result> UDF_GL_Balance(string accNo, Nullable<System.DateTime> lastDate)
         {
             var accNoParameter = accNo != null ?
@@ -347,10 +347,10 @@ namespace MobileBanking_API.Models
                 new ObjectParameter("LastDate", lastDate) :
                 new ObjectParameter("LastDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UDF_GL_Balance_Result>("[TESTEntities1].[UDF_GL_Balance](@AccNo, @LastDate)", accNoParameter, lastDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UDF_GL_Balance_Result>("[TESTEntities].[UDF_GL_Balance](@AccNo, @LastDate)", accNoParameter, lastDateParameter);
         }
     
-        [DbFunction("TESTEntities1", "UDF_GL_OpeningBalance")]
+        [DbFunction("TESTEntities", "UDF_GL_OpeningBalance")]
         public virtual IQueryable<UDF_GL_OpeningBalance_Result> UDF_GL_OpeningBalance(string accNo, Nullable<System.DateTime> lastDate)
         {
             var accNoParameter = accNo != null ?
@@ -361,7 +361,7 @@ namespace MobileBanking_API.Models
                 new ObjectParameter("LastDate", lastDate) :
                 new ObjectParameter("LastDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UDF_GL_OpeningBalance_Result>("[TESTEntities1].[UDF_GL_OpeningBalance](@AccNo, @LastDate)", accNoParameter, lastDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UDF_GL_OpeningBalance_Result>("[TESTEntities].[UDF_GL_OpeningBalance](@AccNo, @LastDate)", accNoParameter, lastDateParameter);
         }
     
         public virtual int ACC_EDIT(string aCCNO)

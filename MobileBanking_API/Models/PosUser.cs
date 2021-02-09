@@ -20,10 +20,11 @@ namespace MobileBanking_API.Models
         public string AgencyCode { get; set; }
         public string PhoneNo { get; set; }
         public bool Active { get; set; }
-        public string FingerPrint { get; set; }
+        public string FingerPrint1 { get; set; }
         public string PosSerialNo { get; set; }
         public bool Admin { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedOn { get; set; }
+        public string FingerPrint2 { get; set; }
     }
 }
