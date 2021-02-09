@@ -10,20 +10,16 @@
 namespace MobileBanking_API.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PosUser
+    public partial class Get_Frozen_Trans_Result
     {
         public long ID { get; set; }
-        public string IDNo { get; set; }
-        public string Name { get; set; }
-        public string AgencyCode { get; set; }
-        public string PhoneNo { get; set; }
-        public bool Active { get; set; }
-        public string FingerPrint { get; set; }
-        public string PosSerialNo { get; set; }
-        public bool Admin { get; set; }
-        public string CreatedBy { get; set; }
-        public System.DateTime CreatedOn { get; set; }
+        public string AccNo { get; set; }
+        public System.DateTime TransDate { get; set; }
+        public string TransDescription { get; set; }
+        public double Amount { get; set; }
+        public string TransType { get; set; }
+        public string AuditID { get; set; }
+        public System.DateTime AuditTime { get; set; }
     }
 }

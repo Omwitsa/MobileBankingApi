@@ -12,10 +12,16 @@ namespace MobileBanking_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PosDevice
+    public partial class Expected_Return
     {
-        public int Id { get; set; }
-        public string Device_id { get; set; }
-        public string location { get; set; }
+        public string MemberNo { get; set; }
+        public string Surname { get; set; }
+        public string OtherNames { get; set; }
+        public Nullable<decimal> BALANCE { get; set; }
+        public Nullable<decimal> INTEREST { get; set; }
+        public Nullable<decimal> SHARES { get; set; }
+        public Nullable<int> mmonth { get; set; }
+        public string yyear { get; set; }
+        public string Rank { get; set; }
     }
 }

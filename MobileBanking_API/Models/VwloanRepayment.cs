@@ -12,18 +12,16 @@ namespace MobileBanking_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PosUser
+    public partial class VwloanRepayment
     {
-        public long ID { get; set; }
+        public string MemberNo { get; set; }
+        public string Surname { get; set; }
+        public string OtherNames { get; set; }
+        public string StaffNo { get; set; }
         public string IDNo { get; set; }
-        public string Name { get; set; }
-        public string AgencyCode { get; set; }
-        public string PhoneNo { get; set; }
-        public bool Active { get; set; }
-        public string FingerPrint { get; set; }
-        public string PosSerialNo { get; set; }
-        public bool Admin { get; set; }
-        public string CreatedBy { get; set; }
-        public System.DateTime CreatedOn { get; set; }
+        public string AccNo { get; set; }
+        public Nullable<decimal> Principal { get; set; }
+        public Nullable<decimal> Interest { get; set; }
+        public int Mmonth { get; set; }
     }
 }

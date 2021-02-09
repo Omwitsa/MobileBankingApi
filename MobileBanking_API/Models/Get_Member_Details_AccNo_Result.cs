@@ -10,9 +10,8 @@
 namespace MobileBanking_API.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class MEMBER
+    public partial class Get_Member_Details_AccNo_Result
     {
         public long ID { get; set; }
         public string MemberNo { get; set; }

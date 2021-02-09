@@ -10,33 +10,54 @@ namespace MobileBanking_API.Controllers
 	[RoutePrefix("webservice/users")]
 	public class UsersController : ApiController
 	{
-		kpillerEntities db;
+		TESTEntities1 db;
 		public UsersController()
 		{
-			db = new kpillerEntities();
+			db = new TESTEntities1();
 		}
 
-		[Route("seedAdminUser")]
-		public ReturnData SeedAdminUser([FromBody] PosUser admin)
-		{
+	
 
-
-
+        [Route("registerAgencyMember")]
+        public ReturnData RegisterAgencyMember([FromBody] Agencymember agencymember)
+        {
             try
             {
-                var isMembers = db.PosUsers.Any(a => a.username.ToUpper().Equals(admin.username.ToUpper()));
-                if (!isMembers)
-                {
-                    admin.password = Decryptor.Decript_String(admin.password);
-                    //admin.password = SecurePasswordHasher.Hash(admin.password);
-                    db.PosUsers.Add(admin);
-                }
+                if (string.IsNullOrEmpty(agencymember.idno) || string.IsNullOrEmpty(agencymember.MachineID))
+                    return new ReturnData
+                    {
+                        Success = false,
+                        Message = "Sorry, kindly provide member data"
+                    };
 
-                db.SaveChanges();
+                var posAgent = db.PosAgents.FirstOrDefault(a => a.AgencyName == agencymember.agency);
+                if (posAgent == null)
+                    return new ReturnData
+                    {
+                        Success = false,
+                        Message = "Sorry, Member already exist"
+                    };
+
+				db.PosUsers.Add(new PosUser
+				{
+					IDNo = agencymember.idno,
+					Name = agencymember.names,
+					AgencyCode = posAgent.AgencyCode,
+					PhoneNo = agencymember.phone,
+					Active = true,
+					FingerPrint = agencymember.Fingerprint,
+					PosSerialNo = agencymember.MachineID,
+					Admin = true,
+					CreatedBy = agencymember.agentid,
+					CreatedOn = DateTime.UtcNow.Date
+
+				});
+
+				db.SaveChanges();
                 return new ReturnData
                 {
                     Success = true,
-                    Message = "Account created successfully"
+                    Message = "Member Registered successfully"
                 };
             }
             catch (Exception ex)
@@ -44,54 +65,11 @@ namespace MobileBanking_API.Controllers
                 return new ReturnData
                 {
                     Success = false,
-                    Message = "Sorry, An error occurred"
+                    Message = "Sorry, Your registration was Unsuccessfully,check your network connection"
                 };
             }
         }
-
-        [Route("registerAgencyMember")]
-		public ReturnData RegisterAgencyMember([FromBody] Agencymember agencymember)
-		{
-			try
-			{
-				if (string.IsNullOrEmpty(agencymember.idno) || string.IsNullOrEmpty(agencymember.MachineID))
-					return new ReturnData
-					{
-						Success = false,
-						Message = "Sorry, kindly provide member data"
-					};
-
-				var posAgent = db.PosAgents.FirstOrDefault(a => a.IDNo == agencymember.idno);
-				if (posAgent != null)
-					return new ReturnData
-					{
-						Success = false,
-						Message = "Sorry, Member already exist"
-					};
-
-                
-				db.PosAgents.Add(new PosAgent
-				{
-					
-					
-				});
-				db.SaveChanges();
-				return new ReturnData
-				{
-					Success = true,
-					Message = "Member Registered successfully"
-				};
-			}
-			catch (Exception ex)
-			{
-				return new ReturnData
-				{
-					Success = false,
-					Message = "Sorry, An error occurred"
-				};
-			}
-		}
-		[Route("registerAgentMember")]
+        [Route("registerAgentMember")]
 		public ReturnData RegisterAgentMember([FromBody] Agentmember agent)
 		{
 			try
@@ -128,39 +106,65 @@ namespace MobileBanking_API.Controllers
 				};
 			}
 		}
-
-		[Route("login")]
-		public ReturnData Login([FromBody] PosUser admin)
+		[Route("registerFingers")]
+		public ReturnData RegisterFingers([FromBody] RegisterFingers fingerprint)
 		{
 			try
 			{
-				var adminUser = db.UserAccounts.FirstOrDefault(u => u.UserLoginID.ToUpper().Equals(admin.username.ToUpper()));
-				if (adminUser == null)
+				//if (!string.IsNullOrEmpty(printModel.FingerPrint))
+				var figuerPrintInfo = fingerprint.FingerPrint.Split('@');
+				fingerprint.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
+				int decimalFingerprint = int.Parse(fingerprint.FingerPrint, System.Globalization.NumberStyles.HexNumber);
+				//select the fingerprints from database
+				var idposuser = $"Select fingerprint1 from PosUsers  where IDNo='{fingerprint.IdNo}'";
+				int posuser = db.Database.SqlQuery<int>(idposuser).FirstOrDefault();
+				if (posuser >= decimalFingerprint)
+				{
 					return new ReturnData
 					{
-						Success = false,
-						Message = "Sorry, Invalid username or password"
+						Success = true,
+						Message = "Verification was successfully"
 					};
-
-				if (!Decryptor.Decript_String (admin.password).Equals(adminUser.mPassword))
-
-					return new ReturnData
+				}
+				else
+				{
+					var idposuser1 = $"Select fingerprint2 from PosUsers  where IDNo='{fingerprint.IdNo}'";
+					int posuser1 = db.Database.SqlQuery<int>(idposuser1).FirstOrDefault();
+					if (posuser1 >= decimalFingerprint)
 					{
-						Success = false,
-						Message = "Sorry, Invalid username or password"
-					};
 
-				if (adminUser.PosAdmin.Equals(false))
-					return new ReturnData
-					{
-						Success = false,
-						Message = "You are not Authorised to use this device"
-					};
-				
+					}
+				}
 				return new ReturnData
 				{
 					Success = true,
-					Message = "Logged in successfully"
+					Message = "Verification was successfully"
+				};
+				//verification for posMembers
+				var posmember = $"Select fingerprint1 from PosMembers  where IDNo='{fingerprint.IdNo}'";
+				int posmember1 = db.Database.SqlQuery<int>(posmember).FirstOrDefault();
+				if (posmember1 >= decimalFingerprint)
+				{
+					return new ReturnData
+					{
+						Success = true,
+						Message = "Verification was successfully"
+					};
+				}
+				else
+				{
+					var idposuser1 = $"Select fingerprint2 from PosUsers  where IDNo='{fingerprint.IdNo}'";
+					int posuser1 = db.Database.SqlQuery<int>(idposuser1).FirstOrDefault();
+					if (posuser1 >= decimalFingerprint)
+					{
+
+					}
+				}
+				return new ReturnData
+				{
+					Success = true,
+					Message = "Verification was successfully"
+
 				};
 			}
 			catch (Exception ex)
@@ -168,24 +172,150 @@ namespace MobileBanking_API.Controllers
 				return new ReturnData
 				{
 					Success = false,
-					Message = "Sorry, An error occurred"
+					Message = "Sorry, your identity could not be verified,please try again"
 				};
 			}
 		}
 
-		[Route("registerFingerPrints")]
+//[Route("login")]
+//public ReturnData Login([FromBody] PosUser admin)
+//{
+//	try
+//	{
+//		var adminUser = db.UserAccounts.FirstOrDefault(u => u.UserLoginID.ToUpper().Equals(admin.username.ToUpper()));
+//		if (adminUser == null)
+//			return new ReturnData
+//			{
+//				Success = false,
+//				Message = "Sorry, Invalid username or password"
+//			};
+
+//		if (!Decryptor.Decript_String (admin.password).Equals(adminUser.mPassword))
+
+//			return new ReturnData
+//			{
+//				Success = false,
+//				Message = "Sorry, Invalid username or password"
+//			};
+
+//		if (adminUser.PosAdmin.Equals(false))
+//			return new ReturnData
+//			{
+//				Success = false,
+//				Message = "You are not Authorised to use this device"
+//			};
+
+//		return new ReturnData
+//		{
+//			Success = true,
+//			Message = "Logged in successfully"
+//		};
+//	}
+//	catch (Exception ex)
+//	{
+//		return new ReturnData
+//		{
+//			Success = false,
+//			Message = "Sorry, An error occurred"
+//		};
+//	}
+//}
+///
+//registerFingers
+[Route("registerFingerPrints")]
 		public ReturnData RegisterFingerPrints([FromBody] FingerPrintModel printModel)
 		{
 			try
-			{
-                
-                
-                //if (!string.IsNullOrEmpty(printModel.FingerPrint))
-                var accmeber = $"Select FingerPrint1 from MEMBERS  where IDNo='{printModel.IdNo}'";
+			{ 
+				//if (!string.IsNullOrEmpty(printModel.FingerPrint))
+				var figuerPrintInfo = printModel.FingerPrint.Split('@');
+				printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
+				int decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
+				//check existence of id in the PosUser
+				var idposuser= $"Select * from PosUsers  where IDNo='{printModel.IdNo}'";
+				var posuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
+				if(posuser != null) 
+				{
+					var posuserfingerprint = $"Select FingerPrint from PosUsers  where IDNo='{printModel.IdNo}'";
+					var posuserdata = db.Database.SqlQuery<string>(posuserfingerprint).FirstOrDefault();
+
+					if (posuserdata != null)
+					{
+						var posuserFingerprint = $"UPDATE PosUsers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+						db.Database.ExecuteSqlCommand(posuserFingerprint);
+
+					}
+					else
+					{
+						var posuserFingerprint1 = $"UPDATE PosUsers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+						db.Database.ExecuteSqlCommand(posuserFingerprint1);
+					}
+
+
+				}
+                else 
+				{
+					return new ReturnData
+					{
+						Success = true,
+						Message = "User doesnot exist  in the system"
+					};
+				}
+				//checked existence  if id in PosMembers
+				var idposmember = $"Select * from posmembers  where IDNo='{printModel.IdNo}'";
+				var posmember = db.Database.SqlQuery<string>(idposmember).FirstOrDefault();
+				if (posmember != null)
+				{
+					var posmemberfingerprint = $"Select FingerPrint1 from posmembers  where IDNo='{printModel.IdNo}'";
+					var posmemberdata = db.Database.SqlQuery<string>(posmemberfingerprint).FirstOrDefault();
+
+					if (posmemberdata != null)
+					{
+						var posmemberFingerprint = $"UPDATE posmembers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+						db.Database.ExecuteSqlCommand(posmemberFingerprint);
+						var memberFingerprint1 = $"UPDATE members SET fingerprint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+						db.Database.ExecuteSqlCommand(memberFingerprint1);
+
+					}
+					else
+					{
+						var posuserFingerprint1 = $"UPDATE posmembers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+						db.Database.ExecuteSqlCommand(posuserFingerprint1);
+						var memberFingerprint2 = $"UPDATE members SET fingerprint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+						db.Database.ExecuteSqlCommand(memberFingerprint2);
+					}
+
+
+				}
+				else
+				{
+                    //var posAgent = db.PosAgents.FirstOrDefault(a => a.AgencyName == printModel.AgencyCode);
+                    //if (posAgent == null)
+                    //    return new ReturnData
+                    //    {
+                    //        Success = false,
+                    //        Message = ""
+                    //    };
+                    //db.PosMembers.Add(new PosMember
+                    //{
+                    //    IDNo = printModel.IdNo,
+                    //    FingerPrint1 = printModel.FingerPrint,
+                    //    FingerPrint2 = "",
+                    //    AuditID = printModel.AuditId,
+                    //    RegistrationDate = DateTime.UtcNow.Date,
+                    //    PosSerialNo = printModel.serialNo,
+                    //    AgencyCode = posAgent.AgencyCode
+
+                    //});
+
+					var memberFingerprint = $"UPDATE members SET fingerprint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
+					db.Database.ExecuteSqlCommand(memberFingerprint);
+                }
+
+				//Update members table with fingerprint
+				var accmeber = $"Select Fingerprint1 from MEMBERS  where IDNo='{printModel.IdNo}'";
                 var membeno = db.Database.SqlQuery<string>(accmeber).FirstOrDefault();
-                var figuerPrintInfo = printModel.FingerPrint.Split('@');
-                printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
-                int decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
+                
                 if (membeno != null)
                 {
                     var fingerUpdateQuery = $"UPDATE MEMBERS SET FingerPrint = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'";
@@ -258,4 +388,6 @@ namespace MobileBanking_API.Controllers
 		}
 	}
 
+
+   
 }
