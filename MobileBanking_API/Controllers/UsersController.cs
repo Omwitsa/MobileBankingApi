@@ -116,12 +116,15 @@ namespace MobileBanking_API.Controllers
 				//select the fingerprints from database
 				var idposuser = $"Select fingerprint1 from PosUsers  where IDNo='{fingerprint.IdNo}'and PosSerialNo='{fingerprint.MachineId}'";
 				var posuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
+				var role = db.PosUsers.Where(m => m.IDNo == fingerprint.IdNo).Select(m => m.Admin).ToList();
 				if (posuser != null && posuser !="")
 				{
 					return new ReturnData
 					{
 						Success = true,
-						Message = "FingerPrint Verification was successfully"
+						Message = "FingerPrint Verification was successfully",
+						Data=role
+						
 					};
 				}
 				else
