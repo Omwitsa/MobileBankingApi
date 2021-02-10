@@ -234,13 +234,17 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
+				if (string.IsNullOrEmpty(printModel.FingerPrint))
+				{ }
 				//if (!string.IsNullOrEmpty(printModel.FingerPrint))
 				var figuerPrintInfo = printModel.FingerPrint.Split('@');
 				printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
 				int decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
 				//verify idno in the database
-				var posUser = db.PosUsers.FirstOrDefault(a => a.IDNo == printModel.IdNo);
-				if (posUser != null)
+				//var posUser = db.PosUsers.FirstOrDefault(a => a.IDNo == printModel.IdNo);
+				var posUser = $"Select IDNo PosUsers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}'";
+				var posUsers = db.Database.SqlQuery<string>(posUser).FirstOrDefault();
+				if (posUsers != null && posUsers != "")
 				{
 
 					
@@ -272,6 +276,28 @@ namespace MobileBanking_API.Controllers
 					}
 
 					
+				}
+                else 
+				{ 
+							var agentcode = db.PosAgents.FirstOrDefault(a => a.PosSerialNo == printModel.MachineId);
+					db.PosMembers.Add(new PosMember
+					{
+						IDNo = printModel.IdNo,
+						FingerPrint1 = printModel.FingerPrint,
+						AuditID = "",
+						PosSerialNo = printModel.MachineId,
+						AgencyCode = agentcode.AgencyCode
+						
+						
+
+					});
+
+					db.SaveChanges();
+					return new ReturnData
+					{
+						Success = true,
+						Message = "Deposited sucessfully"
+					};
 				}
 
 
@@ -310,11 +336,29 @@ namespace MobileBanking_API.Controllers
 					}
 
 				}
-				return new ReturnData
+				else 
 				{
-					Success = true,
-					Message = "Fingerprints updated successfully"
-				};
+					var agentcode = db.PosAgents.FirstOrDefault(a => a.PosSerialNo == printModel.MachineId);
+					db.PosMembers.Add(new PosMember
+					{
+						IDNo = printModel.IdNo,
+						FingerPrint1 = printModel.FingerPrint,
+						AuditID = "",
+						PosSerialNo = printModel.MachineId,
+						AgencyCode = agentcode.AgencyCode
+						
+						
+
+					});
+
+					db.SaveChanges();
+					return new ReturnData
+					{
+						Success = true,
+						Message = "Deposited sucessfully"
+					};
+				}
+			
 
 			}
 			catch (Exception ex)
