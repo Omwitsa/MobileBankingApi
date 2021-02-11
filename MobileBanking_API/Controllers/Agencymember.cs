@@ -10,6 +10,8 @@
         public string MachineID { get; set; }
         public string agentid { get; set; }
         public string agency { get; set; }
-        
+        public string Role { get; set; }
+        public string Operatorid { get; set; }
+
     }
 }
