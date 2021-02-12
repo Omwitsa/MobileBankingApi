@@ -124,80 +124,47 @@ namespace MobileBanking_API.Controllers
 				};
 			}
 		}
-		[Route("Login")]
-		public ReturnData RegisterFingers([FromBody] RegisterFingers fingerprint)
+		[Route("adminLogin")]
+		public ReturnData LoginModel([FromBody] LoginModel logindata)
 		{
 			try
 			{
 				
 				
-				//select the fingerprints from database
-				var idposuser = $"Select fingerprint1 from PosUsers  where IDNo='{fingerprint.IdNo}'and PosSerialNo='{fingerprint.MachineId}'";
+				//select the Admin status  from database
+				var idposuser = $"Select IDNo from PosUsers  where IDNo='{logindata.IdNo}'and PosSerialNo='{logindata.MachineId}'and Active='1'";
 				var posuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
-				var role = db.PosUsers.Where(m => m.IDNo == fingerprint.IdNo).Select(m => m.Admin).ToList();
 				if (posuser != null && posuser !="")
 				{
+					var idposuser1 = $"Select Admin from PosUsers  where IDNo='{logindata.IdNo}'and PosSerialNo='{logindata.MachineId}'and Active='1'";
+					bool posuser1 = db.Database.SqlQuery<bool>(idposuser1).FirstOrDefault();
+
 					return new ReturnData
 					{
 						Success = true,
-						Message = "FingerPrint Verification was successful",
-						Data=role
+						Message = $"{posuser1}",
+						
 						
 					};
 				}
 				else
 				{
-					var idposuser1 = $"Select fingerprint2 from PosUsers  where IDNo='{fingerprint.IdNo}'and PosSerialNo='{fingerprint.MachineId}'";
-					var posuser1 = db.Database.SqlQuery<string>(idposuser1).FirstOrDefault();
-					if (posuser1 != null && posuser1 != "")
-					{
-						return new ReturnData
-						{
-							Success = true,
-							Message = "FingerPrint Verification was successful"
-
-						};
-					}
 					
-					//verification for posMembers
-					var posmember = $"Select fingerprint1 from PosMembers  where IDNo='{fingerprint.IdNo}'and PosSerialNo='{fingerprint.MachineId}'";
-					var posmember1 = db.Database.SqlQuery<string>(posmember).FirstOrDefault();
-					if (posmember1 != null && posmember1 != "")
-					{
 						return new ReturnData
 						{
 							Success = true,
-							Message = "FingerPrint Verification was successful"
+							Message = "You are not Authorised as Administrator "
+
 						};
-					}
-					else
-					{
-						var idposuser2 = $"Select fingerprint2 from PosMembers  where IDNo='{fingerprint.IdNo}'and PosSerialNo='{fingerprint.MachineId}'";
-						var posuser2 = db.Database.SqlQuery<string>(idposuser2).FirstOrDefault();
-						if (posuser2 != null && posuser2 != "")
-						{
-							return new ReturnData
-							{
-								Success = true,
-								Message = "FingerPrint Verification was successful"
-
-							};
-						}
-					}
-					return new ReturnData
-					{
-						Success = true,
-						Message = "Verification was successful"
-
-					};
 				}
+					
 			}
 			catch (Exception ex)
 			{
 				return new ReturnData
 				{
 					Success = false,
-					Message = "Sorry, your identity could not be verified, please try again"
+					Message = "Sorry, your identity could not be verified, contact System Administrator"
 				};
 			}
 		}
