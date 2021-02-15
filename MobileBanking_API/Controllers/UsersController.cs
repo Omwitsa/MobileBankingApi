@@ -32,11 +32,11 @@ namespace MobileBanking_API.Controllers
 
 
                 //check if another admin exist based on option selected
-                if (agencymember.Role == "Administrator")
+                if (agencymember.admins == "Administrator")
                 {
-                    var posadmin2 = $"Select IDNo From PosUsers Where IDNo='{agencymember.idno}' Not in (Select IDNo='{agencymember.idno}' From UserAccounts Where POSAdmin ='1') AND Admin = '1' and Active = '1' and PosSerialNo = '{agencymember.MachineID}'";
+                    var posadmin2 = $"Select IDNo From PosUsers Where IDNo Not in (Select IDNo From UserAccounts Where POSAdmin=1) AND Admin=1 and Active=1 and PosSerialNo='{agencymember.MachineID}'";
                     var posadmin2idno = db.Database.SqlQuery<string>(posadmin2).FirstOrDefault();
-                    if (posadmin2idno != null && posadmin2idno != "")
+                    if (posadmin2idno != null)
                     {
 						return new ReturnData
 						{
@@ -49,11 +49,23 @@ namespace MobileBanking_API.Controllers
 
                 }
 				bool Isadmin = false;
-				if (agencymember.Role == "Administrator")
+				if (agencymember.admins == "Administrator")
 				{
 					Isadmin = true;
 
                 }
+				var posadminadd = $"Select IDNo From PosUsers Where IDNo='{agencymember.idno}' AND  PosSerialNo='{agencymember.MachineID}'";
+				var poscheckid = db.Database.SqlQuery<string>(posadminadd).FirstOrDefault();
+				if (poscheckid != null && poscheckid !="")
+				{
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, You have already registered"
+					};
+
+
+				}
 
 				var posAgent = db.PosAgents.FirstOrDefault(a => a.AgencyName == agencymember.agency);
 				db.PosUsers.Add(new PosUser
@@ -66,8 +78,9 @@ namespace MobileBanking_API.Controllers
 					FingerPrint1 = agencymember.Fingerprint,
 					PosSerialNo = agencymember.MachineID,
 					Admin = Isadmin,
-					CreatedBy = agencymember.Operatorid,
-					CreatedOn = DateTime.UtcNow.Date
+					CreatedBy = agencymember.agentid,
+					CreatedOn = DateTime.UtcNow.Date,
+					FingerPrint2 = ""
 
 				});
 
@@ -124,6 +137,39 @@ namespace MobileBanking_API.Controllers
 				};
 			}
 		}
+		[Route("passwordLogin")]
+		public ReturnData PasswordLogin([FromBody] LoadData loadData)
+		{
+			try
+			{
+				var posUser = $"Select IDNo from PosUsers  where PosSerialNo='{loadData.MachineId}'";
+				var posUsers = db.Database.SqlQuery<string>(posUser).FirstOrDefault();
+				if (posUsers != null && posUsers != "")
+				{
+					return new ReturnData
+					{
+						Success = true,
+						Message = "True"
+					};
+				}
+				else
+				{
+					return new ReturnData
+					{
+						Success = true,
+						Message = "False"
+					};
+				}
+			}
+			catch (Exception)
+			{
+				return new ReturnData
+				{
+					Success = false,
+					Message = "Sorry, An error occurred"
+				};
+			}
+		}
 		[Route("adminLogin")]
 		public ReturnData LoginModel([FromBody] LoginModel logindata)
 		{
@@ -169,52 +215,62 @@ namespace MobileBanking_API.Controllers
 			}
 		}
 
-//[Route("login")]
-//public ReturnData Login([FromBody] PosUser admin)
-//{
-//	try
-//	{
-//		var adminUser = db.UserAccounts.FirstOrDefault(u => u.UserLoginID.ToUpper().Equals(admin.username.ToUpper()));
-//		if (adminUser == null)
-//			return new ReturnData
-//			{
-//				Success = false,
-//				Message = "Sorry, Invalid username or password"
-//			};
+        [Route("login")]
+        public ReturnData Login([FromBody] MemberModel admin)
+        {
+            try
+            {
+				var adminUser = db.UserAccounts.FirstOrDefault(a => a.UserLoginID == admin.username);
+				if (adminUser != null)
+				{
+					string Password = Decryptor.Decript_String(admin.password);
+					string dbPassword = adminUser.mPassword;
+					if (Password == dbPassword)
 
-//		if (!Decryptor.Decript_String (admin.password).Equals(adminUser.mPassword))
+					{
+						return new ReturnData
+						{
+							Success = true,
+							Message = "Login Successfull"
+						};
+					}
+					else
+					{
+						return new ReturnData
+						{
+							Success = false,
+							Message = "Login failed,wrong password provided"
+						};
+					}
 
-//			return new ReturnData
-//			{
-//				Success = false,
-//				Message = "Sorry, Invalid username or password"
-//			};
 
-//		if (adminUser.PosAdmin.Equals(false))
-//			return new ReturnData
-//			{
-//				Success = false,
-//				Message = "You are not Authorised to use this device"
-//			};
 
-//		return new ReturnData
-//		{
-//			Success = true,
-//			Message = "Logged in successfully"
-//		};
-//	}
-//	catch (Exception ex)
-//	{
-//		return new ReturnData
-//		{
-//			Success = false,
-//			Message = "Sorry, An error occurred"
-//		};
-//	}
-//}
-///
-//registerFingers
-[Route("registerFingerPrints")]
+
+					//if (!Decryptor.Decript_String(admin.password).Equals(adminUser.mPassword))
+
+
+				}
+				else
+				{
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Invalid username and Password"
+					};
+				}
+            }
+            catch (Exception ex)
+            {
+                return new ReturnData
+                {
+                    Success = false,
+                    Message = "Sorry, An error occurred"
+                };
+            }
+        }
+        ///
+        //registerFingers
+        [Route("registerFingerPrints")]
         public ReturnData RegisterFingerPrints([FromBody] FingerPrintModel printModel)
 		{
 			try
