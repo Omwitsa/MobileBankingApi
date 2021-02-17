@@ -175,21 +175,36 @@ warning 6002: The table/view 'TEST.dbo.AdvanceStmt' does not have a primary key 
           <Property Name="RequestDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'TEST.dbo.Agentmembers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Agentmembers">
+warning 6002: The table/view 'TEST.dbo.AgentMembers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AgentMembers">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDNo" />
+            <PropertyRef Name="SurName" />
+            <PropertyRef Name="OtherNames" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="DOB" />
+            <PropertyRef Name="MobileNo" />
+            <PropertyRef Name="FingerPrint1" />
+            <PropertyRef Name="FingerPrint2" />
+            <PropertyRef Name="PosSerialNo" />
+            <PropertyRef Name="Registred" />
+            <PropertyRef Name="AuditID" />
+            <PropertyRef Name="RegistrationDate" />
           </Key>
-          <Property Name="Surname" Type="nchar" MaxLength="10" />
-          <Property Name="Other names" Type="nchar" MaxLength="10" />
-          <Property Name="idno" Type="nchar" MaxLength="10" />
-          <Property Name="mobile number" Type="nchar" MaxLength="10" />
-          <Property Name="Gender" Type="nchar" MaxLength="10" />
-          <Property Name="DOB" Type="nchar" MaxLength="10" />
-          <Property Name="fingerprint1" Type="nchar" MaxLength="10" />
-          <Property Name="fingerprint2" Type="nchar" MaxLength="10" />
-          <Property Name="Agentid" Type="nchar" MaxLength="10" />
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SurName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OtherNames" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sex" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DOB" Type="datetime" Nullable="false" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FingerPrint1" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FingerPrint2" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PosSerialNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Registred" Type="bit" Nullable="false" />
+          <Property Name="AuditID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RegistrationDate" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6013: The table/view 'TEST.dbo.agents' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
@@ -3863,6 +3878,7 @@ warning 6002: The table/view 'TEST.dbo.port' does not have a primary key defined
           <Property Name="PhoneNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CreateOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CommissionAccNo" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PosMembers">
           <Key>
@@ -6839,6 +6855,19 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
         <Function Name="Get_Other_Deduction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="memberno" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="Get_POS_Charges" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Amount" Type="money" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="id" Type="int" Nullable="false" />
+                <Property Name="Agent_Charges" Type="money" />
+                <Property Name="Sacco_Charges" Type="money" />
+                <Property Name="Exise_Duty" Type="money" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="Get_Posted_Amount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Period" Type="datetime" Mode="In" />
           <Parameter Name="Source" Type="nvarchar" Mode="In" />
@@ -9150,19 +9179,22 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
     [AdvanceStmt].[IsAdvance] AS [IsAdvance]
     FROM [dbo].[AdvanceStmt] AS [AdvanceStmt]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="Agentmembers" EntityType="Self.Agentmembers" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="AgentMembers" EntityType="Self.AgentMembers" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Agentmembers].[Surname] AS [Surname], 
-    [Agentmembers].[Other names] AS [Other names], 
-    [Agentmembers].[idno] AS [idno], 
-    [Agentmembers].[mobile number] AS [mobile number], 
-    [Agentmembers].[Gender] AS [Gender], 
-    [Agentmembers].[DOB] AS [DOB], 
-    [Agentmembers].[fingerprint1] AS [fingerprint1], 
-    [Agentmembers].[fingerprint2] AS [fingerprint2], 
-    [Agentmembers].[Agentid] AS [Agentid], 
-    [Agentmembers].[Id] AS [Id]
-    FROM [dbo].[Agentmembers] AS [Agentmembers]</DefiningQuery>
+    [AgentMembers].[ID] AS [ID], 
+    [AgentMembers].[IDNo] AS [IDNo], 
+    [AgentMembers].[SurName] AS [SurName], 
+    [AgentMembers].[OtherNames] AS [OtherNames], 
+    [AgentMembers].[Sex] AS [Sex], 
+    [AgentMembers].[DOB] AS [DOB], 
+    [AgentMembers].[MobileNo] AS [MobileNo], 
+    [AgentMembers].[FingerPrint1] AS [FingerPrint1], 
+    [AgentMembers].[FingerPrint2] AS [FingerPrint2], 
+    [AgentMembers].[PosSerialNo] AS [PosSerialNo], 
+    [AgentMembers].[Registred] AS [Registred], 
+    [AgentMembers].[AuditID] AS [AuditID], 
+    [AgentMembers].[RegistrationDate] AS [RegistrationDate]
+    FROM [dbo].[AgentMembers] AS [AgentMembers]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="agingsummary" EntityType="Self.agingsummary" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -12014,6 +12046,12 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <Property Name="Safaricom_Charges" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Sacco_Charges" Type="Decimal" Precision="19" Scale="4" />
         </ComplexType>
+        <ComplexType Name="Get_POS_Charges_Result">
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Agent_Charges" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Sacco_Charges" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Exise_Duty" Type="Decimal" Precision="19" Scale="4" />
+        </ComplexType>
         <ComplexType Name="LoanInstalmentDetails_Result">
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="IntAmt" Type="Decimal" Precision="19" Scale="4" />
@@ -13119,6 +13157,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreateOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CommissionAccNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PosMember">
           <Key>
@@ -13773,20 +13812,35 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <Property Name="DedCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IsAdvance" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="Agentmember">
+        <EntityType Name="AgentMember">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDNo" />
+            <PropertyRef Name="SurName" />
+            <PropertyRef Name="OtherNames" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="DOB" />
+            <PropertyRef Name="MobileNo" />
+            <PropertyRef Name="FingerPrint1" />
+            <PropertyRef Name="FingerPrint2" />
+            <PropertyRef Name="PosSerialNo" />
+            <PropertyRef Name="Registred" />
+            <PropertyRef Name="AuditID" />
+            <PropertyRef Name="RegistrationDate" />
           </Key>
-          <Property Name="Surname" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Other_names" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="idno" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="mobile_number" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="DOB" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="fingerprint1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="fingerprint2" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Agentid" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SurName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OtherNames" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Sex" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FingerPrint1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FingerPrint2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PosSerialNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Registred" Type="Boolean" Nullable="false" />
+          <Property Name="AuditID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RegistrationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="agingsummary">
           <Key>
@@ -17374,7 +17428,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <Property Name="ShareCapital" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Deposits" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
-        <EntityContainer Name="TESTEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TESTEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Advances" EntityType="Self.Advance" />
           <EntitySet Name="Adverts" EntityType="Self.Advert" />
           <EntitySet Name="APPRAISALs" EntityType="Self.APPRAISAL" />
@@ -17446,7 +17500,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <EntitySet Name="AdvanceGuarantors" EntityType="Self.AdvanceGuarantor" />
           <EntitySet Name="AdvanceStatements" EntityType="Self.AdvanceStatement" />
           <EntitySet Name="AdvanceStmts" EntityType="Self.AdvanceStmt" />
-          <EntitySet Name="Agentmembers" EntityType="Self.Agentmember" />
+          <EntitySet Name="AgentMembers" EntityType="Self.AgentMember" />
           <EntitySet Name="agingsummaries" EntityType="Self.agingsummary" />
           <EntitySet Name="APs" EntityType="Self.AP" />
           <EntitySet Name="Asset_Depreciations" EntityType="Self.Asset_Depreciation" />
@@ -17654,6 +17708,9 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
             <Parameter Name="ProductID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Get_B2C_Charges" IsComposable="true" ReturnType="Collection(TESTModel.Get_B2C_Charges_Result)">
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="Get_POS_Charges" IsComposable="true" ReturnType="Collection(TESTModel.Get_POS_Charges_Result)">
             <Parameter Name="Amount" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="LoanInstalmentDetails" IsComposable="true" ReturnType="Collection(TESTModel.LoanInstalmentDetails_Result)">
@@ -23357,7 +23414,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TESTModelStoreContainer" CdmEntityContainer="TESTEntities">
+        <EntityContainerMapping StorageEntityContainer="TESTModelStoreContainer" CdmEntityContainer="TESTEntities1">
           <EntitySetMapping Name="Advances">
             <EntityTypeMapping TypeName="TESTModel.Advance">
               <MappingFragment StoreEntitySet="Advance">
@@ -24483,6 +24540,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
                 <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
                 <ScalarProperty Name="CreateOn" ColumnName="CreateOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CommissionAccNo" ColumnName="CommissionAccNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -25142,19 +25200,22 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Agentmembers">
-            <EntityTypeMapping TypeName="TESTModel.Agentmember">
-              <MappingFragment StoreEntitySet="Agentmembers">
-                <ScalarProperty Name="Surname" ColumnName="Surname" />
-                <ScalarProperty Name="Other_names" ColumnName="Other names" />
-                <ScalarProperty Name="idno" ColumnName="idno" />
-                <ScalarProperty Name="mobile_number" ColumnName="mobile number" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <EntitySetMapping Name="AgentMembers">
+            <EntityTypeMapping TypeName="TESTModel.AgentMember">
+              <MappingFragment StoreEntitySet="AgentMembers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDNo" ColumnName="IDNo" />
+                <ScalarProperty Name="SurName" ColumnName="SurName" />
+                <ScalarProperty Name="OtherNames" ColumnName="OtherNames" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="fingerprint1" ColumnName="fingerprint1" />
-                <ScalarProperty Name="fingerprint2" ColumnName="fingerprint2" />
-                <ScalarProperty Name="Agentid" ColumnName="Agentid" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="FingerPrint1" ColumnName="FingerPrint1" />
+                <ScalarProperty Name="FingerPrint2" ColumnName="FingerPrint2" />
+                <ScalarProperty Name="PosSerialNo" ColumnName="PosSerialNo" />
+                <ScalarProperty Name="Registred" ColumnName="Registred" />
+                <ScalarProperty Name="AuditID" ColumnName="AuditID" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -28411,6 +28472,16 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="Safaricom_Charges" ColumnName="Safaricom_Charges" />
                 <ScalarProperty Name="Sacco_Charges" ColumnName="Sacco_Charges" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="TESTModel.Store.Get_POS_Charges" FunctionImportName="Get_POS_Charges">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TESTModel.Get_POS_Charges_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Agent_Charges" ColumnName="Agent_Charges" />
+                <ScalarProperty Name="Sacco_Charges" ColumnName="Sacco_Charges" />
+                <ScalarProperty Name="Exise_Duty" ColumnName="Exise_Duty" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

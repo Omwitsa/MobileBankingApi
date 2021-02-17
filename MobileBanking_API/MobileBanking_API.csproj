@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Agencymember.cs" />
+    <Compile Include="Controllers\AgentNewMembers.cs" />
     <Compile Include="Controllers\LoadData.cs" />
     <Compile Include="Controllers\LoginModel.cs" />
     <Compile Include="Controllers\MemberModel.cs" />
@@ -141,7 +142,7 @@
     <Compile Include="Models\Advert.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Agentmember.cs">
+    <Compile Include="Models\AgentMember.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\agingsummary.cs">
@@ -568,6 +569,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Get_Other_Deduction_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Get_POS_Charges_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Get_Share_contrib_Result.cs">

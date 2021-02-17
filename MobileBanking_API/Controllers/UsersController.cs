@@ -10,10 +10,10 @@ namespace MobileBanking_API.Controllers
 	[RoutePrefix("webservice/users")]
 	public class UsersController : ApiController
 	{
-		TESTEntities db;
+		TESTEntities1 db;
 		public UsersController()
 		{
-			db = new TESTEntities();
+			db = new TESTEntities1();
 		}
 
 	
@@ -101,26 +101,50 @@ namespace MobileBanking_API.Controllers
             }
         }
         [Route("registerAgentMember")]
-		public ReturnData RegisterAgentMember([FromBody] Agentmember agent)
+		public ReturnData RegisterAgentMember([FromBody] AgentNewMembers agent)
 		{
 			try
 			{
-				if (string.IsNullOrEmpty(agent.idno) || string.IsNullOrEmpty(agent.Surname))
+				if (string.IsNullOrEmpty(agent.idno) || string.IsNullOrEmpty(agent.MachineId))
+				{
 					return new ReturnData
 					{
 						Success = false,
 						Message = "Sorry, kindly provide member data"
 					};
+				}
 
-				var agentMember = db.Agentmembers.FirstOrDefault(a => a.idno == agent.idno);
+				var agentMember = db.AgentMembers.FirstOrDefault(a => a.IDNo == agent.idno);
 				if (agentMember != null)
+				{
 					return new ReturnData
 					{
 						Success = false,
 						Message = "Sorry, Member already exist"
 					};
+				}
+				else
+				{
+					var agentMember1 = db.PosUsers.FirstOrDefault(a => a.PosSerialNo == agent.MachineId);
 
-				db.Agentmembers.Add(agent);
+					//db.Agentmembers.Add(agent);
+					db.AgentMembers.Add(new AgentMember
+					{
+						SurName = agent.Surname,
+						OtherNames = agent.other_Names,
+						IDNo = agent.idno,
+						MobileNo = agent.mobile_number,
+						Sex = agent.Gender,
+						DOB = agent.DOB,
+						PosSerialNo=agent.MachineId,
+						FingerPrint1 = agent.FingerPrint1,
+						FingerPrint2 = agent.FingerPrint1,
+						AuditID = agentMember1.Name,
+						RegistrationDate= "",
+						Registred=false
+
+					});
+				}
 				db.SaveChanges();
 				return new ReturnData
 				{
@@ -146,10 +170,13 @@ namespace MobileBanking_API.Controllers
 				var posUsers = db.Database.SqlQuery<string>(posUser).FirstOrDefault();
 				if (posUsers != null && posUsers != "")
 				{
+					bool isRole = true;
+					
 					return new ReturnData
 					{
 						Success = true,
-						Message = "True"
+						Message = "Complete",
+						Data= isRole
 					};
 				}
 				else
@@ -228,10 +255,12 @@ namespace MobileBanking_API.Controllers
 					if (Password == dbPassword)
 
 					{
+						bool isRole = true;
 						return new ReturnData
 						{
 							Success = true,
-							Message = "Login Successfull"
+							Message = "Login Successfull",
+							Data=isRole
 						};
 					}
 					else
@@ -242,12 +271,6 @@ namespace MobileBanking_API.Controllers
 							Message = "Login failed,wrong password provided"
 						};
 					}
-
-
-
-
-					//if (!Decryptor.Decript_String(admin.password).Equals(adminUser.mPassword))
-
 
 				}
 				else

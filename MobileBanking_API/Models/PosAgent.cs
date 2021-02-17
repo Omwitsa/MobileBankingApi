@@ -28,5 +28,6 @@ namespace MobileBanking_API.Models
         public string PhoneNo { get; set; }
         public System.DateTime CreateOn { get; set; }
         public string CreatedBy { get; set; }
+        public string CommissionAccNo { get; set; }
     }
 }

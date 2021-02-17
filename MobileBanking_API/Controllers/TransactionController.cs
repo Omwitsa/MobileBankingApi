@@ -10,10 +10,10 @@ namespace MobileBanking_API.Controllers
 	[RoutePrefix("webservice/transacions")]
 	public class TransactionController : ApiController
     {
-		TESTEntities db;
+		TESTEntities1 db;
 		public TransactionController()
 		{
-			db = new TESTEntities();
+			db = new TESTEntities1();
 		}
 
 		[Route("deposit")]
@@ -38,56 +38,77 @@ namespace MobileBanking_API.Controllers
 				var transactionDescription = "Cash Deposit";
 
 				var vNo = GetVoucherNo(transaction.Amount);
-				db.CustomerBalances.Add(new CustomerBalance
+				var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
+				//debit balance for the float account;
+				var drBalance = $"Select SUM(Amount) From GLTransactions Where DrAccNo='{floatAcc.FloatAccNo}'";
+				decimal poscheckid = db.Database.SqlQuery<decimal>(drBalance).FirstOrDefault();
+				//credit balance for the float account;
+				var crBalance = $"Select SUM(Amount) From GLTransactions Where CrAccNo='{floatAcc.FloatAccNo}'";
+				decimal poscheckid1 = db.Database.SqlQuery<decimal>(crBalance).FirstOrDefault();
+				decimal TellerBalance = poscheckid - poscheckid1;
+				if (TellerBalance < transaction.Amount)
 				{
-					IDNo = member.IDNo,
-					PayrollNo = member.Payno,
-					CustomerNo = member.Payno,
-					vno = vNo,
-					AccName = member.AccountName,
-					Amount = transaction.Amount,
-					MachineID = transaction.MachineID,
-					TransactionNo = vNo,
-					Auditid = transaction.AuditId,
-					AvailableBalance = member.AvailableBalance,
-					TransDescription = transactionDescription,
-					TransDate = DateTime.UtcNow.Date,
-					ReconDate = DateTime.UtcNow.Date,
-					AccNO = member.AccNo,
-					valuedate = DateTime.UtcNow.Date,
-					transType = "CR",
-					Status = true,
-					Cash = true,
-				});
-
-				db.GLTRANSACTIONS.Add(new GLTRANSACTION
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, Your float balance is insufficient"
+					};
+				}
+				else
 				{
-					TransDate = DateTime.UtcNow.Date,
-					Amount = transaction.Amount,
-					DocumentNo = vNo,
-					TransactionNo = vNo,
-					AuditTime = DateTime.UtcNow.AddHours(3),
-					AuditID = transaction.AuditId,
-					DrAccNo = "827",
-					CrAccNo = "942",
-					TransDescript = transactionDescription,
-					Source = member.MemberNo
-				});
 
-                //var memberDetails = db.MEMBERS.FirstOrDefault(m => m.MemberNo.ToUpper().Equals(transaction.SNo.ToUpper()));
-                db.Messages.Add(new Message
-                {
-                    AccNo = member.AccNo,
-                    Source = transaction.AuditId,
-                    Telephone = member.Phone,
-                    Processed = false,
-                    AlertType = "AgencyDeposit",
-                    Charged = false,
-                    MsgType = "Outbox",
-                    DateReceived = DateTime.UtcNow.Date,
-                    Content = $"Dear Member,your deposit of KES {transaction.Amount} to your account number {transaction.SNo} was successful."
+					db.CustomerBalances.Add(new CustomerBalance
+					{
+						IDNo = member.IDNo,
+						PayrollNo = member.Payno,
+						CustomerNo = member.Payno,
+						vno = vNo,
+						AccName = member.AccountName,
+						Amount = transaction.Amount,
+						MachineID = transaction.MachineID,
+						TransactionNo = vNo,
+						Auditid = transaction.AuditId,
+						AvailableBalance = member.AvailableBalance,
+						TransDescription = transactionDescription,
+						TransDate = DateTime.UtcNow.Date,
+						ReconDate = DateTime.UtcNow.Date,
+						AccNO = member.AccNo,
+						valuedate = DateTime.UtcNow.Date,
+						transType = "CR",
+						Status = true,
+						Cash = true,
+					});
 
-                });
+
+					db.GLTRANSACTIONS.Add(new GLTRANSACTION
+					{
+						TransDate = DateTime.UtcNow.Date,
+						Amount = transaction.Amount,
+						DocumentNo = vNo,
+						TransactionNo = vNo,
+						AuditTime = DateTime.UtcNow.AddHours(3),
+						AuditID = transaction.AuditId,
+						DrAccNo = floatAcc.FloatAccNo,
+						CrAccNo = "942",
+						TransDescript = transactionDescription,
+						Source = member.MemberNo
+					});
+
+					//var memberDetails = db.MEMBERS.FirstOrDefault(m => m.MemberNo.ToUpper().Equals(transaction.SNo.ToUpper()));
+					db.Messages.Add(new Message
+					{
+						AccNo = member.AccNo,
+						Source = transaction.AuditId,
+						Telephone = member.Phone,
+						Processed = false,
+						AlertType = "Pos Deposit",
+						Charged = false,
+						MsgType = "Outbox",
+						DateReceived = DateTime.UtcNow.Date,
+						Content = $"Pos deposit of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} has been credited to account {transaction.SNo}. Reference Number{vNo}."
+
+					});
+				}
 
                 db.SaveChanges();
 				return new ReturnData
@@ -132,15 +153,26 @@ namespace MobileBanking_API.Controllers
 						Success = false,
 						Message = "Sorry, account number not found"
 					};
-				member.AvailableBalance -= transaction.Amount;
-				if (member.AvailableBalance < 500)
+
+                
+                if (member.AvailableBalance < 500)
+                    return new ReturnData
+                    {
+                        Success = false,
+                        Message = "Sorry, your account must remain with a minimum of KES. 500"
+                    };
+				if (transaction.Amount > 70000)
 					return new ReturnData
 					{
 						Success = false,
-						Message = "Sorry, your account must remain with a minimum of KES. 500"
+						Message = "Sorry, your cannot transact more than Ksh 70,000 at once"
 					};
 
-				var transactionDescription = "Cash Withdraw";
+				var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
+		
+
+				member.AvailableBalance -= transaction.Amount;
+				var transactionDescription = "Pos Withdrawal";
 				var vNo = GetVoucherNo(transaction.Amount);
 
 				db.CustomerBalances.Add(new CustomerBalance
@@ -165,9 +197,20 @@ namespace MobileBanking_API.Controllers
 					Cash = true,
 				});
 
+				//function getSacco charges
+				
+				var pullFunction = $"Select Sacco_Charges From dbo.Get_POS_Charges '{transaction.Amount}'";
+				decimal poscheckid1 = db.Database.SqlQuery<decimal>(pullFunction).FirstOrDefault();
+				//function getAgent charges
+				var pullFunction1 = $"Select Agent_Charges From dbo.Get_POS_Charges '{transaction.Amount}'";
+				decimal poscheckid2 = db.Database.SqlQuery<decimal>(pullFunction1).FirstOrDefault();
+				//function getExcise charges
+				var pullFunction2 = $"Select Excise_Duty From dbo.Get_POS_Charges '{transaction.Amount}'";
+				decimal poscheckid3 = db.Database.SqlQuery<decimal>(pullFunction2).FirstOrDefault();
 				var Withdrawal_Charges = 50;
-				var saccoCommission = 0.7 * Withdrawal_Charges;
-				var agentCommision = 0.3 * Withdrawal_Charges;
+				var saccoCommission = poscheckid1;
+				var agentCommision = poscheckid2;
+				decimal totalCommission = saccoCommission + agentCommision;
 
 				db.GLTRANSACTIONS.Add(new GLTRANSACTION
 				{
@@ -176,7 +219,7 @@ namespace MobileBanking_API.Controllers
 					DocumentNo = vNo,
 					TransactionNo = vNo,
 					DrAccNo = "942",
-					CrAccNo = "827",
+					CrAccNo = floatAcc.FloatAccNo,
 					TransDescript = transactionDescription,
 					AuditTime = DateTime.UtcNow.AddHours(3),
 					AuditID = transaction.AuditId,
@@ -186,7 +229,7 @@ namespace MobileBanking_API.Controllers
 				});
 
 				member.AvailableBalance -= Withdrawal_Charges;
-				transactionDescription = "Whithdrawal Charges";
+				transactionDescription = "Pos Withdrawal Charge";
 				db.CustomerBalances.Add(new CustomerBalance
 				{
 					IDNo = member.IDNo,
@@ -195,7 +238,7 @@ namespace MobileBanking_API.Controllers
 					vno = vNo,
 					AccName = member.AccountName,
 					Auditid = transaction.AuditId,
-					Amount = Withdrawal_Charges,
+					Amount = totalCommission,
 					MachineID = transaction.MachineID,
 					TransactionNo = vNo,
 					AvailableBalance = member.AvailableBalance,
@@ -212,18 +255,49 @@ namespace MobileBanking_API.Controllers
 				db.GLTRANSACTIONS.Add(new GLTRANSACTION
 				{
 					TransDate = DateTime.UtcNow.Date,
-					Amount = Withdrawal_Charges,
+					Amount = totalCommission,
 					DocumentNo = vNo,
 					TransactionNo = vNo,
 					AuditTime = DateTime.UtcNow.AddHours(3),
 					AuditID = transaction.AuditId,
 					DrAccNo = "942",
-					CrAccNo = "052",
+                 //temporary account
+					CrAccNo = "897",
+					TransDescript = transactionDescription,
+					Source = member.MemberNo
+				});
+//Sacco Commission
+				db.GLTRANSACTIONS.Add(new GLTRANSACTION
+				{
+					TransDate = DateTime.UtcNow.Date,
+					Amount = saccoCommission,
+					DocumentNo = vNo,
+					TransactionNo = vNo,
+					AuditTime = DateTime.UtcNow.AddHours(3),
+					AuditID = transaction.AuditId,
+					DrAccNo = "897",
+					//temporary account1
+					CrAccNo = "022",
+					TransDescript = transactionDescription,
+					Source = member.MemberNo
+				});
+	//Agent Commission
+				db.GLTRANSACTIONS.Add(new GLTRANSACTION
+				{
+					TransDate = DateTime.UtcNow.Date,
+					Amount = agentCommision,
+					DocumentNo = vNo,
+					TransactionNo = vNo,
+					AuditTime = DateTime.UtcNow.AddHours(3),
+					AuditID = transaction.AuditId,
+					DrAccNo = "897",
+					//temporary account1
+					CrAccNo = floatAcc.CommissionAccNo,
 					TransDescript = transactionDescription,
 					Source = member.MemberNo
 				});
 
-				var Excise_duty = 10;
+				var Excise_duty = poscheckid3;
 				member.AvailableBalance -= Excise_duty;
 				transactionDescription = "Excise duty";
 				db.CustomerBalances.Add(new CustomerBalance
@@ -269,11 +343,11 @@ namespace MobileBanking_API.Controllers
                     Source = transaction.AuditId,
                     Telephone = member.Phone,
                     Processed = false,
-                    AlertType = "AgencyWithdraw",
+                    AlertType = "Pos Withdrawal",
                     Charged = false,
                     MsgType = "Outbox",
                     DateReceived = DateTime.UtcNow.Date,
-                    Content = $"Dear Member,your withdrawal of KES {transaction.Amount} to your account number {transaction.SNo} was successful."
+                    Content = $"Pos Withdrawal of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} has been debited from account {transaction.SNo}. Reference Number{vNo}."
 
                 });
 
