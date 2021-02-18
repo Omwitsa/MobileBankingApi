@@ -32,7 +32,5 @@ namespace MobileBanking_API.Models
         public string PMode { get; set; }
         public string RefId { get; set; }
         public string LoanNo { get; set; }
-        public Nullable<decimal> agentCommission { get; set; }
-        public Nullable<decimal> saccoCommission { get; set; }
     }
 }

@@ -10,10 +10,10 @@ namespace MobileBanking_API.Controllers
 	[RoutePrefix("webservice/transacions")]
 	public class TransactionController : ApiController
     {
-		TESTEntities1 db;
+		TESTEntities2 db;
 		public TransactionController()
 		{
-			db = new TESTEntities1();
+			db = new TESTEntities2();
 		}
 
 		[Route("deposit")]
@@ -35,7 +35,13 @@ namespace MobileBanking_API.Controllers
 						Message = "Sorry, account number not found"
 					};
 				member.AvailableBalance += transaction.Amount;
-				var transactionDescription = "Cash Deposit";
+				var transactionDescription = "EasyAgent Deposit";
+				//get voucher number
+				var Vno = $"Select ISNULL(max(ID),1) From Masters";
+				string getvno = db.Database.SqlQuery<string>(Vno).FirstOrDefault();
+				string nextvno = getvno + 1;
+				//Operator name
+				var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
 
 				var vNo = GetVoucherNo(transaction.Amount);
 				var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
@@ -62,12 +68,12 @@ namespace MobileBanking_API.Controllers
 						IDNo = member.IDNo,
 						PayrollNo = member.Payno,
 						CustomerNo = member.Payno,
-						vno = vNo,
+						vno = nextvno,
 						AccName = member.AccountName,
 						Amount = transaction.Amount,
 						MachineID = transaction.MachineID,
-						TransactionNo = vNo,
-						Auditid = transaction.AuditId,
+						TransactionNo = nextvno,
+						Auditid = OperatorName.Name,
 						AvailableBalance = member.AvailableBalance,
 						TransDescription = transactionDescription,
 						TransDate = DateTime.UtcNow.Date,
@@ -84,30 +90,56 @@ namespace MobileBanking_API.Controllers
 					{
 						TransDate = DateTime.UtcNow.Date,
 						Amount = transaction.Amount,
-						DocumentNo = vNo,
-						TransactionNo = vNo,
+						DocumentNo = nextvno,
+						TransactionNo = nextvno,
 						AuditTime = DateTime.UtcNow.AddHours(3),
-						AuditID = transaction.AuditId,
+						AuditID = OperatorName.Name,
 						DrAccNo = floatAcc.FloatAccNo,
 						CrAccNo = "942",
 						TransDescript = transactionDescription,
 						Source = member.MemberNo
 					});
 
-					//var memberDetails = db.MEMBERS.FirstOrDefault(m => m.MemberNo.ToUpper().Equals(transaction.SNo.ToUpper()));
-					db.Messages.Add(new Message
-					{
-						AccNo = member.AccNo,
-						Source = transaction.AuditId,
-						Telephone = member.Phone,
-						Processed = false,
-						AlertType = "Pos Deposit",
-						Charged = false,
-						MsgType = "Outbox",
-						DateReceived = DateTime.UtcNow.Date,
-						Content = $"Pos deposit of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} has been credited to account {transaction.SNo}. Reference Number{vNo}."
+					//Agent deposit commission
+					var pullFunction2 = $"Select Expense_Amount From dbo.Get_POS_Expenses ('{transaction.Amount}','Deposit')";
+					decimal AgentDepositCommission = db.Database.SqlQuery<decimal>(pullFunction2).FirstOrDefault();
 
+					db.GLTRANSACTIONS.Add(new GLTRANSACTION
+					{
+						TransDate = DateTime.UtcNow.Date,
+						Amount = AgentDepositCommission,
+						DocumentNo = nextvno,
+						TransactionNo = nextvno,
+						DrAccNo = "205",
+						CrAccNo = floatAcc.CommissionAccNo,
+						TransDescript = "EasyAgent Deposit Commission",
+						AuditTime = DateTime.UtcNow.AddHours(3),
+						AuditID = OperatorName.Name,
+						Source = member.MemberNo
 					});
+
+
+
+
+					var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
+					if (members.MobileNo.Length > 9)
+					{
+
+						//var memberDetails = db.MEMBERS.FirstOrDefault(m => m.MemberNo.ToUpper().Equals(transaction.SNo.ToUpper()));
+						db.Messages.Add(new Message
+						{
+							AccNo = member.AccNo,
+							Source = OperatorName.Name,
+							Telephone = member.Phone,
+							Processed = false,
+							AlertType = "EasyAgent Deposit",
+							Charged = false,
+							MsgType = "Outbox",
+							DateReceived = DateTime.UtcNow.Date,
+							Content = $"Deposit of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} to account {transaction.SNo} at {floatAcc.AgencyName} successful. Reference Number{nextvno}."
+
+						});
+					}
 				}
 
                 db.SaveChanges();
@@ -153,14 +185,40 @@ namespace MobileBanking_API.Controllers
 						Success = false,
 						Message = "Sorry, account number not found"
 					};
+				var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
+				var debtQuery = $"SELECT ISNULL(Sum(Amount),0) FROM CUSTOMERBALANCE WHERE AccNO = '{transaction.SNo}' AND cash = 1 AND transtype='DR' AND TransDescription != 'Cheque Dep(uncleared)' AND TransDescription != 'Bounced Cheque'";
+				var debts = db.Database.SqlQuery<decimal>(debtQuery).FirstOrDefault();
+				var creditQuery = $"SELECT ISNULL(Sum(Amount),0) FROM CUSTOMERBALANCE WHERE AccNO = '{transaction.SNo}' AND cash = 1 AND transtype='CR' AND TransDescription != 'Cheque Dep(uncleared)'";
+				var credits = db.Database.SqlQuery<decimal>(creditQuery).FirstOrDefault();
 
-                
-                if (member.AvailableBalance < 500)
-                    return new ReturnData
-                    {
-                        Success = false,
-                        Message = "Sorry, your account must remain with a minimum of KES. 500"
-                    };
+				var balance = credits - debts;
+				float MMbalance = 0;
+				if (member.AccountName == "SAVINGS ACCOUNT")
+				{
+					MMbalance = 500;
+
+
+					if (member.AvailableBalance < 500)
+						return new ReturnData
+						{
+							Success = false,
+							Message = "Sorry, your account must remain with a minimum of KES. 500"
+						};
+				}
+				if (transaction.Amount < 50)
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, withdrawal amount should be Ksh 50 or more"
+					};
+				if (transaction.Amount > (balance - 500))
+				{
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, your account balance is insufficient"
+					};
+				}
 				if (transaction.Amount > 70000)
 					return new ReturnData
 					{
@@ -168,11 +226,15 @@ namespace MobileBanking_API.Controllers
 						Message = "Sorry, your cannot transact more than Ksh 70,000 at once"
 					};
 
+				//get voucher number
+				var Vno = $"Select ISNULL(max(ID),1) From Masters";
+				string getvno = db.Database.SqlQuery<string>(Vno).FirstOrDefault();
+				string nextvno = getvno + 1;
 				var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
-		
+
 
 				member.AvailableBalance -= transaction.Amount;
-				var transactionDescription = "Pos Withdrawal";
+				var transactionDescription = "EasyAgent Withdrawal";
 				var vNo = GetVoucherNo(transaction.Amount);
 
 				db.CustomerBalances.Add(new CustomerBalance
@@ -180,12 +242,12 @@ namespace MobileBanking_API.Controllers
 					IDNo = member.IDNo,
 					PayrollNo = member.Payno,
 					CustomerNo = member.Payno,
-					vno = vNo,
+					vno = nextvno,
 					AccName = member.AccountName,
-					Auditid = transaction.AuditId,
+					Auditid = OperatorName.Name,
 					Amount = transaction.Amount,
 					MachineID = transaction.MachineID,
-					TransactionNo = vNo,
+					TransactionNo = nextvno,
 					AvailableBalance = member.AvailableBalance,
 					TransDescription = transactionDescription,
 					TransDate = DateTime.UtcNow.Date,
@@ -198,7 +260,7 @@ namespace MobileBanking_API.Controllers
 				});
 
 				//function getSacco charges
-				
+
 				var pullFunction = $"Select Sacco_Charges From dbo.Get_POS_Charges '{transaction.Amount}'";
 				decimal poscheckid1 = db.Database.SqlQuery<decimal>(pullFunction).FirstOrDefault();
 				//function getAgent charges
@@ -216,31 +278,29 @@ namespace MobileBanking_API.Controllers
 				{
 					TransDate = DateTime.UtcNow.Date,
 					Amount = transaction.Amount,
-					DocumentNo = vNo,
-					TransactionNo = vNo,
+					DocumentNo = nextvno,
+					TransactionNo = nextvno,
 					DrAccNo = "942",
 					CrAccNo = floatAcc.FloatAccNo,
 					TransDescript = transactionDescription,
 					AuditTime = DateTime.UtcNow.AddHours(3),
-					AuditID = transaction.AuditId,
-					agentCommission = (decimal)agentCommision,
-					saccoCommission = (decimal)saccoCommission,
+					AuditID = OperatorName.Name,
 					Source = member.MemberNo
 				});
 
 				member.AvailableBalance -= Withdrawal_Charges;
-				transactionDescription = "Pos Withdrawal Charge";
+				transactionDescription = "EasyAgent Withdrawal Charge";
 				db.CustomerBalances.Add(new CustomerBalance
 				{
 					IDNo = member.IDNo,
 					PayrollNo = member.Payno,
 					CustomerNo = member.Payno,
-					vno = vNo,
+					vno = nextvno,
 					AccName = member.AccountName,
-					Auditid = transaction.AuditId,
+					Auditid = OperatorName.Name,
 					Amount = totalCommission,
 					MachineID = transaction.MachineID,
-					TransactionNo = vNo,
+					TransactionNo = nextvno,
 					AvailableBalance = member.AvailableBalance,
 					TransDescription = transactionDescription,
 					TransDate = DateTime.UtcNow.Date,
@@ -256,41 +316,41 @@ namespace MobileBanking_API.Controllers
 				{
 					TransDate = DateTime.UtcNow.Date,
 					Amount = totalCommission,
-					DocumentNo = vNo,
-					TransactionNo = vNo,
+					DocumentNo = nextvno,
+					TransactionNo = nextvno,
 					AuditTime = DateTime.UtcNow.AddHours(3),
-					AuditID = transaction.AuditId,
+					AuditID = OperatorName.Name,
 					DrAccNo = "942",
-                 //temporary account
-					CrAccNo = "897",
+					//temporary account
+					CrAccNo = "958",
 					TransDescript = transactionDescription,
 					Source = member.MemberNo
 				});
-//Sacco Commission
+				//Sacco Commission
 				db.GLTRANSACTIONS.Add(new GLTRANSACTION
 				{
 					TransDate = DateTime.UtcNow.Date,
 					Amount = saccoCommission,
-					DocumentNo = vNo,
-					TransactionNo = vNo,
+					DocumentNo = nextvno,
+					TransactionNo = nextvno,
 					AuditTime = DateTime.UtcNow.AddHours(3),
-					AuditID = transaction.AuditId,
-					DrAccNo = "897",
+					AuditID = OperatorName.Name,
+					DrAccNo = "958",
 					//temporary account1
 					CrAccNo = "022",
 					TransDescript = transactionDescription,
 					Source = member.MemberNo
 				});
-	//Agent Commission
+				//Agent Commission
 				db.GLTRANSACTIONS.Add(new GLTRANSACTION
 				{
 					TransDate = DateTime.UtcNow.Date,
 					Amount = agentCommision,
-					DocumentNo = vNo,
-					TransactionNo = vNo,
+					DocumentNo = nextvno,
+					TransactionNo = nextvno,
 					AuditTime = DateTime.UtcNow.AddHours(3),
-					AuditID = transaction.AuditId,
-					DrAccNo = "897",
+					AuditID = OperatorName.Name,
+					DrAccNo = "958",
 					//temporary account1
 					CrAccNo = floatAcc.CommissionAccNo,
 					TransDescript = transactionDescription,
@@ -305,12 +365,12 @@ namespace MobileBanking_API.Controllers
 					IDNo = member.IDNo,
 					PayrollNo = member.Payno,
 					CustomerNo = member.Payno,
-					vno = vNo,
+					vno = nextvno,
 					AccName = member.AccountName,
 					Amount = Excise_duty,
 					MachineID = transaction.MachineID,
-					Auditid = transaction.AuditId,
-					TransactionNo = vNo,
+					Auditid = OperatorName.Name,
+					TransactionNo = nextvno,
 					AvailableBalance = member.AvailableBalance,
 					TransDescription = transactionDescription,
 					TransDate = DateTime.UtcNow.Date,
@@ -326,30 +386,33 @@ namespace MobileBanking_API.Controllers
 				{
 					TransDate = DateTime.UtcNow.Date,
 					Amount = Excise_duty,
-					DocumentNo = vNo,
-					TransactionNo = vNo,
+					DocumentNo = nextvno,
+					TransactionNo = nextvno,
 					AuditTime = DateTime.UtcNow.AddHours(3),
-					AuditID = transaction.AuditId,
+					AuditID = OperatorName.Name,
 					DrAccNo = "942",
 					CrAccNo = "956",
 					TransDescript = transactionDescription,
 					Source = member.MemberNo
 				});
+				var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
+				if (members.MobileNo.Length > 9)
+				  { 
+					db.SaveChanges();
+				db.Messages.Add(new Message
+				{
+					AccNo = member.AccNo,
+					Source = OperatorName.Name,
+					Telephone = member.Phone,
+					Processed = false,
+					AlertType = "EasyAgent Withdrawal",
+					Charged = false,
+					MsgType = "Outbox",
+					DateReceived = DateTime.UtcNow.Date,
+					Content = $"Withdrawal of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} from account {transaction.SNo} at {floatAcc.AgencyName} successful. Reference Number{nextvno}."
 
-				db.SaveChanges();
-                db.Messages.Add(new Message
-                {
-                    AccNo = member.AccNo,
-                    Source = transaction.AuditId,
-                    Telephone = member.Phone,
-                    Processed = false,
-                    AlertType = "Pos Withdrawal",
-                    Charged = false,
-                    MsgType = "Outbox",
-                    DateReceived = DateTime.UtcNow.Date,
-                    Content = $"Pos Withdrawal of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} has been debited from account {transaction.SNo}. Reference Number{vNo}."
-
-                });
+				});
+			        }
 
                 db.SaveChanges();
                 return new ReturnData
@@ -394,25 +457,49 @@ namespace MobileBanking_API.Controllers
 				var credits = db.Database.SqlQuery<decimal>(creditQuery).FirstOrDefault();
 
 				var balance = credits - debts;
-                db.Messages.Add(new Message
-                {
-                    AccNo = member.AccNo,
-                    Source = transaction.AuditId,
-                    Telephone = member.Phone,
-                    Processed = false,
-                    AlertType = "AgencyBalance",
-                    Charged = false,
-                    MsgType = "balance",
-                    DateReceived = DateTime.UtcNow.Date,
-                    Content = $"Dear Member,your balance of  your account number {transaction.SNo} is {balance} ."
+				decimal MMbalance = 0;
+				//decimal expectedCharges = 0;
+				//function getSacco charges
 
-                });
+				var pullFunction = $"Select Sacco_Charges+Agent_Charges+Excise_Duty From dbo.Get_POS_Charges ({balance})";
+				decimal expectedCharges = db.Database.SqlQuery<decimal>(pullFunction).FirstOrDefault();
+				if (member.AccountName == "SAVINGS ACCOUNT")
+				{
+					MMbalance = 500;
+				}
+				var withdrawableAmt = balance - MMbalance- expectedCharges;
+				//withdrawableAmt = Math.Round(withdrawableAmt, 2);
+				var pullFunction1 = $"Select (convert(int,{withdrawableAmt}/5)*5)-5";
+				int RoundedWithdrawableAmt = db.Database.SqlQuery<int>(pullFunction1).FirstOrDefault();
+				if (withdrawableAmt < 50) 
+				{
+					withdrawableAmt = 0;
+				}
+				var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
+				var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
+				var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
+				if (members.MobileNo.Length > 9)
+				{
+					db.Messages.Add(new Message
+					{
+						AccNo = member.AccNo,
+						Source = OperatorName.Name,
+						Telephone = member.Phone,
+						Processed = false,
+						AlertType = "EasyAgent Balance Inquiry",
+						Charged = false,
+						MsgType = "Outbox",
+						DateReceived = DateTime.UtcNow.Date,
+						Content = $"Account balance for account {transaction.SNo} is Ksh {balance}. Your withdrawable amount is Ksh {RoundedWithdrawableAmt}. Agency Name {floatAcc.AgencyName}"
+
+					});
+				}
 
                 db.SaveChanges();
                 return new ReturnData
 				{
 					Success = true,
-					Message = $"{balance}",
+					Message = $"{RoundedWithdrawableAmt}",
 					Data = balance,
 				};
 			}
@@ -445,12 +532,13 @@ namespace MobileBanking_API.Controllers
 					$"AND P.Mobile=1 ";
 
 				var advanceProducts = db.Database.SqlQuery<AdvanceProduct>(productDescriptionQuery).ToList();
-
 				return advanceProducts;
+                
 			}
 			catch (Exception ex) 
 			{
 				return new List<AdvanceProduct>();
+
 			}
 		}
 		[Route("fetchAgencyAccounts")]
@@ -483,17 +571,14 @@ namespace MobileBanking_API.Controllers
 				return accounts;
 			}
 		}
-       
 
 
+		[Route("fetchAdvance")]
 		private ReturnData AdvanceService(Transaction transaction)
 		{
 			try
 			{
-                var Accmeber = $"Select MemberNo from CUB  where AccNo='{transaction.AccountNo}'";
-                var Membeno = db.Database.SqlQuery<string>(Accmeber).FirstOrDefault();
-
-
+                
                 var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
                 if (member == null)
                     return new ReturnData
@@ -502,117 +587,121 @@ namespace MobileBanking_API.Controllers
                         Message = "Sorry, Member number not found"
                     };
 
+				var ProductID = db.PRODUCTSETUPs.FirstOrDefault(m => m.ProductName.ToUpper().Equals(transaction.ProductDescription.ToUpper()));
 
+				var productDetailsQuery = $"Exec dbo.Recommended_Advance ({transaction.AccountNo},{ProductID.ProductID})";
+				decimal RecommAdvance = db.Database.SqlQuery<decimal>(productDetailsQuery).FirstOrDefault();
 
-                var productDetailsQuery = $"SELECT * FROM DEDUCTIONLIST d INNER JOIN INCOME i ON i.ProductID = d.Recoverfrom WHERE d.Description = '{transaction.ProductDescription}' AND i.AccNo = '{transaction.AccountNo}'";
-				var productDetails = db.Database.SqlQuery<AdvanceProduct>(productDetailsQuery).FirstOrDefault();
-
-				var incomeQuery = $"SELECT Amount FROM INCOME WHERE AccNo = '{transaction.AccountNo}' AND Period > (SELECT DATEADD(month, -3, GETDATE())) AND ProductID = '{productDetails.ProductID}'";
-				var threeMonthsIncome = db.Database.SqlQuery<decimal>(incomeQuery).Sum();
-				var averageIncome = 0m;
-                if (threeMonthsIncome > 0)
-                    averageIncome = threeMonthsIncome / 3;
-                else
-                    averageIncome = 0;
-
-                //var advanceBalQuery = $"SELECT Amount FROM DEDUCTION WHERE Amount > 0 AND ProductID = '{productDetails.ProductID}'";
-                var advanceBalQuery = $"Select (AmountCF)+(AmountIntCF)+(Arrears) From DEDUCTION Where AccNo='{transaction.AccountNo}' AND RecoverFrom='{productDetails.ProductID}'";
-                var threeMonthsAdvanceBal = db.Database.SqlQuery<decimal>(advanceBalQuery).Sum();
-				var averageAdvanceBal = 0m;
-                if (threeMonthsAdvanceBal > 0)
-                    averageAdvanceBal = threeMonthsAdvanceBal / 3;
-                else
-                    averageAdvanceBal = 0;
-
-                //var advanceArreaersQuery = $"SELECT Arrears FROM DEDUCTION WHERE Amount > 0 AND ProductID = '{productDetails.ProductID}'";
-                var advanceArreaersQuery = $"Select Arrears From DEDUCTION Where AccNo='{transaction.AccountNo}' AND RecoverFrom<>'{productDetails.ProductID}' AND Arrears > 0";
-                var threeMonthsAdvanceArrears = db.Database.SqlQuery<decimal>(advanceArreaersQuery).Sum();
-				var averageAdvanceArrears = 0m;
-                if (threeMonthsAdvanceArrears > 0)
-                    averageAdvanceArrears = threeMonthsAdvanceArrears / 3;
-                else
-                    averageAdvanceArrears = 0;
-
-                //var repayRateQuery = $"SELECT RepayRate FROM LOANBAL WHERE ACCNO = '{transaction.AccountNo}'";
-                var repayRateQuery = $"Select RepayRate From LOANBAL L Inner Join MEMBERDEDUCTIONS D On D.STONo=L.LoanNo Where L.MemberNo='{Membeno}' AND D.ProductID='{productDetails.ProductID}' AND L.Balance+L.IntBalance>10";
-                var repayRate = db.Database.SqlQuery<decimal>(repayRateQuery).Sum();
-                var totalrepayrate = 0m;
-                if (repayRate > 0)
-                    totalrepayrate = repayRate;
-                else
-                    totalrepayrate = 0;
-
-                //var loanArrearsQuery = $"SELECT arrears FROM LOANARREARS WHERE AccNo = '{transaction.AccountNo}'";
-                var loanArrearsQuery = $"SELECT Arrears From LOANARREARS Where AccNo='{transaction.AccountNo}' and Arrears >0";
-                var loanArrears = db.Database.SqlQuery<decimal>(loanArrearsQuery).Sum();
-                var totalloanarrears = 0m;
-                if (loanArrears > 0)
-                    totalloanarrears = loanArrears;
-                else
-                    totalloanarrears = 0;
-
-
-                var advance = averageIncome - averageAdvanceBal - averageAdvanceArrears - totalrepayrate - totalloanarrears;
-                //var Recadvance = 0m;
-                if (productDetails.ProductID =="001" || productDetails.ProductID == "077" && advance > 0)
-                      advance = 3*(advance - 100);
-                 else
-                    advance = 0;
-                
                     if (transaction.Amount < 200)
 					return new ReturnData
 					{
 						Success = false,
-						Message = "Sorry, minimum advance amount is KES 200"
+						Message = "Sorry, Minimum advance amount to apply should be Ksh 200 or more"
 					};
 
-				if (transaction.Amount > advance)
+				if (transaction.Amount > RecommAdvance)
 					return new ReturnData
 					{
 						Success = false,
-						Message = $"Sorry, your maximum advance amount is KES {advance}"
+						Message = $"Your maximum advance amount for {transaction.ProductDescription} is KES {RecommAdvance}"
 					};
-                //var query = $"select TOP 1 serialno from advance order by serialno desc";
-                //var bal = db.Database.SqlQuery<Int64>(query).FirstOrDefault();
+                var query = $"select TOP 1 serialno from advance where ISNUMERIC(serialno)=1 order by serialno desc";
+                var advanceSerialno = db.Database.SqlQuery<string>(query).FirstOrDefault();
+                 var seri = advanceSerialno + 1;
+				//periods
+				var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
+				var Advancedetails = db.DEDUCTIONLISTs.FirstOrDefault(m => m.Recoverfrom.ToUpper().Equals(ProductID.ProductID.ToUpper()));
 
-
-                var seri =transaction.MachineID+1;
-
-
-                var pe = 7;
-                var pd = 3;
               	db.Advances.Add(new Advance
 				{
 					accno = transaction.AccountNo,
 					appamnt = transaction.Amount,
 					advdate = DateTime.UtcNow.Date,
-					auditid = transaction.AuditId,
+					auditid = OperatorName.Name,
 					serialno = seri,
-					description = productDetails.Description,
+					description = transaction.ProductDescription,
                     payrollno=member.Payno,
                     name=member.Name,
-                    ProductID=productDetails.ProductID,
+                    ProductID=ProductID.ProductID,
                     custno=member.Payno,
                     amntapp=transaction.Amount,
-                    IntRate= pe,
-                    period=pd,
+                    IntRate= (int?)Advancedetails.InterestRate,
+                    period=3,
 					audittime = DateTime.UtcNow.AddHours(3)
 				});
+				db.DEDUCTIONs.Add(new DEDUCTION
+				{
+					AccNo = transaction.AccountNo,
+					Amount = transaction.Amount,
+					TransDate = DateTime.UtcNow.Date,
+					AuditID = OperatorName.Name,
+					VoucherNo = seri,
+					ProductID = Advancedetails.DedCode,
+					CustNo = member.MemberNo,
+					AmountCF = transaction.Amount,
+					AmountIntCF = ((int?)Advancedetails.InterestRate/100)*transaction.Amount,
+					AmountInterest= ((int?)Advancedetails.InterestRate / 100) * transaction.Amount,
+					Period = 3,
+					AuditDateTime = DateTime.UtcNow.AddHours(3),
+					RecoverFrom=ProductID.ProductID,
+					DedCode=Advancedetails.DedCode,
+					Arrears=0,
+					IntDate= DateTime.UtcNow.Date.AddMonths(1),
+					LastTransDate= DateTime.UtcNow.AddHours(3),
+					MaturityDate= DateTime.UtcNow.AddHours(3)
+				});
+				db.CustomerBalances.Add(new CustomerBalance
+				{
+					IDNo = member.IDNo,
+					PayrollNo = member.Payno,
+					CustomerNo = member.Payno,
+					vno = seri,
+					AccName = member.AccountName,
+					Amount = transaction.Amount,
+					MachineID = transaction.MachineID,
+					TransactionNo = seri,
+					Auditid = OperatorName.Name,
+					AvailableBalance = member.AvailableBalance,
+					TransDescription = Advancedetails.Description,
+					TransDate = DateTime.UtcNow.Date,
+					ReconDate = DateTime.UtcNow.Date,
+					AccNO = member.AccNo,
+					valuedate = DateTime.UtcNow.Date,
+					transType = "CR",
+					Status = true,
+					Cash = true,
+				});
+				db.GLTRANSACTIONS.Add(new GLTRANSACTION
+				{
+					TransDate = DateTime.UtcNow.Date,
+					Amount = transaction.Amount,
+					DocumentNo = seri,
+					TransactionNo = seri,
+					AuditTime = DateTime.UtcNow.AddHours(3),
+					AuditID = OperatorName.Name,
+					DrAccNo = "875",
+					CrAccNo = "942",
+					TransDescript = Advancedetails.Description,
+					Source = member.MemberNo
+				});
+				var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
+				var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
+				if (members.MobileNo.Length > 9)
+				{
+					db.Messages.Add(new Message
+					{
+						AccNo = transaction.AccountNo,
+						Source = OperatorName.Name,
+						Telephone = member.Phone,
+						Processed = false,
+						AlertType = "EasyAgent Advance",
+						Charged = false,
+						MsgType = "Outbox",
+						DateReceived = DateTime.UtcNow.Date,
+						Content = $"Request for {Advancedetails.Description} of Ksh {transaction.Amount} to your account number {transaction.AccountNo} at {floatAcc.AgencyName} was successful. Reference Number is {seri}"
 
-				db.SaveChanges();
-                db.Messages.Add(new Message
-                {
-                    AccNo = transaction.AccountNo,
-                    Source = transaction.AuditId,
-                    Telephone = member.Phone,
-                    Processed = false,
-                    AlertType = "AgencyAdvance",
-                    Charged = false,
-                    MsgType = "Outbox",
-                    DateReceived = DateTime.UtcNow.Date,
-                    Content = $"Dear Member,your request for advance of KES {transaction.Amount} to your account number {transaction.AccountNo} was successful."
-
-                });
+					});
+				}
 
                 db.SaveChanges();
                 return new ReturnData
@@ -627,7 +716,7 @@ namespace MobileBanking_API.Controllers
 				return new ReturnData
 				{
 					Success = false,
-					Message = "Sorry,Your request was declined beacuse you have a running loan facility"
+					Message = "Sorry,an error occured"
 				};
 			}
 		}

@@ -11,11 +11,9 @@ namespace MobileBanking_API.Models
 {
     using System;
     
-    public partial class Get_POS_Charges_Result
+    public partial class Get_POS_Expenses_Result
     {
         public int id { get; set; }
-        public Nullable<decimal> Agent_Charges { get; set; }
-        public Nullable<decimal> Sacco_Charges { get; set; }
-        public Nullable<decimal> Excise_Duty { get; set; }
+        public Nullable<decimal> Expense_Amount { get; set; }
     }
 }

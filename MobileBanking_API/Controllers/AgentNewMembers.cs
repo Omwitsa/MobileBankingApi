@@ -18,6 +18,6 @@ namespace MobileBanking_API.Controllers
         public string FingerPrint1 { get; set; }
         public string FingerPrint2 { get; set; }
         public string MachineId { get; set; }
-        public bool Agentid { get; set; }
+        public string Agentid { get; set; }
     }
 }

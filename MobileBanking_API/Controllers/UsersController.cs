@@ -10,10 +10,10 @@ namespace MobileBanking_API.Controllers
 	[RoutePrefix("webservice/users")]
 	public class UsersController : ApiController
 	{
-		TESTEntities1 db;
+		TESTEntities2 db;
 		public UsersController()
 		{
-			db = new TESTEntities1();
+			db = new TESTEntities2();
 		}
 
 	
@@ -125,8 +125,7 @@ namespace MobileBanking_API.Controllers
 				}
 				else
 				{
-					var agentMember1 = db.PosUsers.FirstOrDefault(a => a.PosSerialNo == agent.MachineId);
-
+					var agentMember1 = db.PosUsers.FirstOrDefault(a => a.IDNo == agent.Agentid);
 					//db.Agentmembers.Add(agent);
 					db.AgentMembers.Add(new AgentMember
 					{
@@ -138,11 +137,36 @@ namespace MobileBanking_API.Controllers
 						DOB = agent.DOB,
 						PosSerialNo=agent.MachineId,
 						FingerPrint1 = agent.FingerPrint1,
-						FingerPrint2 = agent.FingerPrint1,
+						FingerPrint2 = agent.FingerPrint2,
 						AuditID = agentMember1.Name,
 						RegistrationDate= DateTime.UtcNow.Date,
 						Registred=false
 
+					});
+					db.SaveChanges();
+
+					//Agent deposit commission
+					var pullFunction2 = $"Select Expense_Amount From dbo.Get_POS_Expenses (0,'Registration')";
+					decimal AgentRegistrationCommission = db.Database.SqlQuery<decimal>(pullFunction2).FirstOrDefault();
+					//get voucher number
+					var Vno = $"Select TOP 1 ID From Masters order by ID desc";
+					string getvno = db.Database.SqlQuery<string>(Vno).FirstOrDefault();
+					string nextvno = getvno+1;
+					var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(agent.MachineId.ToUpper()));
+					var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(agent.Agentid.ToUpper()));
+
+					db.GLTRANSACTIONS.Add(new GLTRANSACTION
+					{
+						TransDate = DateTime.UtcNow.Date,
+						Amount = AgentRegistrationCommission,
+						DocumentNo = nextvno,
+						TransactionNo = nextvno,
+						DrAccNo = "205",
+						CrAccNo = floatAcc.CommissionAccNo,
+						TransDescript = "EasyAgent Deposit Commission",
+						AuditTime = DateTime.UtcNow.AddHours(3),
+						AuditID = OperatorName.Name,
+						Source = agent.idno
 					});
 				}
 				db.SaveChanges();
