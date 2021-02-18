@@ -204,7 +204,7 @@ warning 6002: The table/view 'TEST.dbo.AgentMembers' does not have a primary key
           <Property Name="PosSerialNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Registred" Type="bit" Nullable="false" />
           <Property Name="AuditID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="RegistrationDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6013: The table/view 'TEST.dbo.agents' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
@@ -13840,7 +13840,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <Property Name="PosSerialNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Registred" Type="Boolean" Nullable="false" />
           <Property Name="AuditID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RegistrationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="agingsummary">
           <Key>

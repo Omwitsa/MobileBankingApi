@@ -140,7 +140,7 @@ namespace MobileBanking_API.Controllers
 						FingerPrint1 = agent.FingerPrint1,
 						FingerPrint2 = agent.FingerPrint1,
 						AuditID = agentMember1.Name,
-						RegistrationDate= "",
+						RegistrationDate= DateTime.UtcNow.Date,
 						Registred=false
 
 					});

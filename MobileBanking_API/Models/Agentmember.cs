@@ -26,6 +26,6 @@ namespace MobileBanking_API.Models
         public string PosSerialNo { get; set; }
         public bool Registred { get; set; }
         public string AuditID { get; set; }
-        public string RegistrationDate { get; set; }
+        public System.DateTime RegistrationDate { get; set; }
     }
 }
