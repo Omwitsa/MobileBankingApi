@@ -478,24 +478,24 @@ namespace MobileBanking_API.Controllers
 				var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
 				var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
 				var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
-				if (members.MobileNo.Length > 9)
-				{
-					db.Messages.Add(new Message
-					{
-						AccNo = member.AccNo,
-						Source = OperatorName.Name,
-						Telephone = member.Phone,
-						Processed = false,
-						AlertType = "EasyAgent Balance Inquiry",
-						Charged = false,
-						MsgType = "Outbox",
-						DateReceived = DateTime.UtcNow.Date,
-						Content = $"Account balance for account {transaction.SNo} is Ksh {balance}. Your withdrawable amount is Ksh {RoundedWithdrawableAmt}. Agency Name {floatAcc.AgencyName}"
+				//if (members.MobileNo.Length > 9)
+				//{
+				//	db.Messages.Add(new Message
+				//	{
+				//		AccNo = member.AccNo,
+				//		Source = OperatorName.Name,
+				//		Telephone = member.Phone,
+				//		Processed = false,
+				//		AlertType = "EasyAgent Balance Inquiry",
+				//		Charged = false,
+				//		MsgType = "Outbox",
+				//		DateReceived = DateTime.UtcNow.Date,
+				//		Content = $"Account balance for account {transaction.SNo} is Ksh {balance}. Your withdrawable amount is Ksh {RoundedWithdrawableAmt}. Agency Name {floatAcc.AgencyName}"
 
-					});
-				}
+				//	});
+				//}
 
-                db.SaveChanges();
+                //db.SaveChanges();
                 return new ReturnData
 				{
 					Success = true,

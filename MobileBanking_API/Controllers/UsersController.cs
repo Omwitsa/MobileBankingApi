@@ -30,9 +30,15 @@ namespace MobileBanking_API.Controllers
                         Message = "Sorry, kindly provide member data"
                     };
 
+				//var posAgent = db.PosAgents.FirstOrDefault(a => a.AgencyName == agencymember.agency);
 
-                //check if another admin exist based on option selected
-                if (agencymember.admins == "Administrator")
+				var posadmin3 = $"Select AgencyCode From PosAgents Where AgencyName='{agencymember.agency}'";
+				var posadmin2idno4 = db.Database.SqlQuery<string>(posadmin3).FirstOrDefault();
+
+
+
+				//check if another admin exist based on option selected
+				if (agencymember.admins == "Administrator")
                 {
                     var posadmin2 = $"Select IDNo From PosUsers Where IDNo Not in (Select IDNo From UserAccounts Where POSAdmin=1) AND Admin=1 and Active=1 and PosSerialNo='{agencymember.MachineID}'";
                     var posadmin2idno = db.Database.SqlQuery<string>(posadmin2).FirstOrDefault();
@@ -48,6 +54,16 @@ namespace MobileBanking_API.Controllers
 					}
 
                 }
+				//var agentMember1 = db.PosUsers.FirstOrDefault(a => a.IDNo == agencymember.agentid);
+				var posadmin4 = $"Select Name From PosUsers Where IDNo='{agencymember.agentid}'";
+				var posadmin2idno5 = db.Database.SqlQuery<string>(posadmin4).FirstOrDefault();
+
+
+
+
+
+
+
 				bool Isadmin = false;
 				if (agencymember.admins == "Administrator")
 				{
@@ -67,24 +83,33 @@ namespace MobileBanking_API.Controllers
 
 				}
 
-				var posAgent = db.PosAgents.FirstOrDefault(a => a.AgencyName == agencymember.agency);
-				db.PosUsers.Add(new PosUser
-				{
-					IDNo = agencymember.idno,
-					Name = agencymember.names,
-					AgencyCode = posAgent.AgencyCode,
-					PhoneNo = agencymember.phone,
-					Active = true,
-					FingerPrint1 = agencymember.Fingerprint,
-					PosSerialNo = agencymember.MachineID,
-					Admin = Isadmin,
-					CreatedBy = agencymember.agentid,
-					CreatedOn = DateTime.UtcNow.Date,
-					FingerPrint2 = ""
 
-				});
 
-				db.SaveChanges();
+
+				
+				var inserPosUser = $"insert into PosUsers(IDNo,Name,AgencyCode,PhoneNo,Active,FingerPrint1,PosSerialNo,Admin,CreatedBy)values('{ agencymember.idno }','{agencymember.names}','{posadmin2idno4}','{agencymember.phone}','{true}','{ agencymember.Fingerprint}','{ agencymember.MachineID}','{Isadmin}','{ posadmin2idno5}')";
+				db.Database.ExecuteSqlCommand(inserPosUser);
+				///var poscheckid1 = db.Database.SqlQuery<string>(inserPosUser).FirstOrDefault();
+				//var admin = Isadmin ;
+
+
+				//db.PosUsers.Add(new PosUser
+				//{
+				//	IDNo = agencymember.idno,
+				//	Name = agencymember.names,
+				//	AgencyCode = posAgent.AgencyCode,
+				//	PhoneNo = agencymember.phone,
+				//	Active = true,
+				//	FingerPrint1 = agencymember.Fingerprint,
+				//	PosSerialNo = agencymember.MachineID,
+				//	Admin = Isadmin,
+				//	CreatedBy = agencymember.agentid,
+				//	CreatedOn = DateTime.UtcNow.Date,
+				//	FingerPrint2 = ""
+
+				//});
+
+				//db.SaveChanges();
                 return new ReturnData
                 {
                     Success = true,
