@@ -19,7 +19,7 @@ namespace MobileBanking_API.Controllers
 		[Route("deposit")]
 		public ReturnData Deposit([FromBody] Transaction transaction)
 		{
-			var response = DepositService(transaction);
+            var response = DepositService(transaction);
 			return response;
 		}
 
@@ -62,61 +62,25 @@ namespace MobileBanking_API.Controllers
 				}
 				else
 				{
-
-					db.CustomerBalances.Add(new CustomerBalance
-					{
-						IDNo = member.IDNo,
-						PayrollNo = member.Payno,
-						CustomerNo = member.Payno,
-						vno = nextvno,
-						AccName = member.AccountName,
-						Amount = transaction.Amount,
-						MachineID = transaction.MachineID,
-						TransactionNo = nextvno,
-						Auditid = OperatorName.Name,
-						AvailableBalance = member.AvailableBalance,
-						TransDescription = transactionDescription,
-						TransDate = DateTime.UtcNow.Date,
-						ReconDate = DateTime.UtcNow.Date,
-						AccNO = member.AccNo,
-						valuedate = DateTime.UtcNow.Date,
-						transType = "CR",
-						Status = true,
-						Cash = true,
-					});
+					//insertCustomerbalance 
+					var insertCustomerbalance = $"INSERT INTO CustomerBalances(IDNo,PayrollNo,CustomerNo,vno,AccName,Amount,MachineID,TransactionNo,AuditID,AvailableBalance,TransDescription,TransDate,ReconDate,AccNO,valuedate,transType,Status,Cash)values('{ member.IDNo}','{ member.IDNo}','{member.Payno}','{member.Payno}','{nextvno}','{member.AccountName}','{transaction.Amount}','{transaction.MachineID}','{nextvno}','{OperatorName.Name}','{member.AvailableBalance}','{transactionDescription}','{DateTime.UtcNow.Date}','{DateTime.UtcNow.Date}','{member.AccNo}','{ DateTime.UtcNow.Date}','{ "CR"}','{ true}','{true}',)";
+					db.Database.ExecuteSqlCommand(insertCustomerbalance);
 
 
-					db.GLTRANSACTIONS.Add(new GLTRANSACTION
-					{
-						TransDate = DateTime.UtcNow.Date,
-						Amount = transaction.Amount,
-						DocumentNo = nextvno,
-						TransactionNo = nextvno,
-						AuditTime = DateTime.UtcNow.AddHours(3),
-						AuditID = OperatorName.Name,
-						DrAccNo = floatAcc.FloatAccNo,
-						CrAccNo = "942",
-						TransDescript = transactionDescription,
-						Source = member.MemberNo
-					});
+
+					//insert the first gl
+					var IsertGl = $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source )values('{DateTime.UtcNow.Date}','{transaction.Amount}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{floatAcc.FloatAccNo}','{"942"}','{transactionDescription}','{member.MemberNo}')";
+					db.Database.ExecuteSqlCommand(IsertGl);
 
 					//Agent deposit commission
 					var pullFunction2 = $"Select Expense_Amount From dbo.Get_POS_Expenses ('{transaction.Amount}','Deposit')";
 					decimal AgentDepositCommission = db.Database.SqlQuery<decimal>(pullFunction2).FirstOrDefault();
 
-					db.GLTRANSACTIONS.Add(new GLTRANSACTION
-					{
-						TransDate = DateTime.UtcNow.Date,
-						Amount = AgentDepositCommission,
-						DocumentNo = nextvno,
-						TransactionNo = nextvno,
-						DrAccNo = "205",
-						CrAccNo = floatAcc.CommissionAccNo,
-						TransDescript = "EasyAgent Deposit Commission",
-						AuditTime = DateTime.UtcNow.AddHours(3),
-						AuditID = OperatorName.Name,
-						Source = member.MemberNo
-					});
+
+				//insert the second gl	
+				var insertgl2 = $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,DrAccNo,CrAccNo,TransDescript,AuditTime,AuditID,Source) values('{DateTime.UtcNow.Date}','{AgentDepositCommission}','{nextvno}','{nextvno}','{"205"}','{floatAcc.CommissionAccNo}','{"EasyAgent Deposit Commission"}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{member.MemberNo}')";
+				db.Database.ExecuteSqlCommand(insertgl2);
+		
 
 
 
@@ -125,20 +89,11 @@ namespace MobileBanking_API.Controllers
 					if (members.MobileNo.Length > 9)
 					{
 
-						//var memberDetails = db.MEMBERS.FirstOrDefault(m => m.MemberNo.ToUpper().Equals(transaction.SNo.ToUpper()));
-						db.Messages.Add(new Message
-						{
-							AccNo = member.AccNo,
-							Source = OperatorName.Name,
-							Telephone = member.Phone,
-							Processed = false,
-							AlertType = "EasyAgent Deposit",
-							Charged = false,
-							MsgType = "Outbox",
-							DateReceived = DateTime.UtcNow.Date,
-							Content = $"Deposit of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} to account {transaction.SNo} at {floatAcc.AgencyName} successful. Reference Number{nextvno}."
+						//Insert Message
+						var insertMessge= $"INSERT INTO Messages (AccNo,Source,Telephone,Processed,AlertType,Charged,MsgType,DateReceived,Content)values('{member.AccNo}','{OperatorName.Name}','{member.Phone}','{false}','{"EasyAgent Deposit"}','{false}','{"Outbox"}','{DateTime.UtcNow.Date}','{$"Deposit of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} to account {transaction.SNo} at {floatAcc.AgencyName} successful. Reference Number{nextvno}."}')";
+						db.Database.ExecuteSqlCommand(insertMessge);
 
-						});
+						
 					}
 				}
 
@@ -292,14 +247,14 @@ namespace MobileBanking_API.Controllers
 				transactionDescription = "EasyAgent Withdrawal Charge";
 				db.CustomerBalances.Add(new CustomerBalance
 				{
-					IDNo = member.IDNo,
-					PayrollNo = member.Payno,
-					CustomerNo = member.Payno,
-					vno = nextvno,
-					AccName = member.AccountName,
-					Auditid = OperatorName.Name,
-					Amount = totalCommission,
-					MachineID = transaction.MachineID,
+					IDNo = '{member.IDNo,
+					PayrollNo = '{member.Payno,
+					CustomerNo = '{member.Payno,
+					vno = '{nextvno,
+					AccName = '{member.AccountName,
+					Auditid = '{OperatorName.Name,
+					Amount = '{totalCommission,
+					MachineID = '{transaction.MachineID,
 					TransactionNo = nextvno,
 					AvailableBalance = member.AvailableBalance,
 					TransDescription = transactionDescription,
@@ -312,109 +267,64 @@ namespace MobileBanking_API.Controllers
 					Cash = true
 				});
 
-				db.GLTRANSACTIONS.Add(new GLTRANSACTION
-				{
-					TransDate = DateTime.UtcNow.Date,
-					Amount = totalCommission,
-					DocumentNo = nextvno,
-					TransactionNo = nextvno,
-					AuditTime = DateTime.UtcNow.AddHours(3),
-					AuditID = OperatorName.Name,
-					DrAccNo = "942",
-					//temporary account
-					CrAccNo = "958",
-					TransDescript = transactionDescription,
-					Source = member.MemberNo
-				});
 				//Sacco Commission
-				db.GLTRANSACTIONS.Add(new GLTRANSACTION
-				{
-					TransDate = DateTime.UtcNow.Date,
-					Amount = saccoCommission,
-					DocumentNo = nextvno,
-					TransactionNo = nextvno,
-					AuditTime = DateTime.UtcNow.AddHours(3),
-					AuditID = OperatorName.Name,
-					DrAccNo = "958",
-					//temporary account1
-					CrAccNo = "022",
-					TransDescript = transactionDescription,
-					Source = member.MemberNo
-				});
+				var cretetrnas1 = $"INSERT INTO GLTRANSACTIONS(TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source)values('{DateTime.UtcNow.Date}',('{totalCommission}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{"942"}','{"958"}','{transactionDescription}','{member.MemberNo}')";
+				db.Database.ExecuteSqlCommand(cretetrnas1);
+
+
+				
+				
 				//Agent Commission
-				db.GLTRANSACTIONS.Add(new GLTRANSACTION
-				{
-					TransDate = DateTime.UtcNow.Date,
-					Amount = agentCommision,
-					DocumentNo = nextvno,
-					TransactionNo = nextvno,
-					AuditTime = DateTime.UtcNow.AddHours(3),
-					AuditID = OperatorName.Name,
-					DrAccNo = "958",
+				var cretetrnas =$"INSERT INTO GLTRANSACTIONS(TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source)values('{DateTime.UtcNow.Date}',('{saccoCommission}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{"958"}','{"022"}','{transactionDescription}','{member.MemberNo}')";
+				db.Database.ExecuteSqlCommand(cretetrnas);
+
+
+
+
+				var insertglss = $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source) values('{DateTime.UtcNow.Date}','{agentCommision}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{"958"}','{floatAcc.CommissionAccNo}','{transactionDescription}','{member.MemberNo}')";
+				db.Database.ExecuteSqlCommand(insertglss);	
 					//temporary account1
-					CrAccNo = floatAcc.CommissionAccNo,
-					TransDescript = transactionDescription,
-					Source = member.MemberNo
-				});
+					
+				
 
 				var Excise_duty = poscheckid3;
 				member.AvailableBalance -= Excise_duty;
 				transactionDescription = "Excise duty";
-				db.CustomerBalances.Add(new CustomerBalance
-				{
-					IDNo = member.IDNo,
-					PayrollNo = member.Payno,
-					CustomerNo = member.Payno,
-					vno = nextvno,
-					AccName = member.AccountName,
-					Amount = Excise_duty,
-					MachineID = transaction.MachineID,
-					Auditid = OperatorName.Name,
-					TransactionNo = nextvno,
-					AvailableBalance = member.AvailableBalance,
-					TransDescription = transactionDescription,
-					TransDate = DateTime.UtcNow.Date,
-					ReconDate = DateTime.UtcNow.Date,
-					AccNO = member.AccNo,
-					valuedate = DateTime.UtcNow.Date,
-					transType = "DR",
-					Status = true,
-					Cash = true
-				});
+				
+					//insert customerbalance
+				var cust = $"INSERT INTO CustomerBalance (IDNo,PayrollNo,CustomerNo,vno,AccName,Amount,MachineID,Auditid,AvailableBalance,TransDescription,TransDateReconDate,AccNO,valuedate,transType,Status,Cash) values ('{member.IDNo}','{member.Payno}','{member.Payno}','{nextvno}','{member.AccountName}','{Excise_duty}','{transaction.MachineID}','{OperatorName.Name}','{nextvno}','{member.AvailableBalance}','{transactionDescription}','{DateTime.UtcNow.Date}','{DateTime.UtcNow.Date}','{member.AccNo}','{DateTime.UtcNow.Date}','{"DR"}','{true}','{true}')";
+				db.Database.ExecuteSqlCommand(cust);	
 
-				db.GLTRANSACTIONS.Add(new GLTRANSACTION
-				{
-					TransDate = DateTime.UtcNow.Date,
-					Amount = Excise_duty,
-					DocumentNo = nextvno,
-					TransactionNo = nextvno,
-					AuditTime = DateTime.UtcNow.AddHours(3),
-					AuditID = OperatorName.Name,
-					DrAccNo = "942",
-					CrAccNo = "956",
-					TransDescript = transactionDescription,
-					Source = member.MemberNo
-				});
+
+
+				//Insert Message gl1
+				var insertGltrans = $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source) values('{DateTime.UtcNow.Date}','{Excise_duty}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{"942"}','{"956"}','{transactionDescription}','{member.MemberNo}')";
+				db.Database.ExecuteSqlCommand(insertGltrans);
+
 				var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
 				if (members.MobileNo.Length > 9)
-				  { 
-					db.SaveChanges();
-				db.Messages.Add(new Message
-				{
-					AccNo = member.AccNo,
-					Source = OperatorName.Name,
-					Telephone = member.Phone,
-					Processed = false,
-					AlertType = "EasyAgent Withdrawal",
-					Charged = false,
-					MsgType = "Outbox",
-					DateReceived = DateTime.UtcNow.Date,
-					Content = $"Withdrawal of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} from account {transaction.SNo} at {floatAcc.AgencyName} successful. Reference Number{nextvno}."
+				  {
+					//Insert Message
+					var insertMessge1 = $"INSERT INTO Messages (AccNo,Source,Telephone,Processed,AlertType,Charged,MsgType,DateReceived,Content)values('{member.AccNo}','{OperatorName.Name}','{member.Phone}','{false}','{"EasyAgent Withdrawal"}','{false}','{"Outbox"}','{DateTime.UtcNow.Date}','{$"Withdrawal of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} from account {transaction.SNo} at {floatAcc.AgencyName} successful. Reference Number{nextvno}."}')";
+					db.Database.ExecuteSqlCommand(insertMessge1);
 
-				});
+
+
+				//	db.Messages.Add(new Message
+				//{
+				//	AccNo = member.AccNo,
+				//	Source = OperatorName.Name,
+				//	Telephone = member.Phone,
+				//	Processed = false,
+				//	AlertType = "EasyAgent Withdrawal",
+				//	Charged = false,
+				//	MsgType = "Outbox",
+				//	DateReceived = DateTime.UtcNow.Date,
+				//	Content = $"Withdrawal of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} from account {transaction.SNo} at {floatAcc.AgencyName} successful. Reference Number{nextvno}."
+
+				//});
 			        }
 
-                db.SaveChanges();
                 return new ReturnData
 				{
 					Success = true,
