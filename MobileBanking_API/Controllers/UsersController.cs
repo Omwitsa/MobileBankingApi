@@ -10,15 +10,137 @@ namespace MobileBanking_API.Controllers
 	[RoutePrefix("webservice/users")]
 	public class UsersController : ApiController
 	{
-		TESTEntities2 db;
+		TESTEntities3 db;
 		public UsersController()
 		{
-			db = new TESTEntities2();
+			db = new TESTEntities3();
 		}
 
-	
 
-        [Route("registerAgencyMember")]
+		[Route("registerAgentMember")]
+		public ReturnData RegisterAgentMember([FromBody] AgentNewMembers agent)
+		{
+			try
+			{
+				if (string.IsNullOrEmpty(agent.idno) || string.IsNullOrEmpty(agent.MachineId))
+				{
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, kindly provide member data"
+					};
+				}
+
+
+				var agentPosUser = $"select Name from PosUsers where IDNo='{agent.Agentid}' AND  PosSerialNo='{agent.MachineId}'";
+				var agentPosUser1 = db.Database.SqlQuery<string>(agentPosUser).FirstOrDefault();
+				//db.Agentmembers.Add(agent);
+
+				//var agentMember = db.AgentMembers.FirstOrDefault(a => a.IDNo == agent.idno);
+				var agentMember = $"select IDNo from AgentMembers where IDNo='{agent.idno}' AND  PosSerialNo='{agent.MachineId}'";
+				var posadmin2idno5 = db.Database.SqlQuery<string>(agentMember).FirstOrDefault();
+				if (posadmin2idno5 != null)
+				{
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Sorry, Member already exist"
+					};
+				}
+
+				//var agentMember1 = db.PosUsers.FirstOrDefault(a => a.IDNo == agent.Agentid);
+
+
+
+
+
+				var insertAgentMember = $"INSERT INTO AgentMembers(SurName,OtherNames,IDNo,MobileNo,Sex,DOB,PosSerialNo,FingerPrint1,FingerPrint2,AuditID,Registered)values('{ agent.Surname}','{agent.other_Names}','{ agent.idno}','{agent.mobile_number}','{agent.Gender}','{agent.DOB}','{ agent.MachineId}','{agent.FingerPrint1}','{ agent.FingerPrint2}','{agentPosUser1}','{false}')";
+				db.Database.ExecuteSqlCommand(insertAgentMember);
+                //return new ReturnData
+                //{
+                //	Success = true,
+                //	Message = "Member Registered successfully"
+                //};
+                //db.AgentMembers.Add(new AgentMember
+                //{
+                //	SurName = agent.Surname,
+                //	OtherNames = agent.other_Names,
+                //	IDNo = agent.idno,
+                //	MobileNo = agent.mobile_number,
+                //	Sex = agent.Gender,
+                //	DOB = agent.DOB,
+                //	PosSerialNo=agent.MachineId,
+                //	FingerPrint1 = agent.FingerPrint1,
+                //	FingerPrint2 = agent.FingerPrint2,
+                //	AuditID = agentMember1.Name,
+                //	RegistrationDate= DateTime.UtcNow.Date,
+                //	Registred=false
+
+                //});
+                //db.SaveChanges();
+
+
+                //Agent deposit commission
+                var pullFunction2 = $"Select Expense_Amount From dbo.Get_POS_Expenses (0,'Registration')";
+                decimal AgentRegistrationCommission = db.Database.SqlQuery<decimal>(pullFunction2).FirstOrDefault();
+                //get voucher number
+                var Vno = $"Select TOP 1 ID From Masters order by ID desc";
+                Int64 getvno = db.Database.SqlQuery<Int64>(Vno).FirstOrDefault();
+				Int64 nextvno = getvno + 1;
+
+                //var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(agent.MachineId.ToUpper()));
+
+
+                var agentPosUser3 = $"select CommissionAccNo from PosAgents where PosSerialNo='{agent.MachineId}'";
+                var floatAcc = db.Database.SqlQuery<string>(agentPosUser3).FirstOrDefault();
+
+
+
+                //var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(agent.Agentid.ToUpper()));
+                var agentPosUser30 = $"select Name from PosUsers where IDNo='{agent.Agentid}'";
+                var OperatorName = db.Database.SqlQuery<string>(agentPosUser30).FirstOrDefault();
+
+				string accno = "205";
+				string message = "EasyAgent Deposit Commission";
+
+
+				var insertGltrans = $"INSERT INTO GLTRANSACTIONS(TransDate,Amount,DocumentNo,TransactionNo,DrAccNo,CrAccNo,TransDescript,AuditTime,AuditID,Source)values('{DateTime.UtcNow.Date}','{AgentRegistrationCommission}','{nextvno}','{nextvno}','{accno}','{floatAcc}','{message}','{DateTime.UtcNow.AddHours(3)}','{OperatorName}','{ agent.idno}')";
+				db.Database.ExecuteSqlCommand(insertGltrans);
+
+				//db.GLTRANSACTIONS.Add(new GLTRANSACTION
+    //            {
+    //                //TransDate = DateTime.UtcNow.Date,
+    //                Amount = AgentRegistrationCommission,
+    //                DocumentNo = nextvno,
+    //                TransactionNo = nextvno,
+    //                DrAccNo = accno,
+    //                CrAccNo = floatAcc,
+    //                TransDescript = message,
+    //                AuditTime = DateTime.UtcNow.AddHours(3),
+    //                AuditID = OperatorName,
+    //                Source = agent.idno
+    //            });
+            
+
+    //            db.SaveChanges();
+
+            return new ReturnData
+				{
+					Success = true,
+					Message = "Member Registered successfully"
+				};
+			}
+			catch (Exception ex)
+			{
+				return new ReturnData
+				{
+					Success = false,
+					Message = "Sorry, An error occurred"
+				};
+			}
+		}
+
+		[Route("registerAgencyMember")]
         public ReturnData RegisterAgencyMember([FromBody] Agencymember agencymember)
         {
             try
@@ -55,7 +177,7 @@ namespace MobileBanking_API.Controllers
 
                 }
 				//var agentMember1 = db.PosUsers.FirstOrDefault(a => a.IDNo == agencymember.agentid);
-				var posadmin4 = $"Select Name From PosUsers Where IDNo='{agencymember.agentid}'";
+				var posadmin4 = $"Select Name From PosUsers Where IDNo='{agencymember.agentid}'AND  PosSerialNo='{agencymember.MachineID}'";
 				var posadmin2idno5 = db.Database.SqlQuery<string>(posadmin4).FirstOrDefault();
 
 
@@ -86,30 +208,30 @@ namespace MobileBanking_API.Controllers
 
 
 
-				
-				var inserPosUser = $"insert into PosUsers(IDNo,Name,AgencyCode,PhoneNo,Active,FingerPrint1,PosSerialNo,Admin,CreatedBy)values('{ agencymember.idno }','{agencymember.names}','{posadmin2idno4}','{agencymember.phone}','{true}','{ agencymember.Fingerprint}','{ agencymember.MachineID}','{Isadmin}','{ posadmin2idno5}')";
-				db.Database.ExecuteSqlCommand(inserPosUser);
-				///var poscheckid1 = db.Database.SqlQuery<string>(inserPosUser).FirstOrDefault();
-				//var admin = Isadmin ;
+
+                var inserPosUser = $"insert into PosUsers(IDNo,Name,AgencyCode,PhoneNo,Active,FingerPrint1,PosSerialNo,Admin,CreatedBy)values('{ agencymember.idno }','{agencymember.names}','{posadmin2idno4}','{agencymember.phone}','{true}','{ agencymember.Fingerprint}','{ agencymember.MachineID}','{Isadmin}','{ posadmin2idno5}')";
+                db.Database.ExecuteSqlCommand(inserPosUser);
+                ///var poscheckid1 = db.Database.SqlQuery<string>(inserPosUser).FirstOrDefault();
+                //var admin = Isadmin ;
 
 
-				//db.PosUsers.Add(new PosUser
-				//{
-				//	IDNo = agencymember.idno,
-				//	Name = agencymember.names,
-				//	AgencyCode = posAgent.AgencyCode,
-				//	PhoneNo = agencymember.phone,
-				//	Active = true,
-				//	FingerPrint1 = agencymember.Fingerprint,
-				//	PosSerialNo = agencymember.MachineID,
-				//	Admin = Isadmin,
-				//	CreatedBy = agencymember.agentid,
-				//	CreatedOn = DateTime.UtcNow.Date,
-				//	FingerPrint2 = ""
+                //db.PosUsers.Add(new PosUser
+                //{
+                //	IDNo = agencymember.idno,
+                //	Name = agencymember.names,
+                //	AgencyCode = posAgent.AgencyCode,
+                //	PhoneNo = agencymember.phone,
+                //	Active = true,
+                //	FingerPrint1 = agencymember.Fingerprint,
+                //	PosSerialNo = agencymember.MachineID,
+                //	Admin = Isadmin,
+                //	CreatedBy = agencymember.agentid,
+                //	CreatedOn = DateTime.UtcNow.Date,
+                //	FingerPrint2 = ""
 
-				//});
+                //});
 
-				//db.SaveChanges();
+                //db.SaveChanges();
                 return new ReturnData
                 {
                     Success = true,
@@ -125,91 +247,7 @@ namespace MobileBanking_API.Controllers
                 };
             }
         }
-        [Route("registerAgentMember")]
-		public ReturnData RegisterAgentMember([FromBody] AgentNewMembers agent)
-		{
-			try
-			{
-				if (string.IsNullOrEmpty(agent.idno) || string.IsNullOrEmpty(agent.MachineId))
-				{
-					return new ReturnData
-					{
-						Success = false,
-						Message = "Sorry, kindly provide member data"
-					};
-				}
-
-				var agentMember = db.AgentMembers.FirstOrDefault(a => a.IDNo == agent.idno);
-				if (agentMember != null)
-				{
-					return new ReturnData
-					{
-						Success = false,
-						Message = "Sorry, Member already exist"
-					};
-				}
-				else
-				{
-					var agentMember1 = db.PosUsers.FirstOrDefault(a => a.IDNo == agent.Agentid);
-					//db.Agentmembers.Add(agent);
-					db.AgentMembers.Add(new AgentMember
-					{
-						SurName = agent.Surname,
-						OtherNames = agent.other_Names,
-						IDNo = agent.idno,
-						MobileNo = agent.mobile_number,
-						Sex = agent.Gender,
-						DOB = agent.DOB,
-						PosSerialNo=agent.MachineId,
-						FingerPrint1 = agent.FingerPrint1,
-						FingerPrint2 = agent.FingerPrint2,
-						AuditID = agentMember1.Name,
-						RegistrationDate= DateTime.UtcNow.Date,
-						Registred=false
-
-					});
-					db.SaveChanges();
-
-					//Agent deposit commission
-					var pullFunction2 = $"Select Expense_Amount From dbo.Get_POS_Expenses (0,'Registration')";
-					decimal AgentRegistrationCommission = db.Database.SqlQuery<decimal>(pullFunction2).FirstOrDefault();
-					//get voucher number
-					var Vno = $"Select TOP 1 ID From Masters order by ID desc";
-					string getvno = db.Database.SqlQuery<string>(Vno).FirstOrDefault();
-					string nextvno = getvno+1;
-					var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(agent.MachineId.ToUpper()));
-					var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(agent.Agentid.ToUpper()));
-
-					db.GLTRANSACTIONS.Add(new GLTRANSACTION
-					{
-						TransDate = DateTime.UtcNow.Date,
-						Amount = AgentRegistrationCommission,
-						DocumentNo = nextvno,
-						TransactionNo = nextvno,
-						DrAccNo = "205",
-						CrAccNo = floatAcc.CommissionAccNo,
-						TransDescript = "EasyAgent Deposit Commission",
-						AuditTime = DateTime.UtcNow.AddHours(3),
-						AuditID = OperatorName.Name,
-						Source = agent.idno
-					});
-				}
-				db.SaveChanges();
-				return new ReturnData
-				{
-					Success = true,
-					Message = "Member Registered successfully"
-				};
-			}
-			catch (Exception ex)
-			{
-				return new ReturnData
-				{
-					Success = false,
-					Message = "Sorry, An error occurred"
-				};
-			}
-		}
+      
 		[Route("passwordLogin")]
 		public ReturnData PasswordLogin([FromBody] LoadData loadData)
 		{
@@ -395,23 +433,29 @@ namespace MobileBanking_API.Controllers
 						var phone = db.MEMBERS.FirstOrDefault(a => a.IDNo == printModel.IdNo);
 						var serial = db.PosAgents.FirstOrDefault(a => a.PosSerialNo == printModel.MachineId);
 
-						db.PosUsers.Add(new PosUser
-						{
-							IDNo = printModel.IdNo,
-							Name = regist.UserName,
-							FingerPrint1 = "",
-							PosSerialNo = printModel.MachineId,
-							AgencyCode = serial.AgencyCode,
-							PhoneNo = phone.MobileNo,
-							Admin = true,
-							Active = true,
-							CreatedBy = regist.UserLoginID,
-							FingerPrint2 = "",
-							CreatedOn = DateTime.UtcNow.Date
 
-						});
+						var inserPosUser1 = $"insert into PosUsers(IDNo,Name,FingerPrint1,PosSerialNo,AgencyCode,PhoneNo,Admin,Active,CreatedBy,FingerPrint2,CreatedOn)values('{ printModel.IdNo }','{regist.UserName}','{""}','{printModel.MachineId}','{serial.AgencyCode}','{phone.MobileNo}','{true}','{true}','{regist.UserLoginID}','{""}','{DateTime.UtcNow.Date}')";
+						db.Database.ExecuteSqlCommand(inserPosUser1);
 
-						db.SaveChanges();
+
+
+						//db.PosUsers.Add(new PosUser
+						//{
+						//	IDNo = printModel.IdNo,
+						//	Name = regist.UserName,
+						//	FingerPrint1 = "",
+						//	PosSerialNo = printModel.MachineId,
+						//	AgencyCode = serial.AgencyCode,
+						//	PhoneNo = phone.MobileNo,
+						//	Admin = true,
+						//	Active = true,
+						//	CreatedBy = regist.UserLoginID,
+						//	FingerPrint2 = "",
+						//	CreatedOn = DateTime.UtcNow.Date
+
+						//});
+
+						//db.SaveChanges();
 						return new ReturnData
 						{
 							Success = true,
@@ -478,21 +522,28 @@ namespace MobileBanking_API.Controllers
 					var newmember = db.MEMBERS.FirstOrDefault(a => a.IDNo == printModel.IdNo);
 					var serial = db.PosAgents.FirstOrDefault(a => a.PosSerialNo == printModel.MachineId);
 
-					db.PosMembers.Add(new PosMember
-					{
-						IDNo = printModel.IdNo,
-						AuditID = "",
-						RegistrationDate= DateTime.UtcNow.Date,
-						FingerPrint1 = "",
-						PosSerialNo = printModel.MachineId,
-						AgencyCode = serial.AgencyCode,
-						Active = true,
-						FingerPrint2 = "",
+
+
+
+
+			var inserPosMember = $"insert into PosMembers(IDNo,AuditID,RegistrationDate,FingerPrint1,PosSerialNo,AgencyCode,Active,FingerPrint2)values('{ printModel.IdNo }','{""}','{DateTime.UtcNow.Date}','{""}','{printModel.MachineId}','{serial.AgencyCode}','{true}','{""}')";
+			db.Database.ExecuteSqlCommand(inserPosMember);
+
+					//db.PosMembers.Add(new PosMember
+					//{
+					//	IDNo = printModel.IdNo,
+					//	AuditID = "",
+					//	RegistrationDate= DateTime.UtcNow.Date,
+					//	FingerPrint1 = "",
+					//	PosSerialNo = printModel.MachineId,
+					//	AgencyCode = serial.AgencyCode,
+					//	Active = true,
+					//	FingerPrint2 = "",
 						
 
-					});
+					//});
 
-					db.SaveChanges();
+					//db.SaveChanges();
 					return new ReturnData
 					{
 						Success = true,

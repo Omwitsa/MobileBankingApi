@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TESTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TESTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'TEST.dbo.A' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="A">
@@ -179,18 +179,18 @@ warning 6002: The table/view 'TEST.dbo.AdvanceStmt' does not have a primary key 
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IDNo" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="SurName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="OtherNames" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Sex" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="DOB" Type="datetime" Nullable="false" />
-          <Property Name="MobileNo" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FingerPrint1" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FingerPrint2" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="PosSerialNo" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Registred" Type="bit" Nullable="false" />
-          <Property Name="AuditID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
+          <Property Name="IDNo" Type="varchar" MaxLength="50" />
+          <Property Name="SurName" Type="varchar" MaxLength="50" />
+          <Property Name="OtherNames" Type="varchar" MaxLength="50" />
+          <Property Name="Sex" Type="varchar" MaxLength="50" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="50" />
+          <Property Name="FingerPrint1" Type="varchar" MaxLength="50" />
+          <Property Name="FingerPrint2" Type="varchar" MaxLength="50" />
+          <Property Name="PosSerialNo" Type="varchar" MaxLength="50" />
+          <Property Name="Registered" Type="bit" />
+          <Property Name="AuditID" Type="varchar" MaxLength="50" />
+          <Property Name="RegistrationDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6013: The table/view 'TEST.dbo.agents' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
@@ -12110,18 +12110,18 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IDNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SurName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="OtherNames" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Sex" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FingerPrint1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FingerPrint2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PosSerialNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Registred" Type="Boolean" Nullable="false" />
-          <Property Name="AuditID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IDNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SurName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OtherNames" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sex" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FingerPrint1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FingerPrint2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PosSerialNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Registered" Type="Boolean" />
+          <Property Name="AuditID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="APPRAISAL">
           <Key>
@@ -17398,7 +17398,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <Property Name="ShareCapital" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Deposits" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
-        <EntityContainer Name="TESTEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TESTEntities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Advances" EntityType="Self.Advance" />
           <EntitySet Name="Adverts" EntityType="Self.Advert" />
           <EntitySet Name="AgentMembers" EntityType="Self.AgentMember" />
@@ -23386,7 +23386,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TESTModelStoreContainer" CdmEntityContainer="TESTEntities2">
+        <EntityContainerMapping StorageEntityContainer="TESTModelStoreContainer" CdmEntityContainer="TESTEntities3">
           <EntitySetMapping Name="Advances">
             <EntityTypeMapping TypeName="TESTModel.Advance">
               <MappingFragment StoreEntitySet="Advance">
@@ -23449,7 +23449,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
                 <ScalarProperty Name="FingerPrint1" ColumnName="FingerPrint1" />
                 <ScalarProperty Name="FingerPrint2" ColumnName="FingerPrint2" />
                 <ScalarProperty Name="PosSerialNo" ColumnName="PosSerialNo" />
-                <ScalarProperty Name="Registred" ColumnName="Registred" />
+                <ScalarProperty Name="Registered" ColumnName="Registered" />
                 <ScalarProperty Name="AuditID" ColumnName="AuditID" />
                 <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
               </MappingFragment>
