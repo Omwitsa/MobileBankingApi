@@ -134,6 +134,7 @@
     <Compile Include="Controllers\LoadData.cs" />
     <Compile Include="Controllers\LoginModel.cs" />
     <Compile Include="Controllers\MemberModel.cs" />
+    <Compile Include="Controllers\Operations.cs" />
     <Compile Include="Controllers\RegisterFingers.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UsersController.cs" />

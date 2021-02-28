@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace MobileBanking_API.Controllers
 {
-	[RoutePrefix("webservice/transacions")]
+	[RoutePrefix("webservice/transactions")]
 	public class TransactionController : ApiController
     {
 		TESTEntities3 db;
@@ -19,41 +19,99 @@ namespace MobileBanking_API.Controllers
 		}
 
 		[Route("deposit")]
-		public ReturnData Deposit([FromBody] Transaction transaction)
-		{
-            var response = DepositService(transaction);
-			return response;
-		}
-
-		private ReturnData DepositService(Transaction transaction)
+		//public ReturnData depositService([FromBody] Operations transaction)
+  //      {
+  //          var response = depositService(transaction);
+  //          return response;
+  //      }
+        
+		public ReturnData deposit(Operations transaction)
 		{
 			try
 			{
-				var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.SNo.ToUpper()));
-				if (member == null)
+				var idd2 = ""; var pay1 = ""; var Acco = ""; decimal avail2 = 0; var mbno1 = ""; var accccc = ""; var Name = "";
+
+
+				System.Data.SqlClient.SqlCommand cmd;
+				string str = "Data Source=Data Source=HP-PROBOOK-450;Initial Catalog=KONOIN_BOSA;Integrated Security=false;user id=K-PILLAR;password=kpillar;Connection Timeout=60000; max pool size=500";
+
+				System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(str);
+				con.Open();
+				try
+				{
+					System.Data.SqlClient.SqlCommand comPrice;
+					string sqlPrice = null;
+					System.Data.SqlClient.SqlDataReader dataReaderPrice;
+					sqlPrice = "select Name,AvailableBalance,IDNo,Payno,AccountName,MemberNo,AccNo from CUB where AccNo = '" + transaction.SNo + "'";
+
+
+					comPrice = new System.Data.SqlClient.SqlCommand(sqlPrice, con);
+					dataReaderPrice = comPrice.ExecuteReader();
+					if (dataReaderPrice.HasRows)
+					{
+						dataReaderPrice.Read();
+
+						Name = Convert.ToString(dataReaderPrice.GetValue(0));
+						avail2 = Convert.ToDecimal(dataReaderPrice.GetValue(1));//.ToString());
+						idd2 = Convert.ToString(dataReaderPrice.GetValue(2));
+						pay1 = Convert.ToString(dataReaderPrice.GetValue(3));
+						Acco = Convert.ToString(dataReaderPrice.GetValue(4));
+						mbno1 = Convert.ToString(dataReaderPrice.GetValue(5));
+						accccc = Convert.ToString(dataReaderPrice.GetValue(6));
+
+
+					}
+
+					dataReaderPrice.Close(); dataReaderPrice.Dispose(); dataReaderPrice = null;
+					con.Close();
+				}
+				catch (Exception ex)
+				{
+				}
+
+
+
+				var memberr = $"select AccNo from CUB where AccNo= '{transaction.SNo}'";
+				var member1 = db.Database.SqlQuery<string>(memberr).FirstOrDefault();
+				if (member1 == null)
 					return new ReturnData
 					{
 						Success = false,
 						Message = "Sorry, account number not found"
 					};
-				member.AvailableBalance += transaction.Amount;
+				
+				avail2 += transaction.Amount;
 				var transactionDescription = "EasyAgent Deposit";
 				//get voucher number
-				var Vno = $"Select ISNULL(max(ID),1) From Masters";
-				Int64 getvno = db.Database.SqlQuery<Int64>(Vno).FirstOrDefault();
-				Int64 nextvno = getvno + 1;
+				//var Vno = $"Select ISNULL(max(ID),1) From Masters";
+				//Int64 getvno = db.Database.SqlQuery<Int64>(Vno).FirstOrDefault();
+				//Int64 nextvno = getvno + 1;
+				Int64 nextvno = 11111;
 				//Operator name
-				var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
+				//var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
+				//Operator name
+				var opr = $"select Name from PosUsers where IDNo= '{transaction.AuditId}'";
+				string OperatorName = db.Database.SqlQuery<string>(opr).FirstOrDefault();
 
 				//var vNo = GetVoucherNo(transaction.Amount);
-				var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
+				//var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
+				//float account
+				var flo = $"select FloatAccNo from PosAgents where PosSerialNo= '{transaction.MachineID}'";
+				string floatAcc = db.Database.SqlQuery<string>(flo).FirstOrDefault();
+
+				var flo1 = $"select CommissionAccNo from PosAgents where PosSerialNo= '{transaction.MachineID}'";
+				string floatAcc2 = db.Database.SqlQuery<string>(flo1).FirstOrDefault();
+
+				var flo2 = $"select AgencyName from PosAgents where PosSerialNo= '{transaction.MachineID}'";
+				string floatAcc3 = db.Database.SqlQuery<string>(flo2).FirstOrDefault();
+
 				//debit balance for the float account;
-				var drBalance = $"Select ISNull((Select SUM(Amount) From GLTransactions Where DrAccNo='{floatAcc.FloatAccNo}'),0)";
+				var drBalance = $"Select ISNull((Select SUM(Amount) From GLTransactions Where DrAccNo='{floatAcc}'),0)";
 				decimal poscheckid = db.Database.SqlQuery<decimal>(drBalance).FirstOrDefault();
-				//credit balance for the float account;
-				var crBalance = $"Select ISNull((Select SUM(Amount) From GLTransactions Where CrAccNo='{floatAcc.FloatAccNo}'),0)";
-				decimal poscheckid1 = db.Database.SqlQuery<decimal>(crBalance).FirstOrDefault();
-				decimal TellerBalance = poscheckid - poscheckid1;
+                //credit balance for the float account;
+                var crBalance = $"Select ISNull((Select SUM(Amount) From GLTransactions Where CrAccNo='{floatAcc}'),0)";
+                decimal poscheckid1 = db.Database.SqlQuery<decimal>(crBalance).FirstOrDefault();
+                decimal TellerBalance = poscheckid - poscheckid1;
 				if (TellerBalance < transaction.Amount)
 				{
 					return new ReturnData
@@ -65,13 +123,13 @@ namespace MobileBanking_API.Controllers
 				else
 				{
 					//insertCustomerbalance 
-					var insertCustomerbalance = $"INSERT INTO CustomerBalance(IDNo,PayrollNo,CustomerNo,vno,AccName,Amount,MachineID,TransactionNo,AuditID,AvailableBalance,TransDescription,TransDate,ReconDate,AccNO,valuedate,transType,Status,Cash)values('{ member.IDNo}','{member.Payno}','{member.Payno}','{nextvno}','{member.AccountName}','{transaction.Amount}','{transaction.MachineID}','{nextvno}','{OperatorName.Name}','{member.AvailableBalance}','{transactionDescription}','{DateTime.UtcNow.Date}','{DateTime.UtcNow.Date}','{member.AccNo}','{ DateTime.UtcNow.Date}','{ "CR"}','{ true}','{true}')";
+					var insertCustomerbalance = $"INSERT INTO CustomerBalance(IDNo,PayrollNo,CustomerNo,vno,AccName,Amount,MachineID,TransactionNo,AuditID,AvailableBalance,TransDescription,TransDate,ReconDate,AccNO,valuedate,transType,Status,Cash)values('{ idd2}','{pay1}','{pay1}','{nextvno}','{Acco}','{transaction.Amount}','{transaction.MachineID}','{nextvno}','{OperatorName}','{avail2}','{transactionDescription}','{DateTime.UtcNow.Date}','{DateTime.UtcNow.Date}','{accccc}','{ DateTime.UtcNow.Date}','{ "CR"}','{ true}','{true}')";
 					db.Database.ExecuteSqlCommand(insertCustomerbalance);
 
 
 
 					//insert the first gl
-					var IsertGl = $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source )values('{DateTime.UtcNow.Date}','{transaction.Amount}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{floatAcc.FloatAccNo}','{"942"}','{transactionDescription}','{member.MemberNo}')";
+					var IsertGl = $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source )values('{DateTime.UtcNow.Date}','{transaction.Amount}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName}','{floatAcc}','{"942"}','{transactionDescription}','{mbno1}')";
 					db.Database.ExecuteSqlCommand(IsertGl);
 
 					//Agent deposit commission
@@ -80,7 +138,7 @@ namespace MobileBanking_API.Controllers
 
 
 				//insert the second gl	
-				var insertgl2 = $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,DrAccNo,CrAccNo,TransDescript,AuditTime,AuditID,Source) values('{DateTime.UtcNow.Date}','{AgentDepositCommission}','{nextvno}','{nextvno}','{"205"}','{floatAcc.CommissionAccNo}','{"EasyAgent Deposit Commission"}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{member.MemberNo}')";
+				var insertgl2 = $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,DrAccNo,CrAccNo,TransDescript,AuditTime,AuditID,Source) values('{DateTime.UtcNow.Date}','{AgentDepositCommission}','{nextvno}','{nextvno}','{"205"}','{floatAcc2}','{"EasyAgent Deposit Commission"}','{DateTime.UtcNow.AddHours(3)}','{OperatorName}','{mbno1}')";
 				db.Database.ExecuteSqlCommand(insertgl2);
 		
 
@@ -92,7 +150,7 @@ namespace MobileBanking_API.Controllers
 					{
 
 						//Insert Message
-						var insertMessge= $"INSERT INTO Messages (AccNo,Source,Telephone,Processed,AlertType,Charged,MsgType,DateReceived,Content)values('{member.AccNo}','{OperatorName.Name}','{member.Phone}','{false}','{"EasyAgent Deposit"}','{false}','{"Outbox"}','{DateTime.UtcNow.Date}','{$"Deposit of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} to account {transaction.SNo} at {floatAcc.AgencyName} was successful. Reference Number{nextvno}."}')";
+						var insertMessge= $"INSERT INTO Messages (AccNo,Source,Telephone,Processed,AlertType,Charged,MsgType,DateReceived,Content)values('{accccc}','{OperatorName}','{members.MobileNo}','{false}','{"EasyAgent Deposit"}','{false}','{"Outbox"}','{DateTime.UtcNow.Date}','{$"Deposit of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} to account {transaction.SNo} at {floatAcc3} was successful. Reference Number{nextvno}."}')";
 						db.Database.ExecuteSqlCommand(insertMessge);
 
 						
@@ -125,24 +183,69 @@ namespace MobileBanking_API.Controllers
 		}
 
 		[Route("withdraw")]
-		public ReturnData Withdraw([FromBody] Transaction transaction)
-		{
-			var response = WithdrawalService(transaction);
-			return response;
-		}
+		//public ReturnData withdraw([FromBody] Transaction transaction)
+		//{
+		//	var response = withdraw(transaction);
+		//	return response;
+		//}
 
-		private ReturnData WithdrawalService(Transaction transaction)
+		public ReturnData withdraw(Operations transaction)
 		{
 			try
 			{
-				var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.SNo.ToUpper()));
+				var idd2 = ""; var pay1 = ""; var Acco = ""; decimal avail2 = 0; var mbno1 = ""; var accccc = ""; var Name = "";
+
+
+				System.Data.SqlClient.SqlCommand cmd;
+				string str = "Data Source=HP-PROBOOK-450;Initial Catalog=KONOIN_BOSA;Integrated Security=false;user id=K-PILLAR;password=kpillar;Connection Timeout=60000; max pool size=500";
+
+				System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(str);
+				con.Open();
+				try
+				{
+					System.Data.SqlClient.SqlCommand comPrice;
+					string sqlPrice = null;
+					System.Data.SqlClient.SqlDataReader dataReaderPrice;
+					sqlPrice = "select Name,AvailableBalance,IDNo,Payno,AccountName,MemberNo,AccNo from CUB where AccNo = '" + transaction.SNo + "'";
+
+
+					comPrice = new System.Data.SqlClient.SqlCommand(sqlPrice, con);
+					dataReaderPrice = comPrice.ExecuteReader();
+					if (dataReaderPrice.HasRows)
+					{
+						dataReaderPrice.Read();
+
+						Name = Convert.ToString(dataReaderPrice.GetValue(0));
+						avail2 = Convert.ToDecimal(dataReaderPrice.GetValue(1));//.ToString());
+						idd2 = Convert.ToString(dataReaderPrice.GetValue(2));
+						pay1 = Convert.ToString(dataReaderPrice.GetValue(3));
+						Acco = Convert.ToString(dataReaderPrice.GetValue(4));
+						mbno1 = Convert.ToString(dataReaderPrice.GetValue(5));
+						accccc = Convert.ToString(dataReaderPrice.GetValue(6));
+
+
+					}
+
+					dataReaderPrice.Close(); dataReaderPrice.Dispose(); dataReaderPrice = null;
+					con.Close();
+				}
+				catch (Exception ex)
+				{
+				}
+
+
+				var memberr = $"select AccNo from CUB where AccNo= '{transaction.SNo}'";
+				var member = db.Database.SqlQuery<string>(memberr).FirstOrDefault();
 				if (member == null)
 					return new ReturnData
 					{
 						Success = false,
 						Message = "Sorry, account number not found"
 					};
-				var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
+
+
+
+				//var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
 				var debtQuery = $"SELECT ISNULL(Sum(Amount),0) FROM CUSTOMERBALANCE WHERE AccNO = '{transaction.SNo}' AND cash = 1 AND transtype='DR' AND TransDescription != 'Cheque Dep(uncleared)' AND TransDescription != 'Bounced Cheque'";
 				var debts = db.Database.SqlQuery<decimal>(debtQuery).FirstOrDefault();
 				var creditQuery = $"SELECT ISNULL(Sum(Amount),0) FROM CUSTOMERBALANCE WHERE AccNO = '{transaction.SNo}' AND cash = 1 AND transtype='CR' AND TransDescription != 'Cheque Dep(uncleared)'";
@@ -150,12 +253,12 @@ namespace MobileBanking_API.Controllers
 
 				var balance = credits - debts;
 				float MMbalance = 0;
-				if (member.AccountName == "SAVINGS ACCOUNT")
+				if (Acco == "SAVINGS ACCOUNT")
 				{
 					MMbalance = 500;
 
 
-					if (member.AvailableBalance < 500)
+					if (avail2 < 500)
 						return new ReturnData
 						{
 							Success = false,
@@ -184,18 +287,35 @@ namespace MobileBanking_API.Controllers
 					};
 
 				//get voucher number
-				var Vno = $"Select ISNULL(max(ID),1) From Masters";
-				Int64 getvno = db.Database.SqlQuery<Int64>(Vno).FirstOrDefault();
-				Int64 nextvno = getvno + 1;
-				var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
+				//var Vno = $"Select ISNULL(max(ID),1) From Masters";
+				//Int64 getvno = db.Database.SqlQuery<Int64>(Vno).FirstOrDefault();
+				//Int64 nextvno = getvno + 1;
+				//var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
+
+				Int64 nextvno = 11111;
 
 
-				member.AvailableBalance -= transaction.Amount;
+
+
+
+				var flo1 = $"select CommissionAccNo from PosAgents where PosSerialNo= '{transaction.MachineID}'";
+				string floatAcc2 = db.Database.SqlQuery<string>(flo1).FirstOrDefault();
+
+				var flo2 = $"select AgencyName from PosAgents where PosSerialNo= '{transaction.MachineID}'";
+				string floatAcc3 = db.Database.SqlQuery<string>(flo2).FirstOrDefault();
+
+				var opr = $"select Name from PosUsers where IDNo= '{transaction.AuditId}'";
+				string OperatorName = db.Database.SqlQuery<string>(opr).FirstOrDefault();
+				var flo = $"select FloatAccNo from PosAgents where PosSerialNo= '{transaction.MachineID}'";
+				string floatAcc = db.Database.SqlQuery<string>(flo).FirstOrDefault();
+
+
+				avail2 -= transaction.Amount;
 				var transactionDescription = "EasyAgent Withdrawal";
 				//var vNo = GetVoucherNo(transaction.Amount);
 
 				
-				var insercustomer =	$"INSERT INTO CustomerBalance(IDNo,PayrollNo,CustomerNo,vno,AccName,Auditid,Amount,MachineID,TransactionNo,AvailableBalance,TransDescription,TransDate,ReconDate,AccNO,valuedate,transType,Status,Cash)values ('{member.IDNo}','{member.Payno}','{member.Payno}','{nextvno}','{member.AccountName}','{OperatorName.Name}','{transaction.Amount}','{transaction.MachineID}','{nextvno}','{member.AvailableBalance}','{transactionDescription}','{DateTime.UtcNow.Date}','{DateTime.UtcNow.Date}','{member.AccNo}','{DateTime.UtcNow.Date}','{"DR"}', '{true}','{true}')";
+				var insercustomer =	$"INSERT INTO CustomerBalance(IDNo,PayrollNo,CustomerNo,vno,AccName,Auditid,Amount,MachineID,TransactionNo,AvailableBalance,TransDescription,TransDate,ReconDate,AccNO,valuedate,transType,Status,Cash)values ('{idd2}','{pay1}','{pay1}','{nextvno}','{Acco}','{OperatorName}','{transaction.Amount}','{transaction.MachineID}','{nextvno}','{avail2}','{transactionDescription}','{DateTime.UtcNow.Date}','{DateTime.UtcNow.Date}','{accccc}','{DateTime.UtcNow.Date}','{"DR"}', '{true}','{true}')";
 				db.Database.ExecuteSqlCommand(insercustomer);	
 					
 
@@ -216,56 +336,59 @@ namespace MobileBanking_API.Controllers
 				decimal totalCommission = saccoCommission + agentCommision;
 
 				
-					var gls= $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,DrAccNo,CrAccNo,TransDescript,AuditTime ,AuditID,Source)values ('{DateTime.UtcNow.Date}','{transaction.Amount}','{nextvno}','{nextvno}','{"942"}','{floatAcc.FloatAccNo}','{transactionDescription}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{member.MemberNo}')";
+					var gls= $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,DrAccNo,CrAccNo,TransDescript,AuditTime ,AuditID,Source)values ('{DateTime.UtcNow.Date}','{transaction.Amount}','{nextvno}','{nextvno}','{"942"}','{floatAcc}','{transactionDescription}','{DateTime.UtcNow.AddHours(3)}','{OperatorName}','{mbno1}')";
 				db.Database.ExecuteSqlCommand(gls);
 				
 
-				member.AvailableBalance -= totalCommission;
+				avail2 -= totalCommission;
 				transactionDescription = "EasyAgent Withdrawal Charge";
 				//inser customerbalance
-					var insertcustomer = $"INSERT INTO CustomerBalance (IDNo,PayrollNo,CustomerNo,vno,AccName,Auditid,Amount,MachineID,TransactionNo,AvailableBalance,TransDescription,TransDate,ReconDate,AccNO,valuedate,transType,Status,Cash)values('{member.IDNo}','{member.Payno}','{member.Payno}','{nextvno}','{member.AccountName}','{OperatorName.Name}','{totalCommission}','{transaction.MachineID}','{nextvno}','{member.AvailableBalance}','{transactionDescription}','{DateTime.UtcNow.Date}','{DateTime.UtcNow.Date}','{member.AccNo}','{DateTime.UtcNow.Date}','{"DR"}','{true}','{true}')";
+					var insertcustomer = $"INSERT INTO CustomerBalance (IDNo,PayrollNo,CustomerNo,vno,AccName,Auditid,Amount,MachineID,TransactionNo,AvailableBalance,TransDescription,TransDate,ReconDate,AccNO,valuedate,transType,Status,Cash)values('{idd2}','{pay1}','{pay1}','{nextvno}','{Acco}','{OperatorName}','{totalCommission}','{transaction.MachineID}','{nextvno}','{avail2}','{transactionDescription}','{DateTime.UtcNow.Date}','{DateTime.UtcNow.Date}','{accccc}','{DateTime.UtcNow.Date}','{"DR"}','{true}','{true}')";
                     db.Database.ExecuteSqlCommand(insertcustomer);
 				
 
 				//Sacco Commission
-				var cretetrnas1 = $"INSERT INTO GLTRANSACTIONS(TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source)values('{DateTime.UtcNow.Date}','{totalCommission}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{"942"}','{"958"}','{transactionDescription}','{member.MemberNo}')";
+				var cretetrnas1 = $"INSERT INTO GLTRANSACTIONS(TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source)values('{DateTime.UtcNow.Date}','{totalCommission}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName}','{"942"}','{"958"}','{transactionDescription}','{mbno1}')";
 				db.Database.ExecuteSqlCommand(cretetrnas1);
 
 
 				
 				
 				//Agent Commission
-				var cretetrnas =$"INSERT INTO GLTRANSACTIONS(TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source)values('{DateTime.UtcNow.Date}','{saccoCommission}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{"958"}','{"022"}','{transactionDescription}','{member.MemberNo}')";
+				var cretetrnas =$"INSERT INTO GLTRANSACTIONS(TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source)values('{DateTime.UtcNow.Date}','{saccoCommission}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName}','{"958"}','{"022"}','{transactionDescription}','{mbno1}')";
 				db.Database.ExecuteSqlCommand(cretetrnas);
 
 
 
 
-				var insertglss = $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source) values('{DateTime.UtcNow.Date}','{agentCommision}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{"958"}','{floatAcc.CommissionAccNo}','{transactionDescription}','{member.MemberNo}')";
+				var insertglss = $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source) values('{DateTime.UtcNow.Date}','{agentCommision}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName}','{"958"}','{floatAcc2}','{transactionDescription}','{mbno1}')";
 				db.Database.ExecuteSqlCommand(insertglss);	
 					//temporary account1
 					
 				
 
 				var Excise_duty = poscheckid3;
-				member.AvailableBalance -= Excise_duty;
+				avail2 -= Excise_duty;
 				transactionDescription = "Excise duty";
 				
 					//insert customerbalance
-				var cust = $"INSERT INTO CustomerBalance (IDNo,PayrollNo,CustomerNo,vno,AccName,Amount,TransactionNo,MachineID,Auditid,AvailableBalance,TransDescription,TransDate,ReconDate,AccNO,valuedate,transType,Status,Cash) values ('{member.IDNo}','{member.Payno}','{member.Payno}','{nextvno}','{member.AccountName}','{Excise_duty}','{transaction.MachineID}','{OperatorName.Name}','{nextvno}','{member.AvailableBalance}','{transactionDescription}','{DateTime.UtcNow.Date}','{DateTime.UtcNow.Date}','{member.AccNo}','{DateTime.UtcNow.Date}','{"DR"}','{true}','{true}')";
+				var cust = $"INSERT INTO CustomerBalance (IDNo,PayrollNo,CustomerNo,vno,AccName,Amount,TransactionNo,MachineID,Auditid,AvailableBalance,TransDescription,TransDate,ReconDate,AccNO,valuedate,transType,Status,Cash) values ('{idd2}','{pay1}','{pay1}','{nextvno}','{Acco}','{Excise_duty}','{transaction.MachineID}','{OperatorName}','{nextvno}','{avail2}','{transactionDescription}','{DateTime.UtcNow.Date}','{DateTime.UtcNow.Date}','{Acco}','{DateTime.UtcNow.Date}','{"DR"}','{true}','{true}')";
 				db.Database.ExecuteSqlCommand(cust);	
 
 
 
 				//Insert Message gl1
-				var insertGltrans = $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source) values('{DateTime.UtcNow.Date}','{Excise_duty}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{"942"}','{"956"}','{transactionDescription}','{member.MemberNo}')";
+				var insertGltrans = $"INSERT INTO GLTRANSACTIONS (TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source) values('{DateTime.UtcNow.Date}','{Excise_duty}','{nextvno}','{nextvno}','{DateTime.UtcNow.AddHours(3)}','{OperatorName}','{"942"}','{"956"}','{transactionDescription}','{mbno1}')";
 				db.Database.ExecuteSqlCommand(insertGltrans);
 
-				var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
-				if (members.MobileNo.Length > 9)
+				//var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
+				var flo22 = $"select MobileNo from MEMBERS where AccNo= '{transaction.AccountNo}'";
+				string phone = db.Database.SqlQuery<string>(flo22).FirstOrDefault();
+
+				if (phone.Length > 9)
 				  {
 					//Insert Message
-					var insertMessge1 = $"INSERT INTO Messages (AccNo,Source,Telephone,Processed,AlertType,Charged,MsgType,DateReceived,Content)values('{member.AccNo}','{OperatorName.Name}','{member.Phone}','{false}','{"EasyAgent Withdrawal"}','{false}','{"Outbox"}','{DateTime.UtcNow.Date}','{$"Withdrawal of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} from account {transaction.SNo} at {floatAcc.AgencyName} successful. Reference Number{nextvno}."}')";
+					var insertMessge1 = $"INSERT INTO Messages (AccNo,Source,Telephone,Processed,AlertType,Charged,MsgType,DateReceived,Content)values('{Acco}','{OperatorName}','{phone}','{false}','{"EasyAgent Withdrawal"}','{false}','{"Outbox"}','{DateTime.UtcNow.Date}','{$"Withdrawal of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} from account {transaction.SNo} at {floatAcc3} successful. Reference Number{nextvno}."}')";
 					db.Database.ExecuteSqlCommand(insertMessge1);
 
 
@@ -302,18 +425,22 @@ namespace MobileBanking_API.Controllers
 		}
 
 		[Route("balance")]
-		public ReturnData Balance([FromBody] Transaction transaction)
+		public ReturnData balance([FromBody] Operations transaction)
 		{
 			try
 			{
-                //var isMember = db.CustomerBalances.Any(b => b.AccNO.ToUpper().Equals(transaction.SNo.ToUpper()));
-                //if (!isMember)
-                //	return new ReturnData
-                //	{
-                //		Success = false,
-                //		Message = "Sorry, You details could not be found"
-                //};
-                var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.SNo.ToUpper()));
+				//var isMember = db.CustomerBalances.Any(b => b.AccNO.ToUpper().Equals(transaction.SNo.ToUpper()));
+				//if (!isMember)
+				//	return new ReturnData
+				//	{
+				//		Success = false,
+				//		Message = "Sorry, You details could not be found"
+				//};
+
+				var opr = $"select AccNo from CUB where AccNo= '{transaction.SNo}'";
+				string member = db.Database.SqlQuery<string>(opr).FirstOrDefault();
+
+				//var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.SNo.ToUpper()));
                 if (member == null)
                     return new ReturnData
                     {
@@ -333,7 +460,9 @@ namespace MobileBanking_API.Controllers
 
 				var pullFunction = $"Select Sacco_Charges+Agent_Charges+Excise_Duty From dbo.Get_POS_Charges ({balance})";
 				decimal expectedCharges = db.Database.SqlQuery<decimal>(pullFunction).FirstOrDefault();
-				if (member.AccountName == "SAVINGS ACCOUNT")
+				var oprty = $"select AccountName from CUB where AccNo= '{transaction.SNo}'";
+				string memberrf = db.Database.SqlQuery<string>(oprty).FirstOrDefault();
+				if (memberrf == "SAVINGS ACCOUNT")
 				{
 					MMbalance = 500;
 				}
@@ -342,43 +471,36 @@ namespace MobileBanking_API.Controllers
 				var pullFunction1 = $"Select (convert(int,{withdrawableAmt}/5)*5)-5";
 				int RoundedWithdrawableAmt = db.Database.SqlQuery<int>(pullFunction1).FirstOrDefault();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 				if (withdrawableAmt < 50) 
 				{
 					withdrawableAmt = 0;
 				}
-				var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
-				var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
-				var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
-				//if (members.MobileNo.Length > 9)
-				//{
-				//	db.Messages.Add(new Message
-				//	{
-				//		AccNo = member.AccNo,
-				//		Source = OperatorName.Name,
-				//		Telephone = member.Phone,
-				//		Processed = false,
-				//		AlertType = "EasyAgent Balance Inquiry",
-				//		Charged = false,
-				//		MsgType = "Outbox",
-				//		DateReceived = DateTime.UtcNow.Date,
-				//		Content = $"Account balance for account {transaction.SNo} is Ksh {balance}. Your withdrawable amount is Ksh {RoundedWithdrawableAmt}. Agency Name {floatAcc.AgencyName}"
 
-				//	});
-				//}
+
+				var opr1 = $"select Name from PosUsers where IDNo= '{transaction.AuditId}'";
+				string OperatorName = db.Database.SqlQuery<string>(opr1).FirstOrDefault();
+				var flo = $"select FloatAccNo from PosAgents where PosSerialNo= '{transaction.MachineID}'";
+				string floatAcc = db.Database.SqlQuery<string>(flo).FirstOrDefault();
+
+				//var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
+
+				var flo22 = $"select MobileNo from MEMBERS where AccNo= '{transaction.AccountNo}'";
+				string phone = db.Database.SqlQuery<string>(flo22).FirstOrDefault();
+
+				var flo222 = $"select AccNo from MEMBERS where AccNo= '{transaction.AccountNo}'";
+				string Acco = db.Database.SqlQuery<string>(flo222).FirstOrDefault();
+
+				var flo2 = $"select AgencyName from PosAgents where PosSerialNo= '{transaction.MachineID}'";
+				string floatAcc3 = db.Database.SqlQuery<string>(flo2).FirstOrDefault();
+
+
+				//var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
+				//var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
+				if (phone.Length > 9)
+                {
+					var inMess = $"insert into Messages(AccNo,Source,Telephone,Processed,AlertType,Charged,MsgType,DateReceived,Content)values('{Acco}','{OperatorName}','{phone }','{false }','{"EasyAgent Balance Inquiry"}','{false}','{"Outbox"}','{DateTime.UtcNow.Date }','{$"Account balance for account {transaction.SNo} is Ksh {balance}. Your withdrawable amount is Ksh {RoundedWithdrawableAmt} checked at Agency Name {floatAcc3}"}')";
+					db.Database.ExecuteSqlCommand(inMess);
+                }
 
                 //db.SaveChanges();
                 return new ReturnData
@@ -398,23 +520,71 @@ namespace MobileBanking_API.Controllers
 			}
 		}
 		[Route("calculateAdvance")]
-		public ReturnData AdvanceService([FromBody] Transaction transaction)
+		public ReturnData calculateAdvance([FromBody] Operations transaction)
 			
 		{
 			try
 			{
-				
-				var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
+				var idd2 = ""; var pay1 = ""; var Acco = ""; var avail2 = ""; var mbno1 = ""; var accccc = "";  var Name ="";
+
+
+				System.Data.SqlClient.SqlCommand cmd;
+				string str = "Data Source=HP-PROBOOK-450;Initial Catalog=KONOIN_BOSA;Integrated Security=false;user id=K-PILLAR;password=kpillar;Connection Timeout=60000; max pool size=500";
+
+				System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(str);
+				con.Open();
+				try
+				{
+					System.Data.SqlClient.SqlCommand comPrice;
+					string sqlPrice = null;
+					System.Data.SqlClient.SqlDataReader dataReaderPrice;
+					sqlPrice = "select Name,AvailableBalance,IDNo,Payno,AccountName,MemberNo,AccNo from CUB where AccNo = '" + transaction.SNo + "'";
+
+
+					comPrice = new System.Data.SqlClient.SqlCommand(sqlPrice, con);
+					dataReaderPrice = comPrice.ExecuteReader();
+					if (dataReaderPrice.HasRows)
+					{
+						dataReaderPrice.Read();
+						
+							Name = Convert.ToString(dataReaderPrice.GetValue(0));
+							avail2 = Convert.ToString(dataReaderPrice.GetValue(1));//.ToString());
+							idd2 = Convert.ToString(dataReaderPrice.GetValue(2));
+							pay1 = Convert.ToString(dataReaderPrice.GetValue(3));
+							Acco = Convert.ToString(dataReaderPrice.GetValue(4));
+							mbno1 = Convert.ToString(dataReaderPrice.GetValue(5));
+							accccc = Convert.ToString(dataReaderPrice.GetValue(6));
+						
+
+					}
+
+					dataReaderPrice.Close(); dataReaderPrice.Dispose(); dataReaderPrice = null;
+					con.Close();
+				}
+				catch (Exception ex)
+				{
+				}
+
+				var memberr = $"select AccNo from CUB where AccNo= '{transaction.AccountNo}'";
+				var member = db.Database.SqlQuery<string>(memberr).FirstOrDefault();
+
+				//var member = db.CUBs.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
 				if (member == null)
 					return new ReturnData
 					{
 						Success = false,
-						Message = "Sorry, Member number not found"
+						Message = "Sorry, Account number not found"
 					};
 
-				var fetchProductID = db.DEDUCTIONLISTs.FirstOrDefault(m => m.Description.ToUpper().Equals(transaction.ProductDescription.ToUpper()));
+				//var fetchProductID = db.DEDUCTIONLISTs.FirstOrDefault(m => m.Description.ToUpper().Equals(transaction.ProductDescription.ToUpper()));
 
-				var productDetailsQuery = $"Select dbo.Recommended_Advance ('{transaction.AccountNo}','{fetchProductID.Recoverfrom}')";
+				var fetchProductID23 = $"Select Recoverfrom from DEDUCTIONLIST where Description ='{transaction.ProductDescription}'";
+				string fetchProductID = db.Database.SqlQuery<string>(fetchProductID23).FirstOrDefault();
+
+
+
+
+				var productDetailsQuery = $"Select dbo.Recommended_Advance ('{transaction.AccountNo}','{fetchProductID}')";
 				decimal RecommAdvance = db.Database.SqlQuery<decimal>(productDetailsQuery).FirstOrDefault();
 
 			
@@ -433,32 +603,51 @@ namespace MobileBanking_API.Controllers
 						Success = false,
 						Message = $"Your maximum advance amount for {transaction.ProductDescription} is KES {RecommAdvance}"
 					};
-				var query = $"select TOP 1 serialno from advance where ISNUMERIC(serialno)=1 order by serialno desc";
-				var advanceSerialno = db.Database.SqlQuery<string>(query).FirstOrDefault();
-				var seri = advanceSerialno + 1;
+				//var query = $"select TOP 1 serialno from advance where ISNUMERIC(serialno)=1 order by serialno desc";
+				//var advanceSerialno = db.Database.SqlQuery<string>(query).FirstOrDefault();
+				//var seri = advanceSerialno + 1;
+				Int64 seri = 11111;
 				//periods
-				var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
-				var Advancedetails = db.DEDUCTIONLISTs.FirstOrDefault(m => m.Recoverfrom.ToUpper().Equals(fetchProductID.Recoverfrom.ToUpper()));
+				//var OperatorName = db.PosUsers.FirstOrDefault(m => m.IDNo.ToUpper().Equals(transaction.AuditId.ToUpper()));
+				//var Advancedetails = db.DEDUCTIONLISTs.FirstOrDefault(m => m.Recoverfrom.ToUpper().Equals(fetchProductID.ToUpper()));
+
+				var quer12 = $"select InterestRate from DEDUCTIONLIST where Recoverfrom ='{fetchProductID}'";
+				double Advancedetails = db.Database.SqlQuery<double>(quer12).FirstOrDefault(); 
+
+				var quer123 = $"select DedCode from DEDUCTIONLIST where Recoverfrom ='{fetchProductID}'";
+				string Advancedetails1 = db.Database.SqlQuery<string>(quer123).FirstOrDefault(); 
+
+                var quer1234 = $"select Description from DEDUCTIONLIST where Recoverfrom ='{fetchProductID}'";
+				string Advancedetails2 = db.Database.SqlQuery<string>(quer1234).FirstOrDefault();
+
+				var opr = $"select Name from PosUsers where IDNo= '{transaction.AuditId}'";
+				string OperatorName = db.Database.SqlQuery<string>(opr).FirstOrDefault();
 
 
-				var insertAdvance = $"INSERT INTO Advance (accno,appamnt,advdate,auditid,serialno,description,payrollno,name,ProductID,custno,amntapp,IntRate,period,audittime)values('{transaction.AccountNo}','{transaction.Amount}','{DateTime.UtcNow.Date}','{OperatorName.Name}','{seri}','{transaction.ProductDescription}','{member.Payno}','{member.Name}','{fetchProductID.Recoverfrom}','{member.Payno}','{transaction.Amount}','{(int?)Advancedetails.InterestRate}','{3}','{DateTime.UtcNow.AddHours(3)}')";
+				var insertAdvance = $"INSERT INTO Advance (accno,appamnt,advdate,auditid,serialno,description,payrollno,name,ProductID,custno,amntapp,IntRate,period,audittime)values('{transaction.AccountNo}','{transaction.Amount}','{DateTime.UtcNow.Date}','{OperatorName}','{seri}','{transaction.ProductDescription}','{pay1}','{Name}','{fetchProductID}','{pay1}','{transaction.Amount}','{(int?)Advancedetails}','{3}','{DateTime.UtcNow.AddHours(3)}')";
 				db.Database.ExecuteSqlCommand(insertAdvance);
 
-				var insertDeduct = $"INSERT INTO DEDUCTION(AccNo,Amount,TransDate,AuditID,VoucherNo,ProductID,CustNo,AmountCF,AmountIntCF,AmountInterest,Period,AuditDateTime,RecoverFrom,DedCode,Arrears,IntDate,LastTransDate,MaturityDate)values('{transaction.AccountNo}','{transaction.Amount}','{DateTime.UtcNow.Date}','{OperatorName.Name}','{seri}','{Advancedetails.DedCode}','{member.MemberNo}','{transaction.Amount}','{((int?)Advancedetails.InterestRate / 100) * transaction.Amount}','{((int?)Advancedetails.InterestRate / 100) * transaction.Amount}','{3}','{DateTime.UtcNow.AddHours(3)}','{fetchProductID.Recoverfrom}','{Advancedetails.DedCode}','{0}','{DateTime.UtcNow.Date.AddMonths(1)}','{DateTime.UtcNow.AddHours(3)}','{DateTime.UtcNow.AddHours(3)}')";
+				var insertDeduct = $"INSERT INTO DEDUCTION(AccNo,Amount,TransDate,AuditID,VoucherNo,ProductID,CustNo,AmountCF,AmountIntCF,AmountInterest,Period,AuditDateTime,RecoverFrom,DedCode,Arrears,IntDate,LastTransDate,MaturityDate)values('{transaction.AccountNo}','{transaction.Amount}','{DateTime.UtcNow.Date}','{OperatorName}','{seri}','{Advancedetails1}','{mbno1}','{transaction.Amount}','{((int?)Advancedetails / 100) * transaction.Amount}','{((int?)Advancedetails / 100) * transaction.Amount}','{3}','{DateTime.UtcNow.AddHours(3)}','{fetchProductID}','{Advancedetails1}','{0}','{DateTime.UtcNow.Date.AddMonths(1)}','{DateTime.UtcNow.AddHours(3)}','{DateTime.UtcNow.AddHours(3)}')";
 				db.Database.ExecuteSqlCommand(insertDeduct);
 
-				var InCustom = $"INSERT INTO CustomerBalance(IDNo,PayrollNo,CustomerNo,vno,AccName,Amount,MachineID,TransactionNo,Auditid,AvailableBalance,TransDescription,TransDate,ReconDate,AccNO,valuedate,transType,Status,Cash)values('{member.IDNo}','{member.Payno}','{member.Payno}','{seri}','{member.AccountName}','{transaction.Amount}','{transaction.MachineID}','{seri}','{OperatorName.Name}','{member.AvailableBalance}','{Advancedetails.Description}','{DateTime.UtcNow.Date}','{ DateTime.UtcNow.Date}','{member.AccNo}','{DateTime.UtcNow.Date}','{"CR"}','{true}','{true}')";
+				var InCustom = $"INSERT INTO CustomerBalance(IDNo,PayrollNo,CustomerNo,vno,AccName,Amount,MachineID,TransactionNo,Auditid,AvailableBalance,TransDescription,TransDate,ReconDate,AccNO,valuedate,transType,Status,Cash)values('{idd2}','{pay1}','{pay1}','{seri}','{Acco}','{transaction.Amount}','{transaction.MachineID}','{seri}','{OperatorName}','{avail2}','{Advancedetails2}','{DateTime.UtcNow.Date}','{ DateTime.UtcNow.Date}','{Acco}','{DateTime.UtcNow.Date}','{"CR"}','{true}','{true}')";
 				db.Database.ExecuteSqlCommand(InCustom);
 
-				var glsss = $"INSERT INTO GLTRANSACTIONS(TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source)values ('{DateTime.UtcNow.Date}','{transaction.Amount}','{seri}','{seri}','{DateTime.UtcNow.AddHours(3)}','{OperatorName.Name}','{"875"}','{"942"}','{Advancedetails.Description}','{member.MemberNo}')";
+				var glsss = $"INSERT INTO GLTRANSACTIONS(TransDate,Amount,DocumentNo,TransactionNo,AuditTime,AuditID,DrAccNo,CrAccNo,TransDescript,Source)values ('{DateTime.UtcNow.Date}','{transaction.Amount}','{seri}','{seri}','{DateTime.UtcNow.AddHours(3)}','{OperatorName}','{"875"}','{"942"}','{Advancedetails2}','{mbno1}')";
 
 
-				var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
-				var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
-				if (members.MobileNo.Length > 9)
+				//var floatAcc = db.PosAgents.FirstOrDefault(m => m.PosSerialNo.ToUpper().Equals(transaction.MachineID.ToUpper()));
+				//var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.AccountNo.ToUpper()));
+
+				var flo = $"select FloatAccNo from PosAgents where PosSerialNo= '{transaction.MachineID}'";
+				string floatAcc = db.Database.SqlQuery<string>(flo).FirstOrDefault();
+				var mob = $"select MobileNo from MEMBERS where AccNo= '{transaction.AccountNo}'";
+				string floatAcc9 = db.Database.SqlQuery<string>(mob).FirstOrDefault();
+
+				if (floatAcc9.Length > 9)
 				{
 
-					var insertMessge = $"INSERT INTO Messages(AccNo,Source,Telephone,Processed,AlertType,Charged,MsgType,DateReceived,Content)values('{transaction.AccountNo}','{OperatorName.Name}','{member.Phone}','{false}','{"EasyAgent Advance"}','{false}','{"Outbox"}','{DateTime.UtcNow.Date}','{$"Request for {Advancedetails.Description} of Ksh {transaction.Amount} to your account number {transaction.AccountNo} at {floatAcc.AgencyName} was successful. Reference Number is {seri}"}')";
+					var insertMessge = $"INSERT INTO Messages(AccNo,Source,Telephone,Processed,AlertType,Charged,MsgType,DateReceived,Content)values('{transaction.AccountNo}','{OperatorName}','{floatAcc9}','{false}','{"EasyAgent Advance"}','{false}','{"Outbox"}','{DateTime.UtcNow.Date}','{$"Request for {Advancedetails2} of Ksh {transaction.Amount} to your account number {transaction.AccountNo} at {floatAcc} was successful. Reference Number is {seri}"}')";
 					db.Database.ExecuteSqlCommand(insertMessge);
 
 				}
@@ -488,7 +677,7 @@ namespace MobileBanking_API.Controllers
 		//}
 
 		[Route("fetchAdvanceProducts")]
-		public List<AdvanceProduct> FetchAdvanceProducts([FromBody] Transaction transaction)
+		public List<AdvanceProduct> FetchAdvanceProducts([FromBody] Operations transaction)
 		{
 			try
 			{
@@ -506,7 +695,7 @@ namespace MobileBanking_API.Controllers
 			}
 		}
 		[Route("fetchAgencyAccounts")]
-		public List<string> fetchAgencyAccounts([FromBody] Transaction transaction)
+		public List<string> fetchAgencyAccounts([FromBody] Operations transaction)
 		{
 
 			try
@@ -522,7 +711,7 @@ namespace MobileBanking_API.Controllers
 		}
 
 		[Route("fetchMemberAccounts")]
-		public List<string> FetchMemberAccounts([FromBody] Transaction transaction)
+		public List<string> FetchMemberAccounts([FromBody] Operations transaction)
 		{
 			var accounts = new List<string>();
 			try
@@ -539,27 +728,27 @@ namespace MobileBanking_API.Controllers
 
 		
 
-		[Route("sychTransactions")]
-		public ReturnData SychTransactions([FromBody] List<Transaction> transactions)
-		{
-			var response = new ReturnData();
-			foreach(var transaction in transactions)
-			{
-				if (transaction.Operation.ToLower().Equals("deposit"))
-					response = DepositService(transaction);
+		//[Route("sychTransactions")]
+		//public ReturnData SychTransactions([FromBody] List<Transaction> transactions)
+		//{
+		//	var response = new ReturnData();
+		//	foreach(var transaction in transactions)
+		//	{
+		//		if (transaction.Operation.ToLower().Equals("deposit"))
+		//			response = deposit(transaction);
 
-				if (transaction.Operation.ToLower().Equals("withdraw"))
-					response = WithdrawalService(transaction);
+		//		if (transaction.Operation.ToLower().Equals("withdraw"))
+		//			response = Withdraw(transaction);
 
-				if (transaction.Operation.ToLower().Equals("advance"))
-					response = AdvanceService(transaction);
+		//		if (transaction.Operation.ToLower().Equals("advance"))
+		//			response = calculateAdvance(transaction);
 				
-				if (!response.Success)
-					return response;
-			}
+		//		if (!response.Success)
+		//			return response;
+		//	}
 
-			return response;
-		}
+		//	return response;
+		//}
 	}
 
 }
