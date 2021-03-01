@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace MobileBanking_API.Controllers
 {
-	[RoutePrefix("webservice/transactions")]
+	[RoutePrefix("webservice/transacions")]
 	public class TransactionController : ApiController
     {
 		TESTEntities3 db;
@@ -145,12 +145,15 @@ namespace MobileBanking_API.Controllers
 
 
 
-					var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.SNo.ToUpper()));
-					if (members.MobileNo.Length > 9)
+					//var members = db.MEMBERS.FirstOrDefault(m => m.AccNo.ToUpper().Equals(transaction.SNo.ToUpper()));
+					var flo22 = $"select MobileNo from MEMBERS where AccNo= '{transaction.SNo}'";
+					string phone = db.Database.SqlQuery<string>(flo22).FirstOrDefault();
+
+					if (phone.Length > 9)
 					{
 
 						//Insert Message
-						var insertMessge= $"INSERT INTO Messages (AccNo,Source,Telephone,Processed,AlertType,Charged,MsgType,DateReceived,Content)values('{accccc}','{OperatorName}','{members.MobileNo}','{false}','{"EasyAgent Deposit"}','{false}','{"Outbox"}','{DateTime.UtcNow.Date}','{$"Deposit of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} to account {transaction.SNo} at {floatAcc3} was successful. Reference Number{nextvno}."}')";
+						var insertMessge= $"INSERT INTO Messages (AccNo,Source,Telephone,Processed,AlertType,Charged,MsgType,DateReceived,Content)values('{accccc}','{OperatorName}','{phone}','{false}','{"EasyAgent Deposit"}','{false}','{"Outbox"}','{DateTime.UtcNow.Date}','{$"Deposit of Ksh {transaction.Amount} on {DateTime.UtcNow.Date} to account {transaction.SNo} at {floatAcc3} was successful. Reference Number{nextvno}."}')";
 						db.Database.ExecuteSqlCommand(insertMessge);
 
 						
