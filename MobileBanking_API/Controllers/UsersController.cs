@@ -162,9 +162,28 @@ namespace MobileBanking_API.Controllers
 
 				}
 
+				var posadminad = $"Select IDNo From PosMembers Where IDNo='{agencymember.idno}' AND  PosSerialNo='{agencymember.MachineID}' and Active=1";
+				var poscheckids = db.Database.SqlQuery<string>(posadminad).FirstOrDefault();
+			
+				if (string.IsNullOrEmpty(poscheckids).Equals(false))
+                {
+					var print1 = $"Select FingerPrint1 From PosMembers Where IDNo='{agencymember.idno}' AND  PosSerialNo='{agencymember.MachineID}' and Active=1";
+					var print11 = db.Database.SqlQuery<string>(print1).FirstOrDefault();
 
-				var inserPosUser = $"set dateformat dmy insert into PosUsers(IDNo,Name,AgencyCode,PhoneNo,Active,FingerPrint1,PosSerialNo,Admin,CreatedBy,Teller)values('{ agencymember.idno }','{agencymember.names}','{posadmin2idno4}','{agencymember.phone}','{true}','{ agencymember.Fingerprint}','{ agencymember.MachineID}','{Isadmin}','{ posadmin2idno5}','{true}')";
+					var print2 = $"Select FingerPrint2 From PosMembers Where IDNo='{agencymember.idno}' AND  PosSerialNo='{agencymember.MachineID}' and Active=1";
+					var print22 = db.Database.SqlQuery<string>(print2).FirstOrDefault();
+
+					var inserPosUser = $"set dateformat dmy insert into PosUsers(IDNo,Name,AgencyCode,PhoneNo,Active,FingerPrint1,FingerPrint2,PosSerialNo,Admin,CreatedBy,Teller)values('{ agencymember.idno }','{agencymember.names}','{posadmin2idno4}','{agencymember.phone}','{true}','{print11}','{print22}','{ agencymember.MachineID}','{Isadmin}','{ posadmin2idno5}','{true}')";
+					db.Database.ExecuteSqlCommand(inserPosUser);
+
+				}
+                else
+				{
+				var inserPosUser = $"set dateformat dmy insert into PosUsers(IDNo,Name,AgencyCode,PhoneNo,Active,FingerPrint1,FingerPrint2,PosSerialNo,Admin,CreatedBy,Teller)values('{ agencymember.idno }','{agencymember.names}','{posadmin2idno4}','{agencymember.phone}','{true}','{""}','{""}','{ agencymember.MachineID}','{Isadmin}','{ posadmin2idno5}','{true}')";
 				db.Database.ExecuteSqlCommand(inserPosUser);
+				}
+
+				
 
 				return new ReturnData
 				{
@@ -602,7 +621,7 @@ namespace MobileBanking_API.Controllers
 							var possuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
 							if (possuser != null && possuser != "")
 							{
-								var idposuser3 = $"Select IDNo from PosMembers  where IDNo='{printModel.IdNo}' PosSerialNo='{printModel.MachineId} ' and Active=1 ";
+								var idposuser3 = $"Select IDNo from PosMembers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId} ' and Active=1 ";
 								var possuser3 = db.Database.SqlQuery<string>(idposuser3).FirstOrDefault();
 								if (string.IsNullOrEmpty(possuser3))
 								{
@@ -701,7 +720,7 @@ namespace MobileBanking_API.Controllers
 						var possuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
 						if (possuser != null && possuser != "")
 						{
-							var idposuser3 = $"Select IDNo from PosMembers  where IDNo='{printModel.IdNo}' PosSerialNo='{printModel.MachineId} ' and Active=1 ";
+							var idposuser3 = $"Select IDNo from PosMembers  where IDNo='{printModel.IdNo}' and  PosSerialNo='{printModel.MachineId} ' and Active=1 ";
 							var possuser3 = db.Database.SqlQuery<string>(idposuser3).FirstOrDefault();
 							if (string.IsNullOrEmpty(possuser3))
 							{
@@ -731,7 +750,7 @@ namespace MobileBanking_API.Controllers
                         var possuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
                         if (possuser != null && possuser != "")
                         {
-							var idposuser3 = $"Select IDNo from PosMembers  where IDNo='{printModel.IdNo}' PosSerialNo='{printModel.MachineId} ' and Active=1 ";
+							var idposuser3 = $"Select IDNo from PosMembers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId} ' and Active=1 ";
 							var possuser3 = db.Database.SqlQuery<string>(idposuser3).FirstOrDefault();
 							if (string.IsNullOrEmpty(possuser3))
 							{

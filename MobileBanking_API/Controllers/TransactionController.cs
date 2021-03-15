@@ -802,8 +802,16 @@ namespace MobileBanking_API.Controllers
 			var accounts = new List<string>();
 			try
 			{
-				var getAcc = $"Select AccNo from CUB where IDNo='{transaction.SNo}'and Frozen=0";
-				accounts = db.Database.SqlQuery<string>(getAcc).ToList();
+				var VerifyRegistration = $"Select IDNo from PosMembers where IDNo='{transaction.SNo}'and PosSerialNo='{transaction.MachineID}' and  Active=1";
+				var checkedids= db.Database.SqlQuery<string>(VerifyRegistration).FirstOrDefault();
+				if (string.IsNullOrEmpty(checkedids).Equals(false))
+				{
+
+					var getAcc = $"Select AccNo from CUB where IDNo='{transaction.SNo}'and Frozen=0";
+					accounts = db.Database.SqlQuery<string>(getAcc).ToList();
+				}
+
+				
 				return accounts;
 			}
 			catch (Exception ex)
