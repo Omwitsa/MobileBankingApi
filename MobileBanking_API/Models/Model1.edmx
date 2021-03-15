@@ -3864,6 +3864,22 @@ warning 6002: The table/view 'TEST.dbo.port' does not have a primary key defined
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CommissionAccNo" Type="varchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TEST.dbo.PosLogins' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PosLogins">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDNo" />
+            <PropertyRef Name="AgencyCode" />
+            <PropertyRef Name="PosSerialNo" />
+            <PropertyRef Name="LoginTime" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AgencyCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PosSerialNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LoginTime" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="PosMembers">
           <Key>
             <PropertyRef Name="IDNo" />
@@ -3878,6 +3894,36 @@ warning 6002: The table/view 'TEST.dbo.port' does not have a primary key defined
           <Property Name="PosSerialNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AgencyCode" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TEST.dbo.PosReconcilliation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PosReconcilliation">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="InitiationDate" />
+            <PropertyRef Name="AccNo" />
+            <PropertyRef Name="VoucherNo" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="CompletionDate" />
+            <PropertyRef Name="AgencyCode" />
+            <PropertyRef Name="PosSerialNo" />
+            <PropertyRef Name="InitiatedBy" />
+            <PropertyRef Name="Activity" />
+            <PropertyRef Name="Posted" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InitiationDate" Type="datetime" Nullable="false" />
+          <Property Name="AccNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="VoucherNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="CompletionDate" Type="datetime" Nullable="false" />
+          <Property Name="AgencyCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PosSerialNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="InitiatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activity" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Posted" Type="bit" Nullable="false" />
+          <Property Name="ProductID" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="PosUsers">
           <Key>
             <PropertyRef Name="ID" />
@@ -3888,12 +3934,13 @@ warning 6002: The table/view 'TEST.dbo.port' does not have a primary key defined
           <Property Name="AgencyCode" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PhoneNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
-          <Property Name="FingerPrint1" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FingerPrint1" Type="varchar" MaxLength="100" />
+          <Property Name="FingerPrint2" Type="varchar" MaxLength="100" />
           <Property Name="PosSerialNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Admin" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="FingerPrint2" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Teller" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PRODUCTINC">
           <Key>
@@ -10685,6 +10732,31 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
     [port].[port] AS [port]
     FROM [dbo].[port] AS [port]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="PosLogins" EntityType="Self.PosLogins" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PosLogins].[ID] AS [ID], 
+    [PosLogins].[IDNo] AS [IDNo], 
+    [PosLogins].[AgencyCode] AS [AgencyCode], 
+    [PosLogins].[PosSerialNo] AS [PosSerialNo], 
+    [PosLogins].[LoginTime] AS [LoginTime]
+    FROM [dbo].[PosLogins] AS [PosLogins]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PosReconcilliation" EntityType="Self.PosReconcilliation" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PosReconcilliation].[ID] AS [ID], 
+    [PosReconcilliation].[InitiationDate] AS [InitiationDate], 
+    [PosReconcilliation].[AccNo] AS [AccNo], 
+    [PosReconcilliation].[VoucherNo] AS [VoucherNo], 
+    [PosReconcilliation].[Amount] AS [Amount], 
+    [PosReconcilliation].[CompletionDate] AS [CompletionDate], 
+    [PosReconcilliation].[AgencyCode] AS [AgencyCode], 
+    [PosReconcilliation].[PosSerialNo] AS [PosSerialNo], 
+    [PosReconcilliation].[InitiatedBy] AS [InitiatedBy], 
+    [PosReconcilliation].[Activity] AS [Activity], 
+    [PosReconcilliation].[Posted] AS [Posted], 
+    [PosReconcilliation].[ProductID] AS [ProductID]
+    FROM [dbo].[PosReconcilliation] AS [PosReconcilliation]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="REASONS" EntityType="Self.REASONS" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [REASONS].[ReasonID] AS [ReasonID], 
@@ -13183,12 +13255,13 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <Property Name="AgencyCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="FingerPrint1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FingerPrint1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FingerPrint2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PosSerialNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Admin" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="FingerPrint2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Teller" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="PRODUCTINC">
           <Key>
@@ -15809,6 +15882,48 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="port1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="PosLogin">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDNo" />
+            <PropertyRef Name="AgencyCode" />
+            <PropertyRef Name="PosSerialNo" />
+            <PropertyRef Name="LoginTime" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AgencyCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PosSerialNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LoginTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="PosReconcilliation">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="InitiationDate" />
+            <PropertyRef Name="AccNo" />
+            <PropertyRef Name="VoucherNo" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="CompletionDate" />
+            <PropertyRef Name="AgencyCode" />
+            <PropertyRef Name="PosSerialNo" />
+            <PropertyRef Name="InitiatedBy" />
+            <PropertyRef Name="Activity" />
+            <PropertyRef Name="Posted" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InitiationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AccNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="CompletionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AgencyCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PosSerialNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="InitiatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Activity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Posted" Type="Boolean" Nullable="false" />
+          <Property Name="ProductID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="REASON">
           <Key>
             <PropertyRef Name="ReasonID" />
@@ -17398,7 +17513,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <Property Name="ShareCapital" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Deposits" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
-        <EntityContainer Name="TESTEntities3" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TESTEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Advances" EntityType="Self.Advance" />
           <EntitySet Name="Adverts" EntityType="Self.Advert" />
           <EntitySet Name="AgentMembers" EntityType="Self.AgentMember" />
@@ -17584,6 +17699,8 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
           <EntitySet Name="PaymentBookings" EntityType="Self.PaymentBooking" />
           <EntitySet Name="PERTRANs" EntityType="Self.PERTRAN" />
           <EntitySet Name="ports" EntityType="Self.port" />
+          <EntitySet Name="PosLogins" EntityType="Self.PosLogin" />
+          <EntitySet Name="PosReconcilliations" EntityType="Self.PosReconcilliation" />
           <EntitySet Name="REASONS" EntityType="Self.REASON" />
           <EntitySet Name="ReceiptBookings" EntityType="Self.ReceiptBooking" />
           <EntitySet Name="Refunds" EntityType="Self.Refund" />
@@ -23386,7 +23503,7 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TESTModelStoreContainer" CdmEntityContainer="TESTEntities3">
+        <EntityContainerMapping StorageEntityContainer="TESTModelStoreContainer" CdmEntityContainer="TESTEntities">
           <EntitySetMapping Name="Advances">
             <EntityTypeMapping TypeName="TESTModel.Advance">
               <MappingFragment StoreEntitySet="Advance">
@@ -24558,11 +24675,12 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
                 <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="FingerPrint1" ColumnName="FingerPrint1" />
+                <ScalarProperty Name="FingerPrint2" ColumnName="FingerPrint2" />
                 <ScalarProperty Name="PosSerialNo" ColumnName="PosSerialNo" />
                 <ScalarProperty Name="Admin" ColumnName="Admin" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="FingerPrint2" ColumnName="FingerPrint2" />
+                <ScalarProperty Name="Teller" ColumnName="Teller" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -26921,6 +27039,35 @@ warning 6002: The table/view 'TEST.dbo.zonesReport' does not have a primary key 
               <MappingFragment StoreEntitySet="port">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="port1" ColumnName="port" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PosLogins">
+            <EntityTypeMapping TypeName="TESTModel.PosLogin">
+              <MappingFragment StoreEntitySet="PosLogins">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDNo" ColumnName="IDNo" />
+                <ScalarProperty Name="AgencyCode" ColumnName="AgencyCode" />
+                <ScalarProperty Name="PosSerialNo" ColumnName="PosSerialNo" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PosReconcilliations">
+            <EntityTypeMapping TypeName="TESTModel.PosReconcilliation">
+              <MappingFragment StoreEntitySet="PosReconcilliation">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="InitiationDate" ColumnName="InitiationDate" />
+                <ScalarProperty Name="AccNo" ColumnName="AccNo" />
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
+                <ScalarProperty Name="AgencyCode" ColumnName="AgencyCode" />
+                <ScalarProperty Name="PosSerialNo" ColumnName="PosSerialNo" />
+                <ScalarProperty Name="InitiatedBy" ColumnName="InitiatedBy" />
+                <ScalarProperty Name="Activity" ColumnName="Activity" />
+                <ScalarProperty Name="Posted" ColumnName="Posted" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

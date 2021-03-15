@@ -12,10 +12,10 @@ namespace MobileBanking_API.Controllers
 	[RoutePrefix("webservice/transacions")]
 	public class TransactionController : ApiController
     {
-		TESTEntities3 db;
+		TESTEntities db;
 		public TransactionController()
 		{
-			db = new TESTEntities3();
+			db = new TESTEntities();
 		}
 
 		[Route("deposit")]

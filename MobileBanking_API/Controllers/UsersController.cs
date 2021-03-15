@@ -10,10 +10,10 @@ namespace MobileBanking_API.Controllers
 	[RoutePrefix("webservice/users")]
 	public class UsersController : ApiController
 	{
-		TESTEntities3 db;
+		TESTEntities db;
 		public UsersController()
 		{
-			db = new TESTEntities3();
+			db = new TESTEntities();
 		}
 
 
@@ -49,7 +49,7 @@ namespace MobileBanking_API.Controllers
 				}
 
 
-				var insertAgentMember = $"INSERT INTO AgentMembers(SurName,OtherNames,IDNo,MobileNo,Sex,DOB,PosSerialNo,FingerPrint1,FingerPrint2,AuditID,Registered)values('{ agent.Surname}','{agent.other_Names}','{ agent.idno}','{agent.mobile_number}','{agent.Gender}','{agent.DOB}','{ agent.MachineId}','{agent.FingerPrint1}','{ agent.FingerPrint2}','{agentPosUser1}','{false}')";
+				var insertAgentMember = $"set dateformat dmy insert into AgentMembers(SurName,OtherNames,IDNo,MobileNo,Sex,DOB,PosSerialNo,FingerPrint1,FingerPrint2,AuditID,Registered)values('{ agent.Surname}','{agent.other_Names}','{ agent.idno}','{agent.mobile_number}','{agent.Gender}','{agent.DOB}','{ agent.MachineId}','{agent.FingerPrint1}','{ agent.FingerPrint2}','{agentPosUser1}','{false}')";
 				db.Database.ExecuteSqlCommand(insertAgentMember);
 
 				//Agent deposit commission
@@ -81,7 +81,7 @@ namespace MobileBanking_API.Controllers
 					string message = "EasyAgent Member Registration Commission";
 
 
-					var insertGltrans = $"INSERT INTO GLTRANSACTIONS(TransDate,Amount,DocumentNo,TransactionNo,DrAccNo,CrAccNo,TransDescript,AuditTime,AuditID,Source)values('{DateTime.UtcNow.Date}','{AgentRegistrationCommission}','{nextvno}','{nextvno}','{accno}','{floatAcc}','{message}','{DateTime.Now}','{OperatorName}','{ agent.idno}')";
+					var insertGltrans = $"set dateformat dmy insert into GLTRANSACTIONS(TransDate,Amount,DocumentNo,TransactionNo,DrAccNo,CrAccNo,TransDescript,AuditTime,AuditID,Source)values('{DateTime.UtcNow.Date}','{AgentRegistrationCommission}','{nextvno}','{nextvno}','{accno}','{floatAcc}','{message}','{DateTime.Now}','{OperatorName}','{ agent.idno}')";
 					db.Database.ExecuteSqlCommand(insertGltrans);
 				}
 
@@ -163,7 +163,7 @@ namespace MobileBanking_API.Controllers
 				}
 
 
-				var inserPosUser = $"insert into PosUsers(IDNo,Name,AgencyCode,PhoneNo,Active,FingerPrint1,PosSerialNo,Admin,CreatedBy,Teller)values('{ agencymember.idno }','{agencymember.names}','{posadmin2idno4}','{agencymember.phone}','{true}','{ agencymember.Fingerprint}','{ agencymember.MachineID}','{Isadmin}','{ posadmin2idno5}','{true}')";
+				var inserPosUser = $"set dateformat dmy insert into PosUsers(IDNo,Name,AgencyCode,PhoneNo,Active,FingerPrint1,PosSerialNo,Admin,CreatedBy,Teller)values('{ agencymember.idno }','{agencymember.names}','{posadmin2idno4}','{agencymember.phone}','{true}','{ agencymember.Fingerprint}','{ agencymember.MachineID}','{Isadmin}','{ posadmin2idno5}','{true}')";
 				db.Database.ExecuteSqlCommand(inserPosUser);
 
 				return new ReturnData
@@ -187,7 +187,7 @@ namespace MobileBanking_API.Controllers
 		{
 			try
 			{
-				var posUser = $"Select IDNo from PosUsers  where PosSerialNo='{loadData.MachineId}' and Active=1 and Teller=1";
+				var posUser = $"Select IDNo from PosUsers  where PosSerialNo='{loadData.MachineId}' and Active=1";
 				var posUsers = db.Database.SqlQuery<string>(posUser).FirstOrDefault();
 				if (posUsers != null && posUsers != "")
 				{
@@ -218,6 +218,59 @@ namespace MobileBanking_API.Controllers
 				};
 			}
 		}
+		//[Route("TellerStatus")]
+		//public ReturnData TellerDate([FromBody] TellerDate tellerDate)
+		//{
+		//	try
+		//	{
+
+
+		//		//select the Admin status  from database
+
+		//		var idposuser1 = $"Select Teller from PosUsers  where IDNo='{tellerDate.idno}'and PosSerialNo='{tellerDate.MachineId}'and Active=1";
+		//		bool posuser1 = db.Database.SqlQuery<bool>(idposuser1).FirstOrDefault();
+
+		//		var idposuser11 = $"Select AgencyCode from PosAgents  where PosSerialNo='{tellerDate.MachineId}' and Active=1";
+		//		string posuser12 = db.Database.SqlQuery<string>(idposuser11).FirstOrDefault();
+		//		if (String.IsNullOrEmpty(posuser12))
+		//		{
+		//			return new ReturnData
+		//			{
+		//				Success = true,
+		//				Message = "You are not allowed to use this device",
+		//			};
+
+		//		}
+
+		//		if (posuser1.Equals(true))
+		//		{
+		//			return new ReturnData
+		//			{
+		//				Success = true,
+		//				Message = $"{posuser1}",
+		//			};
+		//		}
+		//		else
+		//		{
+		//			return new ReturnData
+		//			{
+		//				Success = true,
+		//				Message = $"{posuser1}",
+		//			};
+
+		//		}
+
+
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		return new ReturnData
+		//		{
+		//			Success = false,
+		//			Message = "Sorry network error,try again"
+		//		};
+		//	}
+		//}
 		[Route("adminLogin")]
 		public ReturnData LoginModel([FromBody] LoginModel logindata)
 		{
@@ -248,21 +301,27 @@ namespace MobileBanking_API.Controllers
 					if (posuser1.Equals(true))
 					{
 						//insert PosLogins
-						var inserPosLogins = $"insert into PosLogins(IDNo,AgencyCode,PosSerialNo)values('{ logindata.IdNo }','{posuser12 }','{logindata.MachineId}')";
+						var inserPosLogins = $"set dateformat dmy insert into PosLogins(IDNo,AgencyCode,PosSerialNo)values('{ logindata.IdNo }','{posuser12 }','{logindata.MachineId}')";
 						db.Database.ExecuteSqlCommand(inserPosLogins);
+						return new ReturnData
+						{
+							Success = true,
+							Message = $"{posuser1}",
+						};
 					}
 					else
 					{
 						//insert PosLogins
-						var inserPosLogins = $"insert into PosLogins(IDNo,AgencyCode,PosSerialNo)values('{ logindata.IdNo }','{posuser12 }','{logindata.MachineId}')";
+						var inserPosLogins = $"set dateformat dmy insert into PosLogins(IDNo,AgencyCode,PosSerialNo)values('{ logindata.IdNo }','{posuser12 }','{logindata.MachineId}')";
 						db.Database.ExecuteSqlCommand(inserPosLogins);
+						return new ReturnData
+						{
+							Success = true,
+							Message = $"{posuser1}",
+						};
 
 					}
-					return new ReturnData
-					{
-						Success = true,
-						Message = $"{posuser1}",
-					};
+
 
 				}
 				else
@@ -344,10 +403,11 @@ namespace MobileBanking_API.Controllers
 				};
 			}
 		}
-		///
-		//registerFingers
-		[Route("registerFingerPrints")]
-		public ReturnData RegisterFingerPrints([FromBody] FingerPrintModel printModel)
+
+
+
+		[Route("existingMembersFingerPrints")]
+		public ReturnData existingMembersFingerPrints([FromBody] FingerPrintModel printModel)
 		{
 			try
 			{
@@ -356,167 +416,114 @@ namespace MobileBanking_API.Controllers
 				var figuerPrintInfo = printModel.FingerPrint.Split('@');
 				printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
 				var decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
-				//verify idno in the database
-				//var posUser = db.PosUsers.FirstOrDefault(a => a.IDNo == printModel.IdNo);
-				//var posUser = $"Select IDNo PosUsers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}'";
-				var posUser = $"Select IDNO from useraccounts  where IDNo='{printModel.IdNo}' and PosAdmin='1' and Status=1";
-				var posUsers = db.Database.SqlQuery<string>(posUser).FirstOrDefault();
-				if (posUsers != null && posUsers != "")
-				{
-					//int decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
 
 
-					var news = db.PosUsers.FirstOrDefault(a => a.IDNo == printModel.IdNo);
-					if (news != null)
-					{
-						var posSmin = $"Select Fingerprint1 from PosUsers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Active=1";
-						var posSdminFingerprint = db.Database.SqlQuery<string>(posSmin).FirstOrDefault();
-						if (posSdminFingerprint != null && posSdminFingerprint != "")
-						{
-							var posSminupdate = $"Update PosUsers set Fingerprint2='{decimalFingerprint}'  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Active=1";
-							db.Database.ExecuteSqlCommand(posSminupdate);
-							return new ReturnData
-							{
-								Success = true,
-								Message = "Fingerprint2 updated Successfully"
-							};
-						}
-						else
-						{
-							var posSSminupdate = $"Update PosUsers set Fingerprint1='{decimalFingerprint}'  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Active=1";
-							db.Database.ExecuteSqlCommand(posSSminupdate);
-							return new ReturnData
-							{
-								Success = true,
-								Message = "Fingerprint1 updated Successfully"
-							};
-						}
-
-					}
-					else
-					{
-						var idposuse = $"Select UserLoginID from UserAccounts  where IDNo='{printModel.IdNo}'  and POSAdmin=1 and Status=1 ";
-						string regists = db.Database.SqlQuery<string>(idposuse).FirstOrDefault();
-						//var regist = db.UserAccounts.FirstOrDefault(a => a.IDNO == printModel.IdNo);
-						var idposusery1 = $"Select UserName from UserAccounts  where IDNo='{printModel.IdNo}' and POSAdmin=1 and Status=1";
-						string regist = db.Database.SqlQuery<string>(idposusery1).FirstOrDefault();
-						//var phone = db.MEMBERS.FirstOrDefault(a => a.IDNo == printModel.IdNo);
-						var idposusery = $"Select MobileNO from MEMBERS  where IDNo='{printModel.IdNo}' ";
-						string phone = db.Database.SqlQuery<string>(idposusery).FirstOrDefault();
-						//var serial = db.PosAgents.FirstOrDefault(a => a.PosSerialNo == printModel.MachineId);
-						var idposuser11 = $"Select AgencyCode from PosAgents  where PosSerialNo='{printModel.MachineId}'and Active=1 ";
-						string serial = db.Database.SqlQuery<string>(idposuser11).FirstOrDefault();
-
-
-						var inserPosUser1 = $"insert into PosUsers(IDNo,Name,FingerPrint1,PosSerialNo,AgencyCode,PhoneNo,Admin,Active,CreatedBy,FingerPrint2,CreatedOn,Teller)values('{ printModel.IdNo }','{regist}','{decimalFingerprint}','{printModel.MachineId}','{serial}','{phone}','{true}','{true}','{regists}','{""}','{DateTime.UtcNow.Date}','{false}')";
-						db.Database.ExecuteSqlCommand(inserPosUser1);
-
-						return new ReturnData
-						{
-							Success = true,
-							Message = "Registration completed sucessfully"
-						};
-					}
-				}
 				//check existence of fingerprint in the PosMembers
-				var idposuser1 = $"Select IDNo from PosUsers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId} ' and Active=1";
-				var possuser2 = db.Database.SqlQuery<string>(idposuser1).FirstOrDefault();
-
-				if (possuser2 != null && possuser2 != "")
-				{
-					var idposuserid1 = $"Select FingerPrint1 from PosUsers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Active=1";
-					var possuserid2 = db.Database.SqlQuery<string>(idposuserid1).FirstOrDefault();
-					if (possuserid2 != null && possuserid2 != "")
-					{
-						var posuserFingerprint1 = $"UPDATE PosUsers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}' and Active=1";
-						db.Database.ExecuteSqlCommand(posuserFingerprint1);
-						return new ReturnData
-						{
-							Success = true,
-							Message = " Fingerprint2 Updated  sucessfully"
-						};
-
-
-					}
-					else
-					{
-						var posuserFingerprint11 = $"UPDATE PosUsers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId} ' and Active=1";
-						db.Database.ExecuteSqlCommand(posuserFingerprint11);
-						return new ReturnData
-						{
-							Success = true,
-							Message = "Fingerprint1 Updated  sucessfully"
-						};
-					}
-
-				}
-				else
-				{
-
-					var idposuser111 = $"Select AgencyCode from PosAgents  where PosSerialNo='{printModel.MachineId} ' and Active=1";
-					string serial = db.Database.SqlQuery<string>(idposuser111).FirstOrDefault();
-
-
-
-					var inserPosMember1 = $"insert into PosUsers(IDNo,AuditID,RegistrationDate,FingerPrint1,PosSerialNo,AgencyCode,Active,FingerPrint2)values('{ printModel.IdNo }','{""}','{DateTime.UtcNow.Date}','{decimalFingerprint}','{printModel.MachineId}','{serial}','{true}','{""}')";
-					db.Database.ExecuteSqlCommand(inserPosMember1);
-
-
-
-				}
-				//check existence of fingerprint in the PosMembers
-				var idposuser = $"Select IDNo from PosMembers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId} ' and Active=1";
+				var idposuser = $"Select IDNo from Members  where IDNo='{printModel.IdNo}'";
 				var possuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
-
-				if (possuser != null && possuser != "")
+				if (String.IsNullOrEmpty(possuser))
 				{
-					var idposuserid = $"Select FingerPrint1 from PosMembers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Active=1";
-					var possuserid = db.Database.SqlQuery<string>(idposuserid).FirstOrDefault();
-					if (possuserid != null && possuserid != "")
+					return new ReturnData
 					{
-						var posuserFingerprint = $"UPDATE PosMembers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}' and Active=1";
-						db.Database.ExecuteSqlCommand(posuserFingerprint);
+						Success = true,
+						Message = "Your details could not be found"
+					};
+
+				}
+				var idposuserid = $"Select IDNo from PosMembers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Active=1";
+				var possuserid = db.Database.SqlQuery<string>(idposuserid).FirstOrDefault();
+
+				if (possuserid != null && possuserid != "")
+				{
+
+					var posuserFingerprint = $"Select FingerPrint1 from PosMembers  WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}' and Active=1";
+					var checkidposmember = db.Database.SqlQuery<string>(posuserFingerprint).FirstOrDefault();
+					if (String.IsNullOrEmpty(checkidposmember).Equals(false))
+					{
+						var inserPosMember1 = $"UPDATE PosMembers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}' and Active=1";
+						db.Database.ExecuteSqlCommand(inserPosMember1);
+						//var idposuseridz = $"Select IDNo from PosUsers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Active=1";
+						//var possuseridz = db.Database.SqlQuery<string>(idposuseridz).FirstOrDefault();
+						//if (idposuseridz != null && idposuseridz != "")
+						//{
+						//	var inserPos = $"UPDATE PosUsers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}' and Active=1";
+						//	db.Database.ExecuteSqlCommand(inserPos);
+						//}
+
+
 						return new ReturnData
 						{
 							Success = true,
-							Message = " Fingerprint2 Updated  sucessfully"
+							Message = " Fingerprint1 Updated  sucessfully"
 						};
-
 
 					}
 					else
 					{
-						var posuserFingerprint1 = $"UPDATE PosMembers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId} ' and Active=1";
-						db.Database.ExecuteSqlCommand(posuserFingerprint1);
+						var inserPosMember1 = $"UPDATE PosMembers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}' and Active=1";
+						db.Database.ExecuteSqlCommand(inserPosMember1);
+						//var idposuseridzz = $"Select IDNo from PosUsers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Active=1";
+						//var possuseridzz = db.Database.SqlQuery<string>(idposuseridzz).FirstOrDefault();
+						//if (idposuseridzz != null && idposuseridzz != "")
+						//{
+						//	var inserPos = $"UPDATE PosUsers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}' and Active=1";
+						//	db.Database.ExecuteSqlCommand(inserPos);
+						//}
 						return new ReturnData
 						{
 							Success = true,
-							Message = "Fingerprint1 Updated  sucessfully"
+							Message = " Fingerprint Updated  sucessfully"
 						};
 					}
 
 				}
 				else
 				{
-
 					var idposuser11 = $"Select AgencyCode from PosAgents  where PosSerialNo='{printModel.MachineId} ' and Active=1";
-					string serial = db.Database.SqlQuery<string>(idposuser11).FirstOrDefault();
+					string serial = db.Database.SqlQuery<string>(idposuser11).FirstOrDefault(); 
+					var searchAuditID = $"Select Name from PosUsers  where PosSerialNo='{printModel.AuditId} ' and Active=1";
+					string AuditID = db.Database.SqlQuery<string>(searchAuditID).FirstOrDefault();
 
-
-
-					var inserPosMember = $"insert into PosMembers(IDNo,AuditID,RegistrationDate,FingerPrint1,PosSerialNo,AgencyCode,Active,FingerPrint2)values('{ printModel.IdNo }','{""}','{DateTime.UtcNow.Date}','{decimalFingerprint}','{printModel.MachineId}','{serial}','{true}','{""}')";
+					 var inserPosMember = $"set dateformat dmy insert into PosMembers(IDNo,AuditID,RegistrationDate,FingerPrint1,PosSerialNo,AgencyCode,Active,FingerPrint2)values('{ printModel.IdNo }','{AuditID}','{DateTime.Now}','{decimalFingerprint}','{printModel.MachineId}','{serial}','{true}','{""}')";
 					db.Database.ExecuteSqlCommand(inserPosMember);
-
-
-
 				}
 
+
+
+				return new ReturnData
+				{
+					Success = true,
+					Message = "Fingerprints captured sucessfully"
+				};
+			}
+
+
+
+			catch (Exception ex)
+			{
+				return new ReturnData
+				{
+					Success = false,
+					Message = "Sorry, An error occurred"
+				};
+			}
+		}
+		[Route("newMembersFingerPrints")]
+		public ReturnData newMembersFingerPrints([FromBody] FingerPrintModel printModel)
+		{
+			try
+			{
+
+				//if (!string.IsNullOrEmpty(printModel.FingerPrint))
+				var figuerPrintInfo = printModel.FingerPrint.Split('@');
+				printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
+				var decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
 
 				//AgentMembers fingerprint update
 				var agentprint = $"Select IDNo from AgentMembers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId} ' and Registered=0";
 				var AgentPrints1 = db.Database.SqlQuery<string>(agentprint).FirstOrDefault();
 
-				if (possuser != null && possuser != "")
+				if (AgentPrints1 != null && AgentPrints1 != "")
 				{
 					var idposuserid = $"Select FingerPrint1 from AgentMembers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Registered=0";
 					var possuserid = db.Database.SqlQuery<string>(idposuserid).FirstOrDefault();
@@ -550,11 +557,214 @@ namespace MobileBanking_API.Controllers
 					Message = "Fingerprints captured sucessfully"
 				};
 
+			}
+
+			catch (Exception ex)
+			{
+				return new ReturnData
+				{
+					Success = false,
+					Message = "Sorry, An error occurred"
+				};
+			}
+		}
+		[Route("OperatorsFingerPrints")]
+		public ReturnData OperatorsFingerPrints([FromBody] FingerPrintModel printModel)
+		{
+			try
+			{
+
+				//if (!string.IsNullOrEmpty(printModel.FingerPrint))
+				var figuerPrintInfo = printModel.FingerPrint.Split('@');
+				printModel.FingerPrint = figuerPrintInfo.Count() < 2 ? figuerPrintInfo[0] : figuerPrintInfo[1];
+				var decimalFingerprint = int.Parse(printModel.FingerPrint, System.Globalization.NumberStyles.HexNumber);
+
+				var posUser = $"Select IDNO from useraccounts  where IDNo='{printModel.IdNo}' and PosAdmin='1' and Status=1";
+				var posUsers = db.Database.SqlQuery<string>(posUser).FirstOrDefault();
+				var idposusery19 = $"Select UserName from UserAccounts  where IDNo='{printModel.IdNo}' and POSAdmin=1 and Status=1";
+				string regist23 = db.Database.SqlQuery<string>(idposusery19).FirstOrDefault();
+
+				var idposuser110 = $"Select AgencyCode from PosAgents  where PosSerialNo='{printModel.MachineId}'and Active=1 ";
+				string serial43 = db.Database.SqlQuery<string>(idposuser110).FirstOrDefault();
+				if (posUsers != null && posUsers != "")
+				{
+
+					var news = db.PosUsers.FirstOrDefault(a => a.IDNo == printModel.IdNo);
+					if (news != null)
+					{
+						var posSmin = $"Select Fingerprint1 from PosUsers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Active=1";
+						var posSdminFingerprint = db.Database.SqlQuery<string>(posSmin).FirstOrDefault();
+						if (posSdminFingerprint != null && posSdminFingerprint != "")
+						{
+							var posSminupdate = $"Update PosUsers set Fingerprint2='{decimalFingerprint}'  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Active=1";
+							db.Database.ExecuteSqlCommand(posSminupdate);
+							var idposuser = $"Select IDNo from Members  where IDNo='{printModel.IdNo}'";
+							var possuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
+							if (possuser != null && possuser != "")
+							{
+								var idposuser3 = $"Select IDNo from PosMembers  where IDNo='{printModel.IdNo}' PosSerialNo='{printModel.MachineId} ' and Active=1 ";
+								var possuser3 = db.Database.SqlQuery<string>(idposuser3).FirstOrDefault();
+								if (string.IsNullOrEmpty(possuser3))
+								{
+									var inserPosUsero1 = $" set dateformat dmy insert into PosMembers(IDNo,AuditID,RegistrationDate,FingerPrint1,PosSerialNo,AgencyCode,Active,FingerPrint2)values('{ printModel.IdNo }','{regist23}','{DateTime.UtcNow.Date}','{""}','{printModel.MachineId}','{serial43}','{true}','{decimalFingerprint}')";
+									db.Database.ExecuteSqlCommand(inserPosUsero1);
+								}
+								else
+								{
+									var MemberFingerprint11 = $"UPDATE PosMembers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId} ' and Active=1";
+									db.Database.ExecuteSqlCommand(MemberFingerprint11);
+								}
+							}
+
+							return new ReturnData
+							{
+								Success = true,
+								Message = "Fingerprint2 updated Successfully"
+							};
+						}
+						else
+						{
+							var posSSminupdate = $"Update PosUsers set Fingerprint1='{decimalFingerprint}'  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Active=1";
+							db.Database.ExecuteSqlCommand(posSSminupdate);
+							var idposuser = $"Select IDNo from Members  where IDNo='{printModel.IdNo}'";
+							var possuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
+							if (possuser != null && possuser != "")
+							{
+								var idposuser3 = $"Select IDNo from PosMembers  where IDNo='{printModel.IdNo}' PosSerialNo='{printModel.MachineId} ' and Active=1 ";
+								var possuser3 = db.Database.SqlQuery<string>(idposuser3).FirstOrDefault();
+								if (string.IsNullOrEmpty(possuser3))
+								{
+									var inserPosUsero1 = $" set dateformat dmy insert into PosMembers(IDNo,AuditID,RegistrationDate,FingerPrint1,PosSerialNo,AgencyCode,Active,FingerPrint2)values('{ printModel.IdNo }','{regist23}','{DateTime.UtcNow.Date}','{decimalFingerprint}','{printModel.MachineId}','{serial43}','{true}','{""}')";
+									db.Database.ExecuteSqlCommand(inserPosUsero1);
+								}
+								else
+								{
+									var MemberFingerprint11 = $"UPDATE PosMembers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId} ' and Active=1";
+									db.Database.ExecuteSqlCommand(MemberFingerprint11);
+								}
+							}
+							return new ReturnData
+							{
+								Success = true,
+								Message = "Fingerprint1 updated Successfully"
+							};
+						}
+
+					}
+					else
+					{
+						var idposuse = $"Select UserLoginID from UserAccounts  where IDNo='{printModel.IdNo}'  and POSAdmin=1 and Status=1 ";
+						string regists = db.Database.SqlQuery<string>(idposuse).FirstOrDefault();
+						//var regist = db.UserAccounts.FirstOrDefault(a => a.IDNO == printModel.IdNo);
+						var idposusery1 = $"Select UserName from UserAccounts  where IDNo='{printModel.IdNo}' and POSAdmin=1 and Status=1";
+						string regist = db.Database.SqlQuery<string>(idposusery1).FirstOrDefault();
+						//var phone = db.MEMBERS.FirstOrDefault(a => a.IDNo == printModel.IdNo);
+						var idposusery = $"Select MobileNO from MEMBERS  where IDNo='{printModel.IdNo}' ";
+						string phone = db.Database.SqlQuery<string>(idposusery).FirstOrDefault();
+						//var serial = db.PosAgents.FirstOrDefault(a => a.PosSerialNo == printModel.MachineId);
+						var idposuser11 = $"Select AgencyCode from PosAgents  where PosSerialNo='{printModel.MachineId}'and Active=1 ";
+						string serial = db.Database.SqlQuery<string>(idposuser11).FirstOrDefault();
+
+
+						var inserPosUser1 = $" set dateformat dmy insert into PosUsers(IDNo,Name,FingerPrint1,PosSerialNo,AgencyCode,PhoneNo,Admin,Active,CreatedBy,FingerPrint2,CreatedOn,Teller)values('{ printModel.IdNo }','{regist}','{decimalFingerprint}','{printModel.MachineId}','{serial}','{phone}','{true}','{true}','{regists}','{""}','{DateTime.UtcNow.Date}','{false}')";
+						db.Database.ExecuteSqlCommand(inserPosUser1);
+
+						var idposuser = $"Select IDNo from Members  where IDNo='{printModel.IdNo}'";
+						var possuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
+						if (possuser != null && possuser != "")
+						{
+							var inserPosUsero1 = $" set dateformat dmy insert into PosMembers(IDNo,AuditID,RegistrationDate,FingerPrint1,PosSerialNo,AgencyCode,Active,FingerPrint2)values('{ printModel.IdNo }','{regist}','{DateTime.UtcNow.Date}','{decimalFingerprint}','{printModel.MachineId}','{serial}','{true}','{""}')";
+							db.Database.ExecuteSqlCommand(inserPosUsero1);
+						}
+
+
+						return new ReturnData
+						{
+							Success = true,
+							Message = "Registration completed sucessfully"
+						};
+					}
+				}
+				//check existence of fingerprint in the PosUsers
+				var idposuser1 = $"Select IDNo from PosUsers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId} ' and Active=1";
+				var possuser2 = db.Database.SqlQuery<string>(idposuser1).FirstOrDefault();
+
+				if (possuser2 != null && possuser2 != "")
+				{
+					var idposuserid1 = $"Select FingerPrint1 from PosUsers  where IDNo='{printModel.IdNo}' and PosSerialNo='{printModel.MachineId}' and Active=1";
+					var possuserid2 = db.Database.SqlQuery<string>(idposuserid1).FirstOrDefault();
+					if (possuserid2 != null && possuserid2 != "")
+					{
+						var posuserFingerprint1 = $"UPDATE PosUsers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId}' and Active=1";
+						db.Database.ExecuteSqlCommand(posuserFingerprint1);
+						var idposuser = $"Select IDNo from Members  where IDNo='{printModel.IdNo}'";
+						var possuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
+						if (possuser != null && possuser != "")
+						{
+							var idposuser3 = $"Select IDNo from PosMembers  where IDNo='{printModel.IdNo}' PosSerialNo='{printModel.MachineId} ' and Active=1 ";
+							var possuser3 = db.Database.SqlQuery<string>(idposuser3).FirstOrDefault();
+							if (string.IsNullOrEmpty(possuser3))
+							{
+								var inserPosUsero1 = $" set dateformat dmy insert into PosMembers(IDNo,AuditID,RegistrationDate,FingerPrint1,PosSerialNo,AgencyCode,Active,FingerPrint2)values('{ printModel.IdNo }','{regist23}','{DateTime.UtcNow.Date}','{""}','{printModel.MachineId}','{serial43}','{true}','{decimalFingerprint}')";
+								db.Database.ExecuteSqlCommand(inserPosUsero1);
+							}
+							else
+							{
+								var MemberFingerprint11 = $"UPDATE PosMembers SET FingerPrint2 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId} ' and Active=1";
+								db.Database.ExecuteSqlCommand(MemberFingerprint11);
+							}
+						}
+						return new ReturnData
+						{
+							Success = true,
+							Message = " Fingerprint2 Updated  sucessfully"
+						};
+
+
+					}
+					else
+					{
+						var posuserFingerprint11 = $"UPDATE PosUsers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId} ' and Active=1";
+						db.Database.ExecuteSqlCommand(posuserFingerprint11);
+
+                        var idposuser = $"Select IDNo from Members  where IDNo='{printModel.IdNo}'";
+                        var possuser = db.Database.SqlQuery<string>(idposuser).FirstOrDefault();
+                        if (possuser != null && possuser != "")
+                        {
+							var idposuser3 = $"Select IDNo from PosMembers  where IDNo='{printModel.IdNo}' PosSerialNo='{printModel.MachineId} ' and Active=1 ";
+							var possuser3 = db.Database.SqlQuery<string>(idposuser3).FirstOrDefault();
+							if (string.IsNullOrEmpty(possuser3))
+							{
+								var inserPosUsero1 = $" set dateformat dmy insert into PosMembers(IDNo,AuditID,RegistrationDate,FingerPrint1,PosSerialNo,AgencyCode,Active,FingerPrint2)values('{ printModel.IdNo }','{regist23}','{DateTime.UtcNow.Date}','{decimalFingerprint}','{printModel.MachineId}','{serial43}','{true}','{""}')";
+								db.Database.ExecuteSqlCommand(inserPosUsero1);
+							}
+							else 
+							{
+								var MemberFingerprint11 = $"UPDATE PosMembers SET FingerPrint1 = '{decimalFingerprint}' WHERE IDNo = '{printModel.IdNo}'and PosSerialNo='{printModel.MachineId} ' and Active=1";
+								db.Database.ExecuteSqlCommand(MemberFingerprint11);
+							}
+                        }
+                        return new ReturnData
+						{
+							Success = true,
+							Message = "Fingerprint1 Updated  sucessfully"
+						};
+					}
+
+				}
+				else
+				{
+
+					return new ReturnData
+					{
+						Success = false,
+						Message = "Kindly  register to continue"
+					};
+
+				}
 
 
 			}
-
-
 
 			catch (Exception ex)
 			{
@@ -614,3 +824,4 @@ namespace MobileBanking_API.Controllers
 
 
 }
+
