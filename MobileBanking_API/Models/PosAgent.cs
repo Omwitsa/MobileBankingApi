@@ -19,15 +19,15 @@ namespace MobileBanking_API.Models
         public string AgencyName { get; set; }
         public bool Active { get; set; }
         public string PhysicalAddress { get; set; }
-        public string Zone { get; set; }
         public string PINNo { get; set; }
         public string IDNo { get; set; }
         public string AccNo { get; set; }
         public string FloatAccNo { get; set; }
+        public string CommissionAccNo { get; set; }
         public string PosSerialNo { get; set; }
+        public string PosMobileNo { get; set; }
         public string PhoneNo { get; set; }
         public System.DateTime CreateOn { get; set; }
         public string CreatedBy { get; set; }
-        public string CommissionAccNo { get; set; }
     }
 }

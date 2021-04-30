@@ -19,13 +19,15 @@ namespace MobileBanking_API.Models
         public string SurName { get; set; }
         public string OtherNames { get; set; }
         public string Sex { get; set; }
-        public Nullable<System.DateTime> DOB { get; set; }
+        public System.DateTime DOB { get; set; }
         public string MobileNo { get; set; }
         public string FingerPrint1 { get; set; }
         public string FingerPrint2 { get; set; }
+        public string FingerName1 { get; set; }
+        public string FingerName2 { get; set; }
         public string PosSerialNo { get; set; }
-        public Nullable<bool> Registered { get; set; }
+        public bool Registered { get; set; }
         public string AuditID { get; set; }
-        public Nullable<System.DateTime> RegistrationDate { get; set; }
+        public System.DateTime RegistrationDate { get; set; }
     }
 }

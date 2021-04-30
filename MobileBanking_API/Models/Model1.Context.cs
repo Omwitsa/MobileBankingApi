@@ -15,10 +15,10 @@ namespace MobileBanking_API.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class TESTEntities : DbContext
+    public partial class KONOIN_BOSAEntities : DbContext
     {
-        public TESTEntities()
-            : base("name=TESTEntities")
+        public KONOIN_BOSAEntities()
+            : base("name=KONOIN_BOSAEntities")
         {
         }
     
@@ -76,7 +76,9 @@ namespace MobileBanking_API.Models
         public virtual DbSet<PIN_Lock_Request> PIN_Lock_Requests { get; set; }
         public virtual DbSet<PIN_Reset> PIN_Resets { get; set; }
         public virtual DbSet<PosAgent> PosAgents { get; set; }
+        public virtual DbSet<PosLogin> PosLogins { get; set; }
         public virtual DbSet<PosMember> PosMembers { get; set; }
+        public virtual DbSet<PosMembersUpdate> PosMembersUpdates { get; set; }
         public virtual DbSet<PosUser> PosUsers { get; set; }
         public virtual DbSet<PRODUCTINC> PRODUCTINCs { get; set; }
         public virtual DbSet<PRODUCTSETUP> PRODUCTSETUPs { get; set; }
@@ -114,6 +116,8 @@ namespace MobileBanking_API.Models
         public virtual DbSet<AUDITTRAN> AUDITTRANS { get; set; }
         public virtual DbSet<BankRecon> BankRecons { get; set; }
         public virtual DbSet<BANK> BANKS { get; set; }
+        public virtual DbSet<BENEFIT> BENEFITS { get; set; }
+        public virtual DbSet<BENSETUP> BENSETUPs { get; set; }
         public virtual DbSet<BFDEDUCT> BFDEDUCTs { get; set; }
         public virtual DbSet<branch> branches { get; set; }
         public virtual DbSet<BRIDGINGLOAN> BRIDGINGLOANs { get; set; }
@@ -138,6 +142,7 @@ namespace MobileBanking_API.Models
         public virtual DbSet<Cprofile> Cprofiles { get; set; }
         public virtual DbSet<CRB_Exemption> CRB_Exemptions { get; set; }
         public virtual DbSet<DAILYTRAN> DAILYTRANS { get; set; }
+        public virtual DbSet<DEDSETUP> DEDSETUPs { get; set; }
         public virtual DbSet<DEDUCTIONLIST> DEDUCTIONLISTs { get; set; }
         public virtual DbSet<DEDUCTION1> DEDUCTIONS1 { get; set; }
         public virtual DbSet<DEFAULTEDLOAN> DEFAULTEDLOANS { get; set; }
@@ -145,6 +150,9 @@ namespace MobileBanking_API.Models
         public virtual DbSet<depreciationMethod> depreciationMethods { get; set; }
         public virtual DbSet<DIFFEREDLOANFORM> DIFFEREDLOANFORMS { get; set; }
         public virtual DbSet<EasyMobi_Mobile_Numbers_Update> EasyMobi_Mobile_Numbers_Updates { get; set; }
+        public virtual DbSet<EMPBENEFIT> EMPBENEFITS { get; set; }
+        public virtual DbSet<EMPDEDUCTION> EMPDEDUCTIONS { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeDetail> EmployeeDetails { get; set; }
         public virtual DbSet<Employer> Employers { get; set; }
         public virtual DbSet<ENDMAIN> ENDMAINs { get; set; }
@@ -166,6 +174,7 @@ namespace MobileBanking_API.Models
         public virtual DbSet<GroupSharesBalance> GroupSharesBalances { get; set; }
         public virtual DbSet<GuarantorAmt> GuarantorAmts { get; set; }
         public virtual DbSet<IMPORT> IMPORTS { get; set; }
+        public virtual DbSet<INCOME_ZONE> INCOME_ZONES { get; set; }
         public virtual DbSet<INCOMESOURCE> INCOMESOURCEs { get; set; }
         public virtual DbSet<incomeStatement_setup_accounts> incomeStatement_setup_accounts { get; set; }
         public virtual DbSet<Int> Ints { get; set; }
@@ -175,14 +184,18 @@ namespace MobileBanking_API.Models
         public virtual DbSet<jointMember> jointMembers { get; set; }
         public virtual DbSet<JV> JVs { get; set; }
         public virtual DbSet<KTDA_List> KTDA_Lists { get; set; }
+        public virtual DbSet<Leave_Day> Leave_Days { get; set; }
+        public virtual DbSet<Leave_Type> Leave_Types { get; set; }
         public virtual DbSet<LiquidityStatement> LiquidityStatements { get; set; }
         public virtual DbSet<LN> LNS { get; set; }
+        public virtual DbSet<Loan1> Loans1 { get; set; }
         public virtual DbSet<Loan_Sector> Loan_Sectors { get; set; }
         public virtual DbSet<Loan_Standingorder> Loan_Standingorder { get; set; }
         public virtual DbSet<loanaging> loanagings { get; set; }
         public virtual DbSet<loanagingdetailed> loanagingdetaileds { get; set; }
         public virtual DbSet<LoanAnalysi> LoanAnalysis { get; set; }
         public virtual DbSet<LOANARREAR> LOANARREARS { get; set; }
+        public virtual DbSet<LOANBALANCE> LOANBALANCEs { get; set; }
         public virtual DbSet<LoanGuarantor> LoanGuarantors { get; set; }
         public virtual DbSet<LoanOpeningBalance> LoanOpeningBalances { get; set; }
         public virtual DbSet<Loans_Classification> Loans_Classifications { get; set; }
@@ -193,6 +206,7 @@ namespace MobileBanking_API.Models
         public virtual DbSet<LOGIN> LOGINS { get; set; }
         public virtual DbSet<LSTMT> LSTMTs { get; set; }
         public virtual DbSet<Master> Masters { get; set; }
+        public virtual DbSet<Masters_BKP> Masters_BKP { get; set; }
         public virtual DbSet<MDEDUCTNOTPOSTED> MDEDUCTNOTPOSTEDs { get; set; }
         public virtual DbSet<MDEDUCTTEMP> MDEDUCTTEMPs { get; set; }
         public virtual DbSet<MEMBERLOAN> MEMBERLOANS { get; set; }
@@ -205,14 +219,16 @@ namespace MobileBanking_API.Models
         public virtual DbSet<MiniStat> MiniStats { get; set; }
         public virtual DbSet<Mpesa> Mpesas { get; set; }
         public virtual DbSet<NARRATION> NARRATIONS { get; set; }
+        public virtual DbSet<NETPAY> NETPAYs { get; set; }
         public virtual DbSet<NHIF> NHIFS { get; set; }
         public virtual DbSet<OtherLoanCharge> OtherLoanCharges { get; set; }
         public virtual DbSet<param> @params { get; set; }
         public virtual DbSet<PayBill_Reconcilliation> PayBill_Reconcilliations { get; set; }
         public virtual DbSet<PaymentBooking> PaymentBookings { get; set; }
+        public virtual DbSet<PayrollMonthSummary> PayrollMonthSummaries { get; set; }
+        public virtual DbSet<PAYSUMMARY> PAYSUMMARies { get; set; }
         public virtual DbSet<PERTRAN> PERTRANs { get; set; }
         public virtual DbSet<port> ports { get; set; }
-        public virtual DbSet<PosLogin> PosLogins { get; set; }
         public virtual DbSet<PosReconcilliation> PosReconcilliations { get; set; }
         public virtual DbSet<REASON> REASONS { get; set; }
         public virtual DbSet<ReceiptBooking> ReceiptBookings { get; set; }
@@ -232,6 +248,7 @@ namespace MobileBanking_API.Models
         public virtual DbSet<smsLoanGuarantor> smsLoanGuarantors { get; set; }
         public virtual DbSet<SMSSetting> SMSSettings { get; set; }
         public virtual DbSet<SMTDR> SMTDRs { get; set; }
+        public virtual DbSet<Staff_Leave> Staff_Leaves { get; set; }
         public virtual DbSet<standingorder> standingorders { get; set; }
         public virtual DbSet<STATEMENT> STATEMENTs { get; set; }
         public virtual DbSet<Stmt> Stmts { get; set; }
@@ -267,7 +284,9 @@ namespace MobileBanking_API.Models
         public virtual DbSet<UserGroupRights_Logs> UserGroupRights_Logs { get; set; }
         public virtual DbSet<VOUCHERNO> VOUCHERNOes { get; set; }
         public virtual DbSet<WCHARGE> WCHARGES { get; set; }
-        public virtual DbSet<ZONE> ZONES { get; set; }
+        public virtual DbSet<xxxx> xxxxes { get; set; }
+        public virtual DbSet<xxxy> xxxies { get; set; }
+        public virtual DbSet<Zone> Zones { get; set; }
         public virtual DbSet<Expected_Return> Expected_Returns { get; set; }
         public virtual DbSet<HENRYSHARELOANBAL> HENRYSHARELOANBALs { get; set; }
         public virtual DbSet<vbMicrofinanceCollection> vbMicrofinanceCollections { get; set; }
@@ -304,7 +323,7 @@ namespace MobileBanking_API.Models
         public virtual DbSet<VwSharesHolder> VwSharesHolders { get; set; }
         public virtual DbSet<zonesReport> zonesReports { get; set; }
     
-        [DbFunction("TESTEntities", "Advance_Appraisal")]
+        [DbFunction("KONOIN_BOSAEntities", "Advance_Appraisal")]
         public virtual IQueryable<Advance_Appraisal_Result> Advance_Appraisal(string accNo, string productID)
         {
             var accNoParameter = accNo != null ?
@@ -315,30 +334,30 @@ namespace MobileBanking_API.Models
                 new ObjectParameter("ProductID", productID) :
                 new ObjectParameter("ProductID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Advance_Appraisal_Result>("[TESTEntities].[Advance_Appraisal](@AccNo, @ProductID)", accNoParameter, productIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Advance_Appraisal_Result>("[KONOIN_BOSAEntities].[Advance_Appraisal](@AccNo, @ProductID)", accNoParameter, productIDParameter);
         }
     
-        [DbFunction("TESTEntities", "Get_B2C_Charges")]
+        [DbFunction("KONOIN_BOSAEntities", "Get_B2C_Charges")]
         public virtual IQueryable<Get_B2C_Charges_Result> Get_B2C_Charges(Nullable<decimal> amount)
         {
             var amountParameter = amount.HasValue ?
                 new ObjectParameter("Amount", amount) :
                 new ObjectParameter("Amount", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Get_B2C_Charges_Result>("[TESTEntities].[Get_B2C_Charges](@Amount)", amountParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Get_B2C_Charges_Result>("[KONOIN_BOSAEntities].[Get_B2C_Charges](@Amount)", amountParameter);
         }
     
-        [DbFunction("TESTEntities", "Get_POS_Charges")]
+        [DbFunction("KONOIN_BOSAEntities", "Get_POS_Charges")]
         public virtual IQueryable<Get_POS_Charges_Result> Get_POS_Charges(Nullable<decimal> amount)
         {
             var amountParameter = amount.HasValue ?
                 new ObjectParameter("Amount", amount) :
                 new ObjectParameter("Amount", typeof(decimal));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Get_POS_Charges_Result>("[TESTEntities].[Get_POS_Charges](@Amount)", amountParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Get_POS_Charges_Result>("[KONOIN_BOSAEntities].[Get_POS_Charges](@Amount)", amountParameter);
         }
     
-        [DbFunction("TESTEntities", "Get_POS_Expenses")]
+        [DbFunction("KONOIN_BOSAEntities", "Get_POS_Expenses")]
         public virtual IQueryable<Get_POS_Expenses_Result> Get_POS_Expenses(Nullable<decimal> amount, string activity)
         {
             var amountParameter = amount.HasValue ?
@@ -349,20 +368,20 @@ namespace MobileBanking_API.Models
                 new ObjectParameter("Activity", activity) :
                 new ObjectParameter("Activity", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Get_POS_Expenses_Result>("[TESTEntities].[Get_POS_Expenses](@Amount, @Activity)", amountParameter, activityParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Get_POS_Expenses_Result>("[KONOIN_BOSAEntities].[Get_POS_Expenses](@Amount, @Activity)", amountParameter, activityParameter);
         }
     
-        [DbFunction("TESTEntities", "LoanInstalmentDetails")]
+        [DbFunction("KONOIN_BOSAEntities", "LoanInstalmentDetails")]
         public virtual IQueryable<LoanInstalmentDetails_Result> LoanInstalmentDetails(string lNo)
         {
             var lNoParameter = lNo != null ?
                 new ObjectParameter("LNo", lNo) :
                 new ObjectParameter("LNo", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<LoanInstalmentDetails_Result>("[TESTEntities].[LoanInstalmentDetails](@LNo)", lNoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<LoanInstalmentDetails_Result>("[KONOIN_BOSAEntities].[LoanInstalmentDetails](@LNo)", lNoParameter);
         }
     
-        [DbFunction("TESTEntities", "UDF_GL_Balance")]
+        [DbFunction("KONOIN_BOSAEntities", "UDF_GL_Balance")]
         public virtual IQueryable<UDF_GL_Balance_Result> UDF_GL_Balance(string accNo, Nullable<System.DateTime> lastDate)
         {
             var accNoParameter = accNo != null ?
@@ -373,10 +392,10 @@ namespace MobileBanking_API.Models
                 new ObjectParameter("LastDate", lastDate) :
                 new ObjectParameter("LastDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UDF_GL_Balance_Result>("[TESTEntities].[UDF_GL_Balance](@AccNo, @LastDate)", accNoParameter, lastDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UDF_GL_Balance_Result>("[KONOIN_BOSAEntities].[UDF_GL_Balance](@AccNo, @LastDate)", accNoParameter, lastDateParameter);
         }
     
-        [DbFunction("TESTEntities", "UDF_GL_OpeningBalance")]
+        [DbFunction("KONOIN_BOSAEntities", "UDF_GL_OpeningBalance")]
         public virtual IQueryable<UDF_GL_OpeningBalance_Result> UDF_GL_OpeningBalance(string accNo, Nullable<System.DateTime> lastDate)
         {
             var accNoParameter = accNo != null ?
@@ -387,7 +406,7 @@ namespace MobileBanking_API.Models
                 new ObjectParameter("LastDate", lastDate) :
                 new ObjectParameter("LastDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UDF_GL_OpeningBalance_Result>("[TESTEntities].[UDF_GL_OpeningBalance](@AccNo, @LastDate)", accNoParameter, lastDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<UDF_GL_OpeningBalance_Result>("[KONOIN_BOSAEntities].[UDF_GL_OpeningBalance](@AccNo, @LastDate)", accNoParameter, lastDateParameter);
         }
     
         public virtual int ACC_EDIT(string aCCNO)
@@ -1138,6 +1157,16 @@ namespace MobileBanking_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EasyMobi_MICRO_Savings_Deduction", accNoParameter, productIDParameter, refNoParameter, phoneNoParameter, amountParameter);
         }
     
+        public virtual int Finalize_Bulk_SMSs()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Finalize_Bulk_SMSs");
+        }
+    
+        public virtual int Finalize_POS_Transactions()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Finalize_POS_Transactions");
+        }
+    
         public virtual int GENERATE_CASH_FLOW(string transdate)
         {
             var transdateParameter = transdate != null ?
@@ -1710,13 +1739,13 @@ namespace MobileBanking_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Get_NHIF_Month_Members", periodParameter);
         }
     
-        public virtual ObjectResult<Get_Other_Deduction_Result> Get_Other_Deduction(string memberno)
+        public virtual int Get_Other_Deduction(string memberno)
         {
             var membernoParameter = memberno != null ?
                 new ObjectParameter("memberno", memberno) :
                 new ObjectParameter("memberno", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Other_Deduction_Result>("Get_Other_Deduction", membernoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Get_Other_Deduction", membernoParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> Get_Posted_Amount(Nullable<System.DateTime> period, string source, string productID, string chequeNo)
@@ -1797,13 +1826,13 @@ namespace MobileBanking_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Staff_Loan_Arrears_Result>("Get_Staff_Loan_Arrears", accNoParameter);
         }
     
-        public virtual int Get_Staff_Loans(string accNo)
+        public virtual ObjectResult<Get_Staff_Loans_Result> Get_Staff_Loans(string accNo)
         {
             var accNoParameter = accNo != null ?
                 new ObjectParameter("AccNo", accNo) :
                 new ObjectParameter("AccNo", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Get_Staff_Loans", accNoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Get_Staff_Loans_Result>("Get_Staff_Loans", accNoParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> get_sum_advances()
@@ -2165,9 +2194,91 @@ namespace MobileBanking_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Post_B2C_Transaction_Result>("Post_B2C_Transaction");
         }
     
+        public virtual int Post_Benefits_to_FOSA(string myMonth, string myYear, string myDept)
+        {
+            var myMonthParameter = myMonth != null ?
+                new ObjectParameter("myMonth", myMonth) :
+                new ObjectParameter("myMonth", typeof(string));
+    
+            var myYearParameter = myYear != null ?
+                new ObjectParameter("myYear", myYear) :
+                new ObjectParameter("myYear", typeof(string));
+    
+            var myDeptParameter = myDept != null ?
+                new ObjectParameter("myDept", myDept) :
+                new ObjectParameter("myDept", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Post_Benefits_to_FOSA", myMonthParameter, myYearParameter, myDeptParameter);
+        }
+    
+        public virtual int Post_Deductions_to_FOSA(string myMonth, string myYear)
+        {
+            var myMonthParameter = myMonth != null ?
+                new ObjectParameter("myMonth", myMonth) :
+                new ObjectParameter("myMonth", typeof(string));
+    
+            var myYearParameter = myYear != null ?
+                new ObjectParameter("myYear", myYear) :
+                new ObjectParameter("myYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Post_Deductions_to_FOSA", myMonthParameter, myYearParameter);
+        }
+    
+        public virtual int Post_Month_Agency_Commissions()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Post_Month_Agency_Commissions");
+        }
+    
         public virtual int Post_PayBill_deposits()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Post_PayBill_deposits");
+        }
+    
+        public virtual int Post_Payroll_Salary_to_FOSA(string myMonth, string myYear, Nullable<System.DateTime> period)
+        {
+            var myMonthParameter = myMonth != null ?
+                new ObjectParameter("myMonth", myMonth) :
+                new ObjectParameter("myMonth", typeof(string));
+    
+            var myYearParameter = myYear != null ?
+                new ObjectParameter("myYear", myYear) :
+                new ObjectParameter("myYear", typeof(string));
+    
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("period", period) :
+                new ObjectParameter("period", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Post_Payroll_Salary_to_FOSA", myMonthParameter, myYearParameter, periodParameter);
+        }
+    
+        public virtual int Post_Payroll_Shares_to_BOSA(string myYear, string myMonth)
+        {
+            var myYearParameter = myYear != null ?
+                new ObjectParameter("myYear", myYear) :
+                new ObjectParameter("myYear", typeof(string));
+    
+            var myMonthParameter = myMonth != null ?
+                new ObjectParameter("myMonth", myMonth) :
+                new ObjectParameter("myMonth", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Post_Payroll_Shares_to_BOSA", myYearParameter, myMonthParameter);
+        }
+    
+        public virtual int Post_Received_Income_to_FOSA(string myMonth, string myYear, Nullable<System.DateTime> period)
+        {
+            var myMonthParameter = myMonth != null ?
+                new ObjectParameter("myMonth", myMonth) :
+                new ObjectParameter("myMonth", typeof(string));
+    
+            var myYearParameter = myYear != null ?
+                new ObjectParameter("myYear", myYear) :
+                new ObjectParameter("myYear", typeof(string));
+    
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("period", period) :
+                new ObjectParameter("period", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Post_Received_Income_to_FOSA", myMonthParameter, myYearParameter, periodParameter);
         }
     
         public virtual int Rebuild_Account_Available_Balance(string accNo)
@@ -2209,6 +2320,11 @@ namespace MobileBanking_API.Models
         public virtual int Recover_Loan_From_Account()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Recover_Loan_From_Account");
+        }
+    
+        public virtual int Register_New_POS_Members()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Register_New_POS_Members");
         }
     
         public virtual int Remove_Day_Advance_Credited_Severally()
@@ -2332,6 +2448,35 @@ namespace MobileBanking_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("save_Advance", payrollno_1Parameter, accno_2Parameter, name_3Parameter, advdate_4Parameter, period_5Parameter, amntapp_6Parameter, amntg_7Parameter, expirydate_8Parameter, locked_9Parameter, glpost_10Parameter, auditid_11Parameter, audittime_12Parameter, serialno_13Parameter, custno_14Parameter, idno_15Parameter, kilo_16Parameter, factor_17Parameter, examnt_18Parameter, appamnt_19Parameter, posted_20Parameter, remarks_21Parameter, description_22Parameter);
         }
     
+        public virtual int Save_AdvanceBreakdown(string payrollNo_1, string mMonth_2, string yYear_3, string advanceNo_4, Nullable<decimal> amount_5, Nullable<decimal> amount_6)
+        {
+            var payrollNo_1Parameter = payrollNo_1 != null ?
+                new ObjectParameter("PayrollNo_1", payrollNo_1) :
+                new ObjectParameter("PayrollNo_1", typeof(string));
+    
+            var mMonth_2Parameter = mMonth_2 != null ?
+                new ObjectParameter("mMonth_2", mMonth_2) :
+                new ObjectParameter("mMonth_2", typeof(string));
+    
+            var yYear_3Parameter = yYear_3 != null ?
+                new ObjectParameter("yYear_3", yYear_3) :
+                new ObjectParameter("yYear_3", typeof(string));
+    
+            var advanceNo_4Parameter = advanceNo_4 != null ?
+                new ObjectParameter("AdvanceNo_4", advanceNo_4) :
+                new ObjectParameter("AdvanceNo_4", typeof(string));
+    
+            var amount_5Parameter = amount_5.HasValue ?
+                new ObjectParameter("Amount_5", amount_5) :
+                new ObjectParameter("Amount_5", typeof(decimal));
+    
+            var amount_6Parameter = amount_6.HasValue ?
+                new ObjectParameter("Amount_6", amount_6) :
+                new ObjectParameter("Amount_6", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_AdvanceBreakdown", payrollNo_1Parameter, mMonth_2Parameter, yYear_3Parameter, advanceNo_4Parameter, amount_5Parameter, amount_6Parameter);
+        }
+    
         public virtual int Save_Advert(string advertisement_1, Nullable<bool> status_2, string accno_3, Nullable<decimal> amount_4, string username_5, string vno_6, string transType, Nullable<System.DateTime> requestDate)
         {
             var advertisement_1Parameter = advertisement_1 != null ?
@@ -2453,6 +2598,27 @@ namespace MobileBanking_API.Models
                 new ObjectParameter("AuditID_5", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_AUDITTRANS", transTable_1Parameter, transDescription_2Parameter, transDate_3Parameter, amount_4Parameter, auditID_5Parameter);
+        }
+    
+        public virtual int SAVE_BENSETUP(string benNo_1, string benDescription_2, Nullable<int> taxable_3, string gLAccNo)
+        {
+            var benNo_1Parameter = benNo_1 != null ?
+                new ObjectParameter("BenNo_1", benNo_1) :
+                new ObjectParameter("BenNo_1", typeof(string));
+    
+            var benDescription_2Parameter = benDescription_2 != null ?
+                new ObjectParameter("BenDescription_2", benDescription_2) :
+                new ObjectParameter("BenDescription_2", typeof(string));
+    
+            var taxable_3Parameter = taxable_3.HasValue ?
+                new ObjectParameter("Taxable_3", taxable_3) :
+                new ObjectParameter("Taxable_3", typeof(int));
+    
+            var gLAccNoParameter = gLAccNo != null ?
+                new ObjectParameter("GLAccNo", gLAccNo) :
+                new ObjectParameter("GLAccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_BENSETUP", benNo_1Parameter, benDescription_2Parameter, taxable_3Parameter, gLAccNoParameter);
         }
     
         public virtual int SAVE_BUDGET(string accno_1, Nullable<long> mmonth_2, Nullable<long> yyear_3, Nullable<decimal> budgetted_5)
@@ -3192,6 +3358,23 @@ namespace MobileBanking_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Save_CustomerBalance_1", customerNo_1Parameter, iDNo_2Parameter, payrollNo_3Parameter, accName_4Parameter, amount_5Parameter, availableBalance_6Parameter, accNO_7Parameter, transDescription_8Parameter, transDate_9Parameter, commission_10Parameter, chequeNo_11Parameter, period_12Parameter, posted_13Parameter, locked_14Parameter, transType_15Parameter, status_16Parameter, vno_17Parameter, auditid_18Parameter, moduleid_19Parameter, accd_20Parameter, valuedate_21Parameter, actualbalance_22Parameter, cash_23Parameter, bcode_24Parameter, bosa_25Parameter, rebuild_26Parameter, reconciled_27Parameter, authorityParameter, transactionNoParameter);
         }
     
+        public virtual int SAVE_DEDSETUP(string dedNo_1, string dedDescription_2, string gLAccNo)
+        {
+            var dedNo_1Parameter = dedNo_1 != null ?
+                new ObjectParameter("DedNo_1", dedNo_1) :
+                new ObjectParameter("DedNo_1", typeof(string));
+    
+            var dedDescription_2Parameter = dedDescription_2 != null ?
+                new ObjectParameter("DedDescription_2", dedDescription_2) :
+                new ObjectParameter("DedDescription_2", typeof(string));
+    
+            var gLAccNoParameter = gLAccNo != null ?
+                new ObjectParameter("GLAccNo", gLAccNo) :
+                new ObjectParameter("GLAccNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_DEDSETUP", dedNo_1Parameter, dedDescription_2Parameter, gLAccNoParameter);
+        }
+    
         public virtual int SAVE_DEDUCTION(string custNo_1, string accNo_2, string memberNo_3, string dedCode_4, Nullable<long> yYear_5, Nullable<decimal> amount_6, Nullable<decimal> amountInterest_7, Nullable<int> partialPosted_8, Nullable<int> posted_9, Nullable<decimal> amountCF_10, Nullable<decimal> amountIntCF_11, string auditID_12, string voucherNo_13, Nullable<int> mMonth_14, Nullable<bool> uPD_15, Nullable<System.DateTime> transDate_16, Nullable<int> stopped_17, string wMNO_18, string productID, string recoverFrom, string source, Nullable<decimal> period, Nullable<System.DateTime> intDate)
         {
             var custNo_1Parameter = custNo_1 != null ?
@@ -3442,6 +3625,122 @@ namespace MobileBanking_API.Models
                 new ObjectParameter("SharesAsAt", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_DIVIDEND", memberNo_1Parameter, current_Tot_Shares_2Parameter, shares_as_at_3Parameter, gross_Dividend_4Parameter, withTax_5Parameter, net_Dividend_6Parameter, bankName_7Parameter, acctNo_8Parameter, companyName_9Parameter, shareInterest_10Parameter, withHoldingTax_11Parameter, divInterest_12Parameter, divTax_13Parameter, depTax_14Parameter, shareCap_15Parameter, netDiv_16Parameter, divTaxAmtParameter, sharesAsAtParameter);
+        }
+    
+        public virtual int SAVE_EMPBENEFIT(string payrollNo_1, string benID_2, string benName_3, Nullable<decimal> amount_4, Nullable<int> taxable_5)
+        {
+            var payrollNo_1Parameter = payrollNo_1 != null ?
+                new ObjectParameter("PayrollNo_1", payrollNo_1) :
+                new ObjectParameter("PayrollNo_1", typeof(string));
+    
+            var benID_2Parameter = benID_2 != null ?
+                new ObjectParameter("BenID_2", benID_2) :
+                new ObjectParameter("BenID_2", typeof(string));
+    
+            var benName_3Parameter = benName_3 != null ?
+                new ObjectParameter("BenName_3", benName_3) :
+                new ObjectParameter("BenName_3", typeof(string));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(decimal));
+    
+            var taxable_5Parameter = taxable_5.HasValue ?
+                new ObjectParameter("Taxable_5", taxable_5) :
+                new ObjectParameter("Taxable_5", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_EMPBENEFIT", payrollNo_1Parameter, benID_2Parameter, benName_3Parameter, amount_4Parameter, taxable_5Parameter);
+        }
+    
+        public virtual int SAVE_EMPDEDUCTION(string payrollNo_1, string dedNo_2, string dedName_3, Nullable<System.DateTime> startDate_4, Nullable<System.DateTime> finishDate_5, Nullable<decimal> amount_6, Nullable<int> percentage_7, Nullable<int> periodic_8)
+        {
+            var payrollNo_1Parameter = payrollNo_1 != null ?
+                new ObjectParameter("PayrollNo_1", payrollNo_1) :
+                new ObjectParameter("PayrollNo_1", typeof(string));
+    
+            var dedNo_2Parameter = dedNo_2 != null ?
+                new ObjectParameter("DedNo_2", dedNo_2) :
+                new ObjectParameter("DedNo_2", typeof(string));
+    
+            var dedName_3Parameter = dedName_3 != null ?
+                new ObjectParameter("DedName_3", dedName_3) :
+                new ObjectParameter("DedName_3", typeof(string));
+    
+            var startDate_4Parameter = startDate_4.HasValue ?
+                new ObjectParameter("StartDate_4", startDate_4) :
+                new ObjectParameter("StartDate_4", typeof(System.DateTime));
+    
+            var finishDate_5Parameter = finishDate_5.HasValue ?
+                new ObjectParameter("FinishDate_5", finishDate_5) :
+                new ObjectParameter("FinishDate_5", typeof(System.DateTime));
+    
+            var amount_6Parameter = amount_6.HasValue ?
+                new ObjectParameter("Amount_6", amount_6) :
+                new ObjectParameter("Amount_6", typeof(decimal));
+    
+            var percentage_7Parameter = percentage_7.HasValue ?
+                new ObjectParameter("Percentage_7", percentage_7) :
+                new ObjectParameter("Percentage_7", typeof(int));
+    
+            var periodic_8Parameter = periodic_8.HasValue ?
+                new ObjectParameter("Periodic_8", periodic_8) :
+                new ObjectParameter("Periodic_8", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_EMPDEDUCTION", payrollNo_1Parameter, dedNo_2Parameter, dedName_3Parameter, startDate_4Parameter, finishDate_5Parameter, amount_6Parameter, percentage_7Parameter, periodic_8Parameter);
+        }
+    
+        public virtual int SAVE_EMPLOYEE_BENEFIT(string payrollNo_1, Nullable<decimal> mMonth_2, Nullable<decimal> yYear_3, Nullable<decimal> amount_4, string benDescription_5, Nullable<int> taxable_6)
+        {
+            var payrollNo_1Parameter = payrollNo_1 != null ?
+                new ObjectParameter("PayrollNo_1", payrollNo_1) :
+                new ObjectParameter("PayrollNo_1", typeof(string));
+    
+            var mMonth_2Parameter = mMonth_2.HasValue ?
+                new ObjectParameter("MMonth_2", mMonth_2) :
+                new ObjectParameter("MMonth_2", typeof(decimal));
+    
+            var yYear_3Parameter = yYear_3.HasValue ?
+                new ObjectParameter("YYear_3", yYear_3) :
+                new ObjectParameter("YYear_3", typeof(decimal));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(decimal));
+    
+            var benDescription_5Parameter = benDescription_5 != null ?
+                new ObjectParameter("BenDescription_5", benDescription_5) :
+                new ObjectParameter("BenDescription_5", typeof(string));
+    
+            var taxable_6Parameter = taxable_6.HasValue ?
+                new ObjectParameter("Taxable_6", taxable_6) :
+                new ObjectParameter("Taxable_6", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_EMPLOYEE_BENEFIT", payrollNo_1Parameter, mMonth_2Parameter, yYear_3Parameter, amount_4Parameter, benDescription_5Parameter, taxable_6Parameter);
+        }
+    
+        public virtual int SAVE_EMPLOYEE_DEDUCTION(string payrollNo_1, Nullable<decimal> mMonth_2, Nullable<decimal> yYear_3, Nullable<decimal> amount_4, string dedDescription_5)
+        {
+            var payrollNo_1Parameter = payrollNo_1 != null ?
+                new ObjectParameter("PayrollNo_1", payrollNo_1) :
+                new ObjectParameter("PayrollNo_1", typeof(string));
+    
+            var mMonth_2Parameter = mMonth_2.HasValue ?
+                new ObjectParameter("MMonth_2", mMonth_2) :
+                new ObjectParameter("MMonth_2", typeof(decimal));
+    
+            var yYear_3Parameter = yYear_3.HasValue ?
+                new ObjectParameter("YYear_3", yYear_3) :
+                new ObjectParameter("YYear_3", typeof(decimal));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(decimal));
+    
+            var dedDescription_5Parameter = dedDescription_5 != null ?
+                new ObjectParameter("DedDescription_5", dedDescription_5) :
+                new ObjectParameter("DedDescription_5", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_EMPLOYEE_DEDUCTION", payrollNo_1Parameter, mMonth_2Parameter, yYear_3Parameter, amount_4Parameter, dedDescription_5Parameter);
         }
     
         public virtual int Save_EndMain(string loanNo_1, string minuteNo_2, Nullable<System.DateTime> meetingDate_3, Nullable<decimal> amtApproved_4, string accepted_5, string chairSigned_6, string secSigned_7, string membSigned_8, string reasons_9, string remarks_10, string auditID_11)
@@ -4524,6 +4823,60 @@ namespace MobileBanking_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_MONTHLYDEDUCTION", accNo_1Parameter, stoNo_2Parameter, period_3Parameter, principal_4Parameter, interest_5Parameter, auditID_6Parameter, sourceParameter, productIDParameter);
         }
     
+        public virtual int SAVE_NETPAY(string payrollNo_1, Nullable<int> mMonth_2, string yYear_3, Nullable<decimal> amount_4)
+        {
+            var payrollNo_1Parameter = payrollNo_1 != null ?
+                new ObjectParameter("PayrollNo_1", payrollNo_1) :
+                new ObjectParameter("PayrollNo_1", typeof(string));
+    
+            var mMonth_2Parameter = mMonth_2.HasValue ?
+                new ObjectParameter("mMonth_2", mMonth_2) :
+                new ObjectParameter("mMonth_2", typeof(int));
+    
+            var yYear_3Parameter = yYear_3 != null ?
+                new ObjectParameter("yYear_3", yYear_3) :
+                new ObjectParameter("yYear_3", typeof(string));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_NETPAY", payrollNo_1Parameter, mMonth_2Parameter, yYear_3Parameter, amount_4Parameter);
+        }
+    
+        public virtual int SAVE_NETPAY1(string payrollNo_1, Nullable<int> mMonth_2, string yYear_3, Nullable<decimal> amount_4, Nullable<double> relief, Nullable<double> pAYE, Nullable<double> taxPay)
+        {
+            var payrollNo_1Parameter = payrollNo_1 != null ?
+                new ObjectParameter("PayrollNo_1", payrollNo_1) :
+                new ObjectParameter("PayrollNo_1", typeof(string));
+    
+            var mMonth_2Parameter = mMonth_2.HasValue ?
+                new ObjectParameter("mMonth_2", mMonth_2) :
+                new ObjectParameter("mMonth_2", typeof(int));
+    
+            var yYear_3Parameter = yYear_3 != null ?
+                new ObjectParameter("yYear_3", yYear_3) :
+                new ObjectParameter("yYear_3", typeof(string));
+    
+            var amount_4Parameter = amount_4.HasValue ?
+                new ObjectParameter("Amount_4", amount_4) :
+                new ObjectParameter("Amount_4", typeof(decimal));
+    
+            var reliefParameter = relief.HasValue ?
+                new ObjectParameter("Relief", relief) :
+                new ObjectParameter("Relief", typeof(double));
+    
+            var pAYEParameter = pAYE.HasValue ?
+                new ObjectParameter("PAYE", pAYE) :
+                new ObjectParameter("PAYE", typeof(double));
+    
+            var taxPayParameter = taxPay.HasValue ?
+                new ObjectParameter("TaxPay", taxPay) :
+                new ObjectParameter("TaxPay", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_NETPAY1", payrollNo_1Parameter, mMonth_2Parameter, yYear_3Parameter, amount_4Parameter, reliefParameter, pAYEParameter, taxPayParameter);
+        }
+    
         public virtual int Save_New_Member(string memberNo_1, string staffNo_2, string iDNo_3, string accNo_4, string surname_5, string otherNames_6, string sex_7, Nullable<System.DateTime> dOB_8, string employer_9, string dept_10, string rank_11, string terms_12, string presentAddr_13, string officeTelNo_14, string homeAddr_15, string homeTelNo_16, Nullable<decimal> regFee_17, Nullable<decimal> initShares_18, Nullable<System.DateTime> asAtDate_19, Nullable<decimal> monthlyContr_20, Nullable<System.DateTime> applicDate_21, Nullable<System.DateTime> effectDate_22, string signed_23, string accepted_24, string archived_25, string withdrawn_26, string isGuarantor_27, string province_28, string district_29, string station_30, string companyCode_31, string pIN_32, byte[] photo_33, Nullable<decimal> shareCap_34, string bankCode_35, string auditID_36, Nullable<System.DateTime> auditTime_37, Nullable<System.DateTime> e_DATE_38, Nullable<decimal> hshares_39, Nullable<decimal> fshares_40)
         {
             var memberNo_1Parameter = memberNo_1 != null ?
@@ -4813,6 +5166,39 @@ namespace MobileBanking_API.Models
                 new ObjectParameter("AuditID_12", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_NEWCONTRIB", memberNo_1Parameter, contrDate_2Parameter, refNo_3Parameter, amount_4Parameter, shareBal_5Parameter, transBy_6Parameter, chequeNo_7Parameter, receiptNo_8Parameter, locked_9Parameter, posted_10Parameter, remarks_11Parameter, shareCodeParameter, auditID_12Parameter);
+        }
+    
+        public virtual int SAVE_PASLIP(string payrollNo_1, Nullable<int> mMonth_2, Nullable<int> yYear_3, string transID_4, Nullable<decimal> amount_5, string transDescription_6, string prodID)
+        {
+            var payrollNo_1Parameter = payrollNo_1 != null ?
+                new ObjectParameter("PayrollNo_1", payrollNo_1) :
+                new ObjectParameter("PayrollNo_1", typeof(string));
+    
+            var mMonth_2Parameter = mMonth_2.HasValue ?
+                new ObjectParameter("mMonth_2", mMonth_2) :
+                new ObjectParameter("mMonth_2", typeof(int));
+    
+            var yYear_3Parameter = yYear_3.HasValue ?
+                new ObjectParameter("yYear_3", yYear_3) :
+                new ObjectParameter("yYear_3", typeof(int));
+    
+            var transID_4Parameter = transID_4 != null ?
+                new ObjectParameter("TransID_4", transID_4) :
+                new ObjectParameter("TransID_4", typeof(string));
+    
+            var amount_5Parameter = amount_5.HasValue ?
+                new ObjectParameter("Amount_5", amount_5) :
+                new ObjectParameter("Amount_5", typeof(decimal));
+    
+            var transDescription_6Parameter = transDescription_6 != null ?
+                new ObjectParameter("TransDescription_6", transDescription_6) :
+                new ObjectParameter("TransDescription_6", typeof(string));
+    
+            var prodIDParameter = prodID != null ?
+                new ObjectParameter("ProdID", prodID) :
+                new ObjectParameter("ProdID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SAVE_PASLIP", payrollNo_1Parameter, mMonth_2Parameter, yYear_3Parameter, transID_4Parameter, amount_5Parameter, transDescription_6Parameter, prodIDParameter);
         }
     
         public virtual int SAVE_PRODUCT(string productID_1, string productName_2, string gLAccNo_3, string gLAccNo_4, string processingFee_4, Nullable<decimal> amount_5, Nullable<decimal> percentage_6, Nullable<int> intervals, Nullable<int> backOffice_7, string auditID_8)
@@ -5437,6 +5823,11 @@ namespace MobileBanking_API.Models
         public virtual int Send_ATM_Messages()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Send_ATM_Messages");
+        }
+    
+        public virtual int Send_Operator_Message()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Send_Operator_Message");
         }
     
         public virtual ObjectResult<share_list_Result> share_list(string memno)
@@ -9557,6 +9948,11 @@ namespace MobileBanking_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UPDATE_MEMBERDEDUCTIONS", accNo_1Parameter, deductionID_2Parameter, sTONo_3Parameter, dedAmount_4Parameter, productIDParameter, productID_5Parameter, source_6Parameter, sTONo_7Parameter, dedAmount_8Parameter, source_9Parameter, interest_10Parameter, principal_11Parameter);
         }
     
+        public virtual int Update_Members_Income_Stations()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Members_Income_Stations");
+        }
+    
         public virtual int Update_New_Loan_Standing_Orders()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_New_Loan_Standing_Orders");
@@ -9645,9 +10041,9 @@ namespace MobileBanking_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Total_Shares", memberNoParameter, totalSharesParameter, transDateParameter);
         }
     
-        public virtual int Update_Unposted_Income_Loan_Arrears()
+        public virtual ObjectResult<Update_Unposted_Income_Loan_Arrears_Result> Update_Unposted_Income_Loan_Arrears()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Update_Unposted_Income_Loan_Arrears");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Update_Unposted_Income_Loan_Arrears_Result>("Update_Unposted_Income_Loan_Arrears");
         }
     
         public virtual int Update_Withdrawn_Dividend(string memberNo)

@@ -17,5 +17,6 @@ namespace MobileBanking_API.Models
         public int DID { get; set; }
         public string D_CODE { get; set; }
         public string D_NAME { get; set; }
+        public string BCode { get; set; }
     }
 }

@@ -12,10 +12,9 @@ namespace MobileBanking_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ZONE
+    public partial class Zone
     {
         public string ZoneID { get; set; }
         public string ZoneName { get; set; }
-        public string BuyingCentre { get; set; }
     }
 }

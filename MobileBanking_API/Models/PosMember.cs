@@ -18,6 +18,8 @@ namespace MobileBanking_API.Models
         public string IDNo { get; set; }
         public string FingerPrint1 { get; set; }
         public string FingerPrint2 { get; set; }
+        public string FingerName1 { get; set; }
+        public string FingerName2 { get; set; }
         public bool Active { get; set; }
         public string AuditID { get; set; }
         public System.DateTime RegistrationDate { get; set; }

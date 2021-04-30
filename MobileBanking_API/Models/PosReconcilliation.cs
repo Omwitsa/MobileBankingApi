@@ -26,5 +26,7 @@ namespace MobileBanking_API.Models
         public string Activity { get; set; }
         public bool Posted { get; set; }
         public string ProductID { get; set; }
+        public string RefNo { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -14,25 +14,12 @@ namespace MobileBanking_API.Models
     
     public partial class DEDUCTION1
     {
-        public long id { get; set; }
-        public string MemberNo { get; set; }
-        public Nullable<decimal> Principal { get; set; }
-        public Nullable<decimal> interest { get; set; }
-        public Nullable<decimal> contrib { get; set; }
-        public Nullable<decimal> entrancefee { get; set; }
-        public Nullable<decimal> passbook { get; set; }
-        public Nullable<decimal> memberid { get; set; }
-        public Nullable<decimal> othercharges { get; set; }
-        public Nullable<decimal> loanform { get; set; }
-        public Nullable<int> mmonth { get; set; }
-        public Nullable<int> yyear { get; set; }
-        public Nullable<bool> posted { get; set; }
-        public Nullable<System.DateTime> transdate { get; set; }
-        public Nullable<decimal> nhif { get; set; }
-        public Nullable<decimal> pershare { get; set; }
-        public string accno { get; set; }
-        public Nullable<decimal> calender { get; set; }
-        public string accountaffected { get; set; }
-        public Nullable<int> processed { get; set; }
+        public long DedID { get; set; }
+        public string PayrollNo { get; set; }
+        public decimal MMonth { get; set; }
+        public decimal YYear { get; set; }
+        public decimal Amount { get; set; }
+        public string DedNo { get; set; }
+        public string DedDescription { get; set; }
     }
 }

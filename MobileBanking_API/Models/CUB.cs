@@ -94,6 +94,5 @@ namespace MobileBanking_API.Models
         public string ACCOUNTCODE { get; set; }
         public Nullable<System.DateTime> dateopened { get; set; }
         public string BRANCHCODE1 { get; set; }
-        public string Fingerprint { get; set; }
     }
 }

@@ -23,5 +23,6 @@ namespace MobileBanking_API.Models
         public string email { get; set; }
         public string status { get; set; }
         public Nullable<int> isDefault { get; set; }
+        public string CompanyCode { get; set; }
     }
 }

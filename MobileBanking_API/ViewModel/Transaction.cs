@@ -7,6 +7,8 @@
 		public string FingerePrint { get; set; }
 		public string Pin { get; set; }
 		public string SNo { get; set; }
+		public string Name { get; set; }
+		public string Did { get; set; }
 		public string AuditId { get; set; }
 		public string Operation { get; set; }
 		public string ProductDescription { get; set; }

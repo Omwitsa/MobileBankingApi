@@ -30,5 +30,6 @@ namespace MobileBanking_API.Models
         public decimal NetIncome { get; set; }
         public bool Processed { get; set; }
         public decimal PostingCharge { get; set; }
+        public string Station { get; set; }
     }
 }

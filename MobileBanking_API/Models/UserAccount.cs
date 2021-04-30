@@ -32,6 +32,6 @@ namespace MobileBanking_API.Models
         public Nullable<System.DateTime> Lastdate { get; set; }
         public string IDNO { get; set; }
         public string WkStation { get; set; }
-        public Nullable<bool> PosAdmin { get; set; }
+        public bool POSAdmin { get; set; }
     }
 }

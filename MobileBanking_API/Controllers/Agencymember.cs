@@ -3,6 +3,7 @@
     public class Agencymember
     {
         public string names { get; set; }
+        public string lastname { get; set; }
         public string idno { get; set; }
         public string phone { get; set; }
         public string Fingerprint { get; set; }

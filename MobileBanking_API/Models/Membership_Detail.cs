@@ -31,5 +31,6 @@ namespace MobileBanking_API.Models
         public bool Posted { get; set; }
         public System.DateTime UserDate { get; set; }
         public string SignatoryChanges { get; set; }
+        public string OldSignatories { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace MobileBanking_API.Models
         public Nullable<decimal> salvageValue { get; set; }
         public Nullable<int> usefulLife { get; set; }
         public Nullable<int> months { get; set; }
-        public Nullable<int> departCode { get; set; }
+        public string departCode { get; set; }
         public Nullable<int> status { get; set; }
         public System.DateTime auditDate { get; set; }
         public string auditId { get; set; }
